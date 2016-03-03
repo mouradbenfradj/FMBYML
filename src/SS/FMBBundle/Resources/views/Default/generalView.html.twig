@@ -1,0 +1,38 @@
+{% extends '::base.html.twig' %}
+{% block body -%}
+    <h1>Filiere list du parc {{ parc.nomParc }} </h1>
+    <table class="records_list" border="1" width="100%">
+        <tbody>
+        {% for filiere in parc.filieres %}
+            <tr>
+                <td>
+                    {{ filiere.nomFiliere }}
+                </td>
+                {% for segment in filiere.getsegments %}
+                    <td>
+                        {{ segment.nomSegment }}
+                    </td>
+                    {% for ssegment in segment.getssegments %}
+                        <td>
+                            {{ ssegment.nomSSegment }}
+                        </td>
+                        {% for corde in ssegment.getcordes %}
+                            <td>
+                                {{ corde.placeCorde }}
+                                <br/>
+                                {% if corde.etatCorde %}
+                                    n'est pas disponible
+                                {% else %}
+                                    Disponible
+                                {% endif %}
+                                <br/>
+                                avec quantiter {{ corde.quantiter }}
+                            </td>
+                        {% endfor %}
+                    {% endfor %}
+                {% endfor %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

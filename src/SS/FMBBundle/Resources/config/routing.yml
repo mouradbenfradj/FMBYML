@@ -1,0 +1,33 @@
+ssfmb_stockage:
+    resource: "@SSFMBBundle/Resources/config/routing/stockage.yml"
+    prefix:   /stockage
+
+ssfmb_corde:
+    resource: "@SSFMBBundle/Resources/config/routing/corde.yml"
+    prefix:   /corde
+
+ssfmb_ssegment:
+    resource: "@SSFMBBundle/Resources/config/routing/ssegment.yml"
+    prefix:   /ssegment
+
+ssfmb_segment:
+    resource: "@SSFMBBundle/Resources/config/routing/segment.yml"
+    prefix:   /segment
+
+ssfmb_filiere:
+    resource: "@SSFMBBundle/Resources/config/routing/filiere.yml"
+    prefix:   /filiere
+
+ssfmb_parc:
+    resource: "@SSFMBBundle/Resources/config/routing/parc.yml"
+    prefix:   /parc
+
+ssfmb_homepage:
+    path:     /fmb
+    defaults: { _controller: SSFMBBundle:Default:index }
+ssfmb_affichepage:
+    path:     /generalView/{id}
+    defaults: { _controller: SSFMBBundle:Default:generalView }
+ssfmb_choixpage:
+    path:     /choixParc
+    defaults: { _controller: SSFMBBundle:Default:parcView }

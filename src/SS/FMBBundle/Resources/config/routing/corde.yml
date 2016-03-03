@@ -1,0 +1,30 @@
+corde:
+    path:     /
+    defaults: { _controller: "SSFMBBundle:Corde:index" }
+
+corde_show:
+    path:     /{id}/show
+    defaults: { _controller: "SSFMBBundle:Corde:show" }
+
+corde_new:
+    path:     /new
+    defaults: { _controller: "SSFMBBundle:Corde:new" }
+
+corde_create:
+    path:     /create
+    defaults: { _controller: "SSFMBBundle:Corde:create" }
+    methods:  POST
+
+corde_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "SSFMBBundle:Corde:edit" }
+
+corde_update:
+    path:     /{id}/update
+    defaults: { _controller: "SSFMBBundle:Corde:update" }
+    methods:  [POST, PUT]
+
+corde_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "SSFMBBundle:Corde:delete" }
+    methods:  [POST, DELETE]

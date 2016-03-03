@@ -1,0 +1,121 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Parc</h1>
+    <table class="records_list" border="1" width="100%">
+        <thead>
+        <tr>
+            <th>Nomparc</th>
+            <th>filiere</th>
+            <th>Segment</th>
+            <th>flotteurs</th>
+            <th>Cordes</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td align=center>
+                <a href="{{ path('parc_show', { 'id': entity.id }) }}">
+                    {{ entity.nomParc }}
+                </a>
+            </td>
+            <td>
+                {% for filiere in entity.filieres %}
+                    {{ filiere.getNomFiliere }}
+                    {% if loop.last == false %}
+                        <hr>
+                    {% endif %}
+                {% endfor %}
+
+            </td>
+            <td>
+
+            </td>
+            <td>
+
+            </td>
+            <td>
+
+            </td>
+            {#
+                                {% for entity in entity.filieres %}
+                                    <tr>
+                                        <td align=center>
+                                            {{ entity.nomFiliere }}
+                                        </td>
+                                        <td>
+                                            <table width="100%" border="1">
+                                                <tbody>
+                                                {% for segment in entity.segments %}
+                                                    <tr>
+                                                        <td align=center>
+                                                            {{ segment.nomSegment }}
+                                                        </td>
+                                                        <td>
+                                                            <table width="100%" border="1">
+                                                                <tbody>
+                                                                {% for ssegment in segment.ssegments %}
+                                                                    <tr>
+                                                                        <td align=center>
+                                                                            {{ ssegment.nomSSegment }}
+                                                                        </td>
+                                                                        <td>
+                                                                            <table width="100%">
+                                                                                <tbody>
+                                                                                {% for corde in ssegment.cordes %}
+                                                                                    <tr>
+                                                                                        <td align=center>
+                                                                                            {{ corde.placeCorde }}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                {% endfor %}
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+                                                                {% endfor %}
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </td>
+                        #}
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('parc_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('parc_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('filiere_new', { 'id': entity.id }) }}">ajouter une filiere</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <ul class="record_actions">
+        <li>
+            <a href="{{ path('parc') }}">
+                Back to the list
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('parc_edit', { 'id': entity.id }) }}">
+                Edit
+            </a>
+        </li>
+        <li>{{ form(delete_form) }}</li>
+    </ul>
+{% endblock %}
