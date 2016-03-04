@@ -1,10 +1,11 @@
-{% extends '::base.html.twig' %}
+{% extends "SSFMBBundle::layout.html.twig" %}
 
-{% block body -%}
-    <h1>Parc creation</h1>
+{% block body %}
 
-    {{ form(form) }}
+    <h2>Ajouter un parc</h2>
 
+    {{ include("SSFMBBundle:Parc:form.html.twig") }}
+    <p>
     <ul class="record_actions">
         <li>
             <a href="{{ path('parc') }}">
@@ -12,4 +13,6 @@
             </a>
         </li>
     </ul>
+    </p>
+
 {% endblock %}

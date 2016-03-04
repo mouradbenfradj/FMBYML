@@ -1,95 +1,79 @@
-{% extends '::base.html.twig' %}
+{% extends "SSFMBBundle::layout.html.twig" %}
 
-{% block body -%}
-    <h1>Parc compte</h1>
-    <ul>
-        <li>
-            <a href="{{ path('parc_new') }}">
-                Crée une nouveau parc
-            </a>
-        </li>
-    </ul>
-    <table class="records_list" border="1" width="100%">
-        <thead>
-        <tr>
-            <th width="5%">Nomparc</th>
-            <th>filiere</th>
-            <th>Segment</th>
-            <th>flotteurs</th>
-            <th>Cordes</th>
-            <th width="15%">Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for parc in entities %}
+{% block title %}
+    Lecture d'une annonce - {{ parent() }}
+{% endblock %}
+
+{% block ssfmb_body %}
+
+    <i><a href="{{ path('parc_new') }}">Crée une nouveau parc</a></i>
+
+    <div class="well">
+        <table class="records_list" border="1" width="100%">
+            <thead>
             <tr>
-                <td align=center><a href="{{ path('parc_show', { 'id': parc.id }) }}">{{ parc.nomParc }}</a></td>
-                <td>{{ parc.filieres|length }}</td>
-                <td>
-                    {% set seg = 0 %}
-                    {% set flot = 0 %}
-                    {% set cor = 0 %}
-                    {% for filiere in parc.filieres %}
-                        {% set seg = seg + filiere.segments|length %}
-                        {% for segment in filiere.segments %}
-                            {% set flot = flot + segment.ssegments|length %}
-                            {% for ssegment in segment.ssegments %}
-                                {% set cor = cor + ssegment.cordes|length %}
+                <th width="5%">Nomparc</th>
+                <th>filiere</th>
+                <th>Segment</th>
+                <th>flotteurs</th>
+                <th>Cordes</th>
+                <th width="15%">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for parc in entities %}
+                <tr>
+                    <td align=center><a href="{{ path('parc_show', { 'id': parc.id }) }}">{{ parc.nomParc }}</a></td>
+                    <td>{{ parc.filieres|length }}</td>
+                    <td>
+                        {% set seg = 0 %}
+                        {% set flot = 0 %}
+                        {% set cor = 0 %}
+                        {% for filiere in parc.filieres %}
+                            {% set seg = seg + filiere.segments|length %}
+                            {% for segment in filiere.segments %}
+                                {% set flot = flot + segment.ssegments|length %}
+                                {% for ssegment in segment.ssegments %}
+                                    {% set cor = cor + ssegment.cordes|length %}
+                                {% endfor %}
                             {% endfor %}
                         {% endfor %}
-                    {% endfor %}
-                    {{ seg }}
-                </td>
-                <td>{{ flot }}</td>
-                <td>{{ cor }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('parc_show', { 'id': parc.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('parc_edit', { 'id': parc.id }) }}">edit</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('filiere_newdp', { 'id': parc.id }) }}">ajouter une filiere</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-            {#
-                                                    {% for segment in entity.segments %}
-                                                        <td align=center>{{ segment.ssegments|length }}</td>
-                                                        <td align=center>
-                                                            {% for ssegment in segment.ssegments %}
-                                                                {% set corde =  corde + ssegment.cordes|length %}
-                                                            {% endfor %}
-                                                            {{ corde }}
-                                                        </td>
-                                                    {% endfor %}
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        {% endfor %}
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        <td>
-                            <ul>
-                                <li>
-                                    <a href="{{ path('parc_show', { 'id': entity.id }) }}">show</a>
-                                </li>
-                                <li>
-                                    <a href="{{ path('parc_edit', { 'id': entity.id }) }}">edit</a>
-                                </li>
-                                <li>
-                                    <a href="{{ path('filiere_new', { 'id': entity.id }) }}">ajouter une filiere</a>
-                                </li>
-                            </ul>
-                        </td>
-                        </tr>
-                        #}
-        {% endfor %}
-        </tbody>
-    </table>
+                        {{ seg }}
+                    </td>
+                    <td>{{ flot }}</td>
+                    <td>{{ cor }}</td>
+                    <td>
+                        <ul>
+                            <li>
+                                <a href="{{ path('parc_show', { 'id': parc.id }) }}">show</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('parc_edit', {'id': parc.id}) }}" class="btn btn-default">
+                                    <i class="glyphicon glyphicon-edit"></i>
+                                    Modifier l'annonce
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('filiere_newdp', { 'id': parc.id }) }}">ajouter une filiere</a>
+                            </li>
+                            <li><a href="{{ path('parc_delete', {'id': parc.id}) }}" class="btn btn-danger">
+                                    <i class="glyphicon glyphicon-trash"></i>
+                                    Supprimer l'annonce
+                                </a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <p>
+        <a href="{{ path('ssfmb_homepage') }}" class="btn btn-default">
+            <i class="glyphicon glyphicon-chevron-left"></i>
+            Retour à la liste
+        </a>
+    </p>
+
 {% endblock %}

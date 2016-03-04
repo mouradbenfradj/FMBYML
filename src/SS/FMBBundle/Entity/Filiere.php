@@ -29,7 +29,8 @@ class Filiere
     private $nomFiliere;
 
     /**
-     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Parc", inversedBy="filieres")
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Parc", inversedBy="filieres", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
      */
     private $parc;
     /**
