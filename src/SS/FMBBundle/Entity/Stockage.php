@@ -29,25 +29,19 @@ class Stockage
     private $article;
 
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="quantiter", type="decimal")
+     * @ORM\Column(name="quantiter", type="integer")
      */
     private $quantiter;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="duplication", type="integer")
-     */
-    private $duplication;
 
     /**
-     * @var \DateTime
+     * @var string
      *
-     * @ORM\Column(name="dateDajout", type="date")
+     * @ORM\Column(name="nlot", type="string", length=255)
      */
-    private $dateDajout;
+    private $NLot;
 
 
     /**
@@ -107,47 +101,24 @@ class Stockage
     }
 
     /**
-     * Get duplication
+     * Get NLot
      *
-     * @return integer
+     * @return string
      */
-    public function getDuplication()
+    public function getNLot()
     {
-        return $this->duplication;
+        return $this->NLot;
     }
 
     /**
-     * Set duplication
+     * Set NLot
      *
-     * @param integer $duplication
+     * @param string $nLot
      * @return Stockage
      */
-    public function setDuplication($duplication)
+    public function setNLot($nLot)
     {
-        $this->duplication = $duplication;
-
-        return $this;
-    }
-
-    /**
-     * Get dateDajout
-     *
-     * @return \DateTime
-     */
-    public function getDateDajout()
-    {
-        return $this->dateDajout;
-    }
-
-    /**
-     * Set dateDajout
-     *
-     * @param \DateTime $dateDajout
-     * @return Stockage
-     */
-    public function setDateDajout($dateDajout)
-    {
-        $this->dateDajout = $dateDajout;
+        $this->NLot = $nLot;
 
         return $this;
     }

@@ -17,8 +17,7 @@ class StockageType extends AbstractType
         $builder
             ->add('article')
             ->add('quantiter')
-            ->add('duplication')
-            ->add('dateDajout');
+            ->add('nlot');
     }
 
     /**

@@ -1,16 +1,20 @@
-{% extends '::base.html.twig' %}
+{% extends "SSFMBBundle::layout.html.twig" %}
 
-{% block body -%}
-    <h1>Stockage list</h1>
+{% block title %}
+    Lecture d'une annonce - {{ parent() }}
+{% endblock %}
 
-    <table class="records_list">
+{% block ssfmb_body %}
+    <i><a href="{{ path('stockage_new') }}">Crée une nouveau stock</a></i>
+    <div class="well">
+
+        <table class="records_list">
         <thead>
         <tr>
             <th>Id</th>
             <th>Article</th>
             <th>Quantiter</th>
-            <th>Duplication</th>
-            <th>Datedajout</th>
+            <th>N°Lot</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -20,7 +24,6 @@
                 <td><a href="{{ path('stockage_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{{ entity.article }}</td>
                 <td>{{ entity.quantiter }}</td>
-                <td>{{ entity.duplication }}</td>
                 <td>{% if entity.dateDajout %}{{ entity.dateDajout|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>
                     <ul>
@@ -36,12 +39,13 @@
         {% endfor %}
         </tbody>
     </table>
+    </div>
 
-    <ul>
-        <li>
-            <a href="{{ path('stockage_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
+    <p>
+        <a href="{{ path('ssfmb_homepage') }}" class="btn btn-default">
+            <i class="glyphicon glyphicon-chevron-left"></i>
+            Retour à la liste
+        </a>
+    </p>
+
 {% endblock %}

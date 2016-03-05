@@ -110,7 +110,7 @@ $minorProblems = $symfonyRequirements->getFailedRecommendations();
 
                 <?php if (!count($majorProblems) && !count($minorProblems)): ?>
                     <p class="ok">Your configuration looks good to run Symfony.</p>
-                <?php endif; ?>
+                        <?php endif; ?>
 
                 <ul class="symfony-install-continue">
                     <?php if (!count($majorProblems)): ?>
