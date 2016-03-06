@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class FiliereType extends AbstractType
+class LanterneType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -15,16 +15,12 @@ class FiliereType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nomFiliere')
-            ->add(
-                'parc',
-                'entity',
-                array(
-                    'class' => 'SSFMBBundle:Parc',
-                    'property' => 'id',
-                    'multiple' => false,
-                )
-            );
+            ->add('title')
+            ->add('lft')
+            ->add('lvl')
+            ->add('rgt')
+            ->add('root')
+            ->add('parent');
     }
 
     /**
@@ -34,7 +30,7 @@ class FiliereType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'SS\FMBBundle\Entity\Filiere',
+                'data_class' => 'SS\FMBBundle\Entity\Lanterne',
             )
         );
     }
@@ -44,6 +40,6 @@ class FiliereType extends AbstractType
      */
     public function getName()
     {
-        return 'ss_fmbbundle_filiere';
+        return 'ss_fmbbundle_lanterne';
     }
 }

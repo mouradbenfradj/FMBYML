@@ -1,3 +1,11 @@
+ssfmb_poche:
+    resource: "@SSFMBBundle/Resources/config/routing/poche.yml"
+    prefix:   /poche
+
+ssfmb_lanterne:
+    resource: "@SSFMBBundle/Resources/config/routing/lanterne.yml"
+    prefix:   /lanterne
+
 ssfmb_stockage:
     resource: "@SSFMBBundle/Resources/config/routing/stockage.yml"
     prefix:   /stockage
@@ -22,12 +30,7 @@ ssfmb_parc:
     resource: "@SSFMBBundle/Resources/config/routing/parc.yml"
     prefix:   /parc
 
-ssfmb_homepage:
-    path:     /fmb
-    defaults: { _controller: SSFMBBundle:Default:index }
-ssfmb_affichepage:
-    path:     /generalView/{id}
-    defaults: { _controller: SSFMBBundle:Default:generalView }
-ssfmb_choixpage:
-    path:     /choixParc
-    defaults: { _controller: SSFMBBundle:Default:parcView }
+ssfmb_parc:
+    resource: "@SSFMBBundle/Resources/config/routing/default.yml"
+    prefix:   /
+

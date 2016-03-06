@@ -15,16 +15,8 @@ class SegmentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nomSegment')
-            ->add(
-                'filiere',
-                'entity',
-                array(
-                    'class' => 'SSFMBBundle:Filiere',
-                    'property' => 'nomFiliere',
-                    'multiple' => false,
-                )
-            );;
+            ->add('filiere', new FiliereType())
+            ->add('nomSegment');
     }
 
     /**

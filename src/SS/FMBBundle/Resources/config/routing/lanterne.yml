@@ -1,0 +1,30 @@
+lanterne:
+    path:     /
+    defaults: { _controller: "SSFMBBundle:Lanterne:index" }
+
+lanterne_show:
+    path:     /{id}/show
+    defaults: { _controller: "SSFMBBundle:Lanterne:show" }
+
+lanterne_new:
+    path:     /new
+    defaults: { _controller: "SSFMBBundle:Lanterne:new" }
+
+lanterne_create:
+    path:     /create
+    defaults: { _controller: "SSFMBBundle:Lanterne:create" }
+    methods:  POST
+
+lanterne_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "SSFMBBundle:Lanterne:edit" }
+
+lanterne_update:
+    path:     /{id}/update
+    defaults: { _controller: "SSFMBBundle:Lanterne:update" }
+    methods:  [POST, PUT]
+
+lanterne_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "SSFMBBundle:Lanterne:delete" }
+    methods:  [POST, DELETE]

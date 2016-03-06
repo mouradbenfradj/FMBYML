@@ -29,9 +29,14 @@ class Parc
     private $nomParc;
 
     /**
-     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Filiere", mappedBy="parc")
+     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Filiere", mappedBy="parc" , cascade={"persist", "remove"})
      */
     private $filieres;
+
+    /**
+     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Lanterne", mappedBy="children" , cascade={"persist", "remove"})
+     */
+    private $lanternes;
 
     /**
      * Constructor
@@ -106,5 +111,38 @@ class Parc
     public function getFilieres()
     {
         return $this->filieres;
+    }
+
+    /**
+     * Add lanternes
+     *
+     * @param \SS\FMBBundle\Entity\Lanterne $lanternes
+     * @return Parc
+     */
+    public function addLanterne(\SS\FMBBundle\Entity\Lanterne $lanternes)
+    {
+        $this->lanternes[] = $lanternes;
+
+        return $this;
+    }
+
+    /**
+     * Remove lanternes
+     *
+     * @param \SS\FMBBundle\Entity\Lanterne $lanternes
+     */
+    public function removeLanterne(\SS\FMBBundle\Entity\Lanterne $lanternes)
+    {
+        $this->lanternes->removeElement($lanternes);
+    }
+
+    /**
+     * Get lanternes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getLanternes()
+    {
+        return $this->lanternes;
     }
 }

@@ -29,7 +29,7 @@ class Segment
     private $nomSegment;
 
     /**
-     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Filiere", inversedBy="segments")
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Filiere", inversedBy="segments", cascade={"persist", "remove"})
      */
     private $filiere;
     /**

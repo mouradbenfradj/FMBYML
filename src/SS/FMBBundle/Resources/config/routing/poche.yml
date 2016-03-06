@@ -1,0 +1,30 @@
+poche:
+    path:     /
+    defaults: { _controller: "SSFMBBundle:Poche:index" }
+
+poche_show:
+    path:     /{id}/show
+    defaults: { _controller: "SSFMBBundle:Poche:show" }
+
+poche_new:
+    path:     /new
+    defaults: { _controller: "SSFMBBundle:Poche:new" }
+
+poche_create:
+    path:     /create
+    defaults: { _controller: "SSFMBBundle:Poche:create" }
+    methods:  POST
+
+poche_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "SSFMBBundle:Poche:edit" }
+
+poche_update:
+    path:     /{id}/update
+    defaults: { _controller: "SSFMBBundle:Poche:update" }
+    methods:  [POST, PUT]
+
+poche_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "SSFMBBundle:Poche:delete" }
+    methods:  [POST, DELETE]

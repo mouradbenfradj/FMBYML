@@ -1,0 +1,11 @@
+ssfmb_homepage:
+    path:     /
+    defaults: { _controller: SSFMBBundle:Default:index }
+
+ssfmb_affichepage:
+    path:     /generalView/{id}
+    defaults: { _controller: SSFMBBundle:Default:generalView }
+
+ssfmb_choixpage:
+    path:     /choixParc
+    defaults: { _controller: SSFMBBundle:Default:parcView }
