@@ -77,6 +77,7 @@ class LanterneController extends Controller
                 'method' => 'POST',
             )
         );
+        !
 
         $form->add('submit', 'submit', array('label' => 'Create'));
 

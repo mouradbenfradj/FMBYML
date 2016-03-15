@@ -1,6 +1,10 @@
-{% extends '::base.html.twig' %}
+{% extends "SSFMBBundle::layout.html.twig" %}
 
-{% block body -%}
+{% block title %}
+    Accueil - {{ parent() }}
+{% endblock %}
+
+{% block ssfmb_body %}
     <h1>Stockage</h1>
 
     <table class="record_properties">

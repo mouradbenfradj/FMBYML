@@ -1,6 +1,6 @@
 <?php
 
-namespace SS\FMBBundle\Entity;
+namespace SS\FMBBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 

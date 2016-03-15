@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Poche
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="SS\FMBBundle\Entity\PocheRepository")
+ * @ORM\Entity(repositoryClass="SS\FMBBundle\Repository\PocheRepository")
  */
 class Poche
 {

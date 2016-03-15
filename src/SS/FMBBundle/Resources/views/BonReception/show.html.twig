@@ -1,0 +1,44 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>BonReception</h1>
+
+    <table class="record_properties">
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Quantiter</th>
+            <td>{{ entity.quantiter }}</td>
+        </tr>
+        <tr>
+            <th>Duplication</th>
+            <td>{{ entity.duplication }}</td>
+        </tr>
+        <tr>
+            <th>Datedereception</th>
+            <td>{{ entity.dateDeReception|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Nlot</th>
+            <td>{{ entity.nLot }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <ul class="record_actions">
+        <li>
+            <a href="{{ path('bonreception') }}">
+                Back to the list
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('bonreception_edit', { 'id': entity.id }) }}">
+                Edit
+            </a>
+        </li>
+        <li>{{ form(delete_form) }}</li>
+    </ul>
+{% endblock %}

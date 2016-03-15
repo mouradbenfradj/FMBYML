@@ -1,0 +1,30 @@
+bonreception:
+    path:     /
+    defaults: { _controller: "SSFMBBundle:BonReception:index" }
+
+bonreception_show:
+    path:     /{id}/show
+    defaults: { _controller: "SSFMBBundle:BonReception:show" }
+
+bonreception_new:
+    path:     /new
+    defaults: { _controller: "SSFMBBundle:BonReception:new" }
+
+bonreception_create:
+    path:     /create
+    defaults: { _controller: "SSFMBBundle:BonReception:create" }
+    methods:  POST
+
+bonreception_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "SSFMBBundle:BonReception:edit" }
+
+bonreception_update:
+    path:     /{id}/update
+    defaults: { _controller: "SSFMBBundle:BonReception:update" }
+    methods:  [POST, PUT]
+
+bonreception_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "SSFMBBundle:BonReception:delete" }
+    methods:  [POST, DELETE]

@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Parc
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="SS\FMBBundle\Entity\ParcRepository")
+ * @ORM\Entity(repositoryClass="SS\FMBBundle\Repository\ParcRepository")
  */
 class Parc
 {
@@ -29,12 +29,12 @@ class Parc
     private $nomParc;
 
     /**
-     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Filiere", mappedBy="parc" , cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Filiere", mappedBy="parc" )
      */
     private $filieres;
 
     /**
-     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Lanterne", mappedBy="children" , cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Lanterne", mappedBy="children")
      */
     private $lanternes;
 
@@ -44,6 +44,7 @@ class Parc
     public function __construct()
     {
         $this->filieres = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->lanternes = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -139,7 +140,7 @@ class Parc
     /**
      * Get lanternes
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getLanternes()
     {

@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Corde
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="SS\FMBBundle\Entity\CordeRepository")
+ * @ORM\Entity(repositoryClass="SS\FMBBundle\Repository\CordeRepository")
  */
 class Corde
 {

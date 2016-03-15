@@ -15,7 +15,16 @@ class ParcType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nomParc');
+            ->add('nomParc')
+            ->add(
+                'filieres',
+                'collection',
+                array(
+                    'type' => new FiliereType(),
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                )
+            );
     }
 
     /**

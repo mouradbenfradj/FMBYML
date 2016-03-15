@@ -1,3 +1,7 @@
+ssfmb_bonreception:
+    resource: "@SSFMBBundle/Resources/config/routing/bonreception.yml"
+    prefix:   /bonreception
+
 ssfmb_poche:
     resource: "@SSFMBBundle/Resources/config/routing/poche.yml"
     prefix:   /poche
@@ -30,7 +34,7 @@ ssfmb_parc:
     resource: "@SSFMBBundle/Resources/config/routing/parc.yml"
     prefix:   /parc
 
-ssfmb_parc:
+ssfmb_default:
     resource: "@SSFMBBundle/Resources/config/routing/default.yml"
-    prefix:   /
+    prefix:   /default
 

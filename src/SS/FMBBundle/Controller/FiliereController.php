@@ -46,6 +46,10 @@ class FiliereController extends Controller
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
+            foreach ($entity->getSegments() as $segment) {
+                $segment->setFiliere($entity);
+                $em->persist($entity);
+            }
             $em->flush();
 
             return $this->redirect($this->generateUrl('filiere_show', array('id' => $entity->getId())));

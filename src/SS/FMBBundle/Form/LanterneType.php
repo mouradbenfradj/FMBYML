@@ -19,7 +19,15 @@ class LanterneType extends AbstractType
             ->add('lft')
             ->add('lvl')
             ->add('rgt')
-            ->add('root')
+            ->add(
+                'root',
+                'entity',
+                array(
+                    'class' => 'SSFMBBundle:Parc',
+                    'property' => 'id',
+                    'multiple' => false,
+                )
+            )
             ->add('parent');
     }
 

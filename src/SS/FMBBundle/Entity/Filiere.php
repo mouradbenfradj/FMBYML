@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Filiere
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="SS\FMBBundle\Entity\FiliereRepository")
+ * @ORM\Entity(repositoryClass="SS\FMBBundle\Repository\FiliereRepository")
  */
 class Filiere
 {
@@ -29,12 +29,12 @@ class Filiere
     private $nomFiliere;
 
     /**
-     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Parc", inversedBy="filieres")
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Parc", inversedBy="filieres",cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $parc;
     /**
-     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Segment", mappedBy="filiere", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Segment", mappedBy="filiere",cascade={"persist","remove"})
      */
     private $segments;
 
@@ -102,17 +102,17 @@ class Filiere
         return $this;
     }
 
+
     /**
      * Add segments
      *
-     * @param \SS\FMBBundle\Entity\Segment $segments
+     * @param \SS\FMBBundle\Entity\Segment $segment
      * @return Filiere
      */
-    public function addSegment(\SS\FMBBundle\Entity\Segment $segments)
+    public function addSegment(\SS\FMBBundle\Entity\Segment $segment)
     {
-        $this->segments[] = $segments;
-        $segments->setFiliere($this);
-
+        $this->segments[] = $segment;
+        $segment->setFiliere($this);
         return $this;
     }
 
@@ -129,7 +129,7 @@ class Filiere
     /**
      * Get segments
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getSegments()
     {

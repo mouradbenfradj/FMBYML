@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Stockage
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="SS\FMBBundle\Entity\StockageRepository")
+ * @ORM\Entity(repositoryClass="SS\FMBBundle\Repository\StockageRepository")
  */
 class Stockage
 {

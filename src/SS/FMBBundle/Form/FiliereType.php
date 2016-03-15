@@ -15,7 +15,6 @@ class FiliereType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nomFiliere')
             ->add(
                 'parc',
                 'entity',
@@ -23,6 +22,16 @@ class FiliereType extends AbstractType
                     'class' => 'SSFMBBundle:Parc',
                     'property' => 'id',
                     'multiple' => false,
+                )
+            )
+            ->add('nomFiliere')
+            ->add(
+                'segments',
+                'collection',
+                array(
+                    'type' => new SegmentType(),
+                    'allow_add' => true,
+                    'allow_delete' => true,
                 )
             );
     }

@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * SSegment
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="SS\FMBBundle\Entity\SSegmentRepository")
+ * @ORM\Entity(repositoryClass="SS\FMBBundle\Repository\SSegmentRepository")
  */
 class SSegment
 {
