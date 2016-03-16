@@ -15,9 +15,7 @@ class StockageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('article')
-            ->add('quantiter')
-            ->add('nlot');
+            ->add('quantiter');
     }
 
     /**

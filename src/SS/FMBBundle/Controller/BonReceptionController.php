@@ -32,7 +32,6 @@ class BonReceptionController extends Controller
             )
         );
     }
-
     /**
      * Creates a new BonReception entity.
      *

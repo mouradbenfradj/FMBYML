@@ -1,6 +1,10 @@
-{% extends '::base.html.twig' %}
+{% extends "SSFMBBundle::layout.html.twig" %}
 
-{% block body -%}
+{% block title %}
+    Modifier une annonce - {{ parent() }}
+{% endblock %}
+
+{% block ssfmb_body %}
     <h1>Lanterne creation</h1>
 
     {{ form(form) }}

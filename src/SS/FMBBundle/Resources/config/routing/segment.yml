@@ -25,6 +25,6 @@ segment_update:
     methods:  [POST, PUT]
 
 segment_delete:
-    path:     /{id}/delete
+    path:       /{id}/delete
     defaults: { _controller: "SSFMBBundle:Segment:delete" }
     methods:  [POST, DELETE]

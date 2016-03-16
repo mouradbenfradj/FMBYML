@@ -1,6 +1,14 @@
+ssfmb_lot:
+    resource: "@SSFMBBundle/Resources/config/routing/lot.yml"
+    prefix:   /lot
+
 ssfmb_bonreception:
     resource: "@SSFMBBundle/Resources/config/routing/bonreception.yml"
     prefix:   /bonreception
+
+ssfmb_article:
+    resource: "@SSFMBBundle/Resources/config/routing/article.yml"
+    prefix:   /article
 
 ssfmb_poche:
     resource: "@SSFMBBundle/Resources/config/routing/poche.yml"
@@ -9,6 +17,8 @@ ssfmb_poche:
 ssfmb_lanterne:
     resource: "@SSFMBBundle/Resources/config/routing/lanterne.yml"
     prefix:   /lanterne
+
+
 
 ssfmb_stockage:
     resource: "@SSFMBBundle/Resources/config/routing/stockage.yml"
@@ -36,5 +46,5 @@ ssfmb_parc:
 
 ssfmb_default:
     resource: "@SSFMBBundle/Resources/config/routing/default.yml"
-    prefix:   /default
+    prefix:   /
 

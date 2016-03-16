@@ -37,15 +37,16 @@ class Poche
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Lanterne", inversedBy="children")
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Lanterne", inversedBy="poches")
      * @ORM\JoinColumn(nullable=false)
      */
     private $lanterne;
 
+
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {

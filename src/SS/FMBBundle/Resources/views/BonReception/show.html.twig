@@ -1,6 +1,10 @@
-{% extends '::base.html.twig' %}
+{% extends "SSFMBBundle::layout.html.twig" %}
 
-{% block body -%}
+{% block title %}
+    Accueil - {{ parent() }}
+{% endblock %}
+
+{% block ssfmb_body %}
     <h1>BonReception</h1>
 
     <table class="record_properties">
@@ -20,10 +24,6 @@
         <tr>
             <th>Datedereception</th>
             <td>{{ entity.dateDeReception|date('Y-m-d H:i:s') }}</td>
-        </tr>
-        <tr>
-            <th>Nlot</th>
-            <td>{{ entity.nLot }}</td>
         </tr>
         </tbody>
     </table>

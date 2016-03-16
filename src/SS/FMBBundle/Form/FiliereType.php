@@ -20,7 +20,7 @@ class FiliereType extends AbstractType
                 'entity',
                 array(
                     'class' => 'SSFMBBundle:Parc',
-                    'property' => 'id',
+                    'property' => 'nomParc',
                     'multiple' => false,
                 )
             )

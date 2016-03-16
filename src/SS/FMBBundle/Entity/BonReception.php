@@ -2,7 +2,6 @@
 
 namespace SS\FMBBundle\Entity;
 
-use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -35,27 +34,31 @@ class BonReception
      * @ORM\Column(name="duplication", type="integer")
      */
     private $duplication;
-
     /**
-     * @var \DateTime $dateDeReception
-     *
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(name="date", type="date")
      */
     private $dateDeReception;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="nLot", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Lot", inversedBy="bonReceptions",cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
      */
     private $nLot;
+    /**
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Article", inversedBy="bonReceptions")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $article;
 
+    public function __construct()
+    {
+        $this->dateDeReception = new \Datetime();
+    }
 
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -109,29 +112,6 @@ class BonReception
     }
 
     /**
-     * Get nLot
-     *
-     * @return string
-     */
-    public function getNLot()
-    {
-        return $this->nLot;
-    }
-
-    /**
-     * Set nLot
-     *
-     * @param string $nLot
-     * @return BonReception
-     */
-    public function setNLot($nLot)
-    {
-        $this->nLot = $nLot;
-
-        return $this;
-    }
-
-    /**
      * Get dateDeReception
      *
      * @return \DateTime
@@ -150,6 +130,52 @@ class BonReception
     public function setDateDeReception($dateDeReception)
     {
         $this->dateDeReception = $dateDeReception;
+
+        return $this;
+    }
+
+    /**
+     * Get nLot
+     *
+     * @return \SS\FMBBundle\Entity\Lot
+     */
+    public function getNLot()
+    {
+        return $this->nLot;
+    }
+
+    /**
+     * Set nLot
+     *
+     * @param \SS\FMBBundle\Entity\Lot $nLot
+     * @return BonReception
+     */
+    public function setNLot(\SS\FMBBundle\Entity\Lot $nLot)
+    {
+        $this->nLot = $nLot;
+
+        return $this;
+    }
+
+    /**
+     * Get article
+     *
+     * @return \SS\FMBBundle\Entity\Article
+     */
+    public function getArticle()
+    {
+        return $this->article;
+    }
+
+    /**
+     * Set article
+     *
+     * @param \SS\FMBBundle\Entity\Article $article
+     * @return BonReception
+     */
+    public function setArticle(\SS\FMBBundle\Entity\Article $article)
+    {
+        $this->article = $article;
 
         return $this;
     }

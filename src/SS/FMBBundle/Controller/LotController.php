@@ -5,40 +5,41 @@ namespace SS\FMBBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-use SS\FMBBundle\Entity\Lanterne;
-use SS\FMBBundle\Form\LanterneType;
+use SS\FMBBundle\Entity\Lot;
+use SS\FMBBundle\Form\LotType;
 
 /**
- * Lanterne controller.
+ * Lot controller.
  *
  */
-class LanterneController extends Controller
+class LotController extends Controller
 {
 
     /**
-     * Lists all Lanterne entities.
+     * Lists all Lot entities.
      *
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('SSFMBBundle:Lanterne')->findAll();
+        $entities = $em->getRepository('SSFMBBundle:Lot')->findAll();
 
         return $this->render(
-            'SSFMBBundle:Lanterne:index.html.twig',
+            'SSFMBBundle:Lot:index.html.twig',
             array(
                 'entities' => $entities,
             )
         );
     }
+
     /**
-     * Creates a new Lanterne entity.
+     * Creates a new Lot entity.
      *
      */
     public function createAction(Request $request)
     {
-        $entity = new Lanterne();
+        $entity = new Lot();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -47,11 +48,11 @@ class LanterneController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('lanterne_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('lot_show', array('id' => $entity->getId())));
         }
 
         return $this->render(
-            'SSFMBBundle:Lanterne:new.html.twig',
+            'SSFMBBundle:Lot:new.html.twig',
             array(
                 'entity' => $entity,
                 'form' => $form->createView(),
@@ -60,19 +61,19 @@ class LanterneController extends Controller
     }
 
     /**
-     * Creates a form to create a Lanterne entity.
+     * Creates a form to create a Lot entity.
      *
-     * @param Lanterne $entity The entity
+     * @param Lot $entity The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Lanterne $entity)
+    private function createCreateForm(Lot $entity)
     {
         $form = $this->createForm(
-            new LanterneType(),
+            new LotType(),
             $entity,
             array(
-                'action' => $this->generateUrl('lanterne_create'),
+                'action' => $this->generateUrl('lot_create'),
                 'method' => 'POST',
             )
         );
@@ -83,16 +84,16 @@ class LanterneController extends Controller
     }
 
     /**
-     * Displays a form to create a new Lanterne entity.
+     * Displays a form to create a new Lot entity.
      *
      */
     public function newAction()
     {
-        $entity = new Lanterne();
+        $entity = new Lot();
         $form = $this->createCreateForm($entity);
 
         return $this->render(
-            'SSFMBBundle:Lanterne:new.html.twig',
+            'SSFMBBundle:Lot:new.html.twig',
             array(
                 'entity' => $entity,
                 'form' => $form->createView(),
@@ -101,23 +102,23 @@ class LanterneController extends Controller
     }
 
     /**
-     * Finds and displays a Lanterne entity.
+     * Finds and displays a Lot entity.
      *
      */
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('SSFMBBundle:Lanterne')->find($id);
+        $entity = $em->getRepository('SSFMBBundle:Lot')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Lanterne entity.');
+            throw $this->createNotFoundException('Unable to find Lot entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render(
-            'SSFMBBundle:Lanterne:show.html.twig',
+            'SSFMBBundle:Lot:show.html.twig',
             array(
                 'entity' => $entity,
                 'delete_form' => $deleteForm->createView(),
@@ -126,7 +127,7 @@ class LanterneController extends Controller
     }
 
     /**
-     * Creates a form to delete a Lanterne entity by id.
+     * Creates a form to delete a Lot entity by id.
      *
      * @param mixed $id The entity id
      *
@@ -135,31 +136,31 @@ class LanterneController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('lanterne_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('lot_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm();
     }
 
     /**
-     * Displays a form to edit an existing Lanterne entity.
+     * Displays a form to edit an existing Lot entity.
      *
      */
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('SSFMBBundle:Lanterne')->find($id);
+        $entity = $em->getRepository('SSFMBBundle:Lot')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Lanterne entity.');
+            throw $this->createNotFoundException('Unable to find Lot entity.');
         }
 
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render(
-            'SSFMBBundle:Lanterne:edit.html.twig',
+            'SSFMBBundle:Lot:edit.html.twig',
             array(
                 'entity' => $entity,
                 'edit_form' => $editForm->createView(),
@@ -169,19 +170,19 @@ class LanterneController extends Controller
     }
 
     /**
-     * Creates a form to edit a Lanterne entity.
+     * Creates a form to edit a Lot entity.
      *
-     * @param Lanterne $entity The entity
+     * @param Lot $entity The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createEditForm(Lanterne $entity)
+    private function createEditForm(Lot $entity)
     {
         $form = $this->createForm(
-            new LanterneType(),
+            new LotType(),
             $entity,
             array(
-                'action' => $this->generateUrl('lanterne_update', array('id' => $entity->getId())),
+                'action' => $this->generateUrl('lot_update', array('id' => $entity->getId())),
                 'method' => 'PUT',
             )
         );
@@ -192,17 +193,17 @@ class LanterneController extends Controller
     }
 
     /**
-     * Edits an existing Lanterne entity.
+     * Edits an existing Lot entity.
      *
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('SSFMBBundle:Lanterne')->find($id);
+        $entity = $em->getRepository('SSFMBBundle:Lot')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Lanterne entity.');
+            throw $this->createNotFoundException('Unable to find Lot entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -212,11 +213,11 @@ class LanterneController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('lanterne_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('lot_edit', array('id' => $id)));
         }
 
         return $this->render(
-            'SSFMBBundle:Lanterne:edit.html.twig',
+            'SSFMBBundle:Lot:edit.html.twig',
             array(
                 'entity' => $entity,
                 'edit_form' => $editForm->createView(),
@@ -226,7 +227,7 @@ class LanterneController extends Controller
     }
 
     /**
-     * Deletes a Lanterne entity.
+     * Deletes a Lot entity.
      *
      */
     public function deleteAction(Request $request, $id)
@@ -236,16 +237,16 @@ class LanterneController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('SSFMBBundle:Lanterne')->find($id);
+            $entity = $em->getRepository('SSFMBBundle:Lot')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Lanterne entity.');
+                throw $this->createNotFoundException('Unable to find Lot entity.');
             }
 
             $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('lanterne'));
+        return $this->redirect($this->generateUrl('lot'));
     }
 }

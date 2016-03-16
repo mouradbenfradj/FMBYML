@@ -15,10 +15,26 @@ class BonReceptionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add(
+                'nLot',
+                'entity',
+                array(
+                    'class' => 'SSFMBBundle:Lot',
+                    'property' => 'lot',
+                    'multiple' => false,
+                )
+            )
+            ->add(
+                'article',
+                'entity',
+                array(
+                    'class' => 'SSFMBBundle:Article',
+                    'property' => 'nomArticle',
+                    'multiple' => false,
+                )
+            )
             ->add('quantiter')
-            ->add('duplication')
-            ->add('dateDeReception')
-            ->add('nLot');
+            ->add('duplication');
     }
 
     /**

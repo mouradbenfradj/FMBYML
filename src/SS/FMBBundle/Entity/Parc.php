@@ -29,14 +29,19 @@ class Parc
     private $nomParc;
 
     /**
-     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Filiere", mappedBy="parc" )
+     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Filiere", mappedBy="parc" ,cascade={"remove"})
      */
     private $filieres;
 
     /**
-     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Lanterne", mappedBy="children")
+     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Lanterne", mappedBy="parc",cascade={"remove"})
      */
     private $lanternes;
+
+    /**
+     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Stockage", mappedBy="parc",cascade={"remove"})
+     */
+    private $stocks;
 
     /**
      * Constructor
@@ -50,7 +55,7 @@ class Parc
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -90,7 +95,6 @@ class Parc
     {
         $this->filieres[] = $filieres;
         $filieres->setParc($this);
-
         return $this;
     }
 
@@ -107,7 +111,7 @@ class Parc
     /**
      * Get filieres
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getFilieres()
     {
@@ -123,7 +127,7 @@ class Parc
     public function addLanterne(\SS\FMBBundle\Entity\Lanterne $lanternes)
     {
         $this->lanternes[] = $lanternes;
-
+        $lanternes->setParc($this);
         return $this;
     }
 
@@ -145,5 +149,39 @@ class Parc
     public function getLanternes()
     {
         return $this->lanternes;
+    }
+
+    /**
+     * Add stocks
+     *
+     * @param \SS\FMBBundle\Entity\Stockage $stocks
+     * @return Parc
+     */
+    public function addStock(\SS\FMBBundle\Entity\Stockage $stocks)
+    {
+        $this->stocks[] = $stocks;
+        $stocks->setParc($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove stocks
+     *
+     * @param \SS\FMBBundle\Entity\Stockage $stocks
+     */
+    public function removeStock(\SS\FMBBundle\Entity\Stockage $stocks)
+    {
+        $this->stocks->removeElement($stocks);
+    }
+
+    /**
+     * Get stocks
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getStocks()
+    {
+        return $this->stocks;
     }
 }

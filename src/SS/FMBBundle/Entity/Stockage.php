@@ -22,9 +22,8 @@ class Stockage
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="article", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Article", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
      */
     private $article;
 
@@ -35,19 +34,22 @@ class Stockage
      */
     private $quantiter;
 
-
     /**
-     * @var string
-     *
-     * @ORM\Column(name="nlot", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Parc", inversedBy="stocks",cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $NLot;
+    private $parc;
 
+    public function __construct()
+    {
+        $this->quantiter = 0;
+        $this->nLot = "000000";
+    }
 
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -55,32 +57,9 @@ class Stockage
     }
 
     /**
-     * Get article
-     *
-     * @return string
-     */
-    public function getArticle()
-    {
-        return $this->article;
-    }
-
-    /**
-     * Set article
-     *
-     * @param string $article
-     * @return Stockage
-     */
-    public function setArticle($article)
-    {
-        $this->article = $article;
-
-        return $this;
-    }
-
-    /**
      * Get quantiter
      *
-     * @return string
+     * @return integer
      */
     public function getQuantiter()
     {
@@ -90,12 +69,25 @@ class Stockage
     /**
      * Set quantiter
      *
-     * @param string $quantiter
+     * @param integer $quantiter
      * @return Stockage
      */
     public function setQuantiter($quantiter)
     {
         $this->quantiter = $quantiter;
+
+        return $this;
+    }
+
+    /**
+     * Set NLot
+     *
+     * @param string $nLot
+     * @return Stockage
+     */
+    public function setNLot($nLot)
+    {
+        $this->NLot = $nLot;
 
         return $this;
     }
@@ -111,14 +103,47 @@ class Stockage
     }
 
     /**
-     * Set NLot
+     * Get article
      *
-     * @param string $nLot
+     * @return \SS\FMBBundle\Entity\Article
+     */
+    public function getArticle()
+    {
+        return $this->article;
+    }
+
+    /**
+     * Set article
+     *
+     * @param \SS\FMBBundle\Entity\Article $article
      * @return Stockage
      */
-    public function setNLot($nLot)
+    public function setArticle(\SS\FMBBundle\Entity\Article $article)
     {
-        $this->NLot = $nLot;
+        $this->article = $article;
+
+        return $this;
+    }
+
+    /**
+     * Get parc
+     *
+     * @return \SS\FMBBundle\Entity\Parc
+     */
+    public function getParc()
+    {
+        return $this->parc;
+    }
+
+    /**
+     * Set parc
+     *
+     * @param \SS\FMBBundle\Entity\Parc $parc
+     * @return Stockage
+     */
+    public function setParc(\SS\FMBBundle\Entity\Parc $parc)
+    {
+        $this->parc = $parc;
 
         return $this;
     }

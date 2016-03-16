@@ -1,6 +1,10 @@
-{% extends '::base.html.twig' %}
+{% extends "SSFMBBundle::layout.html.twig" %}
 
-{% block body -%}
+{% block title %}
+    Accueil - {{ parent() }}
+{% endblock %}
+
+{% block ssfmb_body %}
     <h1>BonReception list</h1>
 
     <table class="records_list">
@@ -10,7 +14,6 @@
             <th>Quantiter</th>
             <th>Duplication</th>
             <th>Datedereception</th>
-            <th>Nlot</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -21,7 +24,6 @@
                 <td>{{ entity.quantiter }}</td>
                 <td>{{ entity.duplication }}</td>
                 <td>{% if entity.dateDeReception %}{{ entity.dateDeReception|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{{ entity.nLot }}</td>
                 <td>
                     <ul>
                         <li>

@@ -5,28 +5,28 @@
 {% endblock %}
 
 {% block ssfmb_body %}
-    <h1>Lanterne list</h1>
+    <h1>Lot list</h1>
 
     <table class="records_list">
         <thead>
         <tr>
             <th>Id</th>
-            <th>Nomlanterne</th>
+            <th>Lot</th>
             <th>Actions</th>
         </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('lanterne_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.nomLanterne }}</td>
+                <td><a href="{{ path('lot_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.lot }}</td>
                 <td>
                     <ul>
                         <li>
-                            <a href="{{ path('lanterne_show', { 'id': entity.id }) }}">show</a>
+                            <a href="{{ path('lot_show', { 'id': entity.id }) }}">show</a>
                         </li>
                         <li>
-                            <a href="{{ path('lanterne_edit', { 'id': entity.id }) }}">edit</a>
+                            <a href="{{ path('lot_edit', { 'id': entity.id }) }}">edit</a>
                         </li>
                     </ul>
                 </td>
@@ -37,7 +37,7 @@
 
     <ul>
         <li>
-            <a href="{{ path('lanterne_new') }}">
+            <a href="{{ path('lot_new') }}">
                 Create a new entry
             </a>
         </li>

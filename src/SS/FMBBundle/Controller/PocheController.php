@@ -32,7 +32,6 @@ class PocheController extends Controller
             )
         );
     }
-
     /**
      * Creates a new Poche entity.
      *

@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class SegmentType extends AbstractType
+class LotType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -15,8 +15,7 @@ class SegmentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nomSegment')
-            ->add('longeur');
+            ->add('lot');
     }
 
     /**
@@ -26,7 +25,7 @@ class SegmentType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'SS\FMBBundle\Entity\Segment',
+                'data_class' => 'SS\FMBBundle\Entity\Lot',
             )
         );
     }
@@ -36,6 +35,6 @@ class SegmentType extends AbstractType
      */
     public function getName()
     {
-        return 'ss_fmbbundle_segment';
+        return 'ss_fmbbundle_lot';
     }
 }

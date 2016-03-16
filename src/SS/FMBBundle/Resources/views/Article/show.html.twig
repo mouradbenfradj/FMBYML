@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block ssfmb_body %}
-    <h1>Lanterne</h1>
+    <h1>Article</h1>
 
     <table class="record_properties">
         <tbody>
@@ -14,20 +14,20 @@
             <td>{{ entity.id }}</td>
         </tr>
         <tr>
-            <th>Nomlanterne</th>
-            <td>{{ entity.nomLanterne }}</td>
+            <th>Nomarticle</th>
+            <td>{{ entity.nomArticle }}</td>
         </tr>
         </tbody>
     </table>
 
     <ul class="record_actions">
         <li>
-            <a href="{{ path('lanterne') }}">
+            <a href="{{ path('article') }}">
                 Back to the list
             </a>
         </li>
         <li>
-            <a href="{{ path('lanterne_edit', { 'id': entity.id }) }}">
+            <a href="{{ path('article_edit', { 'id': entity.id }) }}">
                 Edit
             </a>
         </li>

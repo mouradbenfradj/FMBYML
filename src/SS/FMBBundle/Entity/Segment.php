@@ -27,6 +27,12 @@ class Segment
      * @ORM\Column(name="nomSegment", type="string", length=255)
      */
     private $nomSegment;
+    /**
+     * @var decimal
+     *
+     * @ORM\Column(name="longeur", type="decimal",scale=2)
+     */
+    private $longeur;
 
     /**
      * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Filiere", inversedBy="segments",cascade={"persist","remove"})
@@ -133,6 +139,29 @@ class Segment
     public function setFiliere(\SS\FMBBundle\Entity\Filiere $filiere)
     {
         $this->filiere = $filiere;
+
+        return $this;
+    }
+
+    /**
+     * Get longeur
+     *
+     * @return string
+     */
+    public function getLongeur()
+    {
+        return $this->longeur;
+    }
+
+    /**
+     * Set longeur
+     *
+     * @param string $longeur
+     * @return Segment
+     */
+    public function setLongeur($longeur)
+    {
+        $this->longeur = $longeur;
 
         return $this;
     }
