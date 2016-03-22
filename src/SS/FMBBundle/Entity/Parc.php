@@ -42,7 +42,6 @@ class Parc
      * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Stockage", mappedBy="parc",cascade={"remove"})
      */
     private $stocks;
-
     /**
      * Constructor
      */
@@ -50,6 +49,7 @@ class Parc
     {
         $this->filieres = new \Doctrine\Common\Collections\ArrayCollection();
         $this->lanternes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->stocks = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -161,7 +161,6 @@ class Parc
     {
         $this->stocks[] = $stocks;
         $stocks->setParc($this);
-
         return $this;
     }
 
@@ -178,7 +177,7 @@ class Parc
     /**
      * Get stocks
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getStocks()
     {

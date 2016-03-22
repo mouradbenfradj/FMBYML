@@ -31,6 +31,10 @@ class Article
      * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\BonReception", mappedBy="article",cascade={"persist"})
      */
     private $bonReceptions;
+    /**
+     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Stockage", mappedBy="article",cascade={"persist"})
+     */
+    private $stocks;
 
     /**
      * Get id

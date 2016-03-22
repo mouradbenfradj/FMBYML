@@ -32,6 +32,10 @@ class Lot
      * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\BonReception", mappedBy="nLot",cascade={"persist"})
      */
     private $bonReceptions;
+    /**
+     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Stockage", mappedBy="nLot",cascade={"persist"})
+     */
+    private $stocks;
 
     /**
      * Get id

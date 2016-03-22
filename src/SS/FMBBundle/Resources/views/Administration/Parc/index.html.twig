@@ -28,20 +28,20 @@
                     <td>
                         {% set seg = 0 %}
                         {% set flot = 0 %}
-                        {% set cor = 0 %}
+                        {% set emp = 0 %}
                         {% for filiere in parc.filieres %}
                             {% set seg = seg + filiere.segments|length %}
                             {% for segment in filiere.segments %}
-                                {% set flot = flot + segment.ssegments|length %}
-                                {% for ssegment in segment.ssegments %}
-                                    {% set cor = cor + ssegment.cordes|length %}
+                                {% set flot = flot + segment.flotteurs|length %}
+                                {% for flotteur in segment.flotteurs %}
+                                    {% set emp = emp + flotteur.emplacements|length %}
                                 {% endfor %}
                             {% endfor %}
                         {% endfor %}
                         {{ seg }}
                     </td>
                     <td>{{ flot }}</td>
-                    <td>{{ cor }}</td>
+                    <td>{{ emp }}</td>
                     <td>
                         <ul>
                             <li>

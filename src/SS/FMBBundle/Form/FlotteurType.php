@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class SSegmentType extends AbstractType
+class FlotteurType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -15,7 +15,7 @@ class SSegmentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nomSSegment')
+            ->add('nomFlotteur')
             ->add(
                 'segment',
                 'entity',
@@ -34,7 +34,7 @@ class SSegmentType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'SS\FMBBundle\Entity\SSegment',
+                'data_class' => 'SS\FMBBundle\Entity\Flotteur',
             )
         );
     }
@@ -44,6 +44,6 @@ class SSegmentType extends AbstractType
      */
     public function getName()
     {
-        return 'ss_fmbbundle_ssegment';
+        return 'ss_fmbbundle_flotteur';
     }
 }

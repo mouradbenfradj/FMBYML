@@ -5,28 +5,28 @@ namespace SS\FMBBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-use SS\FMBBundle\Entity\SSegment;
-use SS\FMBBundle\Form\SSegmentType;
+use SS\FMBBundle\Entity\Emplacement;
+use SS\FMBBundle\Form\EmplacementType;
 
 /**
- * SSegment controller.
+ * Emplacement controller.
  *
  */
-class SSegmentController extends Controller
+class EmplacementController extends Controller
 {
 
     /**
-     * Lists all SSegment entities.
+     * Lists all Emplacement entities.
      *
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('SSFMBBundle:SSegment')->findAll();
+        $entities = $em->getRepository('SSFMBBundle:Emplacement')->findAll();
 
         return $this->render(
-            'SSFMBBundle:SSegment:index.html.twig',
+            'SSFMBBundle:Emplacement:index.html.twig',
             array(
                 'entities' => $entities,
             )
@@ -34,12 +34,12 @@ class SSegmentController extends Controller
     }
 
     /**
-     * Creates a new SSegment entity.
+     * Creates a new Emplacement entity.
      *
      */
     public function createAction(Request $request)
     {
-        $entity = new SSegment();
+        $entity = new Emplacement();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -48,11 +48,11 @@ class SSegmentController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('ssegment_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('emplacement_show', array('id' => $entity->getId())));
         }
 
         return $this->render(
-            'SSFMBBundle:SSegment:new.html.twig',
+            'SSFMBBundle:Emplacement:new.html.twig',
             array(
                 'entity' => $entity,
                 'form' => $form->createView(),
@@ -61,19 +61,19 @@ class SSegmentController extends Controller
     }
 
     /**
-     * Creates a form to create a SSegment entity.
+     * Creates a form to create a Emplacement entity.
      *
-     * @param SSegment $entity The entity
+     * @param Emplacement $entity The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(SSegment $entity)
+    private function createCreateForm(Emplacement $entity)
     {
         $form = $this->createForm(
-            new SSegmentType(),
+            new EmplacementType(),
             $entity,
             array(
-                'action' => $this->generateUrl('ssegment_create'),
+                'action' => $this->generateUrl('emplacement_create'),
                 'method' => 'POST',
             )
         );
@@ -84,16 +84,16 @@ class SSegmentController extends Controller
     }
 
     /**
-     * Displays a form to create a new SSegment entity.
+     * Displays a form to create a new Emplacement entity.
      *
      */
     public function newAction()
     {
-        $entity = new SSegment();
+        $entity = new Emplacement();
         $form = $this->createCreateForm($entity);
 
         return $this->render(
-            'SSFMBBundle:SSegment:new.html.twig',
+            'SSFMBBundle:Emplacement:new.html.twig',
             array(
                 'entity' => $entity,
                 'form' => $form->createView(),
@@ -102,23 +102,23 @@ class SSegmentController extends Controller
     }
 
     /**
-     * Finds and displays a SSegment entity.
+     * Finds and displays a Emplacement entity.
      *
      */
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('SSFMBBundle:SSegment')->find($id);
+        $entity = $em->getRepository('SSFMBBundle:Emplacement')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find SSegment entity.');
+            throw $this->createNotFoundException('Unable to find Emplacement entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render(
-            'SSFMBBundle:SSegment:show.html.twig',
+            'SSFMBBundle:Emplacement:show.html.twig',
             array(
                 'entity' => $entity,
                 'delete_form' => $deleteForm->createView(),
@@ -127,7 +127,7 @@ class SSegmentController extends Controller
     }
 
     /**
-     * Creates a form to delete a SSegment entity by id.
+     * Creates a form to delete a Emplacement entity by id.
      *
      * @param mixed $id The entity id
      *
@@ -136,31 +136,31 @@ class SSegmentController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('ssegment_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('emplacement_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm();
     }
 
     /**
-     * Displays a form to edit an existing SSegment entity.
+     * Displays a form to edit an existing Emplacement entity.
      *
      */
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('SSFMBBundle:SSegment')->find($id);
+        $entity = $em->getRepository('SSFMBBundle:Emplacement')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find SSegment entity.');
+            throw $this->createNotFoundException('Unable to find Emplacement entity.');
         }
 
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render(
-            'SSFMBBundle:SSegment:edit.html.twig',
+            'SSFMBBundle:Emplacement:edit.html.twig',
             array(
                 'entity' => $entity,
                 'edit_form' => $editForm->createView(),
@@ -170,19 +170,19 @@ class SSegmentController extends Controller
     }
 
     /**
-     * Creates a form to edit a SSegment entity.
+     * Creates a form to edit a Emplacement entity.
      *
-     * @param SSegment $entity The entity
+     * @param Emplacement $entity The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createEditForm(SSegment $entity)
+    private function createEditForm(Emplacement $entity)
     {
         $form = $this->createForm(
-            new SSegmentType(),
+            new EmplacementType(),
             $entity,
             array(
-                'action' => $this->generateUrl('ssegment_update', array('id' => $entity->getId())),
+                'action' => $this->generateUrl('emplacement_update', array('id' => $entity->getId())),
                 'method' => 'PUT',
             )
         );
@@ -193,17 +193,17 @@ class SSegmentController extends Controller
     }
 
     /**
-     * Edits an existing SSegment entity.
+     * Edits an existing Emplacement entity.
      *
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('SSFMBBundle:SSegment')->find($id);
+        $entity = $em->getRepository('SSFMBBundle:Emplacement')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find SSegment entity.');
+            throw $this->createNotFoundException('Unable to find Emplacement entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -213,11 +213,11 @@ class SSegmentController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('ssegment_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('emplacement_edit', array('id' => $id)));
         }
 
         return $this->render(
-            'SSFMBBundle:SSegment:edit.html.twig',
+            'SSFMBBundle:Emplacement:edit.html.twig',
             array(
                 'entity' => $entity,
                 'edit_form' => $editForm->createView(),
@@ -227,7 +227,7 @@ class SSegmentController extends Controller
     }
 
     /**
-     * Deletes a SSegment entity.
+     * Deletes a Emplacement entity.
      *
      */
     public function deleteAction(Request $request, $id)
@@ -237,16 +237,16 @@ class SSegmentController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('SSFMBBundle:SSegment')->find($id);
+            $entity = $em->getRepository('SSFMBBundle:Emplacement')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find SSegment entity.');
+                throw $this->createNotFoundException('Unable to find Emplacement entity.');
             }
 
             $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('ssegment'));
+        return $this->redirect($this->generateUrl('emplacement'));
     }
 }

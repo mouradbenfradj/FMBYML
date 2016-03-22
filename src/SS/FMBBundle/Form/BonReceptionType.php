@@ -15,7 +15,8 @@ class BonReceptionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add(
+            /*
+               ->add(
                 'nLot',
                 'entity',
                 array(
@@ -23,7 +24,7 @@ class BonReceptionType extends AbstractType
                     'property' => 'lot',
                     'multiple' => false,
                 )
-            )
+            )*/
             ->add(
                 'article',
                 'entity',

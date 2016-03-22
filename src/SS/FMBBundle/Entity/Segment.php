@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="SS\FMBBundle\Repository\SegmentRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Segment
 {
@@ -40,16 +41,72 @@ class Segment
      */
     private $filiere;
     /**
-     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\SSegment", mappedBy="segment")
+     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Flotteur", mappedBy="segment",cascade={"persist","remove"})
      */
-    private $ssegments;
+    private $flotteurs;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->ssegments = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->flotteurs = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function generateFlotteur()
+    {
+        $nb = $this->getLongeur() / 5;
+        for ($i = 0; $i < $nb; $i++) {
+            $flotteur = new Flotteur();
+            $flotteur->setNomFlotteur($this->nomSegment.$i);
+            for ($j = 1; $j < 11; $j++) {
+                $emplacement = new Emplacement();
+                $emplacement->setEtat(true);
+                $emplacement->setPlace($j);
+                $flotteur->addEmplacement($emplacement);
+            }
+
+            $this->addFlotteur($flotteur);
+        }
+    }
+
+    /**
+     * Get longeur
+     *
+     * @return string
+     */
+    public function getLongeur()
+    {
+        return $this->longeur;
+    }
+
+    /**
+     * Set longeur
+     *
+     * @param string $longeur
+     * @return Segment
+     */
+    public function setLongeur($longeur)
+    {
+        $this->longeur = $longeur;
+
+        return $this;
+    }
+
+    /**
+     * Add flotteurs
+     *
+     * @param \SS\FMBBundle\Entity\Flotteur $flotteurs
+     * @return Segment
+     */
+    public function addFlotteur(\SS\FMBBundle\Entity\Flotteur $flotteurs)
+    {
+        $this->flotteurs[] = $flotteurs;
+        $flotteurs->setSegment($this);
+        return $this;
     }
 
     /**
@@ -85,45 +142,10 @@ class Segment
         return $this;
     }
 
-
-    /**
-     * Add ssegments
-     *
-     * @param \SS\FMBBundle\Entity\SSegment $ssegments
-     * @return Segment
-     */
-    public function addSsegment(\SS\FMBBundle\Entity\SSegment $ssegments)
-    {
-        $this->ssegments[] = $ssegments;
-        $ssegments->setSegment($this);
-
-        return $this;
-    }
-
-    /**
-     * Remove ssegments
-     *
-     * @param \SS\FMBBundle\Entity\SSegment $ssegments
-     */
-    public function removeSsegment(\SS\FMBBundle\Entity\SSegment $ssegments)
-    {
-        $this->ssegments->removeElement($ssegments);
-    }
-
-    /**
-     * Get ssegments
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getSsegments()
-    {
-        return $this->ssegments;
-    }
-
     /**
      * Get filiere
      *
-     * @return \SS\FMBBundle\Entity\Filiere
+     * @return \SS\FMBBundle\Entity\Filiere 
      */
     public function getFiliere()
     {
@@ -144,25 +166,22 @@ class Segment
     }
 
     /**
-     * Get longeur
+     * Remove flotteurs
      *
-     * @return string
+     * @param \SS\FMBBundle\Entity\Flotteur $flotteurs
      */
-    public function getLongeur()
+    public function removeFlotteur(\SS\FMBBundle\Entity\Flotteur $flotteurs)
     {
-        return $this->longeur;
+        $this->flotteurs->removeElement($flotteurs);
     }
 
     /**
-     * Set longeur
+     * Get flotteurs
      *
-     * @param string $longeur
-     * @return Segment
+     * @return \Doctrine\Common\Collections\Collection 
      */
-    public function setLongeur($longeur)
+    public function getFlotteurs()
     {
-        $this->longeur = $longeur;
-
-        return $this;
+        return $this->flotteurs;
     }
 }

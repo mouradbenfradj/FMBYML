@@ -1,0 +1,54 @@
+{% extends "SSFMBBundle::layout.html.twig" %}
+
+{% block title %}
+    Lecture d'une annonce - {{ parent() }}
+{% endblock %}
+
+{% block ssfmb_body %}
+    <div class="well">
+        <a href="{{ path('parc_show', { 'id': entity.id }) }}">
+            {{ entity.nomParc }}
+        </a>
+
+        <table class="record_properties" border="1">
+            <tbody>
+            {% for filiere in entity.filieres %}
+                <tr>
+                <td>{{ filiere.getNomFiliere }}</td>
+
+                {% for segment in filiere.segments %}
+                    <td> {{ segment.getNomSegment }}</td></tr>
+
+                    {% for flotteur in segment.flotteurs %}
+                        <tr>
+                            <td>{{ flotteur.getNomFlotteur }}</td>
+                            <td>
+                                {% for emplacement in flotteur.emplacements %}
+                                    {{ emplacement.place }}
+                                {% endfor %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <ul class="record_actions">
+        <li>
+            <a href="{{ path('parc') }}">
+                Back to the list
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('filiere_new', { 'id': entity.id }) }}">ajouter une filiere</a>
+        </li>
+
+        <li>
+            <a href="{{ path('parc_edit', { 'id': entity.id }) }}">
+                Edit
+            </a>
+        </li>
+        <li>{{ form(delete_form) }}</li>
+    </ul>
+{% endblock %}

@@ -40,10 +40,6 @@ class Corde
      * @ORM\Column(name="quantiter", type="integer")
      */
     private $quantiter;
-    /**
-     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\SSegment", inversedBy="cordes")
-     */
-    private $ssegment;
 
     /**
      * Get id

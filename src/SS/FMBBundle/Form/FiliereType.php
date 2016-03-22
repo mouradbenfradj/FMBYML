@@ -21,7 +21,9 @@ class FiliereType extends AbstractType
                 array(
                     'class' => 'SSFMBBundle:Parc',
                     'property' => 'nomParc',
-                    'multiple' => false,
+                    'read_only' => 'true',
+                    'attr' => array('class' => 'hidden'),
+                    'label' => 'Parc *',
                 )
             )
             ->add('nomFiliere')

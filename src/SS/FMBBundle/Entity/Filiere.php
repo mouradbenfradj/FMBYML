@@ -34,10 +34,9 @@ class Filiere
      */
     private $parc;
     /**
-     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Segment", mappedBy="filiere",cascade={"persist","remove"})
+     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Segment", mappedBy="filiere" ,cascade={"persist","remove"})
      */
     private $segments;
-
     /**
      * Constructor
      */
@@ -49,7 +48,7 @@ class Filiere
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -102,17 +101,16 @@ class Filiere
         return $this;
     }
 
-
     /**
      * Add segments
      *
-     * @param \SS\FMBBundle\Entity\Segment $segment
+     * @param \SS\FMBBundle\Entity\Segment $segments
      * @return Filiere
      */
-    public function addSegment(\SS\FMBBundle\Entity\Segment $segment)
+    public function addSegment(\SS\FMBBundle\Entity\Segment $segments)
     {
-        $this->segments[] = $segment;
-        $segment->setFiliere($this);
+        $this->segments[] = $segments;
+        $segments->setFiliere($this);
         return $this;
     }
 

@@ -2,6 +2,7 @@
 
 namespace SS\FMBBundle\Controller;
 
+use SS\FMBBundle\Entity\Lot;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -43,7 +44,28 @@ class BonReceptionController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            $em = $this
+                ->getDoctrine()
+                ->getManager();
+
+            $repository = $this
+                ->getDoctrine()
+                ->getManager()
+                ->getRepository('SSFMBBundle:Lot')
+            ;
+            $dt=new \Datetime();
+            //$dt->modify("- 2 days");
+
+            if($repository->findByLot($dt->format('ymd')) != null)
+            {
+                $nLot =$repository->findOneBy(array('lot' => $dt->format('ymd')));
+                $entity->setNLot($nLot);
+            }else
+            {
+                $nLot = new Lot();
+                $nLot->setLot($dt->format('ymd'));
+                $entity->setNLot($nLot);
+            }
             $em->persist($entity);
             $em->flush();
 

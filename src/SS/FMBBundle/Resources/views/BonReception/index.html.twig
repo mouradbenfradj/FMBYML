@@ -7,13 +7,15 @@
 {% block ssfmb_body %}
     <h1>BonReception list</h1>
 
-    <table class="records_list">
+    <table class="records_list" border="1">
         <thead>
         <tr>
             <th>Id</th>
+            <th>Article</th>
             <th>Quantiter</th>
             <th>Duplication</th>
             <th>Datedereception</th>
+            <th>Lot</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -21,9 +23,12 @@
         {% for entity in entities %}
             <tr>
                 <td><a href="{{ path('bonreception_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.article.nomArticle }}</td>
                 <td>{{ entity.quantiter }}</td>
                 <td>{{ entity.duplication }}</td>
-                <td>{% if entity.dateDeReception %}{{ entity.dateDeReception|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if entity.dateDeReception %}{{ entity.dateDeReception|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ entity.nLot.lot }}</td>
+
                 <td>
                     <ul>
                         <li>

@@ -22,12 +22,6 @@ class Stockage
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Article", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $article;
-
-    /**
      * @var integer
      *
      * @ORM\Column(name="quantiter", type="integer")
@@ -35,16 +29,22 @@ class Stockage
     private $quantiter;
 
     /**
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Lot", inversedBy="stocks",cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $nLot;
+    /**
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Article", inversedBy="stocks")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $article;
+
+    /**
      * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Parc", inversedBy="stocks",cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $parc;
 
-    public function __construct()
-    {
-        $this->quantiter = 0;
-        $this->nLot = "000000";
-    }
 
     /**
      * Get id
@@ -80,26 +80,26 @@ class Stockage
     }
 
     /**
-     * Set NLot
+     * Get nLot
      *
-     * @param string $nLot
-     * @return Stockage
-     */
-    public function setNLot($nLot)
-    {
-        $this->NLot = $nLot;
-
-        return $this;
-    }
-
-    /**
-     * Get NLot
-     *
-     * @return string
+     * @return \SS\FMBBundle\Entity\Lot
      */
     public function getNLot()
     {
-        return $this->NLot;
+        return $this->nLot;
+    }
+
+    /**
+     * Set nLot
+     *
+     * @param \SS\FMBBundle\Entity\Lot $nLot
+     * @return Stockage
+     */
+    public function setNLot(\SS\FMBBundle\Entity\Lot $nLot)
+    {
+        $this->nLot = $nLot;
+
+        return $this;
     }
 
     /**

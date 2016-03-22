@@ -5,28 +5,28 @@ namespace SS\FMBBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-use SS\FMBBundle\Entity\Parc;
-use SS\FMBBundle\Form\ParcType;
+use SS\FMBBundle\Entity\Flotteur;
+use SS\FMBBundle\Form\FlotteurType;
 
 /**
- * Parc controller.
+ * Flotteur controller.
  *
  */
-class ParcController extends Controller
+class FlotteurController extends Controller
 {
 
     /**
-     * Lists all Parc entities.
+     * Lists all Flotteur entities.
      *
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('SSFMBBundle:Parc')->findAll();
+        $entities = $em->getRepository('SSFMBBundle:Flotteur')->findAll();
 
         return $this->render(
-            'SSFMBBundle:Administration/Parc:index.html.twig',
+            'SSFMBBundle:Flotteur:index.html.twig',
             array(
                 'entities' => $entities,
             )
@@ -34,12 +34,12 @@ class ParcController extends Controller
     }
 
     /**
-     * Creates a new Parc entity.
+     * Creates a new Flotteur entity.
      *
      */
     public function createAction(Request $request)
     {
-        $entity = new Parc();
+        $entity = new Flotteur();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -48,11 +48,11 @@ class ParcController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('parc_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('flotteur_show', array('id' => $entity->getId())));
         }
 
         return $this->render(
-            'SSFMBBundle:Administration/Parc:new.html.twig',
+            'SSFMBBundle:Flotteur:new.html.twig',
             array(
                 'entity' => $entity,
                 'form' => $form->createView(),
@@ -61,19 +61,19 @@ class ParcController extends Controller
     }
 
     /**
-     * Creates a form to create a Parc entity.
+     * Creates a form to create a Flotteur entity.
      *
-     * @param Parc $entity The entity
+     * @param Flotteur $entity The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Parc $entity)
+    private function createCreateForm(Flotteur $entity)
     {
         $form = $this->createForm(
-            new ParcType(),
+            new FlotteurType(),
             $entity,
             array(
-                'action' => $this->generateUrl('parc_create'),
+                'action' => $this->generateUrl('flotteur_create'),
                 'method' => 'POST',
             )
         );
@@ -84,16 +84,16 @@ class ParcController extends Controller
     }
 
     /**
-     * Displays a form to create a new Parc entity.
+     * Displays a form to create a new Flotteur entity.
      *
      */
     public function newAction()
     {
-        $entity = new Parc();
+        $entity = new Flotteur();
         $form = $this->createCreateForm($entity);
 
         return $this->render(
-            'SSFMBBundle:Administration/Parc:new.html.twig',
+            'SSFMBBundle:Flotteur:new.html.twig',
             array(
                 'entity' => $entity,
                 'form' => $form->createView(),
@@ -102,23 +102,23 @@ class ParcController extends Controller
     }
 
     /**
-     * Finds and displays a Parc entity.
+     * Finds and displays a Flotteur entity.
      *
      */
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('SSFMBBundle:Parc')->find($id);
+        $entity = $em->getRepository('SSFMBBundle:Flotteur')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Parc entity.');
+            throw $this->createNotFoundException('Unable to find Flotteur entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render(
-            'SSFMBBundle:Administration/Parc:show.html.twig',
+            'SSFMBBundle:Flotteur:show.html.twig',
             array(
                 'entity' => $entity,
                 'delete_form' => $deleteForm->createView(),
@@ -127,7 +127,7 @@ class ParcController extends Controller
     }
 
     /**
-     * Creates a form to delete a Parc entity by id.
+     * Creates a form to delete a Flotteur entity by id.
      *
      * @param mixed $id The entity id
      *
@@ -136,31 +136,31 @@ class ParcController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('parc_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('flotteur_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm();
     }
 
     /**
-     * Displays a form to edit an existing Parc entity.
+     * Displays a form to edit an existing Flotteur entity.
      *
      */
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('SSFMBBundle:Parc')->find($id);
+        $entity = $em->getRepository('SSFMBBundle:Flotteur')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Parc entity.');
+            throw $this->createNotFoundException('Unable to find Flotteur entity.');
         }
 
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render(
-            'SSFMBBundle:Administration/Parc:edit.html.twig',
+            'SSFMBBundle:Flotteur:edit.html.twig',
             array(
                 'entity' => $entity,
                 'edit_form' => $editForm->createView(),
@@ -170,19 +170,19 @@ class ParcController extends Controller
     }
 
     /**
-     * Creates a form to edit a Parc entity.
+     * Creates a form to edit a Flotteur entity.
      *
-     * @param Parc $entity The entity
+     * @param Flotteur $entity The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createEditForm(Parc $entity)
+    private function createEditForm(Flotteur $entity)
     {
         $form = $this->createForm(
-            new ParcType(),
+            new FlotteurType(),
             $entity,
             array(
-                'action' => $this->generateUrl('parc_update', array('id' => $entity->getId())),
+                'action' => $this->generateUrl('flotteur_update', array('id' => $entity->getId())),
                 'method' => 'PUT',
             )
         );
@@ -193,17 +193,17 @@ class ParcController extends Controller
     }
 
     /**
-     * Edits an existing Parc entity.
+     * Edits an existing Flotteur entity.
      *
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('SSFMBBundle:Parc')->find($id);
+        $entity = $em->getRepository('SSFMBBundle:Flotteur')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Parc entity.');
+            throw $this->createNotFoundException('Unable to find Flotteur entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -213,11 +213,11 @@ class ParcController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('parc_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('flotteur_edit', array('id' => $id)));
         }
 
         return $this->render(
-            'SSFMBBundle:Administration/Parc:edit.html.twig',
+            'SSFMBBundle:Flotteur:edit.html.twig',
             array(
                 'entity' => $entity,
                 'edit_form' => $editForm->createView(),
@@ -227,7 +227,7 @@ class ParcController extends Controller
     }
 
     /**
-     * Deletes a Parc entity.
+     * Deletes a Flotteur entity.
      *
      */
     public function deleteAction(Request $request, $id)
@@ -237,16 +237,16 @@ class ParcController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('SSFMBBundle:Parc')->find($id);
+            $entity = $em->getRepository('SSFMBBundle:Flotteur')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Parc entity.');
+                throw $this->createNotFoundException('Unable to find Flotteur entity.');
             }
 
             $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('parc'));
+        return $this->redirect($this->generateUrl('flotteur'));
     }
 }
