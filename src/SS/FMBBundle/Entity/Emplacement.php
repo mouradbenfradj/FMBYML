@@ -29,11 +29,9 @@ class Emplacement
     private $place;
 
     /**
-     * @var boolean
-     *
-     * @ORM\Column(name="etat", type="boolean")
+     * @ORM\OneToOne(targetEntity="SS\FMBBundle\Entity\Corde")
      */
-    private $etat;
+    private $corde;
     /**
      * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Flotteur", inversedBy="emplacements",cascade={"persist","remove"})
      * @ORM\JoinColumn(nullable=false)
@@ -74,29 +72,6 @@ class Emplacement
     }
 
     /**
-     * Get etat
-     *
-     * @return boolean
-     */
-    public function getEtat()
-    {
-        return $this->etat;
-    }
-
-    /**
-     * Set etat
-     *
-     * @param boolean $etat
-     * @return Emplacement
-     */
-    public function setEtat($etat)
-    {
-        $this->etat = $etat;
-
-        return $this;
-    }
-
-    /**
      * Get flotteur
      *
      * @return \SS\FMBBundle\Entity\Flotteur
@@ -115,6 +90,29 @@ class Emplacement
     public function setFlotteur(\SS\FMBBundle\Entity\Flotteur $flotteur)
     {
         $this->flotteur = $flotteur;
+
+        return $this;
+    }
+
+    /**
+     * Get corde
+     *
+     * @return \SS\FMBBundle\Entity\Corde
+     */
+    public function getCorde()
+    {
+        return $this->corde;
+    }
+
+    /**
+     * Set corde
+     *
+     * @param \SS\FMBBundle\Entity\Corde $corde
+     * @return Emplacement
+     */
+    public function setCorde(\SS\FMBBundle\Entity\Corde $corde = null)
+    {
+        $this->corde = $corde;
 
         return $this;
     }

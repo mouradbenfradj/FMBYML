@@ -23,7 +23,7 @@ class FiliereType extends AbstractType
                     'property' => 'nomParc',
                     'read_only' => 'true',
                     'attr' => array('class' => 'hidden'),
-                    'label' => 'Parc *',
+                    'label' => false,
                 )
             )
             ->add('nomFiliere')

@@ -29,7 +29,7 @@ class Segment
      */
     private $nomSegment;
     /**
-     * @var decimal
+     * @var float
      *
      * @ORM\Column(name="longeur", type="decimal",scale=2)
      */
@@ -64,7 +64,6 @@ class Segment
             $flotteur->setNomFlotteur($this->nomSegment.$i);
             for ($j = 1; $j < 11; $j++) {
                 $emplacement = new Emplacement();
-                $emplacement->setEtat(true);
                 $emplacement->setPlace($j);
                 $flotteur->addEmplacement($emplacement);
             }

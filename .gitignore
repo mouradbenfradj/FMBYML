@@ -10,4 +10,6 @@
 /vendor/
 /bin/
 /composer.phar
+composer.lock
 ".idea/*"
+res/.sass-cache

@@ -17,16 +17,7 @@ class CordeType extends AbstractType
         $builder
             ->add('etatCorde')
             ->add('placeCorde')
-            ->add('quantiter')
-            ->add(
-                'ssegment',
-                'entity',
-                array(
-                    'class' => 'SSFMBBundle:SSegment',
-                    'property' => 'nomSSegment',
-                    'multiple' => false,
-                )
-            );;
+            ->add('quantiter');
     }
 
     /**
