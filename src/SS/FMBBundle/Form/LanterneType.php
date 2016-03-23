@@ -15,20 +15,8 @@ class LanterneType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title')
-            ->add('lft')
-            ->add('lvl')
-            ->add('rgt')
-            ->add(
-                'root',
-                'entity',
-                array(
-                    'class' => 'SSFMBBundle:Parc',
-                    'property' => 'id',
-                    'multiple' => false,
-                )
-            )
-            ->add('parent');
+            ->add('nomLanterne')
+            ->add('parc');
     }
 
     /**
