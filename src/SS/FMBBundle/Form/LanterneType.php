@@ -15,8 +15,8 @@ class LanterneType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nomLanterne')
-            ->add('parc');
+            ->add('parc')
+            ->add('nomLanterne');
     }
 
     /**

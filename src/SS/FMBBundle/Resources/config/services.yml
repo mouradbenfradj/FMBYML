@@ -1,4 +1,6 @@
 services:
-#    ssfmb.example:
-#        class: SS\FMBBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
+    redirectionListener:
+      class: SS\FMBBundle\Listener\RedirectionListener
+      arguments: [@service_container, @session]
+      tags:
+        - {name: kernel.event_listener, event: kernel.request, method: onKernelRequest}

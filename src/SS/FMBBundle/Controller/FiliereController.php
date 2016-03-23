@@ -2,6 +2,7 @@
 
 namespace SS\FMBBundle\Controller;
 
+use SS\FMBBundle\Entity\Parc;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -105,11 +106,10 @@ class FiliereController extends Controller
         );
     }
 
-    public function newdpAction($id)
+    public function newdpAction(Parc $parc)
     {
-        $em = $this->getDoctrine()->getManager();
         $entity = new Filiere();
-        $entity->setParc($em->getRepository('SSFMBBundle:Parc')->find($id));
+        $entity->setParc($parc);
         $form = $this->createCreateForm($entity);
 
         return $this->render(

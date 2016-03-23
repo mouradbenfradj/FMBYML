@@ -63,29 +63,6 @@ class Parc
     }
 
     /**
-     * Get nomParc
-     *
-     * @return string
-     */
-    public function getNomParc()
-    {
-        return $this->nomParc;
-    }
-
-    /**
-     * Set nomParc
-     *
-     * @param string $nomParc
-     * @return Parc
-     */
-    public function setNomParc($nomParc)
-    {
-        $this->nomParc = $nomParc;
-
-        return $this;
-    }
-
-    /**
      * Add filieres
      *
      * @param \SS\FMBBundle\Entity\Filiere $filieres
@@ -111,7 +88,7 @@ class Parc
     /**
      * Get filieres
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getFilieres()
     {
@@ -144,7 +121,7 @@ class Parc
     /**
      * Get lanternes
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getLanternes()
     {
@@ -177,10 +154,38 @@ class Parc
     /**
      * Get stocks
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getStocks()
     {
         return $this->stocks;
+    }
+
+    public function __toString()
+    {
+        return $this->getNomParc();
+    }
+
+    /**
+     * Get nomParc
+     *
+     * @return string
+     */
+    public function getNomParc()
+    {
+        return $this->nomParc;
+    }
+
+    /**
+     * Set nomParc
+     *
+     * @param string $nomParc
+     * @return Parc
+     */
+    public function setNomParc($nomParc)
+    {
+        $this->nomParc = $nomParc;
+
+        return $this;
     }
 }
