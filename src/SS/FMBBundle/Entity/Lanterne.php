@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Filiere
  *
  * @ORM\Table()
+ * @ORM\HasLifecycleCallbacks()
  * @ORM\Entity(repositoryClass="SS\FMBBundle\Repository\LanterneRepository")
  */
 class Lanterne
@@ -28,6 +29,12 @@ class Lanterne
      * @ORM\Column(name="nomLanterne", type="string", length=255)
      */
     private $nomLanterne;
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="nombre", type="integer")
+     */
+    private $nombre;
 
     /**
      * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Parc", inversedBy="lanternes",cascade={"persist"})
@@ -48,9 +55,35 @@ class Lanterne
     }
 
     /**
+     * @ORM\PrePersist
+     */
+    public function generatePoche()
+    {
+        for ($i = 1; $i < ($this->nombre + 1); $i++) {
+            $poche = new Poche();
+            $poche->setEmplacement($i);
+            $this->addPoch($poche);
+        }
+    }
+
+    /**
+     * Add poches
+     *
+     * @param \SS\FMBBundle\Entity\Poche $poches
+     * @return Lanterne
+     */
+    public function addPoch(\SS\FMBBundle\Entity\Poche $poches)
+    {
+        $this->poches[] = $poches;
+        $poches->setLanterne($this);
+
+        return $this;
+    }
+
+    /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -104,19 +137,6 @@ class Lanterne
     }
 
     /**
-     * Add poches
-     *
-     * @param \SS\FMBBundle\Entity\Poche $poches
-     * @return Lanterne
-     */
-    public function addPoch(\SS\FMBBundle\Entity\Poche $poches)
-    {
-        $this->poches[] = $poches;
-
-        return $this;
-    }
-
-    /**
      * Remove poches
      *
      * @param \SS\FMBBundle\Entity\Poche $poches
@@ -134,5 +154,28 @@ class Lanterne
     public function getPoches()
     {
         return $this->poches;
+    }
+
+    /**
+     * Get nombre
+     *
+     * @return integer
+     */
+    public function getNombre()
+    {
+        return $this->nombre;
+    }
+
+    /**
+     * Set nombre
+     *
+     * @param integer $nombre
+     * @return Lanterne
+     */
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+
+        return $this;
     }
 }

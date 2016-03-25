@@ -56,26 +56,42 @@ class Filiere
     }
 
     /**
-     * Get nomFiliere
+     * Add segments
      *
-     * @return string
+     * @param \SS\FMBBundle\Entity\Segment $segments
+     * @return Filiere
      */
-    public function getNomFiliere()
+    public function addSegment(\SS\FMBBundle\Entity\Segment $segments)
     {
-        return $this->nomFiliere;
+        $this->segments[] = $segments;
+        $segments->setFiliere($this);
+
+        return $this;
     }
 
     /**
-     * Set nomFiliere
+     * Remove segments
      *
-     * @param string $nomFiliere
-     * @return Filiere
+     * @param \SS\FMBBundle\Entity\Segment $segments
      */
-    public function setNomFiliere($nomFiliere)
+    public function removeSegment(\SS\FMBBundle\Entity\Segment $segments)
     {
-        $this->nomFiliere = $nomFiliere;
+        $this->segments->removeElement($segments);
+    }
 
-        return $this;
+    /**
+     * Get segments
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSegments()
+    {
+        return $this->segments;
+    }
+
+    public function __toString()
+    {
+        return $this->getParc()." ".$this->getNomFiliere();
     }
 
     /**
@@ -102,35 +118,26 @@ class Filiere
     }
 
     /**
-     * Add segments
+     * Get nomFiliere
      *
-     * @param \SS\FMBBundle\Entity\Segment $segments
+     * @return string
+     */
+    public function getNomFiliere()
+    {
+        return $this->nomFiliere;
+    }
+
+    /**
+     * Set nomFiliere
+     *
+     * @param string $nomFiliere
      * @return Filiere
      */
-    public function addSegment(\SS\FMBBundle\Entity\Segment $segments)
+    public function setNomFiliere($nomFiliere)
     {
-        $this->segments[] = $segments;
-        $segments->setFiliere($this);
+        $this->nomFiliere = $nomFiliere;
+
         return $this;
     }
 
-    /**
-     * Remove segments
-     *
-     * @param \SS\FMBBundle\Entity\Segment $segments
-     */
-    public function removeSegment(\SS\FMBBundle\Entity\Segment $segments)
-    {
-        $this->segments->removeElement($segments);
-    }
-
-    /**
-     * Get segments
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getSegments()
-    {
-        return $this->segments;
-    }
 }

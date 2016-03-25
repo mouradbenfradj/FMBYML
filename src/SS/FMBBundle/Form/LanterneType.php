@@ -16,7 +16,8 @@ class LanterneType extends AbstractType
     {
         $builder
             ->add('parc')
-            ->add('nomLanterne');
+            ->add('nomLanterne')
+            ->add("nombre");
     }
 
     /**

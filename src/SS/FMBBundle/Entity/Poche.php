@@ -44,6 +44,14 @@ class Poche
 
 
     /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->quantite = 0;
+    }
+
+    /**
      * Get id
      *
      * @return integer 

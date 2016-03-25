@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Flotteur
  *
  * @ORM\Table()
+ * @ORM\HasLifecycleCallbacks()
  * @ORM\Entity(repositoryClass="SS\FMBBundle\Repository\FlotteurRepository")
  */
 class Flotteur
@@ -54,7 +55,6 @@ class Flotteur
     {
         for ($j = 1; $j < 11; $j++) {
             $emplacement = new Emplacement();
-            $emplacement->setEtat(true);
             $emplacement->setPlace($j);
             $this->addEmplacement($emplacement);
         }

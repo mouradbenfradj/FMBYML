@@ -1,23 +1,23 @@
-{% extends '::base.html.twig' %}
+{% extends "SSFMBBundle::layout.html.twig" %}
 
-{% block body -%}
+{% block title %}
+    Lecture d'une annonce - {{ parent() }}
+{% endblock %}
+
+{% block ssfmb_body %}
     <h1>Emplacement list</h1>
 
     <table class="records_list">
         <thead>
         <tr>
-            <th>Id</th>
             <th>Place</th>
-            <th>Etat</th>
             <th>Actions</th>
         </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('emplacement_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{{ entity.place }}</td>
-                <td>{{ entity.etat }}</td>
                 <td>
                     <ul>
                         <li>

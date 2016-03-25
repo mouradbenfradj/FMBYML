@@ -62,12 +62,6 @@ class Segment
         for ($i = 0; $i < $nb; $i++) {
             $flotteur = new Flotteur();
             $flotteur->setNomFlotteur($this->nomSegment.$i);
-            for ($j = 1; $j < 11; $j++) {
-                $emplacement = new Emplacement();
-                $emplacement->setPlace($j);
-                $flotteur->addEmplacement($emplacement);
-            }
-
             $this->addFlotteur($flotteur);
         }
     }
