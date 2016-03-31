@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="SS\FMBBundle\Repository\BonReceptionRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class BonReception
 {
@@ -53,6 +54,19 @@ class BonReception
     public function __construct()
     {
         $this->dateDeReception = new \Datetime();
+    }
+
+    /**
+     * @ORM\PostPersist
+     */
+    public function generateFlotteur()
+    {
+        $nb = $this->getLongeur() / 5;
+        for ($i = 0; $i < $nb; $i++) {
+            $flotteur = new Flotteur();
+            $flotteur->setNomFlotteur($this->nomSegment.$i);
+            $this->addFlotteur($flotteur);
+        }
     }
 
     /**

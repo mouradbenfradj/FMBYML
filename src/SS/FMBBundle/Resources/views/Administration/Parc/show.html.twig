@@ -17,14 +17,21 @@
                 <td>{{ filiere.getNomFiliere }}</td>
 
                 {% for segment in filiere.segments %}
-                    <td> {{ segment.getNomSegment }}</td></tr>
+                    <td>
+                        <ul>
+                            <li> {{ segment.getNomSegment }}</li>
+                            <li>{{ segment.getLongeur }} m</li>
+                        </ul>
+                    </td></tr>
 
                     {% for flotteur in segment.flotteurs %}
                         <tr>
                             <td>{{ flotteur.getNomFlotteur }}</td>
                             <td>
                                 {% for emplacement in flotteur.emplacements %}
-                                    {{ emplacement.place }}
+                                    {% if emplacement.corde == null %}
+                                        <font color="red"> {{ emplacement.place }}</font>
+                                    {% endif %}
                                 {% endfor %}
                             </td>
                         </tr>
