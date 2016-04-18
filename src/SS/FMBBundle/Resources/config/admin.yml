@@ -1,0 +1,36 @@
+services:
+    sonata.admin.parc:
+          class: SS\FMBBundle\Admin\ParcAdmin
+          tags:
+              - { name: sonata.admin, manager_type: orm, group: "content", label: "Parc",label_catalogue: "SSFMBBundle" }
+          arguments:
+              - ~
+              - SS\FMBBundle\Entity\Parc
+              - ~
+          calls:
+              - [ setTranslationDomain, [AcmeDemoBundle]]
+
+    sonata.admin.filiere:
+          class: SS\FMBBundle\Admin\FiliereAdmin
+          tags:
+              - { name: sonata.admin, manager_type: orm,  label: "Filiere" }
+          arguments:
+              - ~
+              - SS\FMBBundle\Entity\Filiere
+              - 'SonataAdminBundle:CRUD'
+              - ~
+          calls:
+              - [ setTranslationDomain, [AcmeDemoBundle]]
+
+    sonata.admin.segment:
+          class: SS\FMBBundle\Admin\SegmentAdmin
+          tags:
+              - { name: sonata.admin, manager_type: orm,  label: "Segment" }
+          arguments:
+              - ~
+              - SS\FMBBundle\Entity\Segment
+              - 'SonataAdminBundle:CRUD'
+              - ~
+          calls:
+              - [ setTranslationDomain, [AcmeDemoBundle]]
+

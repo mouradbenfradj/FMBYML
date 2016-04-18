@@ -15,7 +15,6 @@ class SegmentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('filiere')
             ->add('nomSegment')
             ->add('longeur');
     }

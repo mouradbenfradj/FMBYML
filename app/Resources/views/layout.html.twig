@@ -16,24 +16,7 @@
 <div class="container">
     <div class="row">
         {% block menu %}
-            <div id="menu" class="col-md-3">
-                <h3>Le Menu</h3>
-                <ul class="nav nav-pills nav-stacked">
-                    <li><a href="{{ path('article') }}">gestion des utilisateurs</a></li>
-                    <li><a href="{{ path('article') }}">gerer les article</a></li>
-                    <li><a href="{{ path('lot') }}">gerer les numero de lot</a></li>
-                    <li><a href="{{ path('parc') }}">gerer parc</a></li>
-                    <li><a href="{{ path('filiere') }}">gerer filiere</a></li>
-                    <li><a href="{{ path('segment') }}">gerer segment</a></li>
-                    <li><a href="{{ path('stockage') }}">gerer stock</a></li>
-                    <li><a href="{{ path('bonreception') }}">bon Reception</a></li>
-                    <li><a href="{{ path('ssfmb_choixpage') }}">statistique</a></li>
-                    <li><a href="{{ path('fos_user_security_logout') }}">Deconnexion</a></li>
-                </ul>
 
-                {#           <h4>Dernières annonces</h4>
-                           {{ render(controller("SSFMBBundle:Default:menu", {'limit': 3})) }} #}
-            </div>
 
         {% endblock %}
 
@@ -41,6 +24,7 @@
             {% block body %}
 
             {% endblock %}
+
         </div>
     </div>
 

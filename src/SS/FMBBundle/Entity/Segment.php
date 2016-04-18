@@ -53,6 +53,34 @@ class Segment
         $this->flotteurs = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->getNomSegment();
+    }
+
+    /**
+     * Get nomSegment
+     *
+     * @return string
+     */
+    public function getNomSegment()
+    {
+        return $this->nomSegment;
+    }
+
+    /**
+     * Set nomSegment
+     *
+     * @param string $nomSegment
+     * @return Segment
+     */
+    public function setNomSegment($nomSegment)
+    {
+        $this->nomSegment = $nomSegment;
+
+        return $this;
+    }
+
     /**
      * @ORM\PrePersist
      */
@@ -113,29 +141,6 @@ class Segment
     }
 
     /**
-     * Get nomSegment
-     *
-     * @return string
-     */
-    public function getNomSegment()
-    {
-        return $this->nomSegment;
-    }
-
-    /**
-     * Set nomSegment
-     *
-     * @param string $nomSegment
-     * @return Segment
-     */
-    public function setNomSegment($nomSegment)
-    {
-        $this->nomSegment = $nomSegment;
-
-        return $this;
-    }
-
-    /**
      * Get filiere
      *
      * @return \SS\FMBBundle\Entity\Filiere 
@@ -154,7 +159,6 @@ class Segment
     public function setFiliere(\SS\FMBBundle\Entity\Filiere $filiere)
     {
         $this->filiere = $filiere;
-
         return $this;
     }
 

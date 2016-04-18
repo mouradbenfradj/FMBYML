@@ -4,8 +4,7 @@ namespace SS\FMBBundle\Controller;
 
 use SS\FMBBundle\Entity\Parc;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
+use Sonata\AdminBundle\Controller\CRUDController as Controller;
 use SS\FMBBundle\Entity\Filiere;
 use SS\FMBBundle\Form\FiliereType;
 

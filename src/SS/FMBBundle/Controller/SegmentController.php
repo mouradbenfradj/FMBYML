@@ -3,8 +3,7 @@
 namespace SS\FMBBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
+use Sonata\AdminBundle\Controller\CRUDController as Controller;
 use SS\FMBBundle\Entity\Segment;
 use SS\FMBBundle\Form\SegmentType;
 
