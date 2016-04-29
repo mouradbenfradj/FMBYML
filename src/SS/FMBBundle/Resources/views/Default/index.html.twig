@@ -1,11 +1,54 @@
 {% extends "SSFMBBundle::layout.html.twig" %}
 
 {% block title %}
-    Accueil - {{ parent() }}
+    Lecture d'une annonce - {{ parent() }}
 {% endblock %}
 
 {% block ssfmb_body %}
+    <div class="well">
+        {% for entity in entities %}
 
-    <h2>Liste</h2>
+            <a href="{{ path('parc_show', { 'id': entity.id }) }}">
+                {{ entity.nomParc }}
+            </a>
 
+            <table class="record_properties" border="1">
+                <tbody>
+                {% for filiere in entity.filieres %}
+                    <tr>
+                    <td>{{ filiere.getNomFiliere }}
+                        <br/>
+                        {% set tailleFiliere =0 %}
+                        {% for segment in filiere.segments %}
+                            {% set tailleFiliere = tailleFiliere+segment.getLongeur %}
+                        {% endfor %}
+                        taille {{ tailleFiliere }} m
+                    </td>
+
+                    {% for segment in filiere.segments %}
+                        <td>
+                            <ul>
+                                <li> {{ segment.getNomSegment }}</li>
+                                <li>{{ segment.getLongeur }} m</li>
+                            </ul>
+                        </td></tr>
+
+                        {% for flotteur in segment.flotteurs %}
+                            <tr>
+                                <td>{{ flotteur.getNomFlotteur }}</td>
+                                <td>
+                                    {% for emplacement in flotteur.emplacements %}
+                                        {% if emplacement.corde == null %}
+                                            <font color="red"> {{ emplacement.place }}</font>
+                                        {% endif %}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% endfor %}
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endfor %}
+    </div>
 {% endblock %}

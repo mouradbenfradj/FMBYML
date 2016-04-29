@@ -3,6 +3,8 @@
 namespace SS\FMBBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use SS\FMBBundle\Entity\Article;
+use SS\FMBBundle\Entity\Lot;
 
 /**
  * StockageRepository
@@ -12,4 +14,15 @@ use Doctrine\ORM\EntityRepository;
  */
 class StockageRepository extends EntityRepository
 {
+    public function existe(Article $article, Lot $nlot)
+    {
+        $qb = $this->createQueryBuilder('s')
+            ->select('s')
+            ->where('s.article = :article')
+            ->andWhere('s.nLot = :nlot')
+            ->setParameter('article', $article)
+            ->setParameter('nlot', $nlot);
+
+        return $qb->getQuery()->getResult();
+    }
 }

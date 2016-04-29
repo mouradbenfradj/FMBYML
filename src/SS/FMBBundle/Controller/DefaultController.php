@@ -3,12 +3,23 @@
 namespace SS\FMBBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DefaultController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('SSFMBBundle:Default:index.html.twig');
+        $em = $this->getDoctrine()->getManager();
+
+        $entities = $em->getRepository('SSFMBBundle:Parc')->findAll();
+
+        return $this->render(
+            'SSFMBBundle:Default:index.html.twig',
+            array(
+                'entities' => $entities,
+            )
+        );
+
     }
 
     public function parcViewAction()
@@ -33,13 +44,13 @@ class DefaultController extends Controller
         if (null === $parc) {
             throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
         }
-        $listCordes = $em
-            ->getRepository('SSFMBBundle:Corde')
+        $listEmplacements = $em
+            ->getRepository('SSFMBBundle:Emplacement')
             ->findBy(
                 array(
-                    'ssegment' =>
+                    'place' =>
                         $em
-                            ->getRepository('SSFMBBundle:SSegment')
+                            ->getRepository('SSFMBBundle:Flotteur')
                             ->findBy(
                                 array(
                                     'segment' =>
@@ -61,7 +72,7 @@ class DefaultController extends Controller
             'SSFMBBundle:Default:generalView.html.twig',
             array(
                 'parc' => $parc,
-                'listCordes' => $listCordes,
+                'listEmplacements' => $listEmplacements,
             )
         );
     }

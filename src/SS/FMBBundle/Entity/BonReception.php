@@ -56,18 +56,6 @@ class BonReception
         $this->dateDeReception = new \Datetime();
     }
 
-    /**
-     * @ORM\PostPersist
-     */
-    public function generateFlotteur()
-    {
-        $nb = $this->getLongeur() / 5;
-        for ($i = 0; $i < $nb; $i++) {
-            $flotteur = new Flotteur();
-            $flotteur->setNomFlotteur($this->nomSegment.$i);
-            $this->addFlotteur($flotteur);
-        }
-    }
 
     /**
      * Get id

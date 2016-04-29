@@ -91,30 +91,7 @@ class Filiere
 
     public function __toString()
     {
-        return $this->getParc()." ".$this->getNomFiliere();
-    }
-
-    /**
-     * Get parc
-     *
-     * @return \SS\FMBBundle\Entity\Parc
-     */
-    public function getParc()
-    {
-        return $this->parc;
-    }
-
-    /**
-     * Set parc
-     *
-     * @param \SS\FMBBundle\Entity\Parc $parc
-     * @return Filiere
-     */
-    public function setParc(\SS\FMBBundle\Entity\Parc $parc)
-    {
-        $this->parc = $parc;
-
-        return $this;
+        return $this->getNomFiliere();
     }
 
     /**
@@ -136,6 +113,29 @@ class Filiere
     public function setNomFiliere($nomFiliere)
     {
         $this->nomFiliere = $nomFiliere;
+
+        return $this;
+    }
+
+    /**
+     * Get parc
+     *
+     * @return \SS\FMBBundle\Entity\Parc
+     */
+    public function getParc()
+    {
+        return $this->parc;
+    }
+
+    /**
+     * Set parc
+     *
+     * @param \SS\FMBBundle\Entity\Parc $parc
+     * @return Filiere
+     */
+    public function setParc(\SS\FMBBundle\Entity\Parc $parc)
+    {
+        $this->parc = $parc;
 
         return $this;
     }

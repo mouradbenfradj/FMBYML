@@ -3,6 +3,7 @@
 namespace SS\FMBBundle\Controller;
 
 use SS\FMBBundle\Entity\Lot;
+use SS\FMBBundle\Entity\Stockage;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -66,7 +67,28 @@ class BonReceptionController extends Controller
                 $nLot->setLot($dt->format('ymd'));
                 $entity->setNLot($nLot);
             }
+            $repositoryStock = $this
+                ->getDoctrine()
+                ->getManager()
+                ->getRepository('SSFMBBundle:Stockage');
+
+            $stock = new Stockage();
+            if (!empty($repositoryStock->existe($entity->getArticle(), $entity->getNLot()))) {
+                $stock = $repositoryStock->existe($entity->getArticle(), $entity->getNLot())[0];
+                $stock->setQuantiter(($stock->getQuantiter() + ($entity->getQuantiter() * $entity->getDuplication())));
+
+                $em->merge($stock);
+            } else {
+                $stock->setArticle($entity->getArticle());
+                $stock->setQuantiter($entity->getQuantiter() * $entity->getDuplication());
+                $stock->setNLot($entity->getNLot());
+                $em->persist($stock);
+                $em->flush();
+
+            }
+
             $em->persist($entity);
+
             $em->flush();
 
             return $this->redirect($this->generateUrl('bonreception_show', array('id' => $entity->getId())));

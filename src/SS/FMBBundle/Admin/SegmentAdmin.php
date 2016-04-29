@@ -23,11 +23,11 @@ class SegmentAdmin extends Admin
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('nomSegment')->add('filiere')->add('longeur');
+        $datagridMapper->add('filiere.parc')->add('filiere')->add('nomSegment')->add('longeur');
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('nomSegment')->add('filiere')->add('longeur');
+        $listMapper->addIdentifier('filiere.parc')->add('filiere')->add('nomSegment')->add('longeur');
     }
 }

@@ -17,21 +17,21 @@
                     <td>
                         {{ segment.nomSegment }}
                     </td>
-                    {% for ssegment in segment.getssegments %}
+                    {% for flotteur in segment.getflotteurs %}
                         <td>
-                            {{ ssegment.nomSSegment }}
+                            {{ flotteur.nomFlotteur }}
                         </td>
-                        {% for corde in ssegment.getcordes %}
+                        {% for emplacement in flotteur.getemplacements %}
                             <td>
-                                {{ corde.placeCorde }}
+                                {{ emplacement.place }}
                                 <br/>
-                                {% if corde.etatCorde %}
+                                {% if emplacement.corde ==null %}
                                     n'est pas disponible
                                 {% else %}
                                     Disponible
+                                    avec quantiter {{ emplacement.corde.quantiter }}
                                 {% endif %}
                                 <br/>
-                                avec quantiter {{ corde.quantiter }}
                             </td>
                         {% endfor %}
                     {% endfor %}

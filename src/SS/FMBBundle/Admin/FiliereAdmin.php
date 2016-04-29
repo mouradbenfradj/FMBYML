@@ -39,7 +39,7 @@ class FiliereAdmin extends Admin
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('nomFiliere');
+        $datagridMapper->add('parc')->add('nomFiliere');
     }
 
     protected function configureListFields(ListMapper $listMapper)

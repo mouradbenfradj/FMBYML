@@ -7,16 +7,35 @@
     <div id="menu" class="col-md-3">
         <h3>Le Menu</h3>
         <ul class="nav nav-pills nav-stacked">
+            <li>
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                    {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                    <a href="{{ path('fos_user_security_logout') }}">
+                        {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                    </a>
+                {% else %}
+                    <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+                {% endif %}
+            </li>
+
+            {% if app.request.hasPreviousSession %}
+                {% for type, messages in app.session.flashbag.all() %}
+                    {% for message in messages %}
+                        <div class="flash-{{ type }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            {% endif %}
+
+            <li><a href="{{ path('sonata_admin_dashboard') }}">Zone Administrateur</a></li>
             <li><a href="{{ path('article') }}">gestion des utilisateurs</a></li>
             <li><a href="{{ path('article') }}">gerer les article</a></li>
             <li><a href="{{ path('lot') }}">gerer les numero de lot</a></li>
-            <li><a href="{{ path('parc') }}">gerer parc</a></li>
-            <li><a href="{{ path('filiere') }}">gerer filiere</a></li>
-            <li><a href="{{ path('segment') }}">gerer segment</a></li>
             <li><a href="{{ path('stockage') }}">gerer stock</a></li>
             <li><a href="{{ path('bonreception') }}">bon Reception</a></li>
             <li><a href="{{ path('ssfmb_choixpage') }}">statistique</a></li>
-            <li><a href="{{ path('fos_user_security_logout') }}">Deconnexion</a></li>
+
         </ul>
 
         {#           <h4>Dernières annonces</h4>
@@ -27,7 +46,6 @@
 {% block body %}
 
     {# On définit un sous-titre commun à toutes les pages du bundle, par exemple #}
-    <h1>Annonces</h1>
 
     <hr>
 

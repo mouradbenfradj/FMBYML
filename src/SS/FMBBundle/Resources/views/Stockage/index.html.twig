@@ -24,7 +24,7 @@
                 <td><a href="{{ path('stockage_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{{ entity.article }}</td>
                 <td>{{ entity.quantiter }}</td>
-                <td>{% if entity.dateDajout %}{{ entity.dateDajout|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.nLot }}</td>
                 <td>
                     <ul>
                         <li>

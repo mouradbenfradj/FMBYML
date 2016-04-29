@@ -41,7 +41,7 @@ class Stockage
 
     /**
      * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Parc", inversedBy="stocks",cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $parc;
 

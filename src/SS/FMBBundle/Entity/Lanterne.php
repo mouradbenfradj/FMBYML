@@ -91,29 +91,6 @@ class Lanterne
     }
 
     /**
-     * Get nomLanterne
-     *
-     * @return string
-     */
-    public function getNomLanterne()
-    {
-        return $this->nomLanterne;
-    }
-
-    /**
-     * Set nomLanterne
-     *
-     * @param string $nomLanterne
-     * @return Lanterne
-     */
-    public function setNomLanterne($nomLanterne)
-    {
-        $this->nomLanterne = $nomLanterne;
-
-        return $this;
-    }
-
-    /**
      * Get parc
      *
      * @return \SS\FMBBundle\Entity\Parc
@@ -175,6 +152,34 @@ class Lanterne
     public function setNombre($nombre)
     {
         $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getNomLanterne();
+    }
+
+    /**
+     * Get nomLanterne
+     *
+     * @return string
+     */
+    public function getNomLanterne()
+    {
+        return $this->nomLanterne;
+    }
+
+    /**
+     * Set nomLanterne
+     *
+     * @param string $nomLanterne
+     * @return Lanterne
+     */
+    public function setNomLanterne($nomLanterne)
+    {
+        $this->nomLanterne = $nomLanterne;
 
         return $this;
     }

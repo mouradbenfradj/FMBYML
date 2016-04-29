@@ -1,12 +1,13 @@
-ss_user:
-    resource: "@SSUserBundle/Resources/config/routing.yml"
-    prefix:   /
 ssfmb:
     resource: "@SSFMBBundle/Resources/config/routing.yml"
     prefix:   /
 
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+ss_user:
+    resource: "@SSUserBundle/Resources/config/routing.yml"
+    prefix:   /
 
 admin_area:
     resource: "@SonataAdminBundle/Resources/config/routing/sonata_admin.xml"
