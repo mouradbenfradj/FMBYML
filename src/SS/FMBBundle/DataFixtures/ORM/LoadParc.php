@@ -12,11 +12,9 @@ class LoadParc implements FixtureInterface
     {
         // Liste des noms de catégorie à ajouter
         $nomParc = array(
-            'Parc1',
-            'Parc2',
-            'Parc3',
-            'Parc4',
-            'Parc5',
+            'FMB',
+            'FMBMTH',
+            'Marinor',
         );
 
         foreach ($nomParc as $name) {

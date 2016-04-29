@@ -14,6 +14,8 @@ class LoadArticle implements FixtureInterface
         $nomArticle = array(
             'Huitre',
             'Moule',
+            'Naissain Huitre',
+            'Naissain Moule',
         );
 
         foreach ($nomArticle as $name) {
