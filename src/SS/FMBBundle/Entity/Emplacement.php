@@ -33,6 +33,10 @@ class Emplacement
      */
     private $corde;
     /**
+     * @ORM\OneToOne(targetEntity="SS\FMBBundle\Entity\Lanterne")
+     */
+    private $lanterne;
+    /**
      * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Flotteur", inversedBy="emplacements",cascade={"persist","remove"})
      * @ORM\JoinColumn(nullable=false)
      */
@@ -113,6 +117,29 @@ class Emplacement
     public function setCorde(\SS\FMBBundle\Entity\Corde $corde = null)
     {
         $this->corde = $corde;
+
+        return $this;
+    }
+
+    /**
+     * Get lanterne
+     *
+     * @return \SS\FMBBundle\Entity\Lanterne
+     */
+    public function getLanterne()
+    {
+        return $this->lanterne;
+    }
+
+    /**
+     * Set lanterne
+     *
+     * @param \SS\FMBBundle\Entity\Lanterne $lanterne
+     * @return Emplacement
+     */
+    public function setLanterne(\SS\FMBBundle\Entity\Lanterne $lanterne = null)
+    {
+        $this->lanterne = $lanterne;
 
         return $this;
     }

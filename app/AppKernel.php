@@ -20,14 +20,19 @@ class AppKernel extends Kernel
             new SS\UserBundle\SSUserBundle(),
 
             new FOS\UserBundle\FOSUserBundle(),
-
             new Sonata\CoreBundle\SonataCoreBundle(),
             new Sonata\BlockBundle\SonataBlockBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
 
             new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
             new Sonata\AdminBundle\SonataAdminBundle(),
-            //new Sonata\UserBundle\SonataUserBundle('FOSUserBundle'),
+            new Sonata\UserBundle\SonataUserBundle('FOSUserBundle'),
+            new Application\Sonata\UserBundle\ApplicationSonataUserBundle(),
+
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+
+
 
         );
 

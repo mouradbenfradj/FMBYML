@@ -5,12 +5,12 @@ namespace SS\FMBBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Corde
+ * Articles
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="SS\FMBBundle\Repository\CordeRepository")
+ * @ORM\Entity
  */
-class Corde
+class Articles
 {
     /**
      * @var integer
@@ -21,13 +21,13 @@ class Corde
      */
     private $id;
 
-
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="quantiter", type="integer")
+     * @ORM\Column(name="lib_article", type="string", length=250)
      */
-    private $quantiter;
+    private $libArticle;
+
 
     /**
      * Get id
@@ -40,24 +40,24 @@ class Corde
     }
 
     /**
-     * Get quantiter
+     * Get libArticle
      *
-     * @return integer
+     * @return string
      */
-    public function getQuantiter()
+    public function getLibArticle()
     {
-        return $this->quantiter;
+        return $this->libArticle;
     }
 
     /**
-     * Set quantiter
+     * Set libArticle
      *
-     * @param integer $quantiter
-     * @return Corde
+     * @param string $libArticle
+     * @return Articles
      */
-    public function setQuantiter($quantiter)
+    public function setLibArticle($libArticle)
     {
-        $this->quantiter = $quantiter;
+        $this->libArticle = $libArticle;
 
         return $this;
     }

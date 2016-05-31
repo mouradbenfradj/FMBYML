@@ -1,3 +1,0 @@
-utilisateurs:
-    path:     /list
-    defaults: { _controller: "@FOSUserBundle/Resources/config/routing/group.xml" }

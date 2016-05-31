@@ -34,13 +34,13 @@ services:
           calls:
               - [ setTranslationDomain, [AcmeDemoBundle]]
 
-    sonata.admin.article:
-              class: SS\FMBBundle\Admin\ArticleAdmin
+    sonata.admin.articles:
+              class: SS\FMBBundle\Admin\ArticlesAdmin
               tags:
                   - { name: sonata.admin, manager_type: orm, label: "Article" }
               arguments:
                   - ~
-                  - SS\FMBBundle\Entity\Article
+                  - SS\FMBBundle\Entity\Articles
                   - ~
               calls:
                   - [ setTranslationDomain, [AcmeDemoBundle]]

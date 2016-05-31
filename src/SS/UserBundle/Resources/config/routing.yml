@@ -1,20 +1,3 @@
-fos_user_group_list:
-    path:     /list
-    defaults: { _controller: "SSUserBundle:Utilisateurs:list" }
-    methods:  GET
-fos_user_group_new:
-    path:     /new
-    defaults: { _controller: "SSUserBundle:Utilisateurs:new" }
-    methods:  GET POST
-fos_user_group_show:
-    path:     /{groupName}
-    defaults: { _controller: "SSUserBundle:Utilisateurs:show" }
-    methods:  GET
-fos_user_group_edit:
-    path:     /{groupName}/edit
-    defaults: { _controller: "SSUserBundle:Utilisateurs:edit" }
-    methods:  GET POST
-fos_user_group_delete:
-    path:     /{groupName}/delete
-    defaults: { _controller: "SSUserBundle:Utilisateurs:delete" }
-    methods:  GET
+ss_user_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: SSUserBundle:Default:index }

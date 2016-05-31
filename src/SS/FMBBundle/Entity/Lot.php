@@ -29,15 +29,6 @@ class Lot
     private $lot;
 
     /**
-     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\BonReception", mappedBy="nLot",cascade={"persist"})
-     */
-    private $bonReceptions;
-    /**
-     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Stockage", mappedBy="nLot",cascade={"persist"})
-     */
-    private $stocks;
-
-    /**
      * Constructor
      */
     public function __construct()
@@ -82,71 +73,5 @@ class Lot
         $this->lot = $lot;
 
         return $this;
-    }
-
-    /**
-     * Add bonReceptions
-     *
-     * @param \SS\FMBBundle\Entity\BonReception $bonReceptions
-     * @return Lot
-     */
-    public function addBonReception(\SS\FMBBundle\Entity\BonReception $bonReceptions)
-    {
-        $this->bonReceptions[] = $bonReceptions;
-
-        return $this;
-    }
-
-    /**
-     * Remove bonReceptions
-     *
-     * @param \SS\FMBBundle\Entity\BonReception $bonReceptions
-     */
-    public function removeBonReception(\SS\FMBBundle\Entity\BonReception $bonReceptions)
-    {
-        $this->bonReceptions->removeElement($bonReceptions);
-    }
-
-    /**
-     * Get bonReceptions
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getBonReceptions()
-    {
-        return $this->bonReceptions;
-    }
-
-    /**
-     * Add stocks
-     *
-     * @param \SS\FMBBundle\Entity\Stockage $stocks
-     * @return Lot
-     */
-    public function addStock(\SS\FMBBundle\Entity\Stockage $stocks)
-    {
-        $this->stocks[] = $stocks;
-
-        return $this;
-    }
-
-    /**
-     * Remove stocks
-     *
-     * @param \SS\FMBBundle\Entity\Stockage $stocks
-     */
-    public function removeStock(\SS\FMBBundle\Entity\Stockage $stocks)
-    {
-        $this->stocks->removeElement($stocks);
-    }
-
-    /**
-     * Get stocks
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getStocks()
-    {
-        return $this->stocks;
     }
 }
