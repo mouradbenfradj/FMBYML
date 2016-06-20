@@ -35,15 +35,45 @@ services:
               - [ setTranslationDomain, [AcmeDemoBundle]]
 
     sonata.admin.articles:
-              class: SS\FMBBundle\Admin\ArticlesAdmin
-              tags:
-                  - { name: sonata.admin, manager_type: orm, label: "Article" }
-              arguments:
-                  - ~
-                  - SS\FMBBundle\Entity\Articles
-                  - ~
-              calls:
-                  - [ setTranslationDomain, [AcmeDemoBundle]]
+                   class: SS\FMBBundle\Admin\ArticlesAdmin
+                   tags:
+                       - { name: sonata.admin, manager_type: orm, label: "Article" }
+                   arguments:
+                       - ~
+                       - SS\FMBBundle\Entity\Articles
+                       - ~
+                   calls:
+                       - [ setTranslationDomain, [AcmeDemoBundle]]
+    sonata.admin.stockarticle:
+                   class: SS\FMBBundle\Admin\StocksArticlesAdmin
+                   tags:
+                       - { name: sonata.admin, manager_type: orm, label: "StockArticle" }
+                   arguments:
+                       - ~
+                       - SS\FMBBundle\Entity\StocksArticles
+                       - ~
+                   calls:
+                       - [ setTranslationDomain, [AcmeDemoBundle]]
+    sonata.admin.stocks:
+                    class: SS\FMBBundle\Admin\StocksAdmin
+                    tags:
+                        - { name: sonata.admin, manager_type: orm, label: "Stock" }
+                    arguments:
+                        - ~
+                        - SS\FMBBundle\Entity\Stocks
+                        - ~
+                    calls:
+                        - [ setTranslationDomain, [AcmeDemoBundle]]
+    sonata.admin.typeDocuments:
+                  class: SS\FMBBundle\Admin\TypeDocumentsAdmin
+                  tags:
+                      - { name: sonata.admin, manager_type: orm, label: "Type Documents" }
+                  arguments:
+                      - ~
+                      - SS\FMBBundle\Entity\TypeDocuments
+                      - ~
+                  calls:
+                      - [ setTranslationDomain, [AcmeDemoBundle]]
     sonata.admin.lanterne:
               class: SS\FMBBundle\Admin\LanterneAdmin
               tags:

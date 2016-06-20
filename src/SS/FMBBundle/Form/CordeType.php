@@ -15,9 +15,9 @@ class CordeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('etatCorde')
-            ->add('placeCorde')
-            ->add('quantiter');
+            ->add('quantiter')
+            ->add('emplacement')
+            ->add('article');
     }
 
     /**

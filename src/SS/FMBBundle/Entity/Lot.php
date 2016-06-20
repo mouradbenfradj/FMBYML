@@ -12,40 +12,14 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Lot
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="lot", type="string", length=255,unique=true)
+     * @ORM\Column(name="lot", type="string", length=255)
+     * @ORM\Id
      */
     private $lot;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->bonReceptions = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->stocks = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
     public function __toString()
     {

@@ -18,16 +18,16 @@ class ArticlesAdmin extends Admin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('refArticle')->add('libArticle');
+        $formMapper->add('refArticle')->add('libArticle')->add('lot');
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('refArticle')->add('libArticle');
+        $datagridMapper->add('refArticle')->add('libArticle')->add('lot');
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('refArticle')->addIdentifier('libArticle');
+        $listMapper->addIdentifier('refArticle')->addIdentifier('libArticle')->addIdentifier('lot');
     }
 }

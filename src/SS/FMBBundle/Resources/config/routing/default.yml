@@ -2,10 +2,23 @@ ssfmb_homepage:
     path:     /
     defaults: { _controller: SSFMBBundle:Default:index }
 
-ssfmb_affichepage:
-    path:     /generalView/{id}
-    defaults: { _controller: SSFMBBundle:Default:generalView }
+ssfmb_preparationcorde:
+    path:     /preparationcorde
+    defaults: { _controller: SSFMBBundle:Default:preparationCorde }
+ssfmb_preparationlanterne:
+    path:     /preparationlanterne
+    defaults: { _controller: SSFMBBundle:Default:preparationLanterne }
 
-ssfmb_choixpage:
-    path:     /choixParc
-    defaults: { _controller: SSFMBBundle:Default:parcView }
+ssfmb_misaaeaucorde:
+    path:     /miseaeaucorde
+    defaults: { _controller: SSFMBBundle:Default:miseAEauCorde }
+ssfmb_misaaeaulanterne:
+    path:     /miseaeaulanterne
+    defaults: { _controller: SSFMBBundle:Default:miseAEauLanterne }
+
+ssfmb_retraitcorde:
+    path:     /retraitcorde
+    defaults: { _controller: SSFMBBundle:Default:retraitCorde }
+ssfmb_retraitLanterne:
+    path:     /retraitlanterne
+    defaults: { _controller: SSFMBBundle:Default:retraitLanterne }

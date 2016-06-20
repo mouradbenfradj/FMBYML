@@ -48,9 +48,9 @@
                                                                     {% if emplacement.corde == null and emplacement.lanterne == null %}
                                                                         <font color="red"> {{ emplacement.place }}</font>
                                                                     {% elseif emplacement.corde != null %}
-                                                                        <font color="green"> {{ emplacement.place }}</font>
+                                                                        <font color="blue"> {{ emplacement.place }}</font>
                                                                     {% elseif emplacement.lanterne != null %}
-                                                                        <font color="orange"> {{ emplacement.place }}</font>
+                                                                        <font color="#adff2f"> {{ emplacement.place }}</font>
                                                                     {% endif %}
                                                                 {% endfor %}
                                                             </p>

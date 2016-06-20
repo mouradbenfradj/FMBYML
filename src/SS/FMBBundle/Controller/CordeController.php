@@ -32,7 +32,6 @@ class CordeController extends Controller
             )
         );
     }
-
     /**
      * Creates a new Corde entity.
      *

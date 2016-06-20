@@ -1,32 +1,44 @@
 <?php
 namespace SS\FMBBundle\DataFixtures\ORM;
 
-use Doctrine\Common\DataFixtures\FixtureInterface;
+use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use SS\FMBBundle\Entity\Parc;
 
-class LoadParc implements FixtureInterface
+class LoadParc extends AbstractFixture implements OrderedFixtureInterface
 {
-    // Dans l'argument de la méthode load, l'objet $manager est l'EntityManager
+
+    /**
+     * Get the order of this fixture
+     *
+     * @return integer
+     */
+    public function getOrder()
+    {
+        return 1;
+    }
+
+    /**
+     * Load data fixtures with the passed EntityManager
+     *
+     * @param ObjectManager $manager
+     */
     public function load(ObjectManager $manager)
     {
-        // Liste des noms de catégorie à ajouter
-        $nomParc = array(
-            'FMB',
-            'FMBMTH',
-            'Marinor',
-        );
+        $fmb = new Parc();
+        $fmb->setNomParc('FMB');
+        $manager->persist($fmb);
+        $FMBMTH = new Parc();
+        $FMBMTH->setNomParc('FMBMTH');
+        $manager->persist($FMBMTH);
+        $Marinor = new Parc();
+        $Marinor->setNomParc('Marinor');
+        $manager->persist($Marinor);
 
-        foreach ($nomParc as $name) {
-            // On crée la catégorie
-            $parc = new Parc();
-            $parc->setNomParc($name);
-
-            // On la persiste
-            $manager->persist($parc);
-        }
-
-        // On déclenche l'enregistrement de toutes les catégories
         $manager->flush();
+        $this->addReference('fmb', $fmb);
+        $this->addReference('FMBMTH', $FMBMTH);
+        $this->addReference('Marinor', $Marinor);
     }
 }

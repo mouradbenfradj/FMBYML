@@ -18,7 +18,7 @@ class LanterneAdmin extends Admin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('nomLanterne')
+        $formMapper->add('parc')->add('nomLanterne')
             ->add('nombre');;
     }
 

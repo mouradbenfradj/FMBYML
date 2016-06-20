@@ -1,3 +1,19 @@
+ssfmb_docslines:
+    resource: "@SSFMBBundle/Resources/config/routing/docslines.yml"
+    prefix:   /docslines
+
+ssfmb_documents:
+    resource: "@SSFMBBundle/Resources/config/routing/documents.yml"
+    prefix:   /documents
+
+ssfmb_stocksarticles:
+    resource: "@SSFMBBundle/Resources/config/routing/stocksarticles.yml"
+    prefix:   /stocksarticles
+
+ssfmb_articles:
+    resource: "@SSFMBBundle/Resources/config/routing/articles.yml"
+    prefix:   /articles
+
 ssfmb_lanterne:
     resource: "@SSFMBBundle/Resources/config/routing/lanterne.yml"
     prefix:   /lanterne
@@ -5,14 +21,6 @@ ssfmb_lanterne:
 ssfmb_emplacement:
     resource: "@SSFMBBundle/Resources/config/routing/emplacement.yml"
     prefix:   /emplacement
-
-ssfmb_flotteur:
-    resource: "@SSFMBBundle/Resources/config/routing/flotteur.yml"
-    prefix:   /flotteur
-
-ssfmb_lot:
-    resource: "@SSFMBBundle/Resources/config/routing/lot.yml"
-    prefix:   /lot
 
 ssfmb_poche:
     resource: "@SSFMBBundle/Resources/config/routing/poche.yml"

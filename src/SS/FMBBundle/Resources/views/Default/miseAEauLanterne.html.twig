@@ -1,0 +1,48 @@
+{% extends "SSFMBBundle::layout.html.twig" %}
+
+{% block title %}
+    Suivit - {{ parent() }}
+{% endblock %}
+
+{% block ssfmb_body %}
+    <div class="well">
+        <table class="record_properties" border="1">
+            <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td>
+                        <a href="{{ path('parc_show', { 'id': entity.id }) }}">
+                            {{ entity.nomParc }}
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        {% for filiere in entity.filieres %}
+                            {{ filiere.getNomFiliere }}
+                            {% for segment in filiere.segments %}
+                                {{ segment.getNomSegment }}
+                                {% for flotteur in segment.flotteurs %}
+                                    {{ flotteur.getNomFlotteur }}
+                                    {% for emplacement in flotteur.emplacements %}
+                                        {% if emplacement.corde == null and emplacement.lanterne == null %}
+                                            <font color="red"> {{ emplacement.place }}</font>
+                                        {% elseif emplacement.corde != null %}
+                                            <font color="blue"> {{ emplacement.place }}</font>
+                                        {% elseif emplacement.lanterne != null %}
+                                            <font color="#adff2f"> {{ emplacement.place }}</font>
+                                        {% endif %}
+                                    {% endfor %}
+
+                                {% endfor %}
+
+                            {% endfor %}
+
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

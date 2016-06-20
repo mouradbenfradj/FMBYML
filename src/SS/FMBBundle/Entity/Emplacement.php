@@ -20,20 +20,20 @@ class Emplacement
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
     /**
      * @var integer
      *
      * @ORM\Column(name="place", type="integer")
      */
     private $place;
-
     /**
-     * @ORM\OneToOne(targetEntity="SS\FMBBundle\Entity\Corde")
+     * @ORM\OneToOne(targetEntity="SS\FMBBundle\Entity\Corde", inversedBy="emplacement")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $corde;
     /**
-     * @ORM\OneToOne(targetEntity="SS\FMBBundle\Entity\Lanterne")
+     * @ORM\OneToOne(targetEntity="SS\FMBBundle\Entity\Lanterne", inversedBy="emplacement")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $lanterne;
     /**
@@ -41,6 +41,11 @@ class Emplacement
      * @ORM\JoinColumn(nullable=false)
      */
     private $flotteur;
+    /**
+     *
+     * @ORM\Column(name="date_remplissage", type="date",nullable=true)
+     */
+    private $dateDeRemplissage;
 
     /**
      * Get id
@@ -140,6 +145,29 @@ class Emplacement
     public function setLanterne(\SS\FMBBundle\Entity\Lanterne $lanterne = null)
     {
         $this->lanterne = $lanterne;
+
+        return $this;
+    }
+
+    /**
+     * Get dateDeRemplissage
+     *
+     * @return \DateTime
+     */
+    public function getDateDeRemplissage()
+    {
+        return $this->dateDeRemplissage;
+    }
+
+    /**
+     * Set dateDeRemplissage
+     *
+     * @param \DateTime $dateDeRemplissage
+     * @return Emplacement
+     */
+    public function setDateDeRemplissage($dateDeRemplissage)
+    {
+        $this->dateDeRemplissage = $dateDeRemplissage;
 
         return $this;
     }

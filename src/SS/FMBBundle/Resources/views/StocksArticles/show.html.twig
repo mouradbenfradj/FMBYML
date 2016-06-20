@@ -1,0 +1,32 @@
+{% extends "SSFMBBundle::layout.html.twig" %}
+
+{% block body -%}
+    <h1>StocksArticles</h1>
+
+    <table class="record_properties">
+        <tbody>
+        <tr>
+            <th>Refstockarticle</th>
+            <td>{{ entity.refStockArticle }}</td>
+        </tr>
+        <tr>
+            <th>Qte</th>
+            <td>{{ entity.qte }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <ul class="record_actions">
+        <li>
+            <a href="{{ path('stocksarticles') }}">
+                Back to the list
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('stocksarticles_edit', { 'id': entity.refStockArticle }) }}">
+                Edit
+            </a>
+        </li>
+        <li>{{ form(delete_form) }}</li>
+    </ul>
+{% endblock %}

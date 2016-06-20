@@ -1,10 +1,6 @@
 {% extends "SSFMBBundle::layout.html.twig" %}
 
-{% block title %}
-    Accueil - {{ parent() }}
-{% endblock %}
-
-{% block ssfmb_body %}
+{% block body -%}
     <h1>Corde edit</h1>
 
     {{ form(edit_form) }}

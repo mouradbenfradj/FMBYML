@@ -27,20 +27,17 @@ class Stocks
      * @ORM\Column(name="lib_stock", type="string", length=250)
      */
     private $libStock;
-
     /**
      * @var string
      *
-     * @ORM\Column(name="abrev_stock", type="string", length=250)
+     * @ORM\Column(name="abrev_stock", type="string", length=250,nullable=TRUE)
      */
     private $abrevStock;
-
     /**
      * @ORM\ManyToOne(targetEntity="Parc")
      * @ORM\JoinColumn(name="ref_adr_stock", nullable=FALSE)
      */
     private $refAdrStock;
-
     /**
      * @var boolean
      *
@@ -60,14 +57,9 @@ class Stocks
         $this->docBlfs = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    /**
-     * Get idStock
-     *
-     * @return integer
-     */
-    public function getIdStock()
+    public function __toString()
     {
-        return $this->idStock;
+        return $this->getLibStock();
     }
 
     /**
@@ -91,6 +83,16 @@ class Stocks
         $this->libStock = $libStock;
 
         return $this;
+    }
+
+    /**
+     * Get idStock
+     *
+     * @return integer
+     */
+    public function getIdStock()
+    {
+        return $this->idStock;
     }
 
     /**

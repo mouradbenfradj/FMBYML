@@ -1,0 +1,40 @@
+{% extends "SSFMBBundle::layout.html.twig" %}
+
+{% block body -%}
+    <h1>DocsLines</h1>
+
+    <table class="record_properties">
+        <tbody>
+        <tr>
+            <th>Refdocline</th>
+            <td>{{ entity.refDocLine }}</td>
+        </tr>
+        <tr>
+            <th>Libarticle</th>
+            <td>{{ entity.libArticle }}</td>
+        </tr>
+        <tr>
+            <th>Descarticle</th>
+            <td>{{ entity.descArticle }}</td>
+        </tr>
+        <tr>
+            <th>Qte</th>
+            <td>{{ entity.qte }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <ul class="record_actions">
+        <li>
+            <a href="{{ path('docslines') }}">
+                Back to the list
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('docslines_edit', { 'id': entity.refDocLine }) }}">
+                Edit
+            </a>
+        </li>
+        <li>{{ form(delete_form) }}</li>
+    </ul>
+{% endblock %}

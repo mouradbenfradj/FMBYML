@@ -45,6 +45,10 @@ class Lanterne
      * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Poche", mappedBy="lanterne",cascade={"persist","remove"})
      */
     private $poches;
+    /**
+     * @ORM\OneToOne(targetEntity="SS\FMBBundle\Entity\Emplacement", mappedBy="lanterne")
+     */
+    private $emplacement;
 
     /**
      * Constructor
@@ -180,6 +184,29 @@ class Lanterne
     public function setNomLanterne($nomLanterne)
     {
         $this->nomLanterne = $nomLanterne;
+
+        return $this;
+    }
+
+    /**
+     * Get emplacement
+     *
+     * @return \SS\FMBBundle\Entity\Emplacement
+     */
+    public function getEmplacement()
+    {
+        return $this->emplacement;
+    }
+
+    /**
+     * Set emplacement
+     *
+     * @param \SS\FMBBundle\Entity\Emplacement $emplacement
+     * @return Lanterne
+     */
+    public function setEmplacement(\SS\FMBBundle\Entity\Emplacement $emplacement = null)
+    {
+        $this->emplacement = $emplacement;
 
         return $this;
     }

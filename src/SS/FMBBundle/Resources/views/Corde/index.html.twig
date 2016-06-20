@@ -1,18 +1,12 @@
 {% extends "SSFMBBundle::layout.html.twig" %}
 
-{% block title %}
-    Accueil - {{ parent() }}
-{% endblock %}
-
-{% block ssfmb_body %}
+{% block body -%}
     <h1>Corde list</h1>
 
     <table class="records_list">
         <thead>
         <tr>
             <th>Id</th>
-            <th>Placecorde</th>
-            <th>Etatcorde</th>
             <th>Quantiter</th>
             <th>Actions</th>
         </tr>
@@ -21,8 +15,6 @@
         {% for entity in entities %}
             <tr>
                 <td><a href="{{ path('corde_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.placeCorde }}</td>
-                <td>{{ entity.etatCorde }}</td>
                 <td>{{ entity.quantiter }}</td>
                 <td>
                     <ul>

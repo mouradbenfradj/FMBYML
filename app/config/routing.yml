@@ -2,10 +2,6 @@ ssfmb:
     resource: "@SSFMBBundle/Resources/config/routing.yml"
     prefix:   /
 
-ss_user:
-    resource: "@SSUserBundle/Resources/config/routing.yml"
-    prefix:   /
-
 
 sonata_user_security:
     resource: "@SonataUserBundle/Resources/config/routing/sonata_security_1.xml"

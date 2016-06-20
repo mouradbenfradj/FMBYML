@@ -1,10 +1,6 @@
 {% extends "SSFMBBundle::layout.html.twig" %}
 
-{% block title %}
-    Modifier une annonce - {{ parent() }}
-{% endblock %}
-
-{% block ssfmb_body %}
+{% block body -%}
     <h1>Corde</h1>
 
     <table class="record_properties">
@@ -12,14 +8,6 @@
         <tr>
             <th>Id</th>
             <td>{{ entity.id }}</td>
-        </tr>
-        <tr>
-            <th>Placecorde</th>
-            <td>{{ entity.placeCorde }}</td>
-        </tr>
-        <tr>
-            <th>Etatcorde</th>
-            <td>{{ entity.etatCorde }}</td>
         </tr>
         <tr>
             <th>Quantiter</th>

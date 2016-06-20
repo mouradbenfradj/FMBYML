@@ -1,0 +1,39 @@
+{% extends "SSFMBBundle::layout.html.twig" %}
+
+{% block body -%}
+    <h1>Documents list</h1>
+
+    <table class="records_list">
+        <thead>
+        <tr>
+            <th>Refdoc</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('documents_show', { 'id': entity.refDoc }) }}">{{ entity.refDoc }}</a></td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('documents_show', { 'id': entity.refDoc }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('documents_edit', { 'id': entity.refDoc }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('documents_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+{% endblock %}
