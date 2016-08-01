@@ -12,4 +12,11 @@ use Doctrine\ORM\EntityRepository;
  */
 class CordeRepository extends EntityRepository
 {
+    public function getDistinctQteCorde($ida)
+    {
+        $q = $this->_em->createQuery("SELECT e FROM SSFMBBundle:Corde e");
+        $q->setParameter('ida', $ida);
+
+        return $q->getResult();
+    }
 }

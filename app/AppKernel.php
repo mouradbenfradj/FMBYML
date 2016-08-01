@@ -32,8 +32,6 @@ class AppKernel extends Kernel
 
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
 
-
-
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

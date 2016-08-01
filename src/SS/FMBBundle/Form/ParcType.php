@@ -4,6 +4,8 @@ namespace SS\FMBBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class ParcType extends AbstractType
@@ -15,7 +17,15 @@ class ParcType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nomParc');
+            ->add(
+                'parc',
+                'entity',
+                array(
+                    'required' => true,
+                    'class' => 'SS\FMBBundle\Entity\Parc',
+                    'label' => 'parc',
+                )
+            );
     }
 
     /**

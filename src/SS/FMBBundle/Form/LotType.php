@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class DocsLinesType extends AbstractType
+class LotType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -15,19 +15,7 @@ class DocsLinesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('refDocLine')
-            ->add('refArticle')
-            ->add('libArticle')
-            ->add('descArticle')
-            ->add('qte')
-            ->add(
-                'nombre',
-                'number',
-                array(
-                    'label' => 'nombre',
-                    'mapped' => false,
-                )
-            );
+            ->add('lot');
     }
 
     /**
@@ -37,7 +25,7 @@ class DocsLinesType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'SS\FMBBundle\Entity\DocsLines',
+                'data_class' => 'SS\FMBBundle\Entity\Lot',
             )
         );
     }
@@ -47,6 +35,6 @@ class DocsLinesType extends AbstractType
      */
     public function getName()
     {
-        return 'ss_fmbbundle_docslines';
+        return 'ss_fmbbundle_lot';
     }
 }

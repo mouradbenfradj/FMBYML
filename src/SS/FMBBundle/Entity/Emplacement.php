@@ -48,16 +48,6 @@ class Emplacement
     private $dateDeRemplissage;
 
     /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
      * Get place
      *
      * @return integer
@@ -78,6 +68,21 @@ class Emplacement
         $this->place = $place;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getId();
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return "".$this->id;
     }
 
     /**

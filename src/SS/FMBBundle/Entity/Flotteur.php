@@ -51,7 +51,7 @@ class Flotteur
     /**
      * @ORM\PrePersist
      */
-    public function generateFlotteur()
+    public function generateEmplacement()
     {
         for ($j = 1; $j < 11; $j++) {
             $emplacement = new Emplacement();

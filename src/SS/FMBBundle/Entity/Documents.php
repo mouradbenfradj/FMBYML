@@ -31,7 +31,7 @@ class Documents
      */
     private $docBlfs;
     /**
-     * @ORM\OneToMany(targetEntity="DocsLines", mappedBy="refDoc")
+     * @ORM\OneToMany(targetEntity="DocsLines", mappedBy="refDoc",cascade={"persist"})
      */
     private $docsLines;
 

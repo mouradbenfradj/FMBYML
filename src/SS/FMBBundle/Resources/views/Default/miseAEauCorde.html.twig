@@ -1,0 +1,230 @@
+{% extends "SSFMBBundle::layout.html.twig" %}
+
+{% block title %}
+    Suivit - {{ parent() }}
+{% endblock %}
+{% block body %}
+    <div class="container-fluid">
+
+        {% block menu %}
+            {{ parent() }}
+        {% endblock %}
+        <br>
+        <br>
+        {% block ssfmb_body %}
+            <div class="row">
+                <div class="col-md-12">
+                    <form action="" method="post">
+                        <ul class="pagination pagination-lg">
+
+                            {% for page in pages %}
+
+                                <li>
+                                    <a href="{{ path('ssfmb_misaaeaucorde', { 'id': page.id }) }}">
+                                        {{ page.nomParc }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+
+                        </ul>
+                        <table class="table table-condensed table-bordered" border="1">
+                            <tbody>
+                            {% for entity in entities %}
+                                <tr>
+                                    <td>
+                                        <a href="{{ path('parc_show', { 'id': entity.id }) }}">
+                                            {{ entity.nomParc }}
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <table class="table table-condensed table-bordered" border="1">
+                                            <tbody>
+                                            {% for filiere in entity.filieres %}
+                                                <tr>
+                                                    <td>{{ filiere.getNomFiliere }}
+                                                        <br/>
+                                                        {% set tailleFiliere =0 %}
+                                                        {% for segment in filiere.segments %}
+                                                            {% set tailleFiliere = tailleFiliere+segment.getLongeur %}
+                                                        {% endfor %}
+                                                        taille {{ tailleFiliere }} m
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <table class="table table-condensed table-bordered" border="1">
+                                                            <tbody>
+                                                            <tr>
+                                                                {% for segment in filiere.segments %}
+                                                                    <td valign="top">
+                                                                        <ul>
+                                                                            <li> {{ segment.getNomSegment }}</li>
+                                                                            <li>{{ segment.getLongeur }} m</li>
+                                                                        </ul>
+                                                                        {% for flotteur in segment.flotteurs %}
+                                                                            <p>    {{ flotteur.getNomFlotteur }}
+                                                                                {% for emplacement in flotteur.emplacements %}
+                                                                                    {% if emplacement.corde == null and emplacement.lanterne == null %}
+                                                                                        <font color="red"> {{ emplacement.place }}</font>
+                                                                                        <input type="checkbox"
+                                                                                               name="placecorde[]"
+                                                                                               value="{{ emplacement.id }}"/>
+                                                                                        <span style="display: none"
+                                                                                              id="dateemplacement">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</span>
+                                                                                    {% elseif emplacement.corde != null %}
+                                                                                        <font color="blue"> {{ emplacement.place }}</font>
+                                                                                        <span style="display: none"
+                                                                                              id="dateemplacement">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</span>
+
+                                                                                    {% elseif emplacement.lanterne != null %}
+                                                                                        <font color="#adff2f"> {{ emplacement.place }}</font>
+                                                                                        <span style="display: none"
+                                                                                              id="dateemplacement">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</span>
+
+                                                                                    {% endif %}
+                                                                                {% endfor %}
+                                                                            </p>
+                                                                        {% endfor %}
+                                                                    </td>
+                                                                {% endfor %}
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <p>quantiter disponible</p>
+                                        <p><input type="number" id="quantit" readonly="true" value="0"></p>
+                                        <p> choisir l'article a mettre</p>
+                                        <p>
+                                            <select name="articlechoix" id="articlechoix">
+                                                {% for article in articles %}
+                                                    <option value="{{ article.refArticle }}">{{ article.lot }}
+                                                        -{{ article.libArticle }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </p>
+                                        <div id="choixqtearticle">
+                                            <p> choix de la quantiter des corde</p>
+                                            <p>
+                                                <select name="quantierchoix" id="quantierchoix">
+                                                </select>
+                                            </p>
+                                            <p><input type="submit" value="confirmer la mise a l'eau"/></p>
+
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        {% endblock %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#choixqtearticle').ready(function () {
+                $('#choixqtearticle').hide();
+            });
+
+
+            $('input:checkbox').change(
+                    function () {
+                        if ($(this).is(':checked')) {
+                            $('#quantit').val(parseInt($('#quantit').val()) - 1);
+                        } else {
+                            $('#quantit').val(parseInt($('#quantit').val()) + 1);
+                        }
+                    });
+
+        });
+        $('#articlechoix').ready(function () {
+
+            $.ajax({
+                type: 'get',
+                url: "{{ path('ssfmb_cordearticle') }}",
+                data: {'ida': $('#articlechoix').val()},
+                dataType: 'json',
+
+                beforeSend: function () {
+                    $('#quantierchoix').empty();
+                },
+                success: function (json) {
+                    $('#quantierchoix').html('');
+                    if (!$.trim(json)) {
+                        $('#choixqtearticle').ready(function () {
+                            $('#choixqtearticle').hide();
+                        });
+                    }
+                    ;
+                    if ($.trim(json)) {
+                        $('#choixqtearticle').ready(function () {
+                            $('#choixqtearticle').show();
+                            $("input:checkbox").each(function () {
+                                $(this).prop('checked', false);
+                            });
+
+                        });
+                    }
+                    ;
+
+                    $.each(json, function (index, value) {
+                        $('#quantit').val(value.nombre);
+
+                        $('#quantierchoix').append('<option value="' + value.qte + '">' + value.qte + '</option>');
+                    });
+                }
+            });
+        });
+        $('#articlechoix').change(function () {
+            $.ajax({
+                type: 'get',
+                url: "{{ path('ssfmb_cordearticle') }}",
+                data: {'ida': $('#articlechoix').val()},
+                dataType: 'json',
+                beforeSend: function () {
+                    $('#quantierchoix').empty();
+                },
+                success: function (json) {
+                    $('#quantierchoix').html('');
+                    if (!$.trim(json)) {
+                        $('#choixqtearticle').ready(function () {
+                            $('#choixqtearticle').hide();
+                        });
+                    }
+                    if ($.trim(json)) {
+                        $('#choixqtearticle').ready(function () {
+                            $("input:checkbox").each(function () {
+                                $(this).prop('checked', false);
+                            });
+
+                            $('#choixqtearticle').show();
+                        });
+                    }
+                    $.each(json, function (index, value) {
+                        $('#quantit').val(value.nombre);
+                        $("input:checkbox").each(function () {
+                            $(this).attr('checked', false);
+                        });
+                        // et  boucle sur la réponse contenu dans la variable passé à la function du success "json"
+                        $('#quantierchoix').append('<option value="' + value.qte + '">' + value.qte + '</option>');
+                    });
+                }
+            });
+        });
+
+    </script>
+{% endblock %}

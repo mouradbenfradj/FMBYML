@@ -21,7 +21,7 @@ class DocsLines
     private $refDocLine;
 
     /**
-     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Documents")
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Documents",cascade={"persist"})
      * @ORM\JoinColumn(name="ref_doc", referencedColumnName="ref_doc",nullable=false)
      */
     private $refDoc;
@@ -70,29 +70,6 @@ class DocsLines
     public function __construct()
     {
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Get refDocLine
-     *
-     * @return string
-     */
-    public function getRefDocLine()
-    {
-        return $this->refDocLine;
-    }
-
-    /**
-     * Set refDocLine
-     *
-     * @param string $refDocLine
-     * @return DocsLines
-     */
-    public function setRefDocLine($refDocLine)
-    {
-        $this->refDocLine = $refDocLine;
-
-        return $this;
     }
 
     /**
@@ -254,6 +231,34 @@ class DocsLines
     public function removeChild(\SS\FMBBundle\Entity\DocsLines $children)
     {
         $this->children->removeElement($children);
+    }
+
+    public function __toString()
+    {
+        return $this->getRefDocLine();
+    }
+
+    /**
+     * Get refDocLine
+     *
+     * @return string
+     */
+    public function getRefDocLine()
+    {
+        return $this->refDocLine;
+    }
+
+    /**
+     * Set refDocLine
+     *
+     * @param string $refDocLine
+     * @return DocsLines
+     */
+    public function setRefDocLine($refDocLine)
+    {
+        $this->refDocLine = $refDocLine;
+
+        return $this;
     }
 
     /**

@@ -1,3 +1,7 @@
+ssfmb_lot:
+    resource: "@SSFMBBundle/Resources/config/routing/lot.yml"
+    prefix:   /lot
+
 ssfmb_docslines:
     resource: "@SSFMBBundle/Resources/config/routing/docslines.yml"
     prefix:   /docslines

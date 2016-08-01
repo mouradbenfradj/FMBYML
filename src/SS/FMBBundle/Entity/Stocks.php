@@ -34,8 +34,8 @@ class Stocks
      */
     private $abrevStock;
     /**
-     * @ORM\ManyToOne(targetEntity="Parc")
-     * @ORM\JoinColumn(name="ref_adr_stock", nullable=FALSE)
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Parc" , inversedBy="stock")
+     * @ORM\JoinColumn(name="ref_adr_stock", referencedColumnName="id", nullable=FALSE)
      */
     private $refAdrStock;
     /**

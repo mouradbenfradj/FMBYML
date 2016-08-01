@@ -1,43 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>{% block title %}SS FMB{% endblock %}</title>
-
+    <meta charset="UTF-8"/>
+    <title>{% block title %}FMB{% endblock %}</title>
     {% block stylesheets %}
-        {# On charge le CSS de bootstrap depuis le site directement #}
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
     {% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
 </head>
-
 <body>
-<div class="container">
-    <div class="row">
+
+<div class="container-fluid">
+
+    {% block body %}
         {% block menu %}
-
-
+            {% endblock %}
+        {% block alerte %}
+        {% endblock %}
+        {% block ssfmb_body %}
         {% endblock %}
 
-        <div id="content" class="col-md-9">
-            {% block body %}
-
-            {% endblock %}
-        </div>
-    </div>
-
-    <hr>
-
+    {% endblock %}
     <footer>
     </footer>
+    {% block javascripts %}
+        <script src="{{ asset('js/jquery.min.js') }}"></script>
+        <script src="{{ asset('js/bootstrap.js') }}"></script>
+    {% endblock %}
 </div>
-
-{% block javascripts %}
-    {# Ajoutez ces lignes JavaScript si vous comptez vous servir des fonctionnalités du bootstrap Twitter #}
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-{% endblock %}
-
 </body>
 </html>

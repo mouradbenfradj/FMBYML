@@ -1,12 +1,11 @@
 {% extends "SSFMBBundle::layout.html.twig" %}
 
 {% block title %}
-    Suivit - {{ parent() }}
+    MAE Corde- {{ parent() }}
 {% endblock %}
-
 {% block ssfmb_body %}
-    <div class="well">
-        <table class="record_properties" border="1">
+    <form action="" method="post">
+        <table class="table table-condensed table-bordered" border="1">
             <tbody>
             {% for entity in entities %}
                 <tr>
@@ -18,31 +17,97 @@
                 </tr>
                 <tr>
                     <td>
-                        {% for filiere in entity.filieres %}
-                            {{ filiere.getNomFiliere }}
-                            {% for segment in filiere.segments %}
-                                {{ segment.getNomSegment }}
-                                {% for flotteur in segment.flotteurs %}
-                                    {{ flotteur.getNomFlotteur }}
-                                    {% for emplacement in flotteur.emplacements %}
-                                        {% if emplacement.corde == null and emplacement.lanterne == null %}
-                                            <font color="red"> {{ emplacement.place }}</font>
-                                        {% elseif emplacement.corde != null %}
-                                            <font color="blue"> {{ emplacement.place }}</font>
-                                        {% elseif emplacement.lanterne != null %}
-                                            <font color="#adff2f"> {{ emplacement.place }}</font>
-                                        {% endif %}
-                                    {% endfor %}
-
-                                {% endfor %}
-
+                        <table class="table table-condensed table-bordered" border="1">
+                            <tbody>
+                            {% for filiere in entity.filieres %}
+                                <tr>
+                                    <td>{{ filiere.getNomFiliere }}
+                                        <br/>
+                                        {% set tailleFiliere =0 %}
+                                        {% for segment in filiere.segments %}
+                                            {% set tailleFiliere = tailleFiliere+segment.getLongeur %}
+                                        {% endfor %}
+                                        taille {{ tailleFiliere }} m
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <table class="table table-condensed table-bordered" border="1">
+                                            <tbody>
+                                            <tr>
+                                                {% for segment in filiere.segments %}
+                                                    <td valign="top">
+                                                        <ul>
+                                                            <li> {{ segment.getNomSegment }}</li>
+                                                            <li>{{ segment.getLongeur }} m</li>
+                                                        </ul>
+                                                        {% for flotteur in segment.flotteurs %}
+                                                            <p>    {{ flotteur.getNomFlotteur }}
+                                                                {% for emplacement in flotteur.emplacements %}
+                                                                    {% if emplacement.corde == null and emplacement.lanterne == null %}
+                                                                        <font color="red"> {{ emplacement.place }}</font>
+                                                                        <input type="checkbox" name=""
+                                                                               value="{{ emplacement }}">
+                                                                    {% elseif emplacement.corde != null %}
+                                                                        <font color="blue"> {{ emplacement.place }}</font>
+                                                                    {% elseif emplacement.lanterne != null %}
+                                                                        <font color="#adff2f"> {{ emplacement.place }}</font>
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                            </p>
+                                                        {% endfor %}
+                                                    </td>
+                                                {% endfor %}
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
                             {% endfor %}
-
-                        {% endfor %}
+                            </tbody>
+                        </table>
                     </td>
+                    <td><br><br>
+                        nombre lanterne <br>
+                        <input type="number" value="50" readonly><br>
+                        lanterne<select name="lanterne">
+                            <option value="lant7p">lant7p</option>
+                            <option value="lant10">lant10p</option>
+                        </select>
+                        <br>
+                        quantiter
+                        <select name="quantiter">
+                            <option value="90">90</option>
+                            <option value="90">80</option>
+                        </select>
+                        <br>
+                        <input type="submit" value="mettre a l'eau"></td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
-    </div>
+    </form>
+    <ul class="pagination pagination-lg">
+        <li>
+            <a href="#">Prev</a>
+        </li>
+        <li>
+            <a href="#">1</a>
+        </li>
+        <li>
+            <a href="#">2</a>
+        </li>
+        <li>
+            <a href="#">3</a>
+        </li>
+        <li>
+            <a href="#">4</a>
+        </li>
+        <li>
+            <a href="#">5</a>
+        </li>
+        <li>
+            <a href="#">Next</a>
+        </li>
+    </ul>
 {% endblock %}

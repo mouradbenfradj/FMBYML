@@ -37,6 +37,10 @@ class Parc
      * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Lanterne", mappedBy="parc",cascade={"remove"})
      */
     private $lanternes;
+    /**
+     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Stocks", mappedBy="refAdrStock",cascade={"remove"})
+     */
+    private $stock;
 
     /**
      * Constructor
@@ -45,6 +49,7 @@ class Parc
     {
         $this->filieres = new \Doctrine\Common\Collections\ArrayCollection();
         $this->lanternes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->st = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -150,5 +155,38 @@ class Parc
         $this->nomParc = $nomParc;
 
         return $this;
+    }
+
+    /**
+     * Add stock
+     *
+     * @param \SS\FMBBundle\Entity\Stocks $stock
+     * @return Parc
+     */
+    public function addStock(\SS\FMBBundle\Entity\Stocks $stock)
+    {
+        $this->stock[] = $stock;
+
+        return $this;
+    }
+
+    /**
+     * Remove stock
+     *
+     * @param \SS\FMBBundle\Entity\Stocks $stock
+     */
+    public function removeStock(\SS\FMBBundle\Entity\Stocks $stock)
+    {
+        $this->stock->removeElement($stock);
+    }
+
+    /**
+     * Get stock
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getStock()
+    {
+        return $this->stock;
     }
 }

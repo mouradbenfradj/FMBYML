@@ -20,7 +20,9 @@
     "incenteev/composer-parameter-handler": "~2.0",
 
     "twig/extensions": "v1.2.0",
-    "twbs/bootstrap": "^3.3",
+    "twbs/bootstrap": "3.*",
+    "components/jquery": "dev-master",
+    "oyejorge/less.php": "dev-master",
 
     "doctrine/doctrine-fixtures-bundle": "2.2",
     "friendsofsymfony/user-bundle": "^1.3",

@@ -5,6 +5,12 @@ ssfmb_homepage:
 ssfmb_preparationcorde:
     path:     /preparationcorde
     defaults: { _controller: SSFMBBundle:Default:preparationCorde }
+ssfmb_parcstock:
+    path:     /parcstock
+    defaults: { _controller: SSFMBBundle:Default:parcStocks }
+ssfmb_cordearticle:
+    path:     /cordearticle
+    defaults: { _controller: SSFMBBundle:Default:cordeArticle}
 ssfmb_preparationlanterne:
     path:     /preparationlanterne
     defaults: { _controller: SSFMBBundle:Default:preparationLanterne }

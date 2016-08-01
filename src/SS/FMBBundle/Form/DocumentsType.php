@@ -22,6 +22,7 @@ class DocumentsType extends AbstractType
                 'collection',
                 array(
                     'type' => new DocsLinesType(),
+                    'required' => true,
                     'allow_add' => true,
                     'allow_delete' => true,
                 )

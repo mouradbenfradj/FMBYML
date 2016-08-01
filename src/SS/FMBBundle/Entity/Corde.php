@@ -29,12 +29,20 @@ class Corde
      */
     private $quantiter;
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="pret", type="boolean")
+     */
+    private $pret;
+    /**
      * @ORM\OneToOne(targetEntity="SS\FMBBundle\Entity\Emplacement", mappedBy="corde")
+     * @ORM\JoinColumn(nullable=true)
+
      */
     private $emplacement;
 
     /**
-     * @ORM\OneToOne(targetEntity="SS\FMBBundle\Entity\Articles")
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Articles")
      * @ORM\JoinColumn(name="ref_article", referencedColumnName="ref_article")
      */
     private $article;
@@ -114,6 +122,29 @@ class Corde
     public function setArticle(\SS\FMBBundle\Entity\Articles $article = null)
     {
         $this->article = $article;
+
+        return $this;
+    }
+
+    /**
+     * Get pret
+     *
+     * @return boolean
+     */
+    public function getPret()
+    {
+        return $this->pret;
+    }
+
+    /**
+     * Set pret
+     *
+     * @param boolean $pret
+     * @return Corde
+     */
+    public function setPret($pret)
+    {
+        $this->pret = $pret;
 
         return $this;
     }
