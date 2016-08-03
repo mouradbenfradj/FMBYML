@@ -37,10 +37,10 @@ class Poche
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Lanterne", inversedBy="poches")
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\StocksLanternes", inversedBy="poches")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $lanterne;
+    private $stocklanterne;
 
 
     /**
@@ -107,26 +107,27 @@ class Poche
         return $this;
     }
 
+
     /**
-     * Get lanterne
+     * Set stocklanterne
      *
-     * @return \SS\FMBBundle\Entity\Lanterne
+     * @param \SS\FMBBundle\Entity\StocksLanternes $stocklanterne
+     * @return Poche
      */
-    public function getLanterne()
+    public function setStocklanterne(\SS\FMBBundle\Entity\StocksLanternes $stocklanterne)
     {
-        return $this->lanterne;
+        $this->stocklanterne = $stocklanterne;
+
+        return $this;
     }
 
     /**
-     * Set lanterne
+     * Get stocklanterne
      *
-     * @param \SS\FMBBundle\Entity\Lanterne $lanterne
-     * @return Poche
+     * @return \SS\FMBBundle\Entity\StocksLanternes 
      */
-    public function setLanterne(\SS\FMBBundle\Entity\Lanterne $lanterne)
+    public function getStocklanterne()
     {
-        $this->lanterne = $lanterne;
-
-        return $this;
+        return $this->stocklanterne;
     }
 }

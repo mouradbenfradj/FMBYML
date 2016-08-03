@@ -7,6 +7,7 @@ use SS\FMBBundle\Entity\Lanterne;
 use SS\FMBBundle\Entity\Lot;
 use SS\FMBBundle\Entity\Parc;
 use SS\FMBBundle\Entity\Poche;
+use SS\FMBBundle\Entity\StocksLanternes;
 use SS\FMBBundle\Form\PreparationCordeType;
 use SS\FMBBundle\Form\PreparationLanterneType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -107,29 +108,43 @@ class DefaultController extends Controller
                 'method' => 'POST',
             )
         );
-
         $form->add('submit', 'submit', array('label' => 'Create'));
-
-
         if ($request->isMethod('POST')) {
-            $form->handleRequest($request);
             $em = $this->getDoctrine()->getManager();
-            $stock = $em->getRepository('SSFMBBundle:Stocks')->find($form['stock']->getData()->getIdStock());
+            $form->handleRequest($request);
             $document = $form['document']->getData();
             $em->persist($document);
+            $i = 0;
             foreach ($form['document']['docsLines']->getData() as $doclin) {
-                $lanterne = new Lanterne();
+                $result = $em->getRepository('SSFMBBundle:StocksArticles')->findBy(
+                    array(
+                        'idStock' => $form->get('stock')->getData()->getIdStock(),
+                        'refArticle' => $doclin->getRefArticle(),
+                    )
+                );
+                $stockarticles = $result[0];
 
-                $poche = new Poche();
-                $poche->setQuantite($doclin->getQte());
-                $poche->
-                $poche->setArticle($doclin->getRefArticle());
-                $em->persist($lanterne);
-
+                for ($j = 0; $j < $request->request->get(
+                    "ss_fmbbundle_preparationlanterne"
+                )['document']['docsLines'][$i]['nombre']; $j++) {
+                    $stockslanternes = new StocksLanternes();
+                    $stockslanternes->setPret(false);
+                    $stockarticles->setQte($stockarticles->getQte() - $doclin->getQte());
+                    for ($i = 1; $i < ($stockslanternes->getLanterne()->getNbrpoche() + 1); $i++) {
+                        $poche = new Poche();
+                        $poche->setEmplacement($i);
+                        $poche->setQuantite($doclin->getQte() / $stockslanternes->getLanterne()->getNbrpoche());
+                        $stockslanternes->addPoch($poche);
+                    }
+                    $stockslanternes->setArticle($doclin->getRefArticle());
+                    $em->persist($stockslanternes);
+                }
+                $i++;
             }
             $em->flush();
-        }
 
+            return $this->redirectToRoute('ssfmb_homepage');
+        }
 
         $form = $this->createForm(
             new PreparationLanterneType(),

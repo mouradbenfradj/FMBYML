@@ -1,163 +1,37 @@
 <?php
-
 namespace SS\FMBBundle\Entity;
-
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Filiere
- *
+ * Lanterne
  * @ORM\Table()
- * @ORM\HasLifecycleCallbacks()
  * @ORM\Entity(repositoryClass="SS\FMBBundle\Repository\LanterneRepository")
  */
 class Lanterne
 {
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
-
-    /**
      * @var string
-     *
+     * @ORM\Id
      * @ORM\Column(name="nomLanterne", type="string", length=255)
      */
     private $nomLanterne;
     /**
      * @var integer
-     *
-     * @ORM\Column(name="nombre", type="integer")
+     * @ORM\Column(name="nbrpoche", type="integer")
      */
-    private $nombre;
-
+    private $nbrpoche;
     /**
-     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Parc", inversedBy="lanternes",cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\StocksLanternes", mappedBy="lanterne",cascade={"persist","remove"})
      */
-    private $parc;
-    /**
-     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Poche", mappedBy="lanterne",cascade={"persist","remove"})
-     */
-    private $poches;
-    /**
-     * @ORM\OneToOne(targetEntity="SS\FMBBundle\Entity\Emplacement", mappedBy="lanterne")
-     */
-    private $emplacement;
+    private $stockslanternes;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->poches = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * @ORM\PrePersist
-     */
-    public function generatePoche()
-    {
-        for ($i = 1; $i < ($this->nombre + 1); $i++) {
-            $poche = new Poche();
-            $poche->setEmplacement($i);
-            $this->addPoch($poche);
-        }
-    }
-
-    /**
-     * Add poches
-     *
-     * @param \SS\FMBBundle\Entity\Poche $poches
-     * @return Lanterne
-     */
-    public function addPoch(\SS\FMBBundle\Entity\Poche $poches)
-    {
-        $this->poches[] = $poches;
-        $poches->setLanterne($this);
-
-        return $this;
-    }
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Get parc
-     *
-     * @return \SS\FMBBundle\Entity\Parc
-     */
-    public function getParc()
-    {
-        return $this->parc;
-    }
-
-    /**
-     * Set parc
-     *
-     * @param \SS\FMBBundle\Entity\Parc $parc
-     * @return Lanterne
-     */
-    public function setParc(\SS\FMBBundle\Entity\Parc $parc)
-    {
-        $this->parc = $parc;
-
-        return $this;
-    }
-
-    /**
-     * Remove poches
-     *
-     * @param \SS\FMBBundle\Entity\Poche $poches
-     */
-    public function removePoch(\SS\FMBBundle\Entity\Poche $poches)
-    {
-        $this->poches->removeElement($poches);
-    }
-
-    /**
-     * Get poches
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPoches()
-    {
-        return $this->poches;
-    }
-
-    /**
-     * Get nombre
-     *
-     * @return integer
-     */
-    public function getNombre()
-    {
-        return $this->nombre;
-    }
-
-    /**
-     * Set nombre
-     *
-     * @param integer $nombre
-     * @return Lanterne
-     */
-    public function setNombre($nombre)
-    {
-        $this->nombre = $nombre;
-
-        return $this;
+        $this->stockslanternes = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function __toString()
@@ -166,14 +40,18 @@ class Lanterne
     }
 
     /**
-     * Get nomLanterne
-     *
-     * @return string
+     * Add stockslanternes
+     * @param \SS\FMBBundle\Entity\StocksLanternes $stockslanternes
+     * @return Lanterne
      */
-    public function getNomLanterne()
+    public function addStockslanterne(\SS\FMBBundle\Entity\StocksLanternes $stockslanternes)
     {
-        return $this->nomLanterne;
+        $this->stockslanternes[] = $stockslanternes;
+        $stockslanternes->setLanterne($this);
+
+        return $this;
     }
+
 
     /**
      * Set nomLanterne
@@ -189,25 +67,55 @@ class Lanterne
     }
 
     /**
-     * Get emplacement
+     * Get nomLanterne
      *
-     * @return \SS\FMBBundle\Entity\Emplacement
+     * @return string 
      */
-    public function getEmplacement()
+    public function getNomLanterne()
     {
-        return $this->emplacement;
+        return $this->nomLanterne;
     }
 
     /**
-     * Set emplacement
+     * Set nbrpoche
      *
-     * @param \SS\FMBBundle\Entity\Emplacement $emplacement
+     * @param integer $nbrpoche
      * @return Lanterne
      */
-    public function setEmplacement(\SS\FMBBundle\Entity\Emplacement $emplacement = null)
+    public function setNbrpoche($nbrpoche)
     {
-        $this->emplacement = $emplacement;
+        $this->nbrpoche = $nbrpoche;
 
         return $this;
+    }
+
+    /**
+     * Get nbrpoche
+     *
+     * @return integer 
+     */
+    public function getNbrpoche()
+    {
+        return $this->nbrpoche;
+    }
+
+    /**
+     * Remove stockslanternes
+     *
+     * @param \SS\FMBBundle\Entity\StocksLanternes $stockslanternes
+     */
+    public function removeStockslanterne(\SS\FMBBundle\Entity\StocksLanternes $stockslanternes)
+    {
+        $this->stockslanternes->removeElement($stockslanternes);
+    }
+
+    /**
+     * Get stockslanternes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getStockslanternes()
+    {
+        return $this->stockslanternes;
     }
 }

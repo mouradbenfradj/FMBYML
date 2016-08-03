@@ -1,0 +1,41 @@
+<?php
+
+namespace SS\FMBBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Flotteur
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="SS\FMBBundle\Repository\FlotteurRepository")
+ */
+class Flotteur
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nomFlotteur", type="string", length=255)
+     */
+    private $nomFlotteur;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Segment", inversedBy="flotteurs")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $segment;
+
+    /**
+     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Emplacement", mappedBy="flotteur",cascade={"persist","remove"})
+     */
+    private $emplacements;
+}

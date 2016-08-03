@@ -1,0 +1,42 @@
+<?php
+
+namespace SS\FMBBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * StocksArticles
+ *
+ * @ORM\Table()
+ * @ORM\Entity
+ */
+class StocksArticles
+{
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ref_stock_article", type="string", length=32)
+     * @ORM\Id
+     */
+    private $refStockArticle;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Stocks")
+     * @ORM\JoinColumn(name="id_stock", referencedColumnName="id_stock",nullable=false)
+     */
+    private $idStock;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Articles")
+     * @ORM\JoinColumn(name="ref_article", referencedColumnName="ref_article",nullable=false)
+     */
+    private $refArticle;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="qte", type="float")
+     */
+    private $qte;
+}

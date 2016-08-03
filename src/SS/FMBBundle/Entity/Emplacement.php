@@ -32,7 +32,7 @@ class Emplacement
      */
     private $corde;
     /**
-     * @ORM\OneToOne(targetEntity="SS\FMBBundle\Entity\Lanterne", inversedBy="emplacement")
+     * @ORM\OneToOne(targetEntity="SS\FMBBundle\Entity\StocksLanternes", inversedBy="emplacement")
      * @ORM\JoinColumn(nullable=true)
      */
     private $lanterne;

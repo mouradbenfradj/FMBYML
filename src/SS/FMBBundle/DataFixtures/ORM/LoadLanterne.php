@@ -17,18 +17,15 @@ class LoadLanterne extends AbstractFixture implements OrderedFixtureInterface
     {
         $lant7p = new Lanterne();
         $lant7p->setNomLanterne('lant7p');
-        $lant7p->setNombre(7);
-        $lant7p->setParc($this->getReference('fmb'));
+        $lant7p->setNbrpoche(7);
         $manager->persist($lant7p);
         $lant10p = new Lanterne();
         $lant10p->setNomLanterne('lant10p');
-        $lant10p->setNombre(10);
-        $lant10p->setParc($this->getReference('fmb'));
+        $lant10p->setNbrpoche(10);
         $manager->persist($lant10p);
         $pearlnet = new Lanterne();
         $pearlnet->setNomLanterne('pearlnet');
-        $pearlnet->setNombre(1);
-        $pearlnet->setParc($this->getReference('fmb'));
+        $pearlnet->setNbrpoche(1);
         $manager->persist($pearlnet);
 
         $manager->flush();

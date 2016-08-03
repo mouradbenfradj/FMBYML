@@ -59,7 +59,7 @@ class PreparationLanterneType extends AbstractType
      */
     public function getName()
     {
-        return 'ss_fmbbundle_preparationcorde';
+        return 'ss_fmbbundle_preparationlanterne';
     }
 
 }

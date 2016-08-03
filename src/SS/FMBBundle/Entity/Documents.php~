@@ -1,0 +1,40 @@
+<?php
+
+namespace SS\FMBBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Ducuments
+ *
+ * @ORM\Table()
+ * @ORM\Entity
+ */
+class Documents
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ref_doc", type="string", length=32)
+     * @ORM\Id
+     */
+    private $refDoc;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\TypeDocuments")
+     * @ORM\JoinColumn(name="id_type_doc", referencedColumnName="id",nullable=false)
+     */
+    private $idTypeDoc;
+
+    /**
+     * @ORM\OneToMany(targetEntity="DocBlf", mappedBy="refDoc")
+     */
+    private $docBlfs;
+    /**
+     * @ORM\OneToMany(targetEntity="DocsLines", mappedBy="refDoc")
+     */
+    private $docsLines;
+
+
+
+}

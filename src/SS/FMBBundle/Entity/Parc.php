@@ -34,9 +34,9 @@ class Parc
     private $filieres;
 
     /**
-     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Lanterne", mappedBy="parc",cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\StocksLanternes", mappedBy="parc",cascade={"remove"})
      */
-    private $lanternes;
+    private $stockslanternes;
     /**
      * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Stocks", mappedBy="refAdrStock",cascade={"remove"})
      */
@@ -55,7 +55,7 @@ class Parc
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -74,6 +74,33 @@ class Parc
         $filieres->setParc($this);
         return $this;
     }
+    public function __toString()
+    {
+        return $this->getNomParc();
+    }
+
+    /**
+     * Set nomParc
+     *
+     * @param string $nomParc
+     * @return Parc
+     */
+    public function setNomParc($nomParc)
+    {
+        $this->nomParc = $nomParc;
+
+        return $this;
+    }
+
+    /**
+     * Get nomParc
+     *
+     * @return string 
+     */
+    public function getNomParc()
+    {
+        return $this->nomParc;
+    }
 
     /**
      * Remove filieres
@@ -88,7 +115,7 @@ class Parc
     /**
      * Get filieres
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getFilieres()
     {
@@ -96,65 +123,36 @@ class Parc
     }
 
     /**
-     * Add lanternes
+     * Add stockslanternes
      *
-     * @param \SS\FMBBundle\Entity\Lanterne $lanternes
+     * @param \SS\FMBBundle\Entity\StocksLanternes $stockslanternes
      * @return Parc
      */
-    public function addLanterne(\SS\FMBBundle\Entity\Lanterne $lanternes)
+    public function addStockslanterne(\SS\FMBBundle\Entity\StocksLanternes $stockslanternes)
     {
-        $this->lanternes[] = $lanternes;
-        $lanternes->setParc($this);
+        $this->stockslanternes[] = $stockslanternes;
+
         return $this;
     }
 
     /**
-     * Remove lanternes
+     * Remove stockslanternes
      *
-     * @param \SS\FMBBundle\Entity\Lanterne $lanternes
+     * @param \SS\FMBBundle\Entity\StocksLanternes $stockslanternes
      */
-    public function removeLanterne(\SS\FMBBundle\Entity\Lanterne $lanternes)
+    public function removeStockslanterne(\SS\FMBBundle\Entity\StocksLanternes $stockslanternes)
     {
-        $this->lanternes->removeElement($lanternes);
+        $this->stockslanternes->removeElement($stockslanternes);
     }
 
     /**
-     * Get lanternes
+     * Get stockslanternes
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getLanternes()
+    public function getStockslanternes()
     {
-        return $this->lanternes;
-    }
-
-
-    public function __toString()
-    {
-        return $this->getNomParc();
-    }
-
-    /**
-     * Get nomParc
-     *
-     * @return string
-     */
-    public function getNomParc()
-    {
-        return $this->nomParc;
-    }
-
-    /**
-     * Set nomParc
-     *
-     * @param string $nomParc
-     * @return Parc
-     */
-    public function setNomParc($nomParc)
-    {
-        $this->nomParc = $nomParc;
-
-        return $this;
+        return $this->stockslanternes;
     }
 
     /**
@@ -183,7 +181,7 @@ class Parc
     /**
      * Get stock
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getStock()
     {

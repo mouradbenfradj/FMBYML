@@ -1,0 +1,41 @@
+<?php
+
+namespace SS\FMBBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Articles
+ *
+ * @ORM\Table()
+ * @ORM\Entity
+ */
+class Articles
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ref_article", type="string", length=32)
+     * @ORM\Id
+     */
+    private $refArticle;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="lib_article", type="string", length=250)
+     */
+    private $libArticle;
+    public function __toString()
+    {
+        return $this->getLibArticle();
+    }
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Lot", cascade={"persist"})
+     * @ORM\JoinColumn(name="lot", referencedColumnName="lot",nullable=false)
+     */
+    private $lot;
+
+
+}

@@ -1,0 +1,64 @@
+<?php
+
+namespace SS\FMBBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * DocumentsTypes
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="SS\FMBBundle\Repository\DocumentsTypesRepository")
+ */
+class DocumentsTypes
+{
+    /**
+     * @var integer
+     * @ORM\Id
+     * @ORM\Column(name="idTypeDoc", type="smallint", length=5)
+     */
+    private $idTypeDoc;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="libTypeDoc", type="string", length=64)
+     */
+    private $libTypeDoc;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="libTypePrinted", type="string", length=64)
+     */
+    private $libTypePrinted;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="codeDoc", type="string", length=32)
+     */
+    private $codeDoc;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="idTypeGroupe", type="boolean" , length=3)
+     */
+    private $idTypeGroupe;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="actif", type="boolean", length=3)
+     */
+    private $actif;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="idPdfModele", type="boolean", length=5)
+     */
+    private $idPdfModele;
+
+}
