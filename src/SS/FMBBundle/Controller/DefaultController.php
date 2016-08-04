@@ -268,8 +268,6 @@ class DefaultController extends Controller
         $lanternearticle = $em->getRepository('SSFMBBundle:StocksLanternes')->findBy(
             array('article' => $request->get('ida'), 'emplacement' => null, 'pret' => false)
         );
-        var_dump($lanternearticle);
-        die(count($lanternearticle));
         count($lanternearticle);
         $tabEnsembles = array();
         $tabtest = array();
@@ -277,14 +275,12 @@ class DefaultController extends Controller
 
         $tabEnsembles[$i]['qte'] = 0;
         foreach ($lanternearticle as $e) { // transformer la réponse de la requete en tableau qui remplira le select pour ensembles
-            if (!in_array($e->getQuantiter(), $tabtest)) {
+            if (!in_array($this->calculerQuantiterLanterne($e), $tabtest)) {
                 $tabEnsembles[$i]['id'] = $e->getId();
                 $tabEnsembles[$i]['nombre'] = count($lanternearticle);
-                foreach ($e->getPoches(
-                ) as $poche) { // transformer la réponse de la requete en tableau qui remplira le select pour ensembles
-                    $tabEnsembles[$i]['qte'] = $tabEnsembles[$i]['qte'] + $poche->getQuantite();
-                    $tabtest[] = $poche->getQuantiter();
-                }
+                $tabEnsembles[$i]['qte'] = $this->calculerQuantiterLanterne($e);
+                $tabtest[] = $this->calculerQuantiterLanterne($e);
+
             }
             $i++;
 
@@ -298,6 +294,17 @@ class DefaultController extends Controller
         $response->setContent($data);
 
         return $response;
+
+    }
+
+    public function calculerQuantiterLanterne($tableauPoches)
+    {
+        $somme = 0;
+        foreach ($tableauPoches->getPoches() as $poches) {
+            $somme = $somme + $poches->getQuantite();
+        }
+
+        return $somme;
 
     }
 
@@ -316,14 +323,22 @@ class DefaultController extends Controller
         if ($request->isMethod('POST')) {
             foreach ($request->request->get('placelanterne') as $emplacementlanterne) {
                 $place = $em->getRepository('SSFMBBundle:Emplacement')->find($emplacementlanterne);
+                var_dump($request->request->get('lanterne'));
+                die();
+
+                $lanternearticle = $em->getRepository('SSFMBBundle:StocksLanternes')->find();
+                var_dump($lanternearticle);
+                die();
+
                 $lanternearticle = $em->getRepository('SSFMBBundle:StocksLanternes')->findOneBy(
                     array(
                         'article' => $request->request->get('articlechoix'),
                         'emplacement' => null,
-                        'quantiter' => $request->request->get('quantierchoix'),
+                        'quantite' => $request->request->get('quantierchoix'),
                         'pret' => false,
                     )
                 );
+
                 $lanternearticle->setEmplacement($place);
                 $lanternearticle->setPret(false);
                 $place->setStocksLanternes($lanternearticle);
