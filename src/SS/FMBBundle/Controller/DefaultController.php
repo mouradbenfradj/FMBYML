@@ -266,13 +266,17 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $lanternearticle = $em->getRepository('SSFMBBundle:StocksLanternes')->findBy(
-            array('article' => $request->get('ida'), 'emplacement' => null, 'pret' => false)
+            array(
+                'article' => $request->get('ida'),
+                'emplacement' => null,
+                'pret' => false,
+                'lanterne' => $request->get('idl'),
+            )
         );
         count($lanternearticle);
         $tabEnsembles = array();
         $tabtest = array();
         $i = 0;
-
         $tabEnsembles[$i]['qte'] = 0;
         foreach ($lanternearticle as $e) { // transformer la réponse de la requete en tableau qui remplira le select pour ensembles
             if (!in_array($this->calculerQuantiterLanterne($e), $tabtest)) {
@@ -280,16 +284,11 @@ class DefaultController extends Controller
                 $tabEnsembles[$i]['nombre'] = count($lanternearticle);
                 $tabEnsembles[$i]['qte'] = $this->calculerQuantiterLanterne($e);
                 $tabtest[] = $this->calculerQuantiterLanterne($e);
-
             }
             $i++;
-
         }
-
         $response = new Response();
-
         $data = json_encode($tabEnsembles); // formater le résultat de la requête en json
-
         $response->headers->set('Content-Type', 'miseaeaulanterne/json');
         $response->setContent($data);
 
@@ -304,14 +303,16 @@ class DefaultController extends Controller
             $somme = $somme + $poches->getQuantite();
         }
 
-        return $somme;
-
+        if ($somme != 0) {
+            return $somme;
+        }
     }
 
     public function miseAEauLanterneAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $page = $em->getRepository('SSFMBBundle:Parc')->findAll();
+        $lanternes = $em->getRepository('SSFMBBundle:Lanterne')->findAll();
 
         if ($request->get('id') == null) {
             $parcs = null;
@@ -323,22 +324,21 @@ class DefaultController extends Controller
         if ($request->isMethod('POST')) {
             foreach ($request->request->get('placelanterne') as $emplacementlanterne) {
                 $place = $em->getRepository('SSFMBBundle:Emplacement')->find($emplacementlanterne);
-                var_dump($request->request->get('lanterne'));
-                die();
 
-                $lanternearticle = $em->getRepository('SSFMBBundle:StocksLanternes')->find();
-                var_dump($lanternearticle);
-                die();
+
+                $lanterne = $em->getRepository('SSFMBBundle:Lanterne')->find($request->request->get('lanternechoix'));
+
 
                 $lanternearticle = $em->getRepository('SSFMBBundle:StocksLanternes')->findOneBy(
                     array(
                         'article' => $request->request->get('articlechoix'),
                         'emplacement' => null,
-                        'quantite' => $request->request->get('quantierchoix'),
+                        'lanterne' => $lanterne,
                         'pret' => false,
                     )
                 );
-
+                var_dump($lanternearticle);
+                die();
                 $lanternearticle->setEmplacement($place);
                 $lanternearticle->setPret(false);
                 $place->setStocksLanternes($lanternearticle);
@@ -355,6 +355,7 @@ class DefaultController extends Controller
                 'entities' => $parcs,
                 'pages' => $page,
                 'articles' => $articles,
+                'lanternes' => $lanternes,
             )
         );
     }

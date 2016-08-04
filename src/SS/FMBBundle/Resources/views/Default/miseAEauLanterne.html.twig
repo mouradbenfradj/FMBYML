@@ -101,7 +101,17 @@
                                     <td>
                                         <p>quantiter disponible</p>
                                         <p><input type="number" id="quantit" readonly="true" value="0"></p>
+                                        <p>choisir type lanternes</p>
+                                        <p>
+                                            <select name="lanternechoix" id="lanternechoix">
+                                                {% for lanterne in lanternes %}
+                                                    <option value="{{ lanterne.nomLanterne }}">{{ lanterne.nomLanterne }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </p>
+
                                         <p> choisir l'article a mettre</p>
+
                                         <p>
                                             <select name="articlechoix" id="articlechoix">
                                                 {% for article in articles %}
@@ -110,6 +120,7 @@
                                                 {% endfor %}
                                             </select>
                                         </p>
+
                                         <div id="choixqtearticle">
                                             <p> choix de la quantiter des lanternes</p>
                                             <p>
@@ -136,10 +147,13 @@
     {{ parent() }}
     <script type="text/javascript">
         $(document).ready(function () {
+            console.log('document ready');
             $('#choixqtearticle').ready(function () {
+                console.log('hide choix article');
                 $('#choixqtearticle').hide();
             });
             $('input:checkbox').change(function () {
+                console.log('change checkbox');
                 if ($(this).is(':checked')) {
                     $('#quantit').val(parseInt($('#quantit').val()) - 1);
                 } else {
@@ -148,28 +162,34 @@
             });
         });
         $('#articlechoix').ready(function () {
+            console.log('article choix ready');
             $.ajax({
                 type: 'get',
                 url: "{{ path('ssfmb_lanternearticle') }}",
-                data: {'ida': $('#articlechoix').val()},
+                data: {'ida': $('#articlechoix').val(), 'idl': $('#lanternechoix').val()},
                 dataType: 'json',
-
                 beforeSend: function () {
+                    console.log('before send');
                     $('#quantierchoix').empty();
                 },
                 success: function (json) {
                     console.log('sucsses');
                     $('#quantierchoix').html('');
                     if (!$.trim(json)) {
+                        console.log('trim');
                         $('#choixqtearticle').ready(function () {
+                            console.log('choix article function ');
                             $('#choixqtearticle').hide();
                         });
                     }
                     ;
                     if ($.trim(json)) {
+                        console.log('trim2');
                         $('#choixqtearticle').ready(function () {
+                            console.log('choix article 2');
                             $('#choixqtearticle').show();
                             $("input:checkbox").each(function () {
+                                console.log('checkbox false ');
                                 $(this).prop('checked', false);
                             });
                         });
@@ -188,7 +208,7 @@
             $.ajax({
                 type: 'get',
                 url: "{{ path('ssfmb_lanternearticle') }}",
-                data: {'ida': $('#articlechoix').val()},
+                data: {'ida': $('#articlechoix').val(), 'idl': $('#lanternechoix').val()},
                 dataType: 'json',
                 beforeSend: function () {
                     $('#quantierchoix').empty();
