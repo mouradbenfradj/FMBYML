@@ -11,6 +11,11 @@ ssfmb_parcstock:
 ssfmb_cordearticle:
     path:     /cordearticle
     defaults: { _controller: SSFMBBundle:Default:cordeArticle}
+
+ssfmb_lanternearticle:
+    path:     /lanternearticle
+    defaults: { _controller: SSFMBBundle:Default:lanterneArticle}
+
 ssfmb_preparationlanterne:
     path:     /preparationlanterne
     defaults: { _controller: SSFMBBundle:Default:preparationLanterne }

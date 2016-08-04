@@ -262,16 +262,84 @@ class DefaultController extends Controller
         );
     }
 
-    public function miseAEauLanterneAction()
+    public function lanterneArticleAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+        $lanternearticle = $em->getRepository('SSFMBBundle:StocksLanternes')->findBy(
+            array('article' => $request->get('ida'), 'emplacement' => null, 'pret' => false)
+        );
+        var_dump($lanternearticle);
+        die(count($lanternearticle));
+        count($lanternearticle);
+        $tabEnsembles = array();
+        $tabtest = array();
+        $i = 0;
 
-        $parcs = $em->getRepository('SSFMBBundle:Parc')->findAll();
+        $tabEnsembles[$i]['qte'] = 0;
+        foreach ($lanternearticle as $e) { // transformer la réponse de la requete en tableau qui remplira le select pour ensembles
+            if (!in_array($e->getQuantiter(), $tabtest)) {
+                $tabEnsembles[$i]['id'] = $e->getId();
+                $tabEnsembles[$i]['nombre'] = count($lanternearticle);
+                foreach ($e->getPoches(
+                ) as $poche) { // transformer la réponse de la requete en tableau qui remplira le select pour ensembles
+                    $tabEnsembles[$i]['qte'] = $tabEnsembles[$i]['qte'] + $poche->getQuantite();
+                    $tabtest[] = $poche->getQuantiter();
+                }
+            }
+            $i++;
+
+        }
+
+        $response = new Response();
+
+        $data = json_encode($tabEnsembles); // formater le résultat de la requête en json
+
+        $response->headers->set('Content-Type', 'miseaeaulanterne/json');
+        $response->setContent($data);
+
+        return $response;
+
+    }
+
+    public function miseAEauLanterneAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $page = $em->getRepository('SSFMBBundle:Parc')->findAll();
+
+        if ($request->get('id') == null) {
+            $parcs = null;
+            $articles = null;
+        } else {
+            $parcs = $em->getRepository('SSFMBBundle:Parc')->findById($request->get('id'));
+            $articles = $em->getRepository('SSFMBBundle:Articles')->findAll();
+        }
+        if ($request->isMethod('POST')) {
+            foreach ($request->request->get('placelanterne') as $emplacementlanterne) {
+                $place = $em->getRepository('SSFMBBundle:Emplacement')->find($emplacementlanterne);
+                $lanternearticle = $em->getRepository('SSFMBBundle:StocksLanternes')->findOneBy(
+                    array(
+                        'article' => $request->request->get('articlechoix'),
+                        'emplacement' => null,
+                        'quantiter' => $request->request->get('quantierchoix'),
+                        'pret' => false,
+                    )
+                );
+                $lanternearticle->setEmplacement($place);
+                $lanternearticle->setPret(false);
+                $place->setStocksLanternes($lanternearticle);
+                $place->setDateDeRemplissage(new \DateTime());
+                $em->flush();
+            }
+
+            return $this->redirectToRoute('ssfmb_homepage');
+        }
 
         return $this->render(
             '@SSFMB/Default/miseAEauLanterne.html.twig',
             array(
                 'entities' => $parcs,
+                'pages' => $page,
+                'articles' => $articles,
             )
         );
     }

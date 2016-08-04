@@ -34,6 +34,7 @@ class StocksLanternes
 
     /**
      * @ORM\OneToOne(targetEntity="SS\FMBBundle\Entity\Emplacement", mappedBy="lanterne")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $emplacement;
     /**
@@ -154,6 +155,16 @@ class StocksLanternes
     }
 
     /**
+     * Get parc
+     *
+     * @return \SS\FMBBundle\Entity\Parc
+     */
+    public function getParc()
+    {
+        return $this->parc;
+    }
+
+    /**
      * Set parc
      *
      * @param \SS\FMBBundle\Entity\Parc $parc
@@ -167,13 +178,13 @@ class StocksLanternes
     }
 
     /**
-     * Get parc
+     * Get pret
      *
-     * @return \SS\FMBBundle\Entity\Parc 
+     * @return boolean
      */
-    public function getParc()
+    public function getPret()
     {
-        return $this->parc;
+        return $this->pret;
     }
 
     /**
@@ -190,13 +201,13 @@ class StocksLanternes
     }
 
     /**
-     * Get pret
+     * Get article
      *
-     * @return boolean 
+     * @return \SS\FMBBundle\Entity\Articles
      */
-    public function getPret()
+    public function getArticle()
     {
-        return $this->pret;
+        return $this->article;
     }
 
     /**
@@ -210,15 +221,5 @@ class StocksLanternes
         $this->article = $article;
 
         return $this;
-    }
-
-    /**
-     * Get article
-     *
-     * @return \SS\FMBBundle\Entity\Articles 
-     */
-    public function getArticle()
-    {
-        return $this->article;
     }
 }
