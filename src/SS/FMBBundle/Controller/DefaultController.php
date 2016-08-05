@@ -407,17 +407,38 @@ class DefaultController extends Controller
         );
     }
 
-    public
-    function retraitLanterneAction()
+    public function retraitLanterneAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+        $page = $em->getRepository('SSFMBBundle:Parc')->findAll();
 
-        $parcs = $em->getRepository('SSFMBBundle:Parc')->findAll();
+        if ($request->get('id') == null) {
+            $parcs = null;
+            $articles = null;
+        } else {
+            $parcs = $em->getRepository('SSFMBBundle:Parc')->findById($request->get('id'));
+            $articles = $em->getRepository('SSFMBBundle:Articles')->findAll();
+        }
+        if ($request->isMethod('POST')) {
+            foreach ($request->request->get('placelanterne') as $emplacementcorde) {
+                $place = $em->getRepository('SSFMBBundle:Emplacement')->find($emplacementcorde);
+                $slanterne = $place->getStockslanterne();
+                $slanterne->setPret(true);
+                $slanterne->setEmplacement(null);
+                $place->setStockslanterne(null);
+                $place->setDateDeRemplissage(null);
+                $em->flush();
+            }
+
+            return $this->redirectToRoute('ssfmb_homepage');
+        }
 
         return $this->render(
-            '@SSFMB/Default/retraitLanterne.html.twig',
+            'SSFMBBundle:Default:retraitLanterne.html.twig',
             array(
                 'entities' => $parcs,
+                'pages' => $page,
+                'articles' => $articles,
             )
         );
     }
