@@ -131,28 +131,38 @@ class DefaultController extends Controller
                         'refArticle' => $doclin->getRefArticle(),
                     )
                 );
-                $stockarticles = $result[0];
-                for ($j = 0; $j < $request->request->get(
-                    "ss_fmbbundle_preparationlanterne"
-                )['document']['docsLines'][0]['nombre']; $j++) {
-                    $stockslanternes = new StocksLanternes();
-                    $stockslanternes->setPret(false);
-                    $stockslanternes->setParc($form->get('parc')->getData());
-                    $stockslanternes->setLanterne($lant[0]);
-                    $stockarticles->setQte($stockarticles->getQte() - $doclin->getQte());
-                    $qtedocs = $doclin->getQte();
-                    for ($i = 1; $i < ($stockslanternes->getLanterne()->getNbrpoche() + 1); $i++) {
-                        $poche = new Poche();
-                        $poche->setEmplacement($i);
-                        $poche->setQuantite((int)($qtedocs / $stockslanternes->getLanterne()->getNbrpoche()));
-                        $qtedocs = $qtedocs - (int)($qtedocs / $stockslanternes->getLanterne()->getNbrpoche());
+                if (!empty($result)) {
+                    $stockarticles = $result[0];
+                    for ($j = 0; $j < $request->request->get(
+                        "ss_fmbbundle_preparationlanterne"
+                    )['document']['docsLines'][0]['nombre']; $j++) {
+                        $stockslanternes = new StocksLanternes();
+                        $stockslanternes->setPret(false);
+                        $stockslanternes->setParc($form->get('parc')->getData());
+                        $stockslanternes->setLanterne($lant[0]);
+                        $stockarticles->setQte($stockarticles->getQte() - $doclin->getQte());
+                        $qtedocs = $doclin->getQte();
+                        for ($i = 1; $i < ($stockslanternes->getLanterne()->getNbrpoche() + 1); $i++) {
+                            $poche = new Poche();
+                            $poche->setEmplacement($i);
+                            $poche->setQuantite((int)($qtedocs / $stockslanternes->getLanterne()->getNbrpoche()));
+                            $stockslanternes->addPoch($poche);
+                        }
+                        $stockslanternes->setArticle($doclin->getRefArticle());
 
-                        $stockslanternes->addPoch($poche);
+                        $em->persist($stockslanternes);
                     }
-                    $stockslanternes->setArticle($doclin->getRefArticle());
 
-                    $em->persist($stockslanternes);
+
+                } else {
+                    return $this->render(
+                        '@SSFMB/Default/preparationLanterne.html.twig',
+                        array(
+                            'form' => $form->createView(),
+                        )
+                    );
                 }
+
                 $i++;
             }
             $em->flush();
