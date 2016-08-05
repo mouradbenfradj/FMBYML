@@ -66,7 +66,7 @@
                                                                         {% for flotteur in segment.flotteurs %}
                                                                             <p>    {{ flotteur.getNomFlotteur }}
                                                                                 {% for emplacement in flotteur.emplacements %}
-                                                                                    {% if emplacement.corde == null and emplacement.lanterne == null %}
+                                                                                    {% if emplacement.corde == null and emplacement.stockslanterne == null %}
                                                                                         <font color="red"> {{ emplacement.place }}</font>
                                                                                         <input type="checkbox"
                                                                                                name="placelanterne[]"
@@ -78,7 +78,7 @@
                                                                                         <span style="display: none"
                                                                                               id="dateemplacement">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</span>
 
-                                                                                    {% elseif emplacement.lanterne != null %}
+                                                                                    {% elseif emplacement.stockslanterne != null %}
                                                                                         <font color="#adff2f"> {{ emplacement.place }}</font>
                                                                                         <span style="display: none"
                                                                                               id="dateemplacement">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</span>

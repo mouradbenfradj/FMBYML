@@ -145,7 +145,14 @@ class DefaultController extends Controller
                         for ($i = 1; $i < ($stockslanternes->getLanterne()->getNbrpoche() + 1); $i++) {
                             $poche = new Poche();
                             $poche->setEmplacement($i);
-                            $poche->setQuantite((int)($qtedocs / $stockslanternes->getLanterne()->getNbrpoche()));
+                            if ($i == 1) {
+                                $poche->setQuantite(
+                                    ((int)($qtedocs / $stockslanternes->getLanterne()->getNbrpoche(
+                                        ))) + ((int)($qtedocs % $stockslanternes->getLanterne()->getNbrpoche()))
+                                );
+                            } else {
+                                $poche->setQuantite((int)($qtedocs / $stockslanternes->getLanterne()->getNbrpoche()));
+                            }
                             $stockslanternes->addPoch($poche);
                         }
                         $stockslanternes->setArticle($doclin->getRefArticle());
@@ -334,11 +341,7 @@ class DefaultController extends Controller
         if ($request->isMethod('POST')) {
             foreach ($request->request->get('placelanterne') as $emplacementlanterne) {
                 $place = $em->getRepository('SSFMBBundle:Emplacement')->find($emplacementlanterne);
-
-
                 $lanterne = $em->getRepository('SSFMBBundle:Lanterne')->find($request->request->get('lanternechoix'));
-
-
                 $lanternearticle = $em->getRepository('SSFMBBundle:StocksLanternes')->findOneBy(
                     array(
                         'article' => $request->request->get('articlechoix'),
@@ -347,11 +350,9 @@ class DefaultController extends Controller
                         'pret' => false,
                     )
                 );
-                var_dump($lanternearticle);
-                die();
                 $lanternearticle->setEmplacement($place);
                 $lanternearticle->setPret(false);
-                $place->setStocksLanternes($lanternearticle);
+                $place->setStocksLanterne($lanternearticle);
                 $place->setDateDeRemplissage(new \DateTime());
                 $em->flush();
             }

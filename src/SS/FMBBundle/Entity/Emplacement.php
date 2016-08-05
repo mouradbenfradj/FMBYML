@@ -35,7 +35,7 @@ class Emplacement
      * @ORM\OneToOne(targetEntity="SS\FMBBundle\Entity\StocksLanternes", inversedBy="emplacement")
      * @ORM\JoinColumn(nullable=true)
      */
-    private $lanterne;
+    private $stockslanterne;
     /**
      * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Flotteur", inversedBy="emplacements",cascade={"persist","remove"})
      * @ORM\JoinColumn(nullable=false)
@@ -72,7 +72,7 @@ class Emplacement
 
     public function __toString()
     {
-        return $this->getId();
+        return "".$this->getId();
     }
 
     /**
@@ -132,29 +132,6 @@ class Emplacement
     }
 
     /**
-     * Get lanterne
-     *
-     * @return \SS\FMBBundle\Entity\Lanterne
-     */
-    public function getLanterne()
-    {
-        return $this->lanterne;
-    }
-
-    /**
-     * Set lanterne
-     *
-     * @param \SS\FMBBundle\Entity\Lanterne $lanterne
-     * @return Emplacement
-     */
-    public function setLanterne(\SS\FMBBundle\Entity\Lanterne $lanterne = null)
-    {
-        $this->lanterne = $lanterne;
-
-        return $this;
-    }
-
-    /**
      * Get dateDeRemplissage
      *
      * @return \DateTime
@@ -173,6 +150,29 @@ class Emplacement
     public function setDateDeRemplissage($dateDeRemplissage)
     {
         $this->dateDeRemplissage = $dateDeRemplissage;
+
+        return $this;
+    }
+
+    /**
+     * Get stockslanterne
+     *
+     * @return \SS\FMBBundle\Entity\StocksLanternes
+     */
+    public function getStockslanterne()
+    {
+        return $this->stockslanterne;
+    }
+
+    /**
+     * Set stockslanterne
+     *
+     * @param \SS\FMBBundle\Entity\StocksLanternes $stockslanterne
+     * @return Emplacement
+     */
+    public function setStockslanterne(\SS\FMBBundle\Entity\StocksLanternes $stockslanterne = null)
+    {
+        $this->stockslanterne = $stockslanterne;
 
         return $this;
     }
