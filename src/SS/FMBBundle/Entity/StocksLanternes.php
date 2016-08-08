@@ -55,6 +55,11 @@ class StocksLanternes
      * @ORM\JoinColumn(name="ref_article", referencedColumnName="ref_article")
      */
     private $article;
+    /**
+     *
+     * @ORM\Column(name="dateDeCreation", type="date")
+     */
+    private $dateDeCreation;
 
     /**
      * Constructor
@@ -221,5 +226,28 @@ class StocksLanternes
         $this->article = $article;
 
         return $this;
+    }
+
+    /**
+     * Set dateDeCreation
+     *
+     * @param \DateTime $dateDeCreation
+     * @return StocksLanternes
+     */
+    public function setDateDeCreation($dateDeCreation)
+    {
+        $this->dateDeCreation = $dateDeCreation;
+
+        return $this;
+    }
+
+    /**
+     * Get dateDeCreation
+     *
+     * @return \DateTime 
+     */
+    public function getDateDeCreation()
+    {
+        return $this->dateDeCreation;
     }
 }

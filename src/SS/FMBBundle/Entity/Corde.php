@@ -37,7 +37,6 @@ class Corde
     /**
      * @ORM\OneToOne(targetEntity="SS\FMBBundle\Entity\Emplacement", mappedBy="corde")
      * @ORM\JoinColumn(nullable=true)
-
      */
     private $emplacement;
 
@@ -47,6 +46,11 @@ class Corde
      */
     private $article;
 
+    /**
+     *
+     * @ORM\Column(name="dateDeCreation", type="date")
+     */
+    private $dateDeCreation;
     /**
      * Get id
      *
@@ -147,5 +151,28 @@ class Corde
         $this->pret = $pret;
 
         return $this;
+    }
+
+    /**
+     * Set dateDeCreation
+     *
+     * @param \DateTime $dateDeCreation
+     * @return Corde
+     */
+    public function setDateDeCreation($dateDeCreation)
+    {
+        $this->dateDeCreation = $dateDeCreation;
+
+        return $this;
+    }
+
+    /**
+     * Get dateDeCreation
+     *
+     * @return \DateTime 
+     */
+    public function getDateDeCreation()
+    {
+        return $this->dateDeCreation;
     }
 }

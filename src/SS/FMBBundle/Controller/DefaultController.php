@@ -3,44 +3,41 @@
 namespace SS\FMBBundle\Controller;
 
 use SS\FMBBundle\Entity\Corde;
-use SS\FMBBundle\Entity\Lanterne;
-use SS\FMBBundle\Entity\Lot;
-use SS\FMBBundle\Entity\Parc;
 use SS\FMBBundle\Entity\Poche;
 use SS\FMBBundle\Entity\StocksLanternes;
 use SS\FMBBundle\Form\PreparationCordeType;
 use SS\FMBBundle\Form\PreparationLanterneType;
+use SS\FMBBundle\Implementation\DefaultImpl;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Validator\Constraints\Date;
 
 class DefaultController extends Controller
 {
+    protected $defaultmetier;
+    protected $em;
+    protected $page;
+
     public function indexAction(Request $request)
     {
+        $this->em = $this->getDoctrine()->getManager();
+        $this->defaultmetier = new DefaultImpl($this->em);
+        $this->page = $this->em->getRepository('SSFMBBundle:Parc')->findAll();
 
-        $em = $this->getDoctrine()->getManager();
-        if (!$em->getRepository('SSFMBBundle:Lot')->find(date("Ymd"))) {
-            $lotId = new Lot();
-            $lotId->setLot(date("Ymd"));
-            $em->persist($lotId);
-            $em->flush();
-        }
-        $page = $em->getRepository('SSFMBBundle:Parc')->findAll();
+        $this->defaultmetier->generateurNumeroDeLotParDateDuJour();
 
         if ($request->get('id') == null) {
-            $parcs = $page;
-        } else {
-            $parcs = $em->getRepository('SSFMBBundle:Parc')->findById($request->get('id'));
-        }
+            $parcs = null;
 
+        } else {
+            $parcs = $this->em->getRepository('SSFMBBundle:Parc')->findById($request->get('id'));
+        }
         return $this->render(
             'SSFMBBundle:Default:index.html.twig',
             array(
                 'entities' => $parcs,
-                'pages' => $page,
+                'pages' => $this->page,
             )
         );
     }
@@ -147,8 +144,7 @@ class DefaultController extends Controller
                             $poche->setEmplacement($i);
                             if ($i == 1) {
                                 $poche->setQuantite(
-                                    ((int)($qtedocs / $stockslanternes->getLanterne()->getNbrpoche(
-                                        ))) + ((int)($qtedocs % $stockslanternes->getLanterne()->getNbrpoche()))
+                                    ((int)($qtedocs / $stockslanternes->getLanterne()->getNbrpoche())) + ((int)($qtedocs % $stockslanternes->getLanterne()->getNbrpoche()))
                                 );
                             } else {
                                 $poche->setQuantite((int)($qtedocs / $stockslanternes->getLanterne()->getNbrpoche()));
