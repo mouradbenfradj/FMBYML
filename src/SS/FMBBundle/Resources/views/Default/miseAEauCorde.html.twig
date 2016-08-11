@@ -210,7 +210,6 @@
                             $("input:checkbox").each(function () {
                                 $(this).prop('checked', false);
                             });
-
                             $('#choixqtearticle').show();
                         });
                     }
@@ -219,7 +218,6 @@
                         $("input:checkbox").each(function () {
                             $(this).attr('checked', false);
                         });
-                        // et  boucle sur la réponse contenu dans la variable passé à la function du success "json"
                         $('#quantierchoix').append('<option value="' + value.qte + '">' + value.qte + '</option>');
                     });
                 }

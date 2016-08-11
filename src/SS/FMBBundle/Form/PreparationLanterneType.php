@@ -49,6 +49,14 @@ class PreparationLanterneType extends AbstractType
             )
         );
         $builder->add(
+            'date',
+            'date',
+            array(
+                'data' => new \DateTime(),
+            )
+        );
+
+        $builder->add(
             'document',
             new DocumentsType()
         );

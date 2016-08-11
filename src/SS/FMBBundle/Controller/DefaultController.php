@@ -15,45 +15,32 @@ use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
-    protected $defaultmetier;
-    protected $em;
-    protected $page;
-
     public function indexAction(Request $request)
     {
-        $this->em = $this->getDoctrine()->getManager();
-        $this->defaultmetier = new DefaultImpl($this->em);
-        $this->page = $this->em->getRepository('SSFMBBundle:Parc')->findAll();
+        $em = $this->getDoctrine()->getManager();
+        $defaultmetier = new DefaultImpl($em);
+        $page = $em->getRepository('SSFMBBundle:Parc')->findAll();
 
-        $this->defaultmetier->generateurNumeroDeLotParDateDuJour();
+        $defaultmetier->generateurNumeroDeLotParDateDuJour();
 
         if ($request->get('id') == null) {
             $parcs = null;
-
         } else {
-            $parcs = $this->em->getRepository('SSFMBBundle:Parc')->findById($request->get('id'));
+            $parcs = $em->getRepository('SSFMBBundle:Parc')->findById($request->get('id'));
         }
         return $this->render(
             'SSFMBBundle:Default:index.html.twig',
             array(
                 'entities' => $parcs,
-                'pages' => $this->page,
+                'pages' => $page,
             )
         );
     }
 
     public function preparationCordeAction(Request $request)
     {
-
-        $form = $this->createForm(
-            new PreparationCordeType(),
-            null,
-            array(
-                'action' => $this->generateUrl('ssfmb_preparationcorde'),
-                'method' => 'POST',
-            )
-        );
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form = $this->createForm(new PreparationCordeType(), null, array('action' => $this->generateUrl('ssfmb_preparationcorde'), 'method' => 'POST',));
+        $form->add('submit', 'submit', array('label' => 'preparer'));
         if ($request->isMethod('POST')) {
             $em = $this->getDoctrine()->getManager();
             $form->handleRequest($request);
@@ -67,6 +54,22 @@ class DefaultController extends Controller
                         'refArticle' => $doclin->getRefArticle(),
                     )
                 );
+                if (empty($result)) {
+                    return $this->render(
+                        '@SSFMB/Default/preparationCorde.html.twig',
+                        array(
+                            'form' => $form->createView(),
+                        )
+                    );
+                }
+                if (empty($result)) {
+                    return $this->render(
+                        '@SSFMB/Default/preparationCorde.html.twig',
+                        array(
+                            'form' => $form->createView(),
+                        )
+                    );
+                }
                 $stockarticles = $result[0];
 
                 for ($j = 0; $j < $request->request->get(
@@ -74,6 +77,7 @@ class DefaultController extends Controller
                 )['document']['docsLines'][$i]['nombre']; $j++) {
                     $corde = new Corde();
                     $corde->setPret(false);
+                    $corde->setDateDeCreation($form->getData('date')['date']);
                     $stockarticles->setQte($stockarticles->getQte() - $doclin->getQte());
                     $corde->setQuantiter($doclin->getQte());
                     $corde->setArticle($doclin->getRefArticle());
@@ -113,12 +117,9 @@ class DefaultController extends Controller
 
             $em->persist($document);
 
-            $lant = $em->getRepository('SSFMBBundle:Lanterne')->findBy(
-                array(
-                    'nomLanterne' => $form->get('lanterne')->getData()->getNomLanterne(),
-                )
+            $lant = $em->getRepository('SSFMBBundle:Lanterne')->findByNomLanterne(
+                $form->get('lanterne')->getData()->getNomLanterne()
             );
-
 
             $i = 0;
             foreach ($form['document']['docsLines']->getData() as $doclin) {
@@ -128,17 +129,21 @@ class DefaultController extends Controller
                         'refArticle' => $doclin->getRefArticle(),
                     )
                 );
+
                 if (!empty($result)) {
                     $stockarticles = $result[0];
                     for ($j = 0; $j < $request->request->get(
                         "ss_fmbbundle_preparationlanterne"
                     )['document']['docsLines'][0]['nombre']; $j++) {
+
                         $stockslanternes = new StocksLanternes();
+                        $stockslanternes->setDateDeCreation($form->getData('date')['date']);
                         $stockslanternes->setPret(false);
                         $stockslanternes->setParc($form->get('parc')->getData());
                         $stockslanternes->setLanterne($lant[0]);
                         $stockarticles->setQte($stockarticles->getQte() - $doclin->getQte());
                         $qtedocs = $doclin->getQte();
+
                         for ($i = 1; $i < ($stockslanternes->getLanterne()->getNbrpoche() + 1); $i++) {
                             $poche = new Poche();
                             $poche->setEmplacement($i);
@@ -151,9 +156,8 @@ class DefaultController extends Controller
                             }
                             $stockslanternes->addPoch($poche);
                         }
-                        $stockslanternes->setArticle($doclin->getRefArticle());
-
                         $em->persist($stockslanternes);
+                        $stockslanternes->setArticle($doclin->getRefArticle());
                     }
 
 

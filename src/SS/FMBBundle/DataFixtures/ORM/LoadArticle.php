@@ -15,26 +15,11 @@ class LoadArticle extends AbstractFixture implements OrderedFixtureInterface
      */
     public function load(ObjectManager $manager)
     {
-        $Huitre = new Articles();
-        $Huitre->setLibArticle('Huitre');
-        $Huitre->setRefArticle('test1');
-        $Huitre->setLot($this->getReference('lot'));
-        $manager->persist($Huitre);
-        $Moule = new Articles();
-        $Moule->setLibArticle('Moule');
-        $Moule->setRefArticle('test2');
-        $Moule->setLot($this->getReference('lot'));
-        $manager->persist($Moule);
         $NaissainHuitre = new Articles();
         $NaissainHuitre->setLibArticle('Naissain Huitre');
-        $NaissainHuitre->setRefArticle('test3');
+        $NaissainHuitre->setRefArticle('NH');
         $NaissainHuitre->setLot($this->getReference('lot'));
         $manager->persist($NaissainHuitre);
-        $NaissainMoule = new Articles();
-        $NaissainMoule->setLibArticle('Naissain Moule');
-        $NaissainMoule->setRefArticle('test4');
-        $NaissainMoule->setLot($this->getReference('lot'));
-        $manager->persist($NaissainMoule);
 
         $manager->flush();
         $this->addReference('Huitre', $Huitre);

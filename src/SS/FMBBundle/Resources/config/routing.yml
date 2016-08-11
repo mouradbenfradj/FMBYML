@@ -1,3 +1,7 @@
+ssfmb_stockslanternes:
+    resource: "@SSFMBBundle/Resources/config/routing/stockslanternes.yml"
+    prefix:   /stockslanternes
+
 ssfmb_lot:
     resource: "@SSFMBBundle/Resources/config/routing/lot.yml"
     prefix:   /lot

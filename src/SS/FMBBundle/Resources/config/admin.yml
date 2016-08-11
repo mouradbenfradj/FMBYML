@@ -1,14 +1,25 @@
 services:
     sonata.admin.parc:
-          class: SS\FMBBundle\Admin\ParcAdmin
-          tags:
-              - { name: sonata.admin, manager_type: orm, label: "Parc"}
-          arguments:
-              - ~
-              - SS\FMBBundle\Entity\Parc
-              - ~
-          calls:
-              - [ setTranslationDomain, [AcmeDemoBundle]]
+              class: SS\FMBBundle\Admin\ParcAdmin
+              tags:
+                  - { name: sonata.admin, manager_type: orm, label: "Parc"}
+              arguments:
+                  - ~
+                  - SS\FMBBundle\Entity\Parc
+                  - ~
+              calls:
+                  - [ setTranslationDomain, [SSFMBBundle]]
+
+    sonata.admin.lot:
+              class: SS\FMBBundle\Admin\LotAdmin
+              tags:
+                  - { name: sonata.admin, manager_type: orm, label: "Lot"}
+              arguments:
+                  - ~
+                  - SS\FMBBundle\Entity\Lot
+                  - ~
+              calls:
+                  - [ setTranslationDomain, [SSFMBBundle]]
 
     sonata.admin.filiere:
           class: SS\FMBBundle\Admin\FiliereAdmin
@@ -20,7 +31,7 @@ services:
               - 'SonataAdminBundle:CRUD'
               - ~
           calls:
-              - [ setTranslationDomain, [AcmeDemoBundle]]
+              - [ setTranslationDomain, [SSFMBBundle]]
 
     sonata.admin.segment:
           class: SS\FMBBundle\Admin\SegmentAdmin
@@ -32,7 +43,7 @@ services:
               - 'SonataAdminBundle:CRUD'
               - ~
           calls:
-              - [ setTranslationDomain, [AcmeDemoBundle]]
+              - [ setTranslationDomain, [SSFMBBundle]]
 
     sonata.admin.articles:
                    class: SS\FMBBundle\Admin\ArticlesAdmin
@@ -43,7 +54,7 @@ services:
                        - SS\FMBBundle\Entity\Articles
                        - ~
                    calls:
-                       - [ setTranslationDomain, [AcmeDemoBundle]]
+                       - [ setTranslationDomain, [SSFMBBundle]]
     sonata.admin.stockarticle:
                    class: SS\FMBBundle\Admin\StocksArticlesAdmin
                    tags:
@@ -53,7 +64,7 @@ services:
                        - SS\FMBBundle\Entity\StocksArticles
                        - ~
                    calls:
-                       - [ setTranslationDomain, [AcmeDemoBundle]]
+                       - [ setTranslationDomain, [SSFMBBundle]]
     sonata.admin.stocks:
                     class: SS\FMBBundle\Admin\StocksAdmin
                     tags:
@@ -63,7 +74,7 @@ services:
                         - SS\FMBBundle\Entity\Stocks
                         - ~
                     calls:
-                        - [ setTranslationDomain, [AcmeDemoBundle]]
+                        - [ setTranslationDomain, [SSFMBBundle]]
     sonata.admin.typeDocuments:
                   class: SS\FMBBundle\Admin\TypeDocumentsAdmin
                   tags:
@@ -73,7 +84,7 @@ services:
                       - SS\FMBBundle\Entity\TypeDocuments
                       - ~
                   calls:
-                      - [ setTranslationDomain, [AcmeDemoBundle]]
+                      - [ setTranslationDomain, [SSFMBBundle]]
     sonata.admin.lanterne:
               class: SS\FMBBundle\Admin\LanterneAdmin
               tags:
@@ -83,7 +94,7 @@ services:
                   - SS\FMBBundle\Entity\Lanterne
                   - ~
               calls:
-                  - [ setTranslationDomain, [AcmeDemoBundle]]
+                  - [ setTranslationDomain, [SSFMBBundle]]
     sonata.admin.poche:
           class: SS\FMBBundle\Admin\PocheAdmin
           tags:
@@ -93,4 +104,4 @@ services:
               - SS\FMBBundle\Entity\Poche
               - ~
           calls:
-              - [ setTranslationDomain, [AcmeDemoBundle]]
+              - [ setTranslationDomain, [SSFMBBundle]]

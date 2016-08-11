@@ -27,10 +27,18 @@ class LoadLot extends AbstractFixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager)
     {
         $lot = new Lot();
-        $lot->setLot('testlot');
+        $lot->setLot('NH30');
+        $manager->persist($lot);
+        $lo = new Lot();
+        $lo->setLot('NH33');
+        $manager->persist($lot);
+        $l = new Lot();
+        $l->setLot('NH32');
         $manager->persist($lot);
 
         $manager->flush();
         $this->addReference('lot', $lot);
+        $this->addReference('lo', $lo);
+        $this->addReference('l', $l);
     }
 }

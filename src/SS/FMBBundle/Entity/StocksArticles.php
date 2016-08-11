@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table()
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks()
  */
 class StocksArticles
 {
@@ -40,6 +41,13 @@ class StocksArticles
      */
     private $qte;
 
+    /**
+     * @ORM\PrePersist
+     */
+    public function generateRefStockArticle()
+    {
+        $this->refStockArticle = uniqid();
+    }
     /**
      * Get refStockArticle
      *

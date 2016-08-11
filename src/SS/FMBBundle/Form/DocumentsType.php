@@ -15,7 +15,6 @@ class DocumentsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('refDoc')
             ->add('idTypeDoc')
             ->add(
                 'docsLines',

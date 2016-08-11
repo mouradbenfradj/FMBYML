@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table()
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks()
  */
 class Documents
 {
@@ -34,6 +35,14 @@ class Documents
      * @ORM\OneToMany(targetEntity="DocsLines", mappedBy="refDoc",cascade={"persist"})
      */
     private $docsLines;
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function generateRefDoc()
+    {
+        $this->refDoc = uniqid();
+    }
 
     /**
      * Constructor

@@ -9,14 +9,11 @@
         {% block menu %}
             {{ parent() }}
         {% endblock %}
-        <br><br><br>
+        <br><br>
         {% block alerte %}
             <div class="row">
                 <div class="col-md-12">
-
-
                     <div class="alert alert-dismissable alert-danger" id="alerterouge" style="display: none">
-
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
                             ×
                         </button>
@@ -121,7 +118,12 @@
                                                                                               style="display: none">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</span>
                                                                                     {% endif %}
                                                                                 {% elseif emplacement.stockslanterne != null %}
-                                                                                    <font color="#adff2f"> {{ emplacement.place }}</font>
+                                                                                    <a title="{{ emplacement.stockslanterne.lanterne.nomlanterne }}
+-article  {{ emplacement.stockslanterne.article.libArticle }}
+-date de creation  {{ emplacement.stockslanterne.dateDeCreation|date('Y-m-d') }}
+-date de MAE  {{ emplacement.dateDeRemplissage|date('Y-m-d') }}"
+                                                                                       href="{{ path('stockslanternes_show', {'id': emplacement.stockslanterne.id }) }}"><font
+                                                                                                color="#adff2f"> {{ emplacement.place }}</font></a>
                                                                                     <span style="display: none"
                                                                                           id="dateemplacement">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</span>
 

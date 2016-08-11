@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table()
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks()
  */
 class DocsLines
 {
@@ -35,14 +36,14 @@ class DocsLines
     /**
      * @var string
      *
-     * @ORM\Column(name="libArticle", type="string", length=250)
+     * @ORM\Column(name="libArticle", type="string", length=250, nullable=true)
      */
     private $libArticle;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="descArticle", type="text")
+     * @ORM\Column(name="descArticle", type="text", nullable=true)
      */
     private $descArticle;
 
@@ -64,6 +65,13 @@ class DocsLines
      */
     private $children;
 
+    /**
+     * @ORM\PrePersist
+     */
+    public function generateRefDocLine()
+    {
+        $this->refDocLine = uniqid();
+    }
     /**
      * Constructor
      */

@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table()
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks()
  */
 class Articles
 {
@@ -34,8 +35,17 @@ class Articles
 
     public function __toString()
     {
-        return $this->getLot()." ".$this->getLibArticle();
+        return $this->getLot() . " " . $this->getLibArticle();
     }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function generateRefArticle()
+    {
+        $this->refArticle = uniqid();
+    }
+
 
     /**
      * Get lot

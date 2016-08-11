@@ -15,7 +15,6 @@ class ArticlesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('refArticle')
             ->add('libArticle')
             ->add('lot');
     }
