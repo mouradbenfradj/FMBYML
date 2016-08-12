@@ -155,10 +155,12 @@
             checkbox.each(function () {
                 switch (fill) {
                     case '0':
+                        if(this.checked == true)
                         $('#quantit').val(parseInt($('#quantit').val()) - 1);
                         this.checked = false;
                         break;
                     case '1':
+                        if(this.checked == false)
                         $('#quantit').val(parseInt($('#quantit').val()) + 1);
                         this.checked = true;
                         break;

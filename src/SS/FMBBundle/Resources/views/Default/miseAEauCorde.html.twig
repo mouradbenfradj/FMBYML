@@ -243,6 +243,8 @@
             });
         });
         function fillCheckbox(containerID, fill) {
+            console.log(containerID);
+            console.log(fill);
             var checkbox = $('#' + containerID);
             var checkbox = checkbox.find('input[type="checkbox"]');
             console.log(checkbox);
@@ -250,19 +252,21 @@
             checkbox.each(function () {
                 switch (fill) {
                     case '0':
-                        $('#quantit').val(parseInt($('#quantit').val()) + 1);
+                        if(this.checked == true)
+                            $('#quantit').val(parseInt($('#quantit').val()) + 1);
                         this.checked = false;
                         break;
                     case '1':
-                        $('#quantit').val(parseInt($('#quantit').val()) - 1);
+                        if(this.checked == false)
+                            $('#quantit').val(parseInt($('#quantit').val()) - 1);
                         this.checked = true;
                         break;
                     case 2:
+                        console.log(fill);
                         this.checked = !this.checked;
                         break;
                 }
             });
         }
-
     </script>
 {% endblock %}
