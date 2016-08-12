@@ -74,8 +74,11 @@
                                                                                         {% if emplacement.corde == null and emplacement.stockslanterne == null %}
                                                                                             <font color="red"> {{ emplacement.place }}</font>|
                                                                                         {% elseif emplacement.corde != null %}
-                                                                                            <font color="blue"> {{ emplacement.place }}</font>|
-                                                                                        {% elseif emplacement.stockslanterne != null %}
+                                                                                            <a title="article  {{ emplacement.corde.article.libArticle }}
+-date de creation  {{ emplacement.corde.dateDeCreation|date('Y-m-d') }}
+-date de MAE  {{ emplacement.dateDeRemplissage|date('Y-m-d') }}"
+                                                                                               href="{{ path('corde_show', {'id': emplacement.corde.id }) }}">
+                                                                                                <font color="blue"> {{ emplacement.place }}</font></a>                                                                                        {% elseif emplacement.stockslanterne != null %}
                                                                                             <a title="{{ emplacement.stockslanterne.lanterne.nomlanterne }}
 -article  {{ emplacement.stockslanterne.article.libArticle }}
 -date de creation  {{ emplacement.stockslanterne.dateDeCreation|date('Y-m-d') }}
@@ -115,6 +118,9 @@
                                         </table>
                                     </td>
                                     <td>
+                                        <p>date de MAE des laternes</p>
+                                        {% set now =  "now"|date("Y-m-d") %}
+                                        <p><input type="date" name="dateRMAELanterne" value="{{ now }}"></p>
                                         <p>quantiter disponible</p>
                                         <p><input type="number" id="quantit" readonly="true" value="0"></p>
                                         <p><input type="submit" value="confirmer le retrait"/></p>
@@ -151,7 +157,6 @@
             var checkbox = $('#' + containerID);
             var checkbox = checkbox.find('input[type="checkbox"]');
             console.log(checkbox);
-
             checkbox.each(function () {
                 switch (fill) {
                     case '0':

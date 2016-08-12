@@ -82,8 +82,12 @@
                                                                                             <span style="display: none"
                                                                                                   id="dateemplacement">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</span>
                                                                                         {% elseif emplacement.corde != null %}
-                                                                                            <font color="blue"> {{ emplacement.place }}</font>
-                                                                                            <span style="display: none"
+                                                                                            <a title="
+article  {{ emplacement.corde.article.libArticle }}
+-date de creation  {{ emplacement.corde.dateDeCreation|date('Y-m-d') }}
+-date de MAE  {{ emplacement.dateDeRemplissage|date('Y-m-d') }}"
+                                                                                               href="{{ path('corde_show', {'id': emplacement.corde.id }) }}">
+                                                                                                <font color="blue"> {{ emplacement.place }}</font></a>                                                                                            <span style="display: none"
                                                                                                   id="dateemplacement">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</span>
 
                                                                                         {% elseif emplacement.stockslanterne != null %}
@@ -120,6 +124,9 @@
                                     <td>
                                         <p>quantiter disponible</p>
                                         <p><input type="number" id="quantit" readonly="true" value="0"></p>
+                                        <p>date de preparation des cordes</p>
+                                        {% set now =  "now"|date("Y-m-d") %}
+                                        <p><input type="date" name="dateMAECorde" value="{{ now }}"></p>
                                         <p> choisir l'article a mettre</p>
                                         <p>
                                             <select name="articlechoix" id="articlechoix">

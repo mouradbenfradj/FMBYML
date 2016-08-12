@@ -89,10 +89,47 @@
                                                 <td>{{ filiere.getNomFiliere }}
                                                     <br/>
                                                     {% set tailleFiliere =0 %}
+                                                    {% set totaleplace =0 %}
+                                                    {% set totalelanterne =0 %}
+                                                    {% set totalecorde =0 %}
+
+
                                                     {% for segment in filiere.segments %}
                                                         {% set tailleFiliere = tailleFiliere+segment.getLongeur %}
+                                                        {% for flotteur in segment.flotteurs %}
+                                                            {% for emplacement in flotteur.emplacements %}
+                                                                {% if emplacement.corde == null and emplacement.stockslanterne == null %}
+                                                                    {% set totaleplace = totaleplace + 1 %}
+
+                                                                {% elseif emplacement.corde != null %}
+                                                                    {% set totaleplace = totaleplace + 1 %}
+                                                                    {% set totalecorde = totalecorde + 1 %}
+
+                                                                {% elseif emplacement.stockslanterne != null %}
+                                                                    {% set totaleplace = totaleplace + 1 %}
+                                                                    {% set totalelanterne =totalelanterne + 1 %}
+
+                                                                {% endif %}
+
+
+                                                            {% endfor %}
+                                                        {% endfor %}
                                                     {% endfor %}
-                                                    taille {{ tailleFiliere }} m
+
+
+                                                    taille {{ tailleFiliere }} m <br>
+                                                    nombre de place totale : {{ totaleplace }} place <br> nombre de
+                                                    place vide :{{ (totaleplace -(totalecorde + totalelanterne)) }}
+                                                    place
+                                                    || {{ ((totaleplace -(totalecorde + totalelanterne))/totaleplace ) *100 }}
+                                                    %
+                                                    <br>
+                                                    nombre de place remplis
+                                                    :{{ totaleplace - (totaleplace -(totalecorde + totalelanterne)) }}
+                                                    place
+                                                    || {{ ((((totaleplace -(totaleplace -(totalecorde + totalelanterne))))/totaleplace )*100 ) }}
+                                                    %
+
                                                 </td>
                                             </tr>
                                             <tr>
@@ -101,18 +138,65 @@
                                                         <tbody>
                                                         <tr>
                                                             {% for segment in filiere.segments %}
+                                                                {% set totaleplace =0 %}
+                                                                {% set totalelanterne =0 %}
+                                                                {% set totalecorde =0 %}
+
+
+                                                                {% for flotteur in segment.flotteurs %}
+                                                                    {% set tailleFiliere = tailleFiliere+segment.getLongeur %}
+                                                                    {% for emplacement in flotteur.emplacements %}
+                                                                        {% if emplacement.corde == null and emplacement.stockslanterne == null %}
+                                                                            {% set totaleplace = totaleplace + 1 %}
+
+                                                                        {% elseif emplacement.corde != null %}
+                                                                            {% set totaleplace = totaleplace + 1 %}
+                                                                            {% set totalecorde = totalecorde + 1 %}
+
+                                                                        {% elseif emplacement.stockslanterne != null %}
+                                                                            {% set totaleplace = totaleplace + 1 %}
+                                                                            {% set totalelanterne =totalelanterne + 1 %}
+
+                                                                        {% endif %}
+
+
+                                                                    {% endfor %}
+                                                                {% endfor %}
                                                                 <td valign="top">
                                                                     <ul>
                                                                         <li> {{ segment.getNomSegment }}</li>
                                                                         <li>{{ segment.getLongeur }} m</li>
+                                                                        <li> nombre de place totale : {{ totaleplace }}
+                                                                            place
+                                                                        </li>
+                                                                        <li>nombre de
+                                                                            place vide
+                                                                            :{{ (totaleplace -(totalecorde + totalelanterne)) }}
+                                                                            place
+                                                                            || {{ ((totaleplace -(totalecorde + totalelanterne))/totaleplace ) *100 }}
+                                                                            %
+                                                                        </li>
+                                                                        <li> nombre de place remplis
+                                                                            :{{ totaleplace - (totaleplace -(totalecorde + totalelanterne)) }}
+                                                                            place
+                                                                            || {{ ((((totaleplace -(totaleplace -(totalecorde + totalelanterne))))/totaleplace )*100 ) }}
+                                                                            %
+                                                                        </li>
+
                                                                     </ul>
                                                                     {% for flotteur in segment.flotteurs %}
                                                                         <p>    {{ flotteur.getNomFlotteur }}
                                                                             {% for emplacement in flotteur.emplacements %}
                                                                                 {% if emplacement.corde == null and emplacement.stockslanterne == null %}
                                                                                     <font color="red"> {{ emplacement.place }}</font>
+
                                                                                 {% elseif emplacement.corde != null %}
-                                                                                    <font color="blue"> {{ emplacement.place }}</font>
+                                                                                    <a title="article  {{ emplacement.corde.article.libArticle }}
+-date de creation  {{ emplacement.corde.dateDeCreation|date('Y-m-d') }}
+-date de MAE  {{ emplacement.dateDeRemplissage|date('Y-m-d') }}"
+                                                                                       href="{{ path('corde_show', {'id': emplacement.corde.id }) }}">
+                                                                                        <font color="blue"> {{ emplacement.place }}</font></a>
+
                                                                                     {% if(emplacement.dateDeRemplissage != null) %}
                                                                                         <span class="dateemplacement"
                                                                                               style="display: none">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</span>
@@ -122,8 +206,9 @@
 -article  {{ emplacement.stockslanterne.article.libArticle }}
 -date de creation  {{ emplacement.stockslanterne.dateDeCreation|date('Y-m-d') }}
 -date de MAE  {{ emplacement.dateDeRemplissage|date('Y-m-d') }}"
-                                                                                       href="{{ path('stockslanternes_show', {'id': emplacement.stockslanterne.id }) }}"><font
-                                                                                                color="#adff2f"> {{ emplacement.place }}</font></a>
+                                                                                       href="{{ path('stockslanternes_show', {'id': emplacement.stockslanterne.id }) }}">
+                                                                                        <font color="#adff2f"> {{ emplacement.place }}</font>
+                                                                                    </a>
                                                                                     <span style="display: none"
                                                                                           id="dateemplacement">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</span>
 

@@ -75,8 +75,12 @@
                                                                                             <font color="red"> {{ emplacement.place }}</font>
                                                                                         {% elseif emplacement.corde != null %}
                                                                                             {% set verifexsistance =  verifexsistance + 1 %}
-                                                                                            <font color="blue"> {{ emplacement.place }}</font>
-                                                                                            <input type="checkbox"
+                                                                                            <a title="
+article  {{ emplacement.corde.article.libArticle }}
+-date de creation  {{ emplacement.corde.dateDeCreation|date('Y-m-d') }}
+-date de MAE  {{ emplacement.dateDeRemplissage|date('Y-m-d') }}"
+                                                                                               href="{{ path('corde_show', {'id': emplacement.corde.id }) }}">
+                                                                                                <font color="blue"> {{ emplacement.place }}</font></a>                                                                                            <input type="checkbox"
                                                                                                    name="placecorde[]"
                                                                                                    value="{{ emplacement.id }}"/>
 
@@ -112,6 +116,10 @@
                                         </table>
                                     </td>
                                     <td>
+                                        <p>date de MAE corde</p>
+                                        {% set now =  "now"|date("Y-m-d") %}
+                                        <p><input type="date" name="dateRMAECorde" value="{{ now }}"></p>
+
                                         <p>quantiter disponible</p>
                                         <p><input type="number" id="quantit" readonly="true" value="0"></p>
                                         <p><input type="submit" value="confirmer le retrait"/></p>
