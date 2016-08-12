@@ -62,26 +62,44 @@
                                                                             <li> {{ segment.getNomSegment }}</li>
                                                                             <li>{{ segment.getLongeur }} m</li>
                                                                         </ul>
-                                                                        {% for flotteur in segment.flotteurs %}
-                                                                            <p>    {{ flotteur.getNomFlotteur }}
-                                                                                {% for emplacement in flotteur.emplacements %}
-                                                                                    {% if emplacement.corde == null and emplacement.stockslanterne == null %}
-                                                                                        <font color="red"> {{ emplacement.place }}</font>
-                                                                                    {% elseif emplacement.corde != null %}
-                                                                                        <font color="blue"> {{ emplacement.place }}</font>
-                                                                                        <input type="checkbox"
-                                                                                               name="placecorde[]"
-                                                                                               value="{{ emplacement.id }}"/>
+                                                                        <table border="1">
+                                                                            {% for flotteur in segment.flotteurs %}
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <div id="{{ filiere.getNomFiliere }}{{ segment.getNomSegment }}{{ flotteur.getNomFlotteur }}">
+                                                                                        {{ flotteur.getNomFlotteur }}|
+                                                                                        {% set verifexsistance = 0 %}
 
-                                                                                    {% elseif emplacement.stockslanterne != null %}
-                                                                                        <font color="#adff2f"> {{ emplacement.place }}</font>
-                                                                                        <span style="display: none"
-                                                                                              id="dateemplacement">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</span>
+                                                                                        {% for emplacement in flotteur.emplacements %}
+                                                                                        {% if emplacement.corde == null and emplacement.stockslanterne == null %}
+                                                                                            <font color="red"> {{ emplacement.place }}</font>
+                                                                                        {% elseif emplacement.corde != null %}
+                                                                                            {% set verifexsistance =  verifexsistance + 1 %}
+                                                                                            <font color="blue"> {{ emplacement.place }}</font>
+                                                                                            <input type="checkbox"
+                                                                                                   name="placecorde[]"
+                                                                                                   value="{{ emplacement.id }}"/>
 
-                                                                                    {% endif %}
-                                                                                {% endfor %}
-                                                                            </p>
-                                                                        {% endfor %}
+                                                                                        {% elseif emplacement.stockslanterne != null %}
+                                                                                            <font color="#adff2f"> {{ emplacement.place }}</font>
+                                                                                            <span style="display: none"
+                                                                                                  id="dateemplacement">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</span>
+
+                                                                                        {% endif %}
+                                                                                        {% endfor %}<br>
+                                                                                        {% if verifexsistance != 0 %}
+                                                                                            <input type="button"
+                                                                                                   value="Tout cocher"
+                                                                                                   onClick="fillCheckbox('{{ filiere.getNomFiliere }}{{ segment.getNomSegment }}{{ flotteur.getNomFlotteur }}','1');">&nbsp;&nbsp;
+                                                                                            <input type="button"
+                                                                                                   value="Tout décocher"
+                                                                                                   onClick="fillCheckbox('{{ filiere.getNomFiliere }}{{ segment.getNomSegment }}{{ flotteur.getNomFlotteur }}','0');">
+                                                                                        {% endif %}
+                                                                                        {% endfor %}
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
                                                                     </td>
                                                                 {% endfor %}
                                                             </tr>
@@ -124,6 +142,30 @@
                         }
                     });
         });
+        function fillCheckbox(containerID, fill) {
+            console.log(containerID);
+            console.log(fill);
+            var checkbox = $('#' + containerID);
+            var checkbox = checkbox.find('input[type="checkbox"]');
+            console.log(checkbox);
+
+            checkbox.each(function () {
+                switch (fill) {
+                    case '0':
+                        $('#quantit').val(parseInt($('#quantit').val()) - 1);
+                        this.checked = false;
+                        break;
+                    case '1':
+                        $('#quantit').val(parseInt($('#quantit').val()) + 1);
+                        this.checked = true;
+                        break;
+                    case 2:
+                        console.log(fill);
+                        this.checked = !this.checked;
+                        break;
+                }
+            });
+        }
 
     </script>
 {% endblock %}
