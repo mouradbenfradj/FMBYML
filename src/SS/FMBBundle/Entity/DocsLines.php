@@ -56,7 +56,7 @@ class DocsLines
 
     /**
      * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\DocsLines")
-     * @ORM\JoinColumn(name="ref_doc_line_parent", referencedColumnName="ref_doc_line")
+     * @ORM\JoinColumn(name="ref_doc_line_parent", referencedColumnName="ref_doc_line", nullable=true)
      */
     private $refDocLineParent;
 

@@ -20,12 +20,22 @@ services:
                       calls:
                           - [ setTranslationDomain, [SSFMBBundle]]
     sonata.admin.docblf:
-                  class: SS\FMBBundle\Admin\DocBlfAdmin
+                      class: SS\FMBBundle\Admin\DocBlfAdmin
+                      tags:
+                          - { name: sonata.admin, manager_type: orm, label: "DocBlf"}
+                      arguments:
+                          - ~
+                          - SS\FMBBundle\Entity\DocBlf
+                          - ~
+                      calls:
+                          - [ setTranslationDomain, [SSFMBBundle]]
+    sonata.admin.docslines:
+                  class: SS\FMBBundle\Admin\DocsLinesAdmin
                   tags:
-                      - { name: sonata.admin, manager_type: orm, label: "DocBlf"}
+                      - { name: sonata.admin, manager_type: orm, label: "DocsLines"}
                   arguments:
                       - ~
-                      - SS\FMBBundle\Entity\DocBlf
+                      - SS\FMBBundle\Entity\DocsLines
                       - ~
                   calls:
                       - [ setTranslationDomain, [SSFMBBundle]]

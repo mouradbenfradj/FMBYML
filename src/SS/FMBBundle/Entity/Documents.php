@@ -36,6 +36,11 @@ class Documents
      */
     private $docsLines;
 
+    public function __toString()
+    {
+        return $this->refDoc;
+    }
+
     /**
      * @ORM\PrePersist
      */
