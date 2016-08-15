@@ -262,7 +262,7 @@ class DefaultController extends Controller
                 $cordearticle->setEmplacement($place);
                 $cordearticle->setPret(false);
                 $place->setCorde($cordearticle);
-                $place->setDateDeRemplissage(new \DateTime());
+                $place->setDateDeRemplissage(new \DateTime($request->request->get('dateMAECorde')));
                 $em->flush();
             }
 
@@ -353,7 +353,7 @@ class DefaultController extends Controller
                 $lanternearticle->setEmplacement($place);
                 $lanternearticle->setPret(false);
                 $place->setStocksLanterne($lanternearticle);
-                $place->setDateDeRemplissage(new \DateTime());
+                $place->setDateDeRemplissage(new \DateTime($request->request->get('dateMAELanterne')));
                 $em->flush();
             }
 
