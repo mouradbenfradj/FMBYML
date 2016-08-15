@@ -75,17 +75,23 @@
                                                                                             <font color="red"> {{ emplacement.place }}</font>
                                                                                         {% elseif emplacement.corde != null %}
                                                                                             {% set verifexsistance =  verifexsistance + 1 %}
-                                                                                            <a title="
-article  {{ emplacement.corde.article.libArticle }}
+                                                                                            <a title="article  {{ emplacement.corde.article.lot.lot }}-{{ emplacement.corde.article.libArticle }}
 -date de creation  {{ emplacement.corde.dateDeCreation|date('Y-m-d') }}
 -date de MAE  {{ emplacement.dateDeRemplissage|date('Y-m-d') }}"
                                                                                                href="{{ path('corde_show', {'id': emplacement.corde.id }) }}">
-                                                                                                <font color="blue"> {{ emplacement.place }}</font></a>                                                                                            <input type="checkbox"
+                                                                                                <font color="blue"> {{ emplacement.place }}</font></a>
+                                                                                            <input type="checkbox"
                                                                                                    name="placecorde[]"
                                                                                                    value="{{ emplacement.id }}"/>
 
                                                                                         {% elseif emplacement.stockslanterne != null %}
-                                                                                            <font color="#adff2f"> {{ emplacement.place }}</font>
+                                                                                            <a title="{{ emplacement.stockslanterne.lanterne.nomlanterne }}
+-article:{{ emplacement.stockslanterne.article.lot.lot }}-{{ emplacement.stockslanterne.article.libArticle }}
+-date de creation  {{ emplacement.stockslanterne.dateDeCreation|date('Y-m-d') }}
+-date de MAE  {{ emplacement.dateDeRemplissage|date('Y-m-d') }}"
+                                                                                               href="{{ path('stockslanternes_show', {'id': emplacement.stockslanterne.id }) }}">
+                                                                                                <font color="#adff2f"> {{ emplacement.place }}</font>
+                                                                                            </a>
                                                                                             <span style="display: none"
                                                                                                   id="dateemplacement">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</span>
 
@@ -160,12 +166,12 @@ article  {{ emplacement.corde.article.libArticle }}
             checkbox.each(function () {
                 switch (fill) {
                     case '0':
-                        if(this.checked == true)
+                        if (this.checked == true)
                             $('#quantit').val(parseInt($('#quantit').val()) - 1);
                         this.checked = false;
                         break;
                     case '1':
-                        if(this.checked == false)
+                        if (this.checked == false)
                             $('#quantit').val(parseInt($('#quantit').val()) + 1);
                         this.checked = true;
                         break;

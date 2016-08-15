@@ -386,6 +386,7 @@ class DefaultController extends Controller
         if ($request->isMethod('POST')) {
             foreach ($request->request->get('placecorde') as $emplacementcorde) {
                 $place = $em->getRepository('SSFMBBundle:Emplacement')->find($emplacementcorde);
+
                 $corde = $place->getCorde();
                 $corde->setPret(true);
                 $corde->setEmplacement(null);
