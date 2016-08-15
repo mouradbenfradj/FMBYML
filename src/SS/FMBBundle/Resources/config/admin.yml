@@ -20,6 +20,16 @@ services:
                   - ~
               calls:
                   - [ setTranslationDomain, [SSFMBBundle]]
+    sonata.admin.corde:
+              class: SS\FMBBundle\Admin\CordeAdmin
+              tags:
+                  - { name: sonata.admin, manager_type: orm, label: "Corde"}
+              arguments:
+                  - ~
+                  - SS\FMBBundle\Entity\Corde
+                  - ~
+              calls:
+                  - [ setTranslationDomain, [SSFMBBundle]]
 
     sonata.admin.filiere:
           class: SS\FMBBundle\Admin\FiliereAdmin

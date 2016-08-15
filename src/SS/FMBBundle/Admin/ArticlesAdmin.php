@@ -28,6 +28,6 @@ class ArticlesAdmin extends Admin
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('libArticle')->addIdentifier('lot');
+        $listMapper->addIdentifier('refArticle')->addIdentifier('libArticle')->addIdentifier('lot');
     }
 }
