@@ -27,10 +27,7 @@ class Documents
      * @ORM\JoinColumn(name="id_type_doc", referencedColumnName="id",nullable=false)
      */
     private $idTypeDoc;
-    /**
-     * @ORM\OneToMany(targetEntity="DocBlf", mappedBy="refDoc")
-     */
-    private $docBlfs;
+
     /**
      * @ORM\OneToMany(targetEntity="DocsLines", mappedBy="refDoc",cascade={"persist"})
      */
@@ -112,39 +109,6 @@ class Documents
         $this->refDoc = $refDoc;
 
         return $this;
-    }
-
-    /**
-     * Add docBlfs
-     *
-     * @param \SS\FMBBundle\Entity\DocBlf $docBlfs
-     * @return Documents
-     */
-    public function addDocBlf(\SS\FMBBundle\Entity\DocBlf $docBlfs)
-    {
-        $this->docBlfs[] = $docBlfs;
-
-        return $this;
-    }
-
-    /**
-     * Remove docBlfs
-     *
-     * @param \SS\FMBBundle\Entity\DocBlf $docBlfs
-     */
-    public function removeDocBlf(\SS\FMBBundle\Entity\DocBlf $docBlfs)
-    {
-        $this->docBlfs->removeElement($docBlfs);
-    }
-
-    /**
-     * Get docBlfs
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getDocBlfs()
-    {
-        return $this->docBlfs;
     }
 
     /**

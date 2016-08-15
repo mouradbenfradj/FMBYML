@@ -14,20 +14,20 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 
 
-class PocheAdmin extends Admin
+class DocumentAdmin extends Admin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('emplacement')->add('quantite')->add('stocklanterne');;
+        $formMapper->add('refDoc')->add('idTypeDoc')->add('docsLines');
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('emplacement')->add('quantite')->add('stocklanterne');
+        $datagridMapper->add('refDoc')->add('idTypeDoc')->add('docsLines');
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->add('emplacement')->add('quantite')->add('stocklanterne');
+        $listMapper->addIdentifier('refDoc')->add('idTypeDoc')->add('docsLines');
     }
 }
