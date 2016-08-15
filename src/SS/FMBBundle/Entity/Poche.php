@@ -20,28 +20,28 @@ class Poche
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
     /**
      * @var integer
      *
      * @ORM\Column(name="quantite", type="integer")
      */
     private $quantite;
-
     /**
      * @var integer
      *
      * @ORM\Column(name="emplacement", type="integer")
      */
     private $emplacement;
-
-
     /**
      * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\StocksLanternes", inversedBy="poches")
      * @ORM\JoinColumn(nullable=false)
      */
     private $stocklanterne;
 
+    public function __toString()
+    {
+        return "" . $this->id;
+    }
 
     /**
      * Constructor
@@ -54,7 +54,7 @@ class Poche
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -80,7 +80,6 @@ class Poche
     public function setQuantite($quantite)
     {
         $this->quantite = $quantite;
-
         return $this;
     }
 
@@ -103,10 +102,8 @@ class Poche
     public function setEmplacement($emplacement)
     {
         $this->emplacement = $emplacement;
-
         return $this;
     }
-
 
     /**
      * Set stocklanterne
@@ -117,14 +114,13 @@ class Poche
     public function setStocklanterne(\SS\FMBBundle\Entity\StocksLanternes $stocklanterne)
     {
         $this->stocklanterne = $stocklanterne;
-
         return $this;
     }
 
     /**
      * Get stocklanterne
      *
-     * @return \SS\FMBBundle\Entity\StocksLanternes 
+     * @return \SS\FMBBundle\Entity\StocksLanternes
      */
     public function getStocklanterne()
     {

@@ -158,6 +158,17 @@ services:
             - ~
         calls:
             - [ setTranslationDomain, [SSFMBBundle]]
+    sonata.admin.stocklanterne:
+        class: SS\FMBBundle\Admin\StocksLanternesAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm,group: "Stock",  label: "stocklanterne",label_catalogue: "StocksLanternes" }
+        arguments:
+            - ~
+            - SS\FMBBundle\Entity\StocksLanternes
+            - ~
+        calls:
+            - [ setTranslationDomain, [SSFMBBundle]]
+
     sonata.admin.typeDocuments:
         class: SS\FMBBundle\Admin\TypeDocumentsAdmin
         tags:
