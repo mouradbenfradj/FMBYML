@@ -39,6 +39,16 @@ services:
                       - ~
                   calls:
                       - [ setTranslationDomain, [SSFMBBundle]]
+    sonata.admin.emplacement:
+                  class: SS\FMBBundle\Admin\EmplacementAdmin
+                  tags:
+                      - { name: sonata.admin, manager_type: orm, label: "Emplacement"}
+                  arguments:
+                      - ~
+                      - SS\FMBBundle\Entity\Emplacement
+                      - ~
+                  calls:
+                      - [ setTranslationDomain, [SSFMBBundle]]
 
     sonata.admin.filiere:
           class: SS\FMBBundle\Admin\FiliereAdmin

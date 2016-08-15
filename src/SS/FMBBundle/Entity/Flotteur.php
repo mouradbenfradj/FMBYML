@@ -74,6 +74,11 @@ class Flotteur
         return $this;
     }
 
+    public function __toString()
+    {
+        return $this->nomFlotteur;
+    }
+
     /**
      * Get id
      *
@@ -87,7 +92,7 @@ class Flotteur
     /**
      * Get nomFlotteur
      *
-     * @return string 
+     * @return string
      */
     public function getNomFlotteur()
     {
@@ -110,7 +115,7 @@ class Flotteur
     /**
      * Get segment
      *
-     * @return \SS\FMBBundle\Entity\Segment 
+     * @return \SS\FMBBundle\Entity\Segment
      */
     public function getSegment()
     {
@@ -143,7 +148,7 @@ class Flotteur
     /**
      * Get emplacements
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getEmplacements()
     {

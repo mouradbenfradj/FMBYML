@@ -51,6 +51,12 @@ class Corde
      * @ORM\Column(name="dateDeCreation", type="date")
      */
     private $dateDeCreation;
+
+    public function __toString()
+    {
+        return "".$this->id;
+    }
+
     /**
      * Get id
      *
@@ -169,7 +175,7 @@ class Corde
     /**
      * Get dateDeCreation
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDateDeCreation()
     {

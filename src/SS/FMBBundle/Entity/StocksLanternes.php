@@ -69,6 +69,11 @@ class StocksLanternes
         $this->poches = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return "" . $this->id;
+    }
+
     /**
      * Get lanterne
      *
@@ -244,7 +249,7 @@ class StocksLanternes
     /**
      * Get dateDeCreation
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDateDeCreation()
     {
