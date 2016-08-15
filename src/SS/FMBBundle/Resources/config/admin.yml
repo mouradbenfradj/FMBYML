@@ -49,7 +49,6 @@ services:
                       - ~
                   calls:
                       - [ setTranslationDomain, [SSFMBBundle]]
-
     sonata.admin.filiere:
           class: SS\FMBBundle\Admin\FiliereAdmin
           tags:
@@ -61,6 +60,17 @@ services:
               - ~
           calls:
               - [ setTranslationDomain, [SSFMBBundle]]
+    sonata.admin.flotteur:
+                  class: SS\FMBBundle\Admin\FlotteurAdmin
+                  tags:
+                      - { name: sonata.admin, manager_type: orm, label: "Flotteur"}
+                  arguments:
+                      - ~
+                      - SS\FMBBundle\Entity\Flotteur
+                      - ~
+                  calls:
+                      - [ setTranslationDomain, [SSFMBBundle]]
+
     sonata.admin.lanterne:
               class: SS\FMBBundle\Admin\LanterneAdmin
               tags:
