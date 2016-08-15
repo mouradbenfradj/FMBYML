@@ -1,4 +1,67 @@
 services:
+    sonata.admin.articles:
+                   class: SS\FMBBundle\Admin\ArticlesAdmin
+                   tags:
+                       - { name: sonata.admin, manager_type: orm, label: "Article" }
+                   arguments:
+                       - ~
+                       - SS\FMBBundle\Entity\Articles
+                       - ~
+                   calls:
+                       - [ setTranslationDomain, [SSFMBBundle]]
+    sonata.admin.corde:
+                      class: SS\FMBBundle\Admin\CordeAdmin
+                      tags:
+                          - { name: sonata.admin, manager_type: orm, label: "Corde"}
+                      arguments:
+                          - ~
+                          - SS\FMBBundle\Entity\Corde
+                          - ~
+                      calls:
+                          - [ setTranslationDomain, [SSFMBBundle]]
+    sonata.admin.docblf:
+                  class: SS\FMBBundle\Admin\DocBlfAdmin
+                  tags:
+                      - { name: sonata.admin, manager_type: orm, label: "DocBlf"}
+                  arguments:
+                      - ~
+                      - SS\FMBBundle\Entity\DocBlf
+                      - ~
+                  calls:
+                      - [ setTranslationDomain, [SSFMBBundle]]
+
+    sonata.admin.filiere:
+          class: SS\FMBBundle\Admin\FiliereAdmin
+          tags:
+              - { name: sonata.admin, manager_type: orm,group: "filiere",  label: "Filiere",label_catalogue: "Filiere" }
+          arguments:
+              - ~
+              - SS\FMBBundle\Entity\Filiere
+              - 'SonataAdminBundle:CRUD'
+              - ~
+          calls:
+              - [ setTranslationDomain, [SSFMBBundle]]
+    sonata.admin.lanterne:
+              class: SS\FMBBundle\Admin\LanterneAdmin
+              tags:
+                  - { name: sonata.admin, manager_type: orm, group: "Lanterne", label: "Lanterne",label_catalogue: "Lanterne" }
+              arguments:
+                  - ~
+                  - SS\FMBBundle\Entity\Lanterne
+                  - ~
+              calls:
+                  - [ setTranslationDomain, [SSFMBBundle]]
+    sonata.admin.lot:
+              class: SS\FMBBundle\Admin\LotAdmin
+              tags:
+                  - { name: sonata.admin, manager_type: orm, label: "Lot"}
+              arguments:
+                  - ~
+                  - SS\FMBBundle\Entity\Lot
+                  - ~
+              calls:
+                  - [ setTranslationDomain, [SSFMBBundle]]
+
     sonata.admin.parc:
               class: SS\FMBBundle\Admin\ParcAdmin
               tags:
@@ -10,35 +73,13 @@ services:
               calls:
                   - [ setTranslationDomain, [SSFMBBundle]]
 
-    sonata.admin.lot:
-              class: SS\FMBBundle\Admin\LotAdmin
-              tags:
-                  - { name: sonata.admin, manager_type: orm, label: "Lot"}
-              arguments:
-                  - ~
-                  - SS\FMBBundle\Entity\Lot
-                  - ~
-              calls:
-                  - [ setTranslationDomain, [SSFMBBundle]]
-    sonata.admin.corde:
-              class: SS\FMBBundle\Admin\CordeAdmin
-              tags:
-                  - { name: sonata.admin, manager_type: orm, label: "Corde"}
-              arguments:
-                  - ~
-                  - SS\FMBBundle\Entity\Corde
-                  - ~
-              calls:
-                  - [ setTranslationDomain, [SSFMBBundle]]
-
-    sonata.admin.filiere:
-          class: SS\FMBBundle\Admin\FiliereAdmin
+    sonata.admin.poche:
+          class: SS\FMBBundle\Admin\PocheAdmin
           tags:
-              - { name: sonata.admin, manager_type: orm,group: "filiere",  label: "Filiere",label_catalogue: "Filiere" }
+              - { name: sonata.admin, manager_type: orm, group: "Lanterne", label: "Poche",label_catalogue: "Poche" }
           arguments:
               - ~
-              - SS\FMBBundle\Entity\Filiere
-              - 'SonataAdminBundle:CRUD'
+              - SS\FMBBundle\Entity\Poche
               - ~
           calls:
               - [ setTranslationDomain, [SSFMBBundle]]
@@ -55,26 +96,6 @@ services:
           calls:
               - [ setTranslationDomain, [SSFMBBundle]]
 
-    sonata.admin.articles:
-                   class: SS\FMBBundle\Admin\ArticlesAdmin
-                   tags:
-                       - { name: sonata.admin, manager_type: orm, label: "Article" }
-                   arguments:
-                       - ~
-                       - SS\FMBBundle\Entity\Articles
-                       - ~
-                   calls:
-                       - [ setTranslationDomain, [SSFMBBundle]]
-    sonata.admin.stockarticle:
-                   class: SS\FMBBundle\Admin\StocksArticlesAdmin
-                   tags:
-                       - { name: sonata.admin, manager_type: orm, label: "StockArticle" }
-                   arguments:
-                       - ~
-                       - SS\FMBBundle\Entity\StocksArticles
-                       - ~
-                   calls:
-                       - [ setTranslationDomain, [SSFMBBundle]]
     sonata.admin.stocks:
                     class: SS\FMBBundle\Admin\StocksAdmin
                     tags:
@@ -85,6 +106,17 @@ services:
                         - ~
                     calls:
                         - [ setTranslationDomain, [SSFMBBundle]]
+
+    sonata.admin.stockarticle:
+                   class: SS\FMBBundle\Admin\StocksArticlesAdmin
+                   tags:
+                       - { name: sonata.admin, manager_type: orm, label: "StockArticle" }
+                   arguments:
+                       - ~
+                       - SS\FMBBundle\Entity\StocksArticles
+                       - ~
+                   calls:
+                       - [ setTranslationDomain, [SSFMBBundle]]
     sonata.admin.typeDocuments:
                   class: SS\FMBBundle\Admin\TypeDocumentsAdmin
                   tags:
@@ -95,23 +127,3 @@ services:
                       - ~
                   calls:
                       - [ setTranslationDomain, [SSFMBBundle]]
-    sonata.admin.lanterne:
-              class: SS\FMBBundle\Admin\LanterneAdmin
-              tags:
-                  - { name: sonata.admin, manager_type: orm, group: "Lanterne", label: "Lanterne",label_catalogue: "Lanterne" }
-              arguments:
-                  - ~
-                  - SS\FMBBundle\Entity\Lanterne
-                  - ~
-              calls:
-                  - [ setTranslationDomain, [SSFMBBundle]]
-    sonata.admin.poche:
-          class: SS\FMBBundle\Admin\PocheAdmin
-          tags:
-              - { name: sonata.admin, manager_type: orm, group: "Lanterne", label: "Poche",label_catalogue: "Poche" }
-          arguments:
-              - ~
-              - SS\FMBBundle\Entity\Poche
-              - ~
-          calls:
-              - [ setTranslationDomain, [SSFMBBundle]]
