@@ -128,7 +128,9 @@
                                                     :{{ totaleplace - (totaleplace -(totalecorde + totalelanterne)) }}
                                                     place
                                                     || {{ ((((totaleplace -(totaleplace -(totalecorde + totalelanterne))))/totaleplace )*100 ) }}
-                                                    %
+                                                    %<br>
+                                                    nombre des corde:{{ totalecorde }}
+                                                    <br>nombre des lanterne:{{ totalelanterne }}
 
                                                 </td>
                                             </tr>
@@ -182,7 +184,8 @@
                                                                             || {{ ((((totaleplace -(totaleplace -(totalecorde + totalelanterne))))/totaleplace )*100 ) }}
                                                                             %
                                                                         </li>
-
+                                                                        <li>nombre des corde:{{ totalecorde }}</li>
+                                                                        <li>nombre des lanterne:{{ totalelanterne }}</li>
                                                                     </ul>
                                                                     {% for flotteur in segment.flotteurs %}
                                                                         <p>    {{ flotteur.getNomFlotteur }}
