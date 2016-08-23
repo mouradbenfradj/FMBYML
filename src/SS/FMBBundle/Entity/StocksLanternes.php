@@ -37,11 +37,6 @@ class StocksLanternes
      * @ORM\JoinColumn(nullable=true)
      */
     private $emplacement;
-    /**
-     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Parc", inversedBy="lanternes",cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $parc;
 
     /**
      * @var boolean
@@ -60,6 +55,14 @@ class StocksLanternes
      * @ORM\Column(name="dateDeCreation", type="date")
      */
     private $dateDeCreation;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\DocsLines")
+     * @ORM\JoinColumn(name="doc_line", referencedColumnName="ref_doc_line")
+
+     */
+    private $docLine;
+
 
     /**
      * Constructor
@@ -93,7 +96,6 @@ class StocksLanternes
     public function setLanterne(\SS\FMBBundle\Entity\Lanterne $lanterne)
     {
         $this->lanterne = $lanterne;
-
         return $this;
     }
 
@@ -165,29 +167,6 @@ class StocksLanternes
     }
 
     /**
-     * Get parc
-     *
-     * @return \SS\FMBBundle\Entity\Parc
-     */
-    public function getParc()
-    {
-        return $this->parc;
-    }
-
-    /**
-     * Set parc
-     *
-     * @param \SS\FMBBundle\Entity\Parc $parc
-     * @return StocksLanternes
-     */
-    public function setParc(\SS\FMBBundle\Entity\Parc $parc)
-    {
-        $this->parc = $parc;
-
-        return $this;
-    }
-
-    /**
      * Get pret
      *
      * @return boolean
@@ -254,5 +233,28 @@ class StocksLanternes
     public function getDateDeCreation()
     {
         return $this->dateDeCreation;
+    }
+
+    /**
+     * Set docLine
+     *
+     * @param \SS\FMBBundle\Entity\DocsLines $docLine
+     * @return StocksLanternes
+     */
+    public function setDocLine(\SS\FMBBundle\Entity\DocsLines $docLine = null)
+    {
+        $this->docLine = $docLine;
+
+        return $this;
+    }
+
+    /**
+     * Get docLine
+     *
+     * @return \SS\FMBBundle\Entity\DocsLines 
+     */
+    public function getDocLine()
+    {
+        return $this->docLine;
     }
 }

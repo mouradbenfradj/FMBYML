@@ -10,23 +10,37 @@ namespace SS\FMBBundle\Implementation;
 
 
 use SS\FMBBundle\Entity\Lot;
+use SS\FMBBundle\Entity\Poche;
 use SS\FMBBundle\Interfaces\DefaultInterface;
 
 class DefaultImpl implements DefaultInterface
 {
     protected $em;
+
     public function __construct($entitymanager)
     {
         $this->em = $entitymanager;
     }
 
-    public function generateurNumeroDeLotParDateDuJour()
+    public function viderPoche($poche, $qte)
     {
-        if (!$this->em->getRepository('SSFMBBundle:Lot')->find(date("Ymd"))) {
-            $lotId = new Lot();
-            $lotId->setLot(date("Ymd"));
-            $this->em->persist($lotId);
-            $this->em->flush();
+        // TODO: Implement viderPoche() method.
+    }
+
+    public function modifierQtePoche($poche, $qte)
+    {
+        // TODO: Implement modifierQtePoche() method.
+    }
+
+    public function remplirPoche($i, $qte, $nbrPocheLanterne)
+    {
+        $poche = new Poche();
+        $poche->setEmplacement($i);
+        if ($i == 1) {
+            $poche->setQuantite(((int)($qte / $nbrPocheLanterne)) + ((int)($qte % $nbrPocheLanterne)));
+        } else {
+            $poche->setQuantite((int)($qte / $nbrPocheLanterne));
         }
+        return $poche;
     }
 }

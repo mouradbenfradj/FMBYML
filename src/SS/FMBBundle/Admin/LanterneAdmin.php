@@ -18,17 +18,17 @@ class LanterneAdmin extends Admin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('nomLanterne')->add('nbrpoche');
-
+        $formMapper->add('parc')->add('nomLanterne')->add('nbrpoche')->add('nbrTotaleEnStock');
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('nomLanterne')->add('nbrpoche');
+        $datagridMapper->add('parc')->add('nomLanterne')->add('nbrpoche')->add('nbrTotaleEnStock');
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->add('nomLanterne')->add('nbrpoche');
+        $listMapper->add('parc')->add('nomLanterne')->add('nbrpoche')->add('nbrTotaleEnStock');
     }
+
 }

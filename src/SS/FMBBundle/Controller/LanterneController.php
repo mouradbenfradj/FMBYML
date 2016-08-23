@@ -4,7 +4,8 @@ namespace SS\FMBBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use SS\FMBBundle\Entity\Lanterne;
 use SS\FMBBundle\Form\LanterneType;
 
@@ -25,13 +26,11 @@ class LanterneController extends Controller
 
         $entities = $em->getRepository('SSFMBBundle:Lanterne')->findAll();
 
-        return $this->render(
-            'SSFMBBundle:Lanterne:index.html.twig',
-            array(
-                'entities' => $entities,
-            )
-        );
+        return $this->render('SSFMBBundle:Lanterne:index.html.twig', array(
+            'entities' => $entities,
+        ));
     }
+
     /**
      * Creates a new Lanterne entity.
      *
@@ -50,13 +49,10 @@ class LanterneController extends Controller
             return $this->redirect($this->generateUrl('lanterne_show', array('id' => $entity->getId())));
         }
 
-        return $this->render(
-            'SSFMBBundle:Lanterne:new.html.twig',
-            array(
-                'entity' => $entity,
-                'form' => $form->createView(),
-            )
-        );
+        return $this->render('SSFMBBundle:Lanterne:new.html.twig', array(
+            'entity' => $entity,
+            'form' => $form->createView(),
+        ));
     }
 
     /**
@@ -66,20 +62,34 @@ class LanterneController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Lanterne $entity)
+    private function createCreateForm($em, Lanterne $entity)
     {
-        $form = $this->createForm(
-            new LanterneType(),
-            $entity,
-            array(
-                'action' => $this->generateUrl('lanterne_create'),
-                'method' => 'POST',
-            )
-        );
+        $form = $this->createForm(new LanterneType($em), $entity, array(
+            'action' => $this->generateUrl('lanterne_create'),
+            'method' => 'POST',
+        ));
 
         $form->add('submit', 'submit', array('label' => 'Create'));
 
         return $form;
+    }
+
+    public function ajaxAction(Request $request)
+    {
+
+        // Get the province ID
+        $id = $request->query->get('parc_id');
+        $result = array();
+
+        // Return a list of cities, based on the selected province
+        $repo = $this->getDoctrine()->getManager()->getRepository('SSFMBBundle:Lanterne');
+        $lanternes = $repo->findByParc($id, array('parc' => 'asc'));
+
+        foreach ($lanternes as $lanterne) {
+
+            $result[$lanterne->getNomLanterne()] = $lanterne->getNomLanterne();
+        }
+        return new JsonResponse($result);
     }
 
     /**
@@ -89,15 +99,11 @@ class LanterneController extends Controller
     public function newAction()
     {
         $entity = new Lanterne();
-        $form = $this->createCreateForm($entity);
-
-        return $this->render(
-            'SSFMBBundle:Lanterne:new.html.twig',
-            array(
-                'entity' => $entity,
-                'form' => $form->createView(),
-            )
-        );
+        $form = $this->createCreateForm($this->getDoctrine()->getManager(), $entity);
+        return $this->render('SSFMBBundle:Lanterne:new.html.twig', array(
+            'entity' => $entity,
+            'form' => $form->createView(),
+        ));
     }
 
     /**
@@ -116,29 +122,10 @@ class LanterneController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render(
-            'SSFMBBundle:Lanterne:show.html.twig',
-            array(
-                'entity' => $entity,
-                'delete_form' => $deleteForm->createView(),
-            )
-        );
-    }
-
-    /**
-     * Creates a form to delete a Lanterne entity by id.
-     *
-     * @param mixed $id The entity id
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('lanterne_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm();
+        return $this->render('SSFMBBundle:Lanterne:show.html.twig', array(
+            'entity' => $entity,
+            'delete_form' => $deleteForm->createView(),
+        ));
     }
 
     /**
@@ -158,14 +145,11 @@ class LanterneController extends Controller
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render(
-            'SSFMBBundle:Lanterne:edit.html.twig',
-            array(
-                'entity' => $entity,
-                'edit_form' => $editForm->createView(),
-                'delete_form' => $deleteForm->createView(),
-            )
-        );
+        return $this->render('SSFMBBundle:Lanterne:edit.html.twig', array(
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        ));
     }
 
     /**
@@ -177,14 +161,10 @@ class LanterneController extends Controller
      */
     private function createEditForm(Lanterne $entity)
     {
-        $form = $this->createForm(
-            new LanterneType(),
-            $entity,
-            array(
-                'action' => $this->generateUrl('lanterne_update', array('id' => $entity->getId())),
-                'method' => 'PUT',
-            )
-        );
+        $form = $this->createForm(new LanterneType(), $entity, array(
+            'action' => $this->generateUrl('lanterne_update', array('id' => $entity->getId())),
+            'method' => 'PUT',
+        ));
 
         $form->add('submit', 'submit', array('label' => 'Update'));
 
@@ -215,14 +195,11 @@ class LanterneController extends Controller
             return $this->redirect($this->generateUrl('lanterne_edit', array('id' => $id)));
         }
 
-        return $this->render(
-            'SSFMBBundle:Lanterne:edit.html.twig',
-            array(
-                'entity' => $entity,
-                'edit_form' => $editForm->createView(),
-                'delete_form' => $deleteForm->createView(),
-            )
-        );
+        return $this->render('SSFMBBundle:Lanterne:edit.html.twig', array(
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        ));
     }
 
     /**
@@ -247,5 +224,21 @@ class LanterneController extends Controller
         }
 
         return $this->redirect($this->generateUrl('lanterne'));
+    }
+
+    /**
+     * Creates a form to delete a Lanterne entity by id.
+     *
+     * @param mixed $id The entity id
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createDeleteForm($id)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('lanterne_delete', array('id' => $id)))
+            ->setMethod('DELETE')
+            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->getForm();
     }
 }

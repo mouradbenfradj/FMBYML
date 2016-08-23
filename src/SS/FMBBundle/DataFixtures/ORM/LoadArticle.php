@@ -17,15 +17,24 @@ class LoadArticle extends AbstractFixture implements OrderedFixtureInterface
     {
         $NaissainHuitre = new Articles();
         $NaissainHuitre->setLibArticle('Naissain Huitre');
-        $NaissainHuitre->setRefArticle('NH');
+        $NaissainHuitre->setRefArticle('0001');
         $NaissainHuitre->setLot($this->getReference('lot'));
         $manager->persist($NaissainHuitre);
+        $NaissainHuitre1 = new Articles();
+        $NaissainHuitre1->setLibArticle('Naissain Huitre');
+        $NaissainHuitre1->setRefArticle('0002');
+        $NaissainHuitre1->setLot($this->getReference('lo'));
+        $manager->persist($NaissainHuitre1);
+        $NaissainHuitre2 = new Articles();
+        $NaissainHuitre2->setLibArticle('Naissain Huitre');
+        $NaissainHuitre2->setRefArticle('0003');
+        $NaissainHuitre2->setLot($this->getReference('l'));
+        $manager->persist($NaissainHuitre2);
 
         $manager->flush();
-        $this->addReference('Huitre', $Huitre);
-        $this->addReference('Moule', $Moule);
+        $this->addReference('NaissainHuitre1', $NaissainHuitre1);
+        $this->addReference('NaissainHuitre2', $NaissainHuitre2);
         $this->addReference('NaissainHuitre', $NaissainHuitre);
-        $this->addReference('NaissainMoule', $NaissainMoule);
     }
 
     /**

@@ -8,6 +8,9 @@ ssfmb_preparationcorde:
 ssfmb_parcstock:
     path:     /parcstock
     defaults: { _controller: SSFMBBundle:Default:parcStocks }
+ssfmb_parclanterne:
+    path:     /parclanterne
+    defaults: { _controller: SSFMBBundle:Default:parcLanternes }
 ssfmb_cordearticle:
     path:     /cordearticle
     defaults: { _controller: SSFMBBundle:Default:cordeArticle}

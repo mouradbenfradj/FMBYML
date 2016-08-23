@@ -28,3 +28,7 @@ lanterne_delete:
     path:     /{id}/delete
     defaults: { _controller: "SSFMBBundle:Lanterne:delete" }
     methods:  [POST, DELETE]
+
+parc_ajax_call:
+    path:     /ajax
+    defaults: { _controller: "SSFMBBundle:Lanterne:ajax" }

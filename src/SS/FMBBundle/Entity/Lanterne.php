@@ -22,9 +22,19 @@ class Lanterne
      */
     private $nbrpoche;
     /**
+     * @var integer
+     * @ORM\Column(name="nbrtotaleEnStock", type="integer")
+     */
+    private $nbrTotaleEnStock;
+    /**
      * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\StocksLanternes", mappedBy="lanterne",cascade={"persist","remove"})
      */
     private $stockslanternes;
+    /**
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Parc", inversedBy="lanternes",cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $parc;
 
     /**
      * Constructor
@@ -119,4 +129,51 @@ class Lanterne
         return $this->stockslanternes;
     }
 
+
+    /**
+     * Get parc
+     *
+     * @return \SS\FMBBundle\Entity\Parc
+     */
+    public function getParc()
+    {
+        return $this->parc;
+    }
+
+    /**
+     * Set parc
+     *
+     * @param \SS\FMBBundle\Entity\Parc $parc
+     * @return StocksLanternes
+     */
+    public function setParc(\SS\FMBBundle\Entity\Parc $parc)
+    {
+        $this->parc = $parc;
+
+        return $this;
+    }
+
+
+    /**
+     * Set nbrTotaleEnStock
+     *
+     * @param integer $nbrTotaleEnStock
+     * @return Lanterne
+     */
+    public function setNbrTotaleEnStock($nbrTotaleEnStock)
+    {
+        $this->nbrTotaleEnStock = $nbrTotaleEnStock;
+
+        return $this;
+    }
+
+    /**
+     * Get nbrTotaleEnStock
+     *
+     * @return integer 
+     */
+    public function getNbrTotaleEnStock()
+    {
+        return $this->nbrTotaleEnStock;
+    }
 }

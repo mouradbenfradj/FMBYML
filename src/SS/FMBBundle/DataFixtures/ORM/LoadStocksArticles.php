@@ -17,33 +17,26 @@ class LoadStocksArticles extends AbstractFixture implements OrderedFixtureInterf
     {
         $stockArNH = new StocksArticles();
         $stockArNH->setRefArticle($this->getReference('NaissainHuitre'));
-        $stockArNH->setQte(1000);
+        $stockArNH->setQte(10000000);
         $stockArNH->setRefStockArticle('00001');
         $stockArNH->setIdStock($this->getReference('stock1'));
         $manager->persist($stockArNH);
         $stockArNM = new StocksArticles();
-        $stockArNM->setRefArticle($this->getReference('NaissainMoule'));
-        $stockArNM->setQte(500);
+        $stockArNM->setRefArticle($this->getReference('NaissainHuitre1'));
+        $stockArNM->setQte(50000000);
         $stockArNM->setRefStockArticle('00002');
         $stockArNM->setIdStock($this->getReference('stock1'));
         $manager->persist($stockArNM);
         $stockArNH2 = new StocksArticles();
-        $stockArNH2->setRefArticle($this->getReference('NaissainHuitre'));
-        $stockArNH2->setQte(1000);
+        $stockArNH2->setRefArticle($this->getReference('NaissainHuitre2'));
+        $stockArNH2->setQte(2000000);
         $stockArNH2->setRefStockArticle('00003');
-        $stockArNH2->setIdStock($this->getReference('stock2'));
+        $stockArNH2->setIdStock($this->getReference('stock1'));
         $manager->persist($stockArNH2);
-        $stockArNM2 = new StocksArticles();
-        $stockArNM2->setRefArticle($this->getReference('NaissainMoule'));
-        $stockArNM2->setQte(500);
-        $stockArNM2->setRefStockArticle('00004');
-        $stockArNM2->setIdStock($this->getReference('stock2'));
-        $manager->persist($stockArNM2);
         $manager->flush();
         $this->addReference('stockArNH', $stockArNH);
         $this->addReference('stockArNM', $stockArNM);
         $this->addReference('stockArNH2', $stockArNH2);
-        $this->addReference('stockArNM2', $stockArNM2);
     }
 
     /**

@@ -1,11 +1,9 @@
 {% extends "SSFMBBundle::layout.html.twig" %}
-
 {% block title %}
     Suivit - {{ parent() }}
 {% endblock %}
 {% block body %}
     <div class="container-fluid">
-
         {% block menu %}
             {{ parent() }}
         {% endblock %}
@@ -14,41 +12,18 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="alert alert-dismissable alert-danger" id="alerterouge" style="display: none">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
-                            ×
-                        </button>
-                        <h4>
-                            Alert!
-                        </h4> <strong>Warning!</strong> l'article du parc nomparc de la filiere f1 contenu dans le
-                        segment A
-                        a
-                        partir du flotteur A1 a l'emplacement 10 a depasser le temps prevue <a href="#"
-                                                                                               class="alert-link">alert
-                            link</a>
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <h4>Alert!</h4>
+                        <strong>Warning!</strong> l'article du parc nomparc de la filiere f1 contenu dans le segment A a
+                        partir du flotteur A1 a l'emplacement 10 a depasser le temps prevue
+                        <a href="#" class="alert-link">alert link</a>
                     </div>
-                    <div class="alert alert-dismissable alert-warning" id="alertejaune" style="display: none">
-
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
-                            ×
-                        </button>
-                        <h4>
-                            Alert!
-                        </h4> <strong>Warning!</strong> il reste 5 jours pour l'article du parc nomparc de la filiere f1
-                        contenu
-                        dans le segment A a partir du flotteur A1 a l'emplacement 5 <a href="#"
-                                                                                       class="alert-link">alert
-                            link</a>
-                    </div>
+                    <div class="alert alert-dismissable alert-warning" id="alertejaune" style="display: none"></div>
                     <div class="alert alert-success alert-dismissable" id="alerteverte" style="display: none">
-
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
-                            ×
-                        </button>
-                        <h4>
-                            Alert!
-                        </h4> <strong>Warning!</strong> Best check yo self, you're not looking too good. <a href="#"
-                                                                                                            class="alert-link">alert
-                            link</a>
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <h4>Alert!</h4>
+                        <strong>Warning!</strong> Best check yo self, you're not looking too good.
+                        <a href="#" class="alert-link">alertlink</a>
                     </div>
                 </div>
             </div>
@@ -57,27 +32,17 @@
         {% block ssfmb_body %}
             <div class="row">
                 <div class="col-md-12">
-
                     <ul class="pagination pagination-lg">
-
                         {% for page in pages %}
-
-                            <li>
-                                <a href="{{ path('ssfmb_homepage', { 'id': page.id }) }}">
-                                    {{ page.nomParc }}
-                                </a>
-                            </li>
+                            <li><a href="{{ path('ssfmb_homepage', { 'id': page.id }) }}">{{ page.nomParc }}</a></li>
                         {% endfor %}
-
                     </ul>
                     <table class="table table-condensed table-bordered" border="1">
                         <tbody>
                         {% for entity in entities %}
                             <tr>
                                 <td>
-                                    <a href="{{ path('parc_show', { 'id': entity.id }) }}">
-                                        {{ entity.nomParc }}
-                                    </a>
+                                    <a href="{{ path('parc_show', { 'id': entity.id }) }}">{{ entity.nomParc }}</a>
                                 </td>
                             </tr>
                             <tr>
@@ -86,52 +51,41 @@
                                         <tbody>
                                         {% for filiere in entity.filieres %}
                                             <tr>
-                                                <td>{{ filiere.getNomFiliere }}
+                                                <td class="filiere">{{ filiere.getNomFiliere }}
                                                     <br/>
                                                     {% set tailleFiliere =0 %}
                                                     {% set totaleplace =0 %}
                                                     {% set totalelanterne =0 %}
                                                     {% set totalecorde =0 %}
-
-
                                                     {% for segment in filiere.segments %}
                                                         {% set tailleFiliere = tailleFiliere+segment.getLongeur %}
                                                         {% for flotteur in segment.flotteurs %}
                                                             {% for emplacement in flotteur.emplacements %}
                                                                 {% if emplacement.corde == null and emplacement.stockslanterne == null %}
                                                                     {% set totaleplace = totaleplace + 1 %}
-
                                                                 {% elseif emplacement.corde != null %}
                                                                     {% set totaleplace = totaleplace + 1 %}
                                                                     {% set totalecorde = totalecorde + 1 %}
-
                                                                 {% elseif emplacement.stockslanterne != null %}
                                                                     {% set totaleplace = totaleplace + 1 %}
                                                                     {% set totalelanterne =totalelanterne + 1 %}
-
                                                                 {% endif %}
-
-
                                                             {% endfor %}
                                                         {% endfor %}
                                                     {% endfor %}
-
-
                                                     taille {{ tailleFiliere }} m <br>
                                                     nombre de place totale : {{ totaleplace }} place <br> nombre de
                                                     place vide :{{ (totaleplace -(totalecorde + totalelanterne)) }}
                                                     place
                                                     || {{ ((totaleplace -(totalecorde + totalelanterne))/totaleplace ) *100 }}
                                                     %
-                                                    <br>
-                                                    nombre de place remplis
+                                                    <br>nombre de place remplis
                                                     :{{ totaleplace - (totaleplace -(totalecorde + totalelanterne)) }}
                                                     place
                                                     || {{ ((((totaleplace -(totaleplace -(totalecorde + totalelanterne))))/totaleplace )*100 ) }}
-                                                    %<br>
-                                                    nombre des corde:{{ totalecorde }}
+                                                    %
+                                                    <br>nombre des corde:{{ totalecorde }}
                                                     <br>nombre des lanterne:{{ totalelanterne }}
-
                                                 </td>
                                             </tr>
                                             <tr>
@@ -143,63 +97,57 @@
                                                                 {% set totaleplace =0 %}
                                                                 {% set totalelanterne =0 %}
                                                                 {% set totalecorde =0 %}
-
-
                                                                 {% for flotteur in segment.flotteurs %}
                                                                     {% set tailleFiliere = tailleFiliere+segment.getLongeur %}
                                                                     {% for emplacement in flotteur.emplacements %}
                                                                         {% if emplacement.corde == null and emplacement.stockslanterne == null %}
                                                                             {% set totaleplace = totaleplace + 1 %}
-
                                                                         {% elseif emplacement.corde != null %}
                                                                             {% set totaleplace = totaleplace + 1 %}
                                                                             {% set totalecorde = totalecorde + 1 %}
-
                                                                         {% elseif emplacement.stockslanterne != null %}
                                                                             {% set totaleplace = totaleplace + 1 %}
                                                                             {% set totalelanterne =totalelanterne + 1 %}
-
                                                                         {% endif %}
-
-
                                                                     {% endfor %}
                                                                 {% endfor %}
                                                                 <td valign="top">
                                                                     <ul>
-                                                                        <li> {{ segment.getNomSegment }}</li>
+                                                                        <li class="segment">
+                                                                            {{ segment.getNomSegment }}
+                                                                        </li>
                                                                         <li>{{ segment.getLongeur }} m</li>
                                                                         <li> nombre de place totale : {{ totaleplace }}
                                                                             place
                                                                         </li>
-                                                                        <li>nombre de
-                                                                            place vide
+                                                                        <li>nombre de place vide
                                                                             :{{ (totaleplace -(totalecorde + totalelanterne)) }}
                                                                             place
                                                                             || {{ ((totaleplace -(totalecorde + totalelanterne))/totaleplace ) *100 }}
                                                                             %
                                                                         </li>
-                                                                        <li> nombre de place remplis
-                                                                            :{{ totaleplace - (totaleplace -(totalecorde + totalelanterne)) }}
+                                                                        <li> nombre de place
+                                                                            remplis:{{ totaleplace - (totaleplace -(totalecorde + totalelanterne)) }}
                                                                             place
                                                                             || {{ ((((totaleplace -(totaleplace -(totalecorde + totalelanterne))))/totaleplace )*100 ) }}
                                                                             %
                                                                         </li>
                                                                         <li>nombre des corde:{{ totalecorde }}</li>
-                                                                        <li>nombre des lanterne:{{ totalelanterne }}</li>
+                                                                        <li>nombre des
+                                                                            lanterne:{{ totalelanterne }}</li>
                                                                     </ul>
                                                                     {% for flotteur in segment.flotteurs %}
-                                                                        <p>    {{ flotteur.getNomFlotteur }}
+                                                                        <p class="flotteur">
+                                                                            {{ flotteur.getNomFlotteur }}
                                                                             {% for emplacement in flotteur.emplacements %}
                                                                                 {% if emplacement.corde == null and emplacement.stockslanterne == null %}
                                                                                     <font color="red"> {{ emplacement.place }}</font>
-
                                                                                 {% elseif emplacement.corde != null %}
                                                                                     <a title="article  {{ emplacement.corde.article.lot.lot }}-{{ emplacement.corde.article.libArticle }}
 -date de creation  {{ emplacement.corde.dateDeCreation|date('Y-m-d') }}
--date de MAE  {{ emplacement.dateDeRemplissage|date('Y-m-d') }}"
-                                                                                       href="{{ path('corde_show', {'id': emplacement.corde.id }) }}">
-                                                                                        <font color="blue"> {{ emplacement.place }}</font></a>
-
+-date de MAE  {{ emplacement.dateDeRemplissage|date('Y-m-d') }}" href="{{ path('corde_show', {'id': emplacement.corde.id }) }} ">
+                                                                                        <font color="blue" class="emplacement"> {{ emplacement.place }}</font>
+                                                                                    </a>
                                                                                     {% if(emplacement.dateDeRemplissage != null) %}
                                                                                         <span class="dateemplacement"
                                                                                               style="display: none">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</span>
@@ -210,11 +158,11 @@
 -date de creation  {{ emplacement.stockslanterne.dateDeCreation|date('Y-m-d') }}
 -date de MAE  {{ emplacement.dateDeRemplissage|date('Y-m-d') }}"
                                                                                        href="{{ path('stockslanternes_show', {'id': emplacement.stockslanterne.id }) }}">
-                                                                                        <font color="#adff2f"> {{ emplacement.place }}</font>
+                                                                                        <font color="#adff2f" class="emplacement">{{ emplacement.place }}
+                                                                                        </font>
                                                                                     </a>
                                                                                     <span style="display: none"
                                                                                           id="dateemplacement">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</span>
-
                                                                                 {% endif %}
                                                                             {% endfor %}
                                                                         </p>
@@ -239,56 +187,49 @@
         {% endblock %}
     </div>
 {% endblock %}
-
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
-
         $(document).ready(function () {
-
 //display:none
+            function diffdate(d1, d2, u) {
+                div = 1
+                switch (u) {
+                    case 's':
+                        div = 1000;
+                        break;
+                    case 'm':
+                        div = 1000 * 60
+                        break;
+                    case 'h':
+                        div = 1000 * 60 * 60
+                        break;
+                    case 'd':
+                        div = 1000 * 60 * 60 * 24
+                        break;
+                }
+                var Diff = d2.getTime() - d1.getTime();
+                return Math.ceil((Diff / div))
+            }
+
             $('.dateemplacement').each(function (ele, val) {
+                console.log(ele + "     "  + val)
                 var datejour = $(this).text().split("-");
                 var Date1 = new Date(datejour[0], datejour[1] - 1, datejour[2]);
                 var Date2 = new Date();
-
-                function diffdate(d1, d2, u) {
-                    div = 1
-                    switch (u) {
-                        case 's':
-                            div = 1000;
-                            break;
-                        case 'm':
-                            div = 1000 * 60
-                            break;
-                        case 'h':
-                            div = 1000 * 60 * 60
-                            break;
-                        case 'd':
-                            div = 1000 * 60 * 60 * 24
-                            break;
-                    }
-
-                    var Diff = d2.getTime() - d1.getTime();
-                    return Math.ceil((Diff / div))
-                }
-
-                $('#alertejaune').show();
-                $('#alerterouge').show();
-
+                if($(this).parent('.flotteur').has('dateemplacement'))
                 if (0 < diffdate(Date1, Date2, 'd') < 10) {
+                    if($(this).parent('.flotteur').has('dateemplacement'))
+                        var str = 'il reste ' + diffdate(Date1, Date2, 'd') + ' jours pour l article de la filiere ' + $(this).parent()+ ' contenu dans le segment ' + $('.segment').text() + ' a partir du flotteur ' + $('.flotteur').text() + ' a lemplacement ' + $('.emplacement').text() + '<br>'
+                    $('#alertejaune').html('<button type="button" class="close" data-dismiss="alert" aria-hidden="true">× </button> <h4> Alert! </h4> <strong>Warning!</strong> ' + str + '<a href="#" class="alert-link">alert link</a>');
                     $('#alertejaune').show();
-
-                    $('#alertejaune2').clone().prependTo("#alertejaune");
-                    $('#alertejaune2').show();
-
                 }
-
                 if (diffdate(Date1, Date2, 'd') <= 0) {
+                    var str2 = 'il reste ' + (diffdate(Date1, Date2, 'd') * -1) + ' jours pour l article de la filiere ' + $('#filiere').text() + ' contenu dans le segment ' + $('#segment').text() + ' a partir du flotteur ' + $('#flotteur').text() + ' a lemplacement ' + $('#emplacement').text()
+                    $('#alerterouge').html('<button type="button" class="close" data-dismiss="alert" aria-hidden="true">× </button> <h4> Alert! </h4> <strong>Warning!</strong> ' + str2 + '<a href="#" class="alert-link">alert link</a>');
                     $('#alerterouge').show();
                 }
             });
-
         });
     </script>
 {% endblock %}

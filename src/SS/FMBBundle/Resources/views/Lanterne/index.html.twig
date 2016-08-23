@@ -5,37 +5,39 @@
 
     <table class="records_list">
         <thead>
-        <tr>
-            <th>Id</th>
-            <th>Nomlanterne</th>
-            <th>Actions</th>
-        </tr>
+            <tr>
+                <th>Nomlanterne</th>
+                <th>Nbrpoche</th>
+                <th>Nbrtotaleenstock</th>
+                <th>Actions</th>
+            </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('lanterne_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.nomLanterne }}</td>
+                <td><a href="{{ path('lanterne_show', { 'id': entity.nomLanterne }) }}">{{ entity.nomLanterne }}</a></td>
+                <td>{{ entity.nbrpoche }}</td>
+                <td>{{ entity.nbrTotaleEnStock }}</td>
                 <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('lanterne_show', { 'id': entity.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('lanterne_edit', { 'id': entity.id }) }}">edit</a>
-                        </li>
-                    </ul>
+                <ul>
+                    <li>
+                        <a href="{{ path('lanterne_show', { 'id': entity.nomLanterne }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('lanterne_edit', { 'id': entity.nomLanterne }) }}">edit</a>
+                    </li>
+                </ul>
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <ul>
+        <ul>
         <li>
             <a href="{{ path('lanterne_new') }}">
                 Create a new entry
             </a>
         </li>
     </ul>
-{% endblock %}
+    {% endblock %}

@@ -11,6 +11,9 @@ namespace SS\FMBBundle\Interfaces;
 
 interface DefaultInterface
 {
-    public function  generateurNumeroDeLotParDateDuJour();
+    public function remplirPoche($i, $qte, $nbrPocheLanterne);
 
+    public function viderPoche($poche, $qte);
+
+    public function modifierQtePoche($poche, $qte);
 }

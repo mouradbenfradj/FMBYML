@@ -34,9 +34,9 @@ class Parc
     private $filieres;
 
     /**
-     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\StocksLanternes", mappedBy="parc",cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Lanterne", mappedBy="parc",cascade={"remove"})
      */
-    private $stockslanternes;
+    private $lanternes;
     /**
      * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Stocks", mappedBy="refAdrStock",cascade={"remove"})
      */
@@ -48,7 +48,6 @@ class Parc
     public function __construct()
     {
         $this->filieres = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->lanternes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->st = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -123,39 +122,6 @@ class Parc
     }
 
     /**
-     * Add stockslanternes
-     *
-     * @param \SS\FMBBundle\Entity\StocksLanternes $stockslanternes
-     * @return Parc
-     */
-    public function addStockslanterne(\SS\FMBBundle\Entity\StocksLanternes $stockslanternes)
-    {
-        $this->stockslanternes[] = $stockslanternes;
-
-        return $this;
-    }
-
-    /**
-     * Remove stockslanternes
-     *
-     * @param \SS\FMBBundle\Entity\StocksLanternes $stockslanternes
-     */
-    public function removeStockslanterne(\SS\FMBBundle\Entity\StocksLanternes $stockslanternes)
-    {
-        $this->stockslanternes->removeElement($stockslanternes);
-    }
-
-    /**
-     * Get stockslanternes
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getStockslanternes()
-    {
-        return $this->stockslanternes;
-    }
-
-    /**
      * Add stock
      *
      * @param \SS\FMBBundle\Entity\Stocks $stock
@@ -186,5 +152,38 @@ class Parc
     public function getStock()
     {
         return $this->stock;
+    }
+
+    /**
+     * Add lanternes
+     *
+     * @param \SS\FMBBundle\Entity\Lanterne $lanternes
+     * @return Parc
+     */
+    public function addLanterne(\SS\FMBBundle\Entity\Lanterne $lanternes)
+    {
+        $this->lanternes[] = $lanternes;
+
+        return $this;
+    }
+
+    /**
+     * Remove lanternes
+     *
+     * @param \SS\FMBBundle\Entity\Lanterne $lanternes
+     */
+    public function removeLanterne(\SS\FMBBundle\Entity\Lanterne $lanternes)
+    {
+        $this->lanternes->removeElement($lanternes);
+    }
+
+    /**
+     * Get lanternes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getLanternes()
+    {
+        return $this->lanternes;
     }
 }

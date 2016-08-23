@@ -171,20 +171,15 @@
             $('#choixqtearticle').ready(function () {
                 $('#choixqtearticle').hide();
             });
-
-
-            $('input:checkbox').change(
-                    function () {
-                        if ($(this).is(':checked')) {
-                            $('#quantit').val(parseInt($('#quantit').val()) - 1);
-                        } else {
-                            $('#quantit').val(parseInt($('#quantit').val()) + 1);
-                        }
-                    });
-
+            $('input:checkbox').change(function () {
+                if ($(this).is(':checked')) {
+                    $('#quantit').val(parseInt($('#quantit').val()) - 1);
+                } else {
+                    $('#quantit').val(parseInt($('#quantit').val()) + 1);
+                }
+            });
         });
         $('#articlechoix').ready(function () {
-
             $.ajax({
                 type: 'get',
                 url: "{{ path('ssfmb_cordearticle') }}",

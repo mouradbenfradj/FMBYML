@@ -156,8 +156,7 @@
                                         <div id="choixqtearticle">
                                             <p> choix de la quantiter des lanternes</p>
                                             <p>
-                                                <select name="quantierchoix" id="quantierchoix">
-                                                </select>
+                                                <select name="quantierchoix" id="quantierchoix"></select>
                                             </p>
                                             <p><input type="submit" value="confirmer la mise a l'eau"/></p>
 
@@ -179,13 +178,10 @@
     {{ parent() }}
     <script type="text/javascript">
         $(document).ready(function () {
-            console.log('document ready');
             $('#choixqtearticle').ready(function () {
-                console.log('hide choix article');
                 $('#choixqtearticle').hide();
             });
             $('input:checkbox').change(function () {
-                console.log('change checkbox');
                 if ($(this).is(':checked')) {
                     $('#quantit').val(parseInt($('#quantit').val()) - 1);
                 } else {
@@ -194,7 +190,6 @@
             });
         });
         $('#articlechoix').ready(function () {
-            console.log('article choix ready');
             $.ajax({
                 type: 'get',
                 url: "{{ path('ssfmb_lanternearticle') }}",
