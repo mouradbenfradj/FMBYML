@@ -3,6 +3,7 @@
 namespace SS\FMBBundle\Form;
 
 use Doctrine\ORM\EntityRepository;
+use SS\FMBBundle\Entity\Parc;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -53,8 +54,8 @@ class PreparationLanterneType extends AbstractType
             // Fetch the cities from specified province
             $repo = $this->em->getRepository('SSFMBBundle:Stocks');
             $repo2 = $this->em->getRepository('SSFMBBundle:Lanterne');
-            $stocks = $repo->findByParc($parc, array('nomParc' => 'asc'));
-            $lanternes = $repo->findByParc($parc, array('nomParc' => 'asc'));
+            $stocks = $repo->findByRefAdrStock($parc);
+            $lanternes = $repo2->findByParc($parc);
         }
         // Add the city element
         $form->add('libStock', 'entity', array(
@@ -77,15 +78,15 @@ class PreparationLanterneType extends AbstractType
 
         $form = $event->getForm();
         $data = $event->getData();
-        $parc = $data->getRefAdrStock() ? $data->getRefAdrStock()->getParc() : null;
-
+        $parc = $data ? $data->getParc() : null;
         $this->addElements($form, $parc);
     }
     function onPreSubmit(FormEvent $event) {
         $form = $event->getForm();
         $data = $event->getData();
         // Note that the data is not yet hydrated into the entity.
-        $parc = $this->em->getRepository('SSFMBBundle:Parc')->find($data['nomParc']);
+        $parc = $this->em->getRepository('SSFMBBundle:Parc')->find($data['Parc']);
+
         $this->addElements($form, $parc);
     }
 

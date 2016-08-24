@@ -4,6 +4,7 @@ namespace SS\FMBBundle\Controller;
 
 use SS\FMBBundle\Entity\Corde;
 use SS\FMBBundle\Entity\Lanterne;
+use SS\FMBBundle\Entity\Parc;
 use SS\FMBBundle\Entity\StocksLanternes;
 use SS\FMBBundle\Form\PreparationCordeType;
 use SS\FMBBundle\Form\PreparationLanterneType;
@@ -46,20 +47,18 @@ class DefaultController extends Controller
             $form->handleRequest($request);
             $document = $form['document']->getData();
             $em->persist($document);
-            var_dump($form->get('nomLanterne'));
-            die();
-            $lant = $em->getRepository('SSFMBBundle:Lanterne')->findByNomLanterne($form->get('nomLanterne')->getData()->getNomLanterne());
+            var_dump("test1");
+            $lant = $em->getRepository('SSFMBBundle:Lanterne')->find($form->get('nomLanterne')->getData());
 
             foreach ($form['document']['docsLines']->getData() as $doclin) {
-                $result = $em->getRepository('SSFMBBundle:StocksArticles')->findBy(array('idStock' => $form->get('stock')->getData()->getIdStock(), 'refArticle' => $doclin->getRefArticle(),));
+                $result = $em->getRepository('SSFMBBundle:StocksArticles')->findBy(array('idStock' => $form->get('libStock')->getData()->getIdStock(), 'refArticle' => $doclin->getRefArticle(),));
                 if (!empty($result)) {
                     $stockarticles = $result[0];
                     for ($j = 0; $j < $request->request->get("ss_fmbbundle_preparationlanterne")['document']['docsLines'][0]['nombre']; $j++) {
                         $stockslanternes = new StocksLanternes();
                         $stockslanternes->setDateDeCreation($form->getData('date')['date']);
                         $stockslanternes->setPret(false);
-                        $stockslanternes->setParc($form->get('parc')->getData());
-                        $stockslanternes->setLanterne($lant[0]);
+                        $stockslanternes->setLanterne($lant);
                         $stockslanternes->setDocLine($doclin);
                         $stockarticles->setQte($stockarticles->getQte() - $doclin->getQte());
                         $qtedocs = $doclin->getQte();
@@ -86,6 +85,7 @@ class DefaultController extends Controller
 
         if ($request->get('id') == null) {
             $parcs = null;
+            $lanternes=null;
             $articles = null;
         } else {
             $parcs = $em->getRepository('SSFMBBundle:Parc')->findById($request->get('id'));
