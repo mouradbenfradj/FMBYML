@@ -200,28 +200,46 @@
                     $('#quantierchoix').empty();
                 },
                 success: function (json) {
-                    console.log('sucsses');
                     $('#quantierchoix').html('');
                     if (!$.trim(json)) {
-                        console.log('trim');
                         $('#choixqtearticle').ready(function () {
-                            console.log('choix article function ');
                             $('#choixqtearticle').hide();
                         });
-                    }
-                    ;
+                    };
                     if ($.trim(json)) {
-                        console.log('trim2');
                         $('#choixqtearticle').ready(function () {
-                            console.log('choix article 2');
                             $('#choixqtearticle').show();
+                            $.ajax({
+                                type: 'get',
+                                url: "{{ path('ssfmb_nombrelanternearticle') }}",
+                                data: {'ida': $('#articlechoix').val(), 'idl': $('#lanternechoix').val(), 'qtech': $('#quantierchoix').val()},
+                                dataType: 'json',
+                                beforeSend: function () {
+                                    $('#quantit').val(0);
+                                },
+                                success: function (json) {
+                                    if ($.trim(json)) {
+                                        $('#choixqtearticle').ready(function () {
+                                            $("input:checkbox").each(function () {
+                                                $(this).prop('checked', false);
+                                            });
+
+                                            $('#choixqtearticle').show();
+                                        });
+                                    }
+                                    $.each(json, function (index, value) {
+                                        $('#quantit').val(value.nombre);
+                                        $("input:checkbox").each(function () {
+                                            $(this).attr('checked', false);
+                                        });
+                                    });
+                                }
+                            });
                             $("input:checkbox").each(function () {
-                                console.log('checkbox false ');
                                 $(this).prop('checked', false);
                             });
                         });
-                    }
-                    ;
+                    };
 
                     $.each(json, function (index, value) {
                         $('#quantit').val(value.nombre);
@@ -238,15 +256,140 @@
                 data: {'ida': $('#articlechoix').val(), 'idl': $('#lanternechoix').val()},
                 dataType: 'json',
                 beforeSend: function () {
+                    $('#quantit').val(0);
+
                     $('#quantierchoix').empty();
                 },
                 success: function (json) {
                     $('#quantierchoix').html('');
+                    console.log($.trim(json));
                     if (!$.trim(json)) {
                         $('#choixqtearticle').ready(function () {
                             $('#choixqtearticle').hide();
                         });
                     }
+                    if ($.trim(json)) {
+                        $('#choixqtearticle').ready(function () {
+                            $("input:checkbox").each(function () {
+                                $(this).prop('checked', false);
+                            });
+
+                            $('#choixqtearticle').show();
+                            $.ajax({
+                                type: 'get',
+                                url: "{{ path('ssfmb_nombrelanternearticle') }}",
+                                data: {'ida': $('#articlechoix').val(), 'idl': $('#lanternechoix').val(), 'qtech': $('#quantierchoix').val()},
+                                dataType: 'json',
+                                beforeSend: function () {
+                                    $('#quantit').val(0);
+                                },
+                                success: function (json) {
+                                    if ($.trim(json)) {
+                                        $('#choixqtearticle').ready(function () {
+                                            $("input:checkbox").each(function () {
+                                                $(this).prop('checked', false);
+                                            });
+
+                                            $('#choixqtearticle').show();
+                                        });
+                                    }
+                                    $.each(json, function (index, value) {
+                                        $('#quantit').val(value.nombre);
+                                        $("input:checkbox").each(function () {
+                                            $(this).attr('checked', false);
+                                        });
+                                    });
+                                }
+                            });
+                        });
+                    }
+                    $.each(json, function (index, value) {
+                        $('#quantit').val(value.nombre);
+                        $("input:checkbox").each(function () {
+                            $(this).attr('checked', false);
+                        });
+                        // et  boucle sur la réponse contenu dans la variable passé à la function du success "json"
+                        $('#quantierchoix').append('<option value="' + value.qte + '">' + value.qte + '</option>');
+                    });
+                }
+            });
+        });
+        $('#lanternechoix').change(function () {
+            $.ajax({
+                type: 'get',
+                url: "{{ path('ssfmb_lanternearticle') }}",
+                data: {'ida': $('#articlechoix').val(), 'idl': $('#lanternechoix').val()},
+                dataType: 'json',
+                beforeSend: function () {
+                    $('#quantit').val(0);
+
+                    $('#quantierchoix').empty();
+                },
+                success: function (json) {
+                    $('#quantierchoix').html('');
+                    console.log($.trim(json));
+                    if (!$.trim(json)) {
+                        $('#choixqtearticle').ready(function () {
+                            $('#choixqtearticle').hide();
+                        });
+                    }
+                    if ($.trim(json)) {
+                        $('#choixqtearticle').ready(function () {
+                            $("input:checkbox").each(function () {
+                                $(this).prop('checked', false);
+                            });
+
+                            $('#choixqtearticle').show();
+                            $.ajax({
+                                type: 'get',
+                                url: "{{ path('ssfmb_nombrelanternearticle') }}",
+                                data: {'ida': $('#articlechoix').val(), 'idl': $('#lanternechoix').val(), 'qtech': $('#quantierchoix').val()},
+                                dataType: 'json',
+                                beforeSend: function () {
+                                    $('#quantit').val(0);
+                                },
+                                success: function (json) {
+                                    if ($.trim(json)) {
+                                        $('#choixqtearticle').ready(function () {
+                                            $("input:checkbox").each(function () {
+                                                $(this).prop('checked', false);
+                                            });
+
+                                            $('#choixqtearticle').show();
+                                        });
+                                    }
+                                    $.each(json, function (index, value) {
+                                        $('#quantit').val(value.nombre);
+                                        $("input:checkbox").each(function () {
+                                            $(this).attr('checked', false);
+                                        });
+                                    });
+                                }
+                            });
+                        });
+                    }
+                    $.each(json, function (index, value) {
+                        $('#quantit').val(value.nombre);
+                        $("input:checkbox").each(function () {
+                            $(this).attr('checked', false);
+                        });
+                        // et  boucle sur la réponse contenu dans la variable passé à la function du success "json"
+                        $('#quantierchoix').append('<option value="' + value.qte + '">' + value.qte + '</option>');
+                    });
+                }
+            });
+        });
+
+        $('#quantierchoix').change(function () {
+            $.ajax({
+                type: 'get',
+                url: "{{ path('ssfmb_nombrelanternearticle') }}",
+                data: {'ida': $('#articlechoix').val(), 'idl': $('#lanternechoix').val(), 'qtech': $('#quantierchoix').val()},
+                dataType: 'json',
+                beforeSend: function () {
+                    $('#quantit').val(0);
+                },
+                success: function (json) {
                     if ($.trim(json)) {
                         $('#choixqtearticle').ready(function () {
                             $("input:checkbox").each(function () {
@@ -261,12 +404,12 @@
                         $("input:checkbox").each(function () {
                             $(this).attr('checked', false);
                         });
-                        // et  boucle sur la réponse contenu dans la variable passé à la function du success "json"
-                        $('#quantierchoix').append('<option value="' + value.qte + '">' + value.qte + '</option>');
                     });
                 }
             });
         });
+
+
         function fillCheckbox(containerID, fill) {
             console.log(containerID);
             console.log(fill);

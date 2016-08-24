@@ -18,6 +18,9 @@ ssfmb_cordearticle:
 ssfmb_lanternearticle:
     path:     /lanternearticle
     defaults: { _controller: SSFMBBundle:Default:lanterneArticle}
+ssfmb_nombrelanternearticle:
+    path:     /nombrelanternearticle
+    defaults: { _controller: SSFMBBundle:Default:nombreLanterneArticle}
 
 ssfmb_preparationlanterne:
     path:     /preparationlanterne

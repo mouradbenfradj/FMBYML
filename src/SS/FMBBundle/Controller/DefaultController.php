@@ -85,7 +85,7 @@ class DefaultController extends Controller
 
         if ($request->get('id') == null) {
             $parcs = null;
-            $lanternes=null;
+            $lanternes = null;
             $articles = null;
         } else {
             $parcs = $em->getRepository('SSFMBBundle:Parc')->findById($request->get('id'));
@@ -96,12 +96,19 @@ class DefaultController extends Controller
             foreach ($request->request->get('placelanterne') as $emplacementlanterne) {
                 $place = $em->getRepository('SSFMBBundle:Emplacement')->find($emplacementlanterne);
                 $lanterne = $em->getRepository('SSFMBBundle:Lanterne')->find($request->request->get('lanternechoix'));
-                $lanternearticle = $em->getRepository('SSFMBBundle:StocksLanternes')->findOneBy(array('article' => $request->request->get('articlechoix'), 'emplacement' => null, 'lanterne' => $lanterne, 'pret' => false,));
-                $lanternearticle->setEmplacement($place);
-                $lanternearticle->setPret(false);
-                $place->setStocksLanterne($lanternearticle);
-                $place->setDateDeRemplissage(new \DateTime($request->request->get('dateMAELanterne')));
-                $em->flush();
+                $lanternearticle = $em->getRepository('SSFMBBundle:StocksLanternes')->findBy(array('article' => $request->request->get('articlechoix'), 'emplacement' => null, 'lanterne' => $lanterne, 'pret' => false,));
+                $trouve = false;
+                foreach ($lanternearticle as $la) {
+                    if (($this->calculerQuantiterLanterne($la) == $request->request->get('quantierchoix')) && !$trouve) {
+
+                        $la->setEmplacement($place);
+                        $la->setPret(false);
+                        $place->setStocksLanterne($la);
+                        $place->setDateDeRemplissage(new \DateTime($request->request->get('dateMAELanterne')));
+                        $em->flush();
+                        $trouve = true;
+                    }
+                }
             }
             return $this->redirectToRoute('ssfmb_homepage');
         }
@@ -323,13 +330,47 @@ class DefaultController extends Controller
         $tabEnsembles = array();
         $tabtest = array();
         $i = 0;
-        $tabEnsembles[$i]['qte'] = 0;
         foreach ($lanternearticle as $e) { // transformer la réponse de la requete en tableau qui remplira le select pour ensembles
             if (!in_array($this->calculerQuantiterLanterne($e), $tabtest)) {
                 $tabEnsembles[$i]['id'] = $e->getId();
                 $tabEnsembles[$i]['nombre'] = count($lanternearticle);
                 $tabEnsembles[$i]['qte'] = $this->calculerQuantiterLanterne($e);
                 $tabtest[] = $this->calculerQuantiterLanterne($e);
+            }
+            $i++;
+        }
+        $response = new Response();
+        $data = json_encode($tabEnsembles); // formater le résultat de la requête en json
+        $response->headers->set('Content-Type', 'miseaeaulanterne/json');
+        $response->setContent($data);
+
+        return $response;
+
+    }
+
+    public function nombreLanterneArticleAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $lanternearticle = $em->getRepository('SSFMBBundle:StocksLanternes')->findBy(
+            array(
+                'article' => $request->get('ida'),
+                'emplacement' => null,
+                'pret' => false,
+                'lanterne' => $request->get('idl'),
+            )
+        );
+        count($lanternearticle);
+        $tabEnsembles = array();
+        $tabtest = array();
+        $i = 0;
+        $tt = 1;
+        foreach ($lanternearticle as $e) { // transformer la réponse de la requete en tableau qui remplira le select pour ensembles
+            if ($this->calculerQuantiterLanterne($e) == $request->get('qtech')) {
+                $tabEnsembles[$i]['id'] = $e->getId();
+                $tabEnsembles[$i]['nombre'] = $tt;
+                $tabEnsembles[$i]['qte'] = $this->calculerQuantiterLanterne($e);
+                $tabtest[] = $this->calculerQuantiterLanterne($e);
+                $tt++;
             }
             $i++;
         }
