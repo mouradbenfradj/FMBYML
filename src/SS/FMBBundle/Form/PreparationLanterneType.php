@@ -68,6 +68,10 @@ class PreparationLanterneType extends AbstractType
             'class' => 'SSFMBBundle:Lanterne',
             'choices' => $lanternes,
         ));
+        $form->add('quantiterEnStock', 'integer', array(
+            'mapped' => false,
+            'read_only' =>'true'
+        ));
         $form->add($dt);
         $form->add($do);
 

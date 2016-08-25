@@ -47,7 +47,6 @@ class DefaultController extends Controller
             $form->handleRequest($request);
             $document = $form['document']->getData();
             $em->persist($document);
-            var_dump("test1");
             $lant = $em->getRepository('SSFMBBundle:Lanterne')->find($form->get('nomLanterne')->getData());
 
             foreach ($form['document']['docsLines']->getData() as $doclin) {
@@ -72,6 +71,8 @@ class DefaultController extends Controller
                     return $this->render('@SSFMB/Default/preparationLanterne.html.twig', array('form' => $form->createView(),));
                 }
             }
+            $lant->setNbrTotaleEnStock($lant->getNbrTotaleEnStock() - $request->request->get("ss_fmbbundle_preparationlanterne")['document']['docsLines'][0]['nombre']);
+
             $em->flush();
             return $this->redirectToRoute('ssfmb_homepage');
         }
@@ -100,7 +101,6 @@ class DefaultController extends Controller
                 $trouve = false;
                 foreach ($lanternearticle as $la) {
                     if (($this->calculerQuantiterLanterne($la) == $request->request->get('quantierchoix')) && !$trouve) {
-
                         $la->setEmplacement($place);
                         $la->setPret(false);
                         $place->setStocksLanterne($la);
@@ -236,6 +236,7 @@ class DefaultController extends Controller
         $lanternes = $repo->findByParc($id, array('parc' => 'asc'));
         foreach ($lanternes as $lanterne) {
             $result[$lanterne->getNomLanterne()] = $lanterne->getNomLanterne();
+            $result[$lanterne->getNomLanterne().$lanterne->getNbrTotaleEnStock()] = $lanterne->getNbrTotaleEnStock();
         }
         return new JsonResponse($result);
     }

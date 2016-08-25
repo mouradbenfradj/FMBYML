@@ -75,79 +75,149 @@
                     return false;
                 });
             }
+
             $('#ss_fmbbundle_preparationlanterne_libStock').hide();
             $('#ss_fmbbundle_preparationlanterne_nomLanterne').hide();
+            $('#ss_fmbbundle_preparationlanterne_quantiterEnStock').hide();
+            $('#ss_fmbbundle_preparationlanterne_submit').hide();
 
-
-            $('#ss_fmbbundle_preparationlanterne_Parc').ready(function(){
-                console.log("change parc reussi");
+            $('#ss_fmbbundle_preparationlanterne_Parc').ready(function () {
                 var val = $("#ss_fmbbundle_preparationlanterne_Parc").val();
                 $.ajax({
                     type: "POST",
                     url: "{{ url('ssfmb_parcstock') }}?parc_id=" + val,
-                    success: function(data) {
-                        console.log("succer change  parc reussi");
-                        $('#ss_fmbbundle_preparationlanterne_libStock').show();
+                    success: function (data) {
+                        if ($.trim(data)) {
+                            $('#ss_fmbbundle_preparationlanterne_libStock').show();
 
-                        // Remove current options
-                        $('#ss_fmbbundle_preparationlanterne_libStock').html('');
-                        $.each(data, function(k, v) {
-                            $('#ss_fmbbundle_preparationlanterne_libStock').append('<option value="' + v + '">' + k + '</option>');
-                        });
-                    }
-                });
-                $.ajax({
-                    type: "POST",
-                    url: "{{ url('ssfmb_parclanterne') }}?parc_id=" + val,
-                    success: function(data) {
-                        console.log("succer change  parc reussi");
-                        $('#ss_fmbbundle_preparationlanterne_nomLanterne').show();
+                            // Remove current options
+                            $('#ss_fmbbundle_preparationlanterne_libStock').html('');
+                            $.each(data, function (k, v) {
+                                $('#ss_fmbbundle_preparationlanterne_libStock').append('<option value="' + v + '">' + k + '</option>');
+                            });
+                            $.ajax({
+                                type: "POST",
+                                url: "{{ url('ssfmb_parclanterne') }}?parc_id=" + val,
+                                success: function (data) {
+                                    if ($.trim(data)) {
+                                        var pos = true;
+                                        var lan = '';
+                                        $('#ss_fmbbundle_preparationlanterne_nomLanterne').show();
 
-                        // Remove current options
-                        $('#ss_fmbbundle_preparationlanterne_nomLanterne').html('');
-                        $.each(data, function(k, v) {
-                            $('#ss_fmbbundle_preparationlanterne_nomLanterne').append('<option value="' + v + '">' + k + '</option>');
-                        });
+                                        // Remove current options
+                                        $('#ss_fmbbundle_preparationlanterne_nomLanterne').html('');
+                                        $.each(data, function (k, v) {
+                                            if (pos) {
+                                                lan = k;
+                                                $('#ss_fmbbundle_preparationlanterne_nomLanterne').append('<option value="' + v + '">' + k + '</option>');
+                                                pos = false;
+                                            } else {
+                                                if ($('#ss_fmbbundle_preparationlanterne_nomLanterne').val() == lan) {
+                                                    $('#ss_fmbbundle_preparationlanterne_quantiterEnStock').show();
+                                                    console.log(v);
+                                                    $('#ss_fmbbundle_preparationlanterne_quantiterEnStock').val(v);
+                                                }
+                                                pos = true;
+
+                                            }
+                                        });
+                                        $('#ss_fmbbundle_preparationlanterne_submit').show();
+                                    }
+                                }
+                            });
+                        }
                     }
                 });
                 return false;
             });
 
 
-            $('#ss_fmbbundle_preparationlanterne_Parc').change(function(){
-                console.log("change parc reussi");
+            $('#ss_fmbbundle_preparationlanterne_Parc').change(function () {
+                $('#ss_fmbbundle_preparationlanterne_libStock').hide();
+                $('#ss_fmbbundle_preparationlanterne_nomLanterne').hide();
+                $('#ss_fmbbundle_preparationlanterne_quantiterEnStock').hide();
+                $('#ss_fmbbundle_preparationlanterne_submit').hide();
                 var val = $(this).val();
                 $.ajax({
                     type: "POST",
                     url: "{{ url('ssfmb_parcstock') }}?parc_id=" + val,
-                    success: function(data) {
-                        console.log("succer change  parc reussi");
-                        $('#ss_fmbbundle_preparationlanterne_libStock').show();
+                    success: function (data) {
+                        if ($.trim(data)) {
+                            $('#ss_fmbbundle_preparationlanterne_libStock').show();
 
-                        // Remove current options
-                        $('#ss_fmbbundle_preparationlanterne_libStock').html('');
-                        $.each(data, function(k, v) {
-                            $('#ss_fmbbundle_preparationlanterne_libStock').append('<option value="' + v + '">' + k + '</option>');
-                        });
-                    }
-                });
-                $.ajax({
-                    type: "POST",
-                    url: "{{ url('ssfmb_parcstock') }}?parc_id=" + val,
-                    success: function(data) {
-                        console.log("succer change  parc reussi");
-                        $('#ss_fmbbundle_preparationlanterne_nomLanterne').show();
+                            // Remove current options
+                            $('#ss_fmbbundle_preparationlanterne_libStock').html('');
+                            $.each(data, function (k, v) {
+                                $('#ss_fmbbundle_preparationlanterne_libStock').append('<option value="' + v + '">' + k + '</option>');
+                            });
+                            $.ajax({
+                                type: "POST",
+                                url: "{{ url('ssfmb_parclanterne') }}?parc_id=" + val,
+                                success: function (data) {
+                                    if ($.trim(data)) {
+                                        var pos = true;
+                                        var lan = '';
+                                        $('#ss_fmbbundle_preparationlanterne_nomLanterne').show();
 
-                        // Remove current options
-                        $('#ss_fmbbundle_preparationlanterne_nomLanterne').html('');
-                        $.each(data, function(k, v) {
-                            $('#ss_fmbbundle_preparationlanterne_nomLanterne').append('<option value="' + v + '">' + k + '</option>');
-                        });
+                                        // Remove current options
+                                        $('#ss_fmbbundle_preparationlanterne_nomLanterne').html('');
+                                        $.each(data, function (k, v) {
+                                            if (pos) {
+                                                lan = k;
+                                                $('#ss_fmbbundle_preparationlanterne_nomLanterne').append('<option value="' + v + '">' + k + '</option>');
+                                                pos = false;
+                                            } else {
+                                                if ($('#ss_fmbbundle_preparationlanterne_nomLanterne').val() == lan) {
+                                                    $('#ss_fmbbundle_preparationlanterne_quantiterEnStock').show();
+                                                    console.log(v);
+                                                    $('#ss_fmbbundle_preparationlanterne_quantiterEnStock').val(v);
+                                                }
+                                                pos = true;
+
+                                            }
+                                        });
+                                        $('#ss_fmbbundle_preparationlanterne_submit').show();
+                                    }
+                                }
+                            });
+                        }
                     }
                 });
                 return false;
             });
+            $('#ss_fmbbundle_preparationlanterne_nomLanterne').change(function () {
+                $('#ss_fmbbundle_preparationlanterne_submit').hide();
+                $('#ss_fmbbundle_preparationlanterne_nomLanterne').hide();
+                $('#ss_fmbbundle_preparationlanterne_quantiterEnStock').hide();
+                var val = $("#ss_fmbbundle_preparationlanterne_Parc").val();
 
+                $.ajax({
+                    type: "POST",
+                    url: "{{ url('ssfmb_parclanterne') }}?parc_id=" + val,
+                    success: function (data) {
+                        if ($.trim(data)) {
+                            var pos = true;
+                            var lan = '';
+                            $('#ss_fmbbundle_preparationlanterne_nomLanterne').show();
+                            $.each(data, function (k, v) {
+                                if (pos) {
+                                    lan = k;
+                                    pos = false;
+                                } else {
+                                    if ($('#ss_fmbbundle_preparationlanterne_nomLanterne').val() == lan) {
+                                        $('#ss_fmbbundle_preparationlanterne_quantiterEnStock').show();
+                                        console.log(v);
+                                        $('#ss_fmbbundle_preparationlanterne_quantiterEnStock').val(v);
+                                    }
+                                    pos = true;
+
+                                }
+                            });
+                            $('#ss_fmbbundle_preparationlanterne_submit').show();
+                        }
+                    }
+                });
+            });
         });
     </script>
 {% endblock %}
