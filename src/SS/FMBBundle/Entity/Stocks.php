@@ -7,70 +7,52 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Stocks
  *
- * @ORM\Table()
+ * @ORM\Table(name="stocks", indexes={@ORM\Index(name="actif", columns={"actif"}), @ORM\Index(name="ref_adr_stock", columns={"ref_adr_stock"})})
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks()
  */
 class Stocks
 {
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="lib_stock", type="string", length=32, nullable=false)
+     */
+    private $libStock;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="abrev_stock", type="string", length=32, nullable=false)
+     */
+    private $abrevStock;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="actif", type="boolean", nullable=false)
+     */
+    private $actif;
+
     /**
      * @var integer
      *
      * @ORM\Column(name="id_stock", type="smallint")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $idStock;
 
     /**
-     * @var string
+     * @var \SS\FMBBundle\Entity\Adresses
      *
-     * @ORM\Column(name="lib_stock", type="string", length=250)
-     */
-    private $libStock;
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="abrev_stock", type="string", length=250,nullable=TRUE)
-     */
-    private $abrevStock;
-    /**
-     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Parc" , inversedBy="stock")
-     * @ORM\JoinColumn(name="ref_adr_stock", referencedColumnName="id", nullable=FALSE)
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Adresses")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="ref_adr_stock", referencedColumnName="ref_adresse")
+     * })
      */
     private $refAdrStock;
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="actif", type="boolean")
-     */
-    private $actif;
-    /**
-     * @ORM\OneToMany(targetEntity="DocBlf", mappedBy="idStock")
-     */
-    private $docBlfs;
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->docBlfs = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
-    public function __toString()
-    {
-        return $this->getLibStock();
-    }
-
-    /**
-     * Get libStock
-     *
-     * @return string
-     */
-    public function getLibStock()
-    {
-        return $this->libStock;
-    }
 
     /**
      * Set libStock
@@ -86,23 +68,13 @@ class Stocks
     }
 
     /**
-     * Get idStock
-     *
-     * @return integer
-     */
-    public function getIdStock()
-    {
-        return $this->idStock;
-    }
-
-    /**
-     * Get abrevStock
+     * Get libStock
      *
      * @return string
      */
-    public function getAbrevStock()
+    public function getLibStock()
     {
-        return $this->abrevStock;
+        return $this->libStock;
     }
 
     /**
@@ -119,13 +91,13 @@ class Stocks
     }
 
     /**
-     * Get actif
+     * Get abrevStock
      *
-     * @return boolean
+     * @return string
      */
-    public function getActif()
+    public function getAbrevStock()
     {
-        return $this->actif;
+        return $this->abrevStock;
     }
 
     /**
@@ -142,57 +114,69 @@ class Stocks
     }
 
     /**
-     * Add docBlfs
+     * Get actif
      *
-     * @param \SS\FMBBundle\Entity\DocBlf $docBlfs
+     * @return boolean
+     */
+    public function getActif()
+    {
+        return $this->actif;
+    }
+
+    /**
+     * Get idStock
+     *
+     * @return integer
+     */
+    public function getIdStock()
+    {
+        return $this->idStock;
+    }
+
+    /**
+     * Set refAdrStock
+     *
+     * @param \SS\FMBBundle\Entity\Adresses $refAdrStock
      * @return Stocks
      */
-    public function addDocBlf(\SS\FMBBundle\Entity\DocBlf $docBlfs)
+    public function setRefAdrStock(\SS\FMBBundle\Entity\Adresses $refAdrStock = null)
     {
-        $this->docBlfs[] = $docBlfs;
+        $this->refAdrStock = $refAdrStock;
 
         return $this;
     }
 
     /**
-     * Remove docBlfs
-     *
-     * @param \SS\FMBBundle\Entity\DocBlf $docBlfs
-     */
-    public function removeDocBlf(\SS\FMBBundle\Entity\DocBlf $docBlfs)
-    {
-        $this->docBlfs->removeElement($docBlfs);
-    }
-
-    /**
-     * Get docBlfs
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getDocBlfs()
-    {
-        return $this->docBlfs;
-    }
-
-    /**
      * Get refAdrStock
      *
-     * @return \SS\FMBBundle\Entity\Parc
+     * @return \SS\FMBBundle\Entity\Adresses
      */
     public function getRefAdrStock()
     {
         return $this->refAdrStock;
     }
 
+    public function __toString()
+    {
+        return $this->getLibStock();
+    }
     /**
-     * Set refAdrStock
+     * @ORM\PrePersist
+     */
+    public function generateIdStock()
+    {
+        $this->idStock = uniqid();
+    }
+
+    /**
+     * Set idStock
      *
-     * @param \SS\FMBBundle\Entity\Parc $refAdrStock
+     * @param integer $idStock
      * @return Stocks
      */
-    public function setRefAdrStock(\SS\FMBBundle\Entity\Parc $refAdrStock)
+    public function setIdStock($idStock)
     {
-        $this->refAdrStock = $refAdrStock;
+        $this->idStock = $idStock;
 
         return $this;
     }

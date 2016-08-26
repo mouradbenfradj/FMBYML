@@ -131,15 +131,38 @@ class DefaultController extends Controller
         if ($request->get('id') == null) {
             $parcs = null;
             $articles = null;
+            $stocks = null;
         } else {
             $parcs = $em->getRepository('SSFMBBundle:Parc')->findById($request->get('id'));
             $articles = $em->getRepository('SSFMBBundle:Articles')->findAll();
+            $stocks = $em->getRepository('SSFMBBundle:Stocks')->findByRefAdrStock($parcs);
         }
         if ($request->isMethod('POST')) {
+            $stock = $em->getRepository('SSFMBBundle:Stocks')->find($request->request->get('stockchoix'));
+
             foreach ($request->request->get('placelanterne') as $emplacementcorde) {
                 $place = $em->getRepository('SSFMBBundle:Emplacement')->find($emplacementcorde);
                 $slanterne = $place->getStockslanterne();
+                $article = $em->getRepository('SSFMBBundle:Articles')->findOneBy(array('libArticle' =>$slanterne->getArticle()->getLibArticle(),'lot' =>$slanterne->getArticle()->getLot()));
+                if ($article) {
+
+                    var_dump('touver');
+                } else {
+                    var_dump(' non touver');
+                }
+                var_dump($article);
+                var_dump(substr($slanterne->getArticle()->getLibArticle(), strrpos($slanterne->getArticle()->getLibArticle(), ' ', 0)+1));
+                die('teste2');
+                $sarticle = $em->getRepository('SSFMBBundle:StocksArticles')->findByRefArticle($slanterne->getArticle());
+                if ($sarticle) {
+
+                    var_dump('touver');
+                } else {
+                    var_dump(' non touver');
+                }
+                die('test');
                 $slanterne->setPret(true);
+                $slanterne->getLanterne()->setNbrTotaleEnStock($slanterne->getLanterne()->getNbrTotaleEnStock() + 1);
                 $slanterne->setEmplacement(null);
                 $place->setStockslanterne(null);
                 $place->setDateDeRemplissage(null);
@@ -148,7 +171,7 @@ class DefaultController extends Controller
             return $this->redirectToRoute('ssfmb_homepage');
         }
 
-        return $this->render('SSFMBBundle:Default:retraitLanterne.html.twig', array('entities' => $parcs, 'pages' => $page, 'articles' => $articles,));
+        return $this->render('SSFMBBundle:Default:retraitLanterne.html.twig', array('entities' => $parcs, 'pages' => $page, 'articles' => $articles, 'stocks' => $stocks));
     }
 
     public function preparationCordeAction(Request $request)
@@ -236,7 +259,7 @@ class DefaultController extends Controller
         $lanternes = $repo->findByParc($id, array('parc' => 'asc'));
         foreach ($lanternes as $lanterne) {
             $result[$lanterne->getNomLanterne()] = $lanterne->getNomLanterne();
-            $result[$lanterne->getNomLanterne().$lanterne->getNbrTotaleEnStock()] = $lanterne->getNbrTotaleEnStock();
+            $result[$lanterne->getNomLanterne() . $lanterne->getNbrTotaleEnStock()] = $lanterne->getNbrTotaleEnStock();
         }
         return new JsonResponse($result);
     }

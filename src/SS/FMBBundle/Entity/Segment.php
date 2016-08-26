@@ -45,6 +45,23 @@ class Segment
      */
     private $flotteurs;
 
+    public function __toString()
+    {
+        return $this->getNomSegment;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function generateFlotteur()
+    {
+        $nb = $this->getLongeur() / 5;
+        for ($i = 0; $i < $nb; $i++) {
+            $flotteur = new Flotteur();
+            $flotteur->setNomFlotteur($this->nomSegment.$i);
+            $this->addFlotteur($flotteur);
+        }
+    }
     /**
      * Constructor
      */
@@ -53,19 +70,14 @@ class Segment
         $this->flotteurs = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    public function __toString()
-    {
-        return $this->getNomSegment();
-    }
-
     /**
-     * Get nomSegment
+     * Get id
      *
-     * @return string
+     * @return integer 
      */
-    public function getNomSegment()
+    public function getId()
     {
-        return $this->nomSegment;
+        return $this->id;
     }
 
     /**
@@ -82,26 +94,13 @@ class Segment
     }
 
     /**
-     * @ORM\PrePersist
-     */
-    public function generateFlotteur()
-    {
-        $nb = $this->getLongeur() / 5;
-        for ($i = 0; $i < $nb; $i++) {
-            $flotteur = new Flotteur();
-            $flotteur->setNomFlotteur($this->nomSegment.$i);
-            $this->addFlotteur($flotteur);
-        }
-    }
-
-    /**
-     * Get longeur
+     * Get nomSegment
      *
-     * @return string
+     * @return string 
      */
-    public function getLongeur()
+    public function getNomSegment()
     {
-        return $this->longeur;
+        return $this->nomSegment;
     }
 
     /**
@@ -118,26 +117,26 @@ class Segment
     }
 
     /**
-     * Add flotteurs
+     * Get longeur
      *
-     * @param \SS\FMBBundle\Entity\Flotteur $flotteurs
-     * @return Segment
+     * @return string 
      */
-    public function addFlotteur(\SS\FMBBundle\Entity\Flotteur $flotteurs)
+    public function getLongeur()
     {
-        $this->flotteurs[] = $flotteurs;
-        $flotteurs->setSegment($this);
-        return $this;
+        return $this->longeur;
     }
 
     /**
-     * Get id
+     * Set filiere
      *
-     * @return integer
+     * @param \SS\FMBBundle\Entity\Filiere $filiere
+     * @return Segment
      */
-    public function getId()
+    public function setFiliere(\SS\FMBBundle\Entity\Filiere $filiere)
     {
-        return $this->id;
+        $this->filiere = $filiere;
+
+        return $this;
     }
 
     /**
@@ -151,14 +150,15 @@ class Segment
     }
 
     /**
-     * Set filiere
+     * Add flotteurs
      *
-     * @param \SS\FMBBundle\Entity\Filiere $filiere
+     * @param \SS\FMBBundle\Entity\Flotteur $flotteurs
      * @return Segment
      */
-    public function setFiliere(\SS\FMBBundle\Entity\Filiere $filiere)
+    public function addFlotteur(\SS\FMBBundle\Entity\Flotteur $flotteurs)
     {
-        $this->filiere = $filiere;
+        $this->flotteurs[] = $flotteurs;
+
         return $this;
     }
 

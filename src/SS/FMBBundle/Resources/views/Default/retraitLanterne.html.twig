@@ -123,6 +123,15 @@
                                         <p><input type="date" name="dateRMAELanterne" value="{{ now }}"></p>
                                         <p>quantiter disponible</p>
                                         <p><input type="number" id="quantit" readonly="true" value="0"></p>
+                                        <p>choisir type le stocks de reception</p>
+                                        <p>
+                                            <select name="stockchoix" id="stockchoix">
+                                                {% for stock in stocks %}
+                                                    <option value="{{ stock.idStock }}">{{ stock.libStock }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </p>
+
                                         <p><input type="submit" value="confirmer le retrait"/></p>
 
                                     </td>

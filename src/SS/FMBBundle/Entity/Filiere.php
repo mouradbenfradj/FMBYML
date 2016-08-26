@@ -29,14 +29,15 @@ class Filiere
     private $nomFiliere;
 
     /**
-     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Parc", inversedBy="filieres",cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Magasins")
+     * @ORM\JoinColumn(name="magasin", referencedColumnName="id_magasin",nullable=false)
      */
     private $parc;
     /**
      * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Segment", mappedBy="filiere" ,cascade={"persist","remove"})
      */
     private $segments;
+
     /**
      * Constructor
      */
@@ -48,7 +49,7 @@ class Filiere
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {

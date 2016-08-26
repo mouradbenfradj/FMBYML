@@ -215,9 +215,10 @@
                                 data: {'ida': $('#articlechoix').val(), 'idl': $('#lanternechoix').val(), 'qtech': $('#quantierchoix').val()},
                                 dataType: 'json',
                                 beforeSend: function () {
-                                    $('#quantit').val(0);
+                                    $('#quantit').val('chargement');
                                 },
                                 success: function (json) {
+                                    $('#quantit').val(0);
                                     if ($.trim(json)) {
                                         $('#choixqtearticle').ready(function () {
                                             $("input:checkbox").each(function () {
@@ -256,11 +257,12 @@
                 data: {'ida': $('#articlechoix').val(), 'idl': $('#lanternechoix').val()},
                 dataType: 'json',
                 beforeSend: function () {
-                    $('#quantit').val(0);
+                    $('#quantit').val('chargement');
 
                     $('#quantierchoix').empty();
                 },
                 success: function (json) {
+                    $('#quantit').val(0);
                     $('#quantierchoix').html('');
                     console.log($.trim(json));
                     if (!$.trim(json)) {
@@ -281,9 +283,10 @@
                                 data: {'ida': $('#articlechoix').val(), 'idl': $('#lanternechoix').val(), 'qtech': $('#quantierchoix').val()},
                                 dataType: 'json',
                                 beforeSend: function () {
-                                    $('#quantit').val(0);
+                                    $('#quantit').val('chargement');
                                 },
                                 success: function (json) {
+                                    $('#quantit').val(0);
                                     if ($.trim(json)) {
                                         $('#choixqtearticle').ready(function () {
                                             $("input:checkbox").each(function () {
@@ -321,11 +324,12 @@
                 data: {'ida': $('#articlechoix').val(), 'idl': $('#lanternechoix').val()},
                 dataType: 'json',
                 beforeSend: function () {
-                    $('#quantit').val(0);
+                    $('#quantit').val('chargement');
 
                     $('#quantierchoix').empty();
                 },
                 success: function (json) {
+                    $('#quantit').val(0);
                     $('#quantierchoix').html('');
                     console.log($.trim(json));
                     if (!$.trim(json)) {
@@ -346,9 +350,11 @@
                                 data: {'ida': $('#articlechoix').val(), 'idl': $('#lanternechoix').val(), 'qtech': $('#quantierchoix').val()},
                                 dataType: 'json',
                                 beforeSend: function () {
-                                    $('#quantit').val(0);
+                                    $('#quantit').val('chargement');
                                 },
                                 success: function (json) {
+                                    $('#quantit').val(0);
+
                                     if ($.trim(json)) {
                                         $('#choixqtearticle').ready(function () {
                                             $("input:checkbox").each(function () {
@@ -387,9 +393,10 @@
                 data: {'ida': $('#articlechoix').val(), 'idl': $('#lanternechoix').val(), 'qtech': $('#quantierchoix').val()},
                 dataType: 'json',
                 beforeSend: function () {
-                    $('#quantit').val(0);
+                    $('#quantit').val('chargement');
                 },
                 success: function (json) {
+                    $('#quantit').val(0);
                     if ($.trim(json)) {
                         $('#choixqtearticle').ready(function () {
                             $("input:checkbox").each(function () {

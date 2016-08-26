@@ -59,10 +59,13 @@ class StocksLanternes
     /**
      * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\DocsLines")
      * @ORM\JoinColumn(name="doc_line", referencedColumnName="ref_doc_line")
-
      */
     private $docLine;
 
+    public function __toString()
+    {
+        return "" . $this->id;
+    }
 
     /**
      * Constructor
@@ -72,108 +75,14 @@ class StocksLanternes
         $this->poches = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    public function __toString()
-    {
-        return "" . $this->id;
-    }
-
-    /**
-     * Get lanterne
-     *
-     * @return \SS\FMBBundle\Entity\Lanterne
-     */
-    public function getLanterne()
-    {
-        return $this->lanterne;
-    }
-
-    /**
-     * Set lanterne
-     *
-     * @param \SS\FMBBundle\Entity\Lanterne $lanterne
-     * @return StocksLanternes
-     */
-    public function setLanterne(\SS\FMBBundle\Entity\Lanterne $lanterne)
-    {
-        $this->lanterne = $lanterne;
-        return $this;
-    }
-
-    /**
-     * Add poches
-     *
-     * @param \SS\FMBBundle\Entity\Poche $poches
-     * @return StocksLanternes
-     */
-    public function addPoch(\SS\FMBBundle\Entity\Poche $poches)
-    {
-        $this->poches[] = $poches;
-        $poches->setStocklanterne($this);
-
-        return $this;
-    }
-
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Remove poches
-     *
-     * @param \SS\FMBBundle\Entity\Poche $poches
-     */
-    public function removePoch(\SS\FMBBundle\Entity\Poche $poches)
-    {
-        $this->poches->removeElement($poches);
-    }
-
-    /**
-     * Get poches
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPoches()
-    {
-        return $this->poches;
-    }
-
-    /**
-     * Get emplacement
-     *
-     * @return \SS\FMBBundle\Entity\Emplacement
-     */
-    public function getEmplacement()
-    {
-        return $this->emplacement;
-    }
-
-    /**
-     * Set emplacement
-     *
-     * @param \SS\FMBBundle\Entity\Emplacement $emplacement
-     * @return StocksLanternes
-     */
-    public function setEmplacement(\SS\FMBBundle\Entity\Emplacement $emplacement = null)
-    {
-        $this->emplacement = $emplacement;
-
-        return $this;
-    }
-
-    /**
-     * Get pret
-     *
-     * @return boolean
-     */
-    public function getPret()
-    {
-        return $this->pret;
     }
 
     /**
@@ -190,26 +99,13 @@ class StocksLanternes
     }
 
     /**
-     * Get article
+     * Get pret
      *
-     * @return \SS\FMBBundle\Entity\Articles
+     * @return boolean 
      */
-    public function getArticle()
+    public function getPret()
     {
-        return $this->article;
-    }
-
-    /**
-     * Set article
-     *
-     * @param \SS\FMBBundle\Entity\Articles $article
-     * @return StocksLanternes
-     */
-    public function setArticle(\SS\FMBBundle\Entity\Articles $article = null)
-    {
-        $this->article = $article;
-
-        return $this;
+        return $this->pret;
     }
 
     /**
@@ -228,11 +124,113 @@ class StocksLanternes
     /**
      * Get dateDeCreation
      *
-     * @return \DateTime
+     * @return \DateTime 
      */
     public function getDateDeCreation()
     {
         return $this->dateDeCreation;
+    }
+
+    /**
+     * Set lanterne
+     *
+     * @param \SS\FMBBundle\Entity\Lanterne $lanterne
+     * @return StocksLanternes
+     */
+    public function setLanterne(\SS\FMBBundle\Entity\Lanterne $lanterne)
+    {
+        $this->lanterne = $lanterne;
+
+        return $this;
+    }
+
+    /**
+     * Get lanterne
+     *
+     * @return \SS\FMBBundle\Entity\Lanterne 
+     */
+    public function getLanterne()
+    {
+        return $this->lanterne;
+    }
+
+    /**
+     * Add poches
+     *
+     * @param \SS\FMBBundle\Entity\Poche $poches
+     * @return StocksLanternes
+     */
+    public function addPoch(\SS\FMBBundle\Entity\Poche $poches)
+    {
+        $this->poches[] = $poches;
+
+        return $this;
+    }
+
+    /**
+     * Remove poches
+     *
+     * @param \SS\FMBBundle\Entity\Poche $poches
+     */
+    public function removePoch(\SS\FMBBundle\Entity\Poche $poches)
+    {
+        $this->poches->removeElement($poches);
+    }
+
+    /**
+     * Get poches
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPoches()
+    {
+        return $this->poches;
+    }
+
+    /**
+     * Set emplacement
+     *
+     * @param \SS\FMBBundle\Entity\Emplacement $emplacement
+     * @return StocksLanternes
+     */
+    public function setEmplacement(\SS\FMBBundle\Entity\Emplacement $emplacement = null)
+    {
+        $this->emplacement = $emplacement;
+
+        return $this;
+    }
+
+    /**
+     * Get emplacement
+     *
+     * @return \SS\FMBBundle\Entity\Emplacement 
+     */
+    public function getEmplacement()
+    {
+        return $this->emplacement;
+    }
+
+    /**
+     * Set article
+     *
+     * @param \SS\FMBBundle\Entity\Articles $article
+     * @return StocksLanternes
+     */
+    public function setArticle(\SS\FMBBundle\Entity\Articles $article = null)
+    {
+        $this->article = $article;
+
+        return $this;
+    }
+
+    /**
+     * Get article
+     *
+     * @return \SS\FMBBundle\Entity\Articles 
+     */
+    public function getArticle()
+    {
+        return $this->article;
     }
 
     /**

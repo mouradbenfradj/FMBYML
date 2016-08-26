@@ -31,8 +31,8 @@ class Lanterne
      */
     private $stockslanternes;
     /**
-     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Parc", inversedBy="lanternes",cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Magasins")
+     * @ORM\JoinColumn(name="magasin", referencedColumnName="id_magasin",nullable=false)
      */
     private $parc;
 

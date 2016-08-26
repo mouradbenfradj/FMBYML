@@ -7,12 +7,89 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * DocsLines
  *
- * @ORM\Table()
+ * @ORM\Table(name="docs_lines", indexes={@ORM\Index(name="ref_doc", columns={"ref_doc"}), @ORM\Index(name="ref_article", columns={"ref_article"}), @ORM\Index(name="ref_doc_line_parent", columns={"ref_doc_line_parent"})})
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks()
  */
 class DocsLines
 {
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ref_article", type="string", length=32, nullable=true)
+     */
+    private $refArticle;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="lib_article", type="string", length=250, nullable=false)
+     */
+    private $libArticle;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="desc_article", type="text", length=16777215, nullable=false)
+     */
+    private $descArticle;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="qte", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $qte;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="pu_ht", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $puHt;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="remise", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $remise;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="tva", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $tva;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="ordre", type="smallint", nullable=false)
+     */
+    private $ordre;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="visible", type="boolean", nullable=false)
+     */
+    private $visible;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="pa_ht", type="float", precision=10, scale=0, nullable=true)
+     */
+    private $paHt;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="pa_forced", type="boolean", nullable=false)
+     */
+    private $paForced;
+
     /**
      * @var string
      *
@@ -22,72 +99,47 @@ class DocsLines
     private $refDocLine;
 
     /**
-     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Documents",cascade={"persist"})
-     * @ORM\JoinColumn(name="ref_doc", referencedColumnName="ref_doc",nullable=false)
-     */
-    private $refDoc;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Articles")
-     * @ORM\JoinColumn(name="ref_article", referencedColumnName="ref_article",nullable=false)
-     */
-    private $refArticle;
-
-    /**
-     * @var string
+     * @var \SS\FMBBundle\Entity\DocsLines
      *
-     * @ORM\Column(name="libArticle", type="string", length=250, nullable=true)
-     */
-    private $libArticle;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="descArticle", type="text", nullable=true)
-     */
-    private $descArticle;
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="qte", type="float")
-     */
-    private $qte;
-
-    /**
      * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\DocsLines")
-     * @ORM\JoinColumn(name="ref_doc_line_parent", referencedColumnName="ref_doc_line", nullable=true)
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="ref_doc_line_parent", referencedColumnName="ref_doc_line")
+     * })
      */
     private $refDocLineParent;
 
     /**
-     * @ORM\OneToMany(targetEntity="DocsLines", mappedBy="ref_doc_line_parent")
+     * @var \SS\FMBBundle\Entity\Documents
+     *
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Documents")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="ref_doc", referencedColumnName="ref_doc")
+     * })
      */
-    private $children;
+    private $refDoc;
+
 
     /**
-     * @ORM\PrePersist
+     * Set refArticle
+     *
+     * @param string $refArticle
+     * @return DocsLines
      */
-    public function generateRefDocLine()
+    public function setRefArticle($refArticle)
     {
-        $this->refDocLine = uniqid();
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->refArticle = $refArticle;
+
+        return $this;
     }
 
     /**
-     * Get libArticle
+     * Get refArticle
      *
      * @return string
      */
-    public function getLibArticle()
+    public function getRefArticle()
     {
-        return $this->libArticle;
+        return $this->refArticle;
     }
 
     /**
@@ -104,13 +156,13 @@ class DocsLines
     }
 
     /**
-     * Get descArticle
+     * Get libArticle
      *
      * @return string
      */
-    public function getDescArticle()
+    public function getLibArticle()
     {
-        return $this->descArticle;
+        return $this->libArticle;
     }
 
     /**
@@ -127,13 +179,13 @@ class DocsLines
     }
 
     /**
-     * Get qte
+     * Get descArticle
      *
-     * @return float
+     * @return string
      */
-    public function getQte()
+    public function getDescArticle()
     {
-        return $this->qte;
+        return $this->descArticle;
     }
 
     /**
@@ -150,59 +202,184 @@ class DocsLines
     }
 
     /**
-     * Get refDoc
+     * Get qte
      *
-     * @return \SS\FMBBundle\Entity\Documents
+     * @return float
      */
-    public function getRefDoc()
+    public function getQte()
     {
-        return $this->refDoc;
+        return $this->qte;
     }
 
     /**
-     * Set refDoc
+     * Set puHt
      *
-     * @param \SS\FMBBundle\Entity\Documents $refDoc
+     * @param float $puHt
      * @return DocsLines
      */
-    public function setRefDoc(\SS\FMBBundle\Entity\Documents $refDoc)
+    public function setPuHt($puHt)
     {
-        $this->refDoc = $refDoc;
+        $this->puHt = $puHt;
 
         return $this;
     }
 
     /**
-     * Get refArticle
+     * Get puHt
      *
-     * @return \SS\FMBBundle\Entity\Articles
+     * @return float
      */
-    public function getRefArticle()
+    public function getPuHt()
     {
-        return $this->refArticle;
+        return $this->puHt;
     }
 
     /**
-     * Set refArticle
+     * Set remise
      *
-     * @param \SS\FMBBundle\Entity\Articles $refArticle
+     * @param float $remise
      * @return DocsLines
      */
-    public function setRefArticle(\SS\FMBBundle\Entity\Articles $refArticle)
+    public function setRemise($remise)
     {
-        $this->refArticle = $refArticle;
+        $this->remise = $remise;
 
         return $this;
     }
 
     /**
-     * Get refDocLineParent
+     * Get remise
      *
-     * @return \SS\FMBBundle\Entity\DocsLines
+     * @return float
      */
-    public function getRefDocLineParent()
+    public function getRemise()
     {
-        return $this->refDocLineParent;
+        return $this->remise;
+    }
+
+    /**
+     * Set tva
+     *
+     * @param float $tva
+     * @return DocsLines
+     */
+    public function setTva($tva)
+    {
+        $this->tva = $tva;
+
+        return $this;
+    }
+
+    /**
+     * Get tva
+     *
+     * @return float
+     */
+    public function getTva()
+    {
+        return $this->tva;
+    }
+
+    /**
+     * Set ordre
+     *
+     * @param integer $ordre
+     * @return DocsLines
+     */
+    public function setOrdre($ordre)
+    {
+        $this->ordre = $ordre;
+
+        return $this;
+    }
+
+    /**
+     * Get ordre
+     *
+     * @return integer
+     */
+    public function getOrdre()
+    {
+        return $this->ordre;
+    }
+
+    /**
+     * Set visible
+     *
+     * @param boolean $visible
+     * @return DocsLines
+     */
+    public function setVisible($visible)
+    {
+        $this->visible = $visible;
+
+        return $this;
+    }
+
+    /**
+     * Get visible
+     *
+     * @return boolean
+     */
+    public function getVisible()
+    {
+        return $this->visible;
+    }
+
+    /**
+     * Set paHt
+     *
+     * @param float $paHt
+     * @return DocsLines
+     */
+    public function setPaHt($paHt)
+    {
+        $this->paHt = $paHt;
+
+        return $this;
+    }
+
+    /**
+     * Get paHt
+     *
+     * @return float
+     */
+    public function getPaHt()
+    {
+        return $this->paHt;
+    }
+
+    /**
+     * Set paForced
+     *
+     * @param boolean $paForced
+     * @return DocsLines
+     */
+    public function setPaForced($paForced)
+    {
+        $this->paForced = $paForced;
+
+        return $this;
+    }
+
+    /**
+     * Get paForced
+     *
+     * @return boolean
+     */
+    public function getPaForced()
+    {
+        return $this->paForced;
+    }
+
+    /**
+     * Get refDocLine
+     *
+     * @return string
+     */
+    public function getRefDocLine()
+    {
+        return $this->refDocLine;
     }
 
     /**
@@ -219,41 +396,44 @@ class DocsLines
     }
 
     /**
-     * Add children
+     * Get refDocLineParent
      *
-     * @param \SS\FMBBundle\Entity\DocsLines $children
+     * @return \SS\FMBBundle\Entity\DocsLines
+     */
+    public function getRefDocLineParent()
+    {
+        return $this->refDocLineParent;
+    }
+
+    /**
+     * Set refDoc
+     *
+     * @param \SS\FMBBundle\Entity\Documents $refDoc
      * @return DocsLines
      */
-    public function addChild(\SS\FMBBundle\Entity\DocsLines $children)
+    public function setRefDoc(\SS\FMBBundle\Entity\Documents $refDoc = null)
     {
-        $this->children[] = $children;
+        $this->refDoc = $refDoc;
 
         return $this;
     }
 
     /**
-     * Remove children
+     * Get refDoc
      *
-     * @param \SS\FMBBundle\Entity\DocsLines $children
+     * @return \SS\FMBBundle\Entity\Documents
      */
-    public function removeChild(\SS\FMBBundle\Entity\DocsLines $children)
+    public function getRefDoc()
     {
-        $this->children->removeElement($children);
-    }
-
-    public function __toString()
-    {
-        return $this->getRefDocLine();
+        return $this->refDoc;
     }
 
     /**
-     * Get refDocLine
-     *
-     * @return string
+     * @ORM\PrePersist
      */
-    public function getRefDocLine()
+    public function generateRefDocLine()
     {
-        return $this->refDocLine;
+        $this->refDocLine = uniqid();
     }
 
     /**
@@ -267,15 +447,5 @@ class DocsLines
         $this->refDocLine = $refDocLine;
 
         return $this;
-    }
-
-    /**
-     * Get children
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getChildren()
-    {
-        return $this->children;
     }
 }

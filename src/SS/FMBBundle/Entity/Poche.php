@@ -42,33 +42,22 @@ class Poche
     {
         return "" . $this->id;
     }
-
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->quantite = 0;
+        $this->setQuantite(0);
     }
 
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Get quantite
-     *
-     * @return integer
-     */
-    public function getQuantite()
-    {
-        return $this->quantite;
     }
 
     /**
@@ -80,17 +69,18 @@ class Poche
     public function setQuantite($quantite)
     {
         $this->quantite = $quantite;
+
         return $this;
     }
 
     /**
-     * Get emplacement
+     * Get quantite
      *
-     * @return integer
+     * @return integer 
      */
-    public function getEmplacement()
+    public function getQuantite()
     {
-        return $this->emplacement;
+        return $this->quantite;
     }
 
     /**
@@ -102,7 +92,18 @@ class Poche
     public function setEmplacement($emplacement)
     {
         $this->emplacement = $emplacement;
+
         return $this;
+    }
+
+    /**
+     * Get emplacement
+     *
+     * @return integer 
+     */
+    public function getEmplacement()
+    {
+        return $this->emplacement;
     }
 
     /**
@@ -114,13 +115,14 @@ class Poche
     public function setStocklanterne(\SS\FMBBundle\Entity\StocksLanternes $stocklanterne)
     {
         $this->stocklanterne = $stocklanterne;
+
         return $this;
     }
 
     /**
      * Get stocklanterne
      *
-     * @return \SS\FMBBundle\Entity\StocksLanternes
+     * @return \SS\FMBBundle\Entity\StocksLanternes 
      */
     public function getStocklanterne()
     {

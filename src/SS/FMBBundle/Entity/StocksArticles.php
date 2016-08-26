@@ -7,12 +7,18 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * StocksArticles
  *
- * @ORM\Table()
+ * @ORM\Table(name="stocks_articles", indexes={@ORM\Index(name="id_stock", columns={"id_stock"}), @ORM\Index(name="ref_article", columns={"ref_article"})})
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks()
  */
 class StocksArticles
 {
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="qte", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $qte;
 
     /**
      * @var string
@@ -23,63 +29,26 @@ class StocksArticles
     private $refStockArticle;
 
     /**
-     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Stocks")
-     * @ORM\JoinColumn(name="id_stock", referencedColumnName="id_stock",nullable=false)
-     */
-    private $idStock;
-
-    /**
+     * @var \SS\FMBBundle\Entity\Articles
+     *
      * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Articles")
-     * @ORM\JoinColumn(name="ref_article", referencedColumnName="ref_article",nullable=false)
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="ref_article", referencedColumnName="ref_article")
+     * })
      */
     private $refArticle;
 
     /**
-     * @var float
+     * @var \SS\FMBBundle\Entity\Stocks
      *
-     * @ORM\Column(name="qte", type="float")
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Stocks")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_stock", referencedColumnName="id_stock")
+     * })
      */
-    private $qte;
+    private $idStock;
 
-    /**
-     * @ORM\PrePersist
-     */
-    public function generateRefStockArticle()
-    {
-        $this->refStockArticle = uniqid();
-    }
-    /**
-     * Get refStockArticle
-     *
-     * @return string
-     */
-    public function getRefStockArticle()
-    {
-        return $this->refStockArticle;
-    }
 
-    /**
-     * Set refStockArticle
-     *
-     * @param string $refStockArticle
-     * @return StocksArticles
-     */
-    public function setRefStockArticle($refStockArticle)
-    {
-        $this->refStockArticle = $refStockArticle;
-
-        return $this;
-    }
-
-    /**
-     * Get qte
-     *
-     * @return float
-     */
-    public function getQte()
-    {
-        return $this->qte;
-    }
 
     /**
      * Set qte
@@ -95,24 +64,34 @@ class StocksArticles
     }
 
     /**
-     * Get idStock
+     * Get qte
      *
-     * @return \SS\FMBBundle\Entity\Stocks
+     * @return float
      */
-    public function getIdStock()
+    public function getQte()
     {
-        return $this->idStock;
+        return $this->qte;
     }
 
     /**
-     * Set idStock
+     * Get refStockArticle
      *
-     * @param \SS\FMBBundle\Entity\Stocks $idStock
+     * @return string
+     */
+    public function getRefStockArticle()
+    {
+        return $this->refStockArticle;
+    }
+
+    /**
+     * Set refArticle
+     *
+     * @param \SS\FMBBundle\Entity\Articles $refArticle
      * @return StocksArticles
      */
-    public function setIdStock(\SS\FMBBundle\Entity\Stocks $idStock)
+    public function setRefArticle(\SS\FMBBundle\Entity\Articles $refArticle = null)
     {
-        $this->idStock = $idStock;
+        $this->refArticle = $refArticle;
 
         return $this;
     }
@@ -128,14 +107,44 @@ class StocksArticles
     }
 
     /**
-     * Set refArticle
+     * Set idStock
      *
-     * @param \SS\FMBBundle\Entity\Articles $refArticle
+     * @param \SS\FMBBundle\Entity\Stocks $idStock
      * @return StocksArticles
      */
-    public function setRefArticle(\SS\FMBBundle\Entity\Articles $refArticle)
+    public function setIdStock(\SS\FMBBundle\Entity\Stocks $idStock = null)
     {
-        $this->refArticle = $refArticle;
+        $this->idStock = $idStock;
+
+        return $this;
+    }
+
+    /**
+     * Get idStock
+     *
+     * @return \SS\FMBBundle\Entity\Stocks
+     */
+    public function getIdStock()
+    {
+        return $this->idStock;
+    }
+    /**
+     * @ORM\PrePersist
+     */
+    public function generateRefStockArticle()
+    {
+        $this->refStockArticle = uniqid();
+    }
+
+    /**
+     * Set refStockArticle
+     *
+     * @param string $refStockArticle
+     * @return StocksArticles
+     */
+    public function setRefStockArticle($refStockArticle)
+    {
+        $this->refStockArticle = $refStockArticle;
 
         return $this;
     }
