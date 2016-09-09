@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="stocks_articles_sn", indexes={@ORM\Index(name="numero_serie", columns={"numero_serie"}), @ORM\Index(name="ref_stock_article", columns={"ref_stock_article"})})
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="SS\FMBBundle\Repository\StocksArticlesSnRepository")
  */
 class StocksArticlesSn
 {
@@ -40,7 +41,10 @@ class StocksArticlesSn
      */
     private $refStockArticle;
 
-
+    public function __toString()
+    {
+        return $this->getNumeroSerie();
+    }
 
     /**
      * Set snQte
@@ -58,7 +62,7 @@ class StocksArticlesSn
     /**
      * Get snQte
      *
-     * @return float 
+     * @return float
      */
     public function getSnQte()
     {
@@ -81,7 +85,7 @@ class StocksArticlesSn
     /**
      * Get numeroSerie
      *
-     * @return string 
+     * @return string
      */
     public function getNumeroSerie()
     {
@@ -109,5 +113,12 @@ class StocksArticlesSn
     public function getRefStockArticle()
     {
         return $this->refStockArticle;
+    }
+
+    public function __construct($numeroSerie, $snQte, $refStockArticle)
+    {
+        $this->numeroSerie = $numeroSerie;
+        $this->snQte = $snQte;
+        $this->refStockArticle = $refStockArticle;
     }
 }

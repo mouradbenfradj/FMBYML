@@ -16,4 +16,6 @@ interface DefaultInterface
     public function viderPoche($poche, $qte);
 
     public function modifierQtePoche($poche, $qte);
+
+    public function calculerQuantiterLanterne($tableauPoches);
 }

@@ -9,7 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="magasins_enseignes")
  * @ORM\Entity
- * @ORM\HasLifecycleCallbacks()
  */
 class MagasinsEnseignes
 {
@@ -25,6 +24,7 @@ class MagasinsEnseignes
      *
      * @ORM\Column(name="id_mag_enseigne", type="smallint")
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $idMagEnseigne;
 
@@ -52,34 +52,14 @@ class MagasinsEnseignes
         return $this->libEnseigne;
     }
 
+
     /**
      * Get idMagEnseigne
      *
-     * @return integer
+     * @return integer 
      */
     public function getIdMagEnseigne()
     {
         return $this->idMagEnseigne;
-    }
-
-    /**
-     * @ORM\PrePersist
-     */
-    public function generateIdMagEnseigne()
-    {
-        $this->idMagEnseigne = uniqid();
-    }
-
-    /**
-     * Set idMagEnseigne
-     *
-     * @param integer $idMagEnseigne
-     * @return MagasinsEnseignes
-     */
-    public function setIdMagEnseigne($idMagEnseigne)
-    {
-        $this->idMagEnseigne = $idMagEnseigne;
-
-        return $this;
     }
 }

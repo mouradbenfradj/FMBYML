@@ -9,7 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="art_categs_specificites")
  * @ORM\Entity
- * @ORM\HasLifecycleCallbacks()
  */
 class ArtCategsSpecificites
 {
@@ -25,6 +24,7 @@ class ArtCategsSpecificites
      *
      * @ORM\Column(name="id_modele_spe", type="smallint")
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $idModeleSpe;
 
@@ -53,6 +53,7 @@ class ArtCategsSpecificites
         return $this->libModeleSpe;
     }
 
+
     /**
      * Get idModeleSpe
      *
@@ -61,25 +62,5 @@ class ArtCategsSpecificites
     public function getIdModeleSpe()
     {
         return $this->idModeleSpe;
-    }
-    /**
-     * @ORM\PrePersist
-     */
-    public function generateIdModeleSpe()
-    {
-        $this->idModeleSpe = uniqid();
-    }
-
-    /**
-     * Set idModeleSpe
-     *
-     * @param integer $idModeleSpe
-     * @return ArtCategsSpecificites
-     */
-    public function setIdModeleSpe($idModeleSpe)
-    {
-        $this->idModeleSpe = $idModeleSpe;
-
-        return $this;
     }
 }

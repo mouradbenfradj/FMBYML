@@ -1,54 +1,15 @@
-ssfmb_lanterne:
-    resource: "@SSFMBBundle/Resources/config/routing/lanterne.yml"
-    prefix:   /lanterne
-
-ssfmb_stockslanternes:
-    resource: "@SSFMBBundle/Resources/config/routing/stockslanternes.yml"
-    prefix:   /stockslanternes
-
-ssfmb_lot:
-    resource: "@SSFMBBundle/Resources/config/routing/lot.yml"
-    prefix:   /lot
-
-ssfmb_docslines:
-    resource: "@SSFMBBundle/Resources/config/routing/docslines.yml"
-    prefix:   /docslines
-
-ssfmb_documents:
-    resource: "@SSFMBBundle/Resources/config/routing/documents.yml"
-    prefix:   /documents
-
-ssfmb_stocksarticles:
-    resource: "@SSFMBBundle/Resources/config/routing/stocksarticles.yml"
-    prefix:   /stocksarticles
-
+ssfmb_magasins:
+    resource: "@SSFMBBundle/Resources/config/routing/magasins.yml"
+    prefix:   /magasins
 ssfmb_articles:
     resource: "@SSFMBBundle/Resources/config/routing/articles.yml"
     prefix:   /articles
-
-ssfmb_emplacement:
-    resource: "@SSFMBBundle/Resources/config/routing/emplacement.yml"
-    prefix:   /emplacement
-
-ssfmb_poche:
-    resource: "@SSFMBBundle/Resources/config/routing/poche.yml"
-    prefix:   /poche
-
 ssfmb_corde:
     resource: "@SSFMBBundle/Resources/config/routing/corde.yml"
     prefix:   /corde
-
-ssfmb_segment:
-    resource: "@SSFMBBundle/Resources/config/routing/segment.yml"
-    prefix:   /segment
-
-ssfmb_filiere:
-    resource: "@SSFMBBundle/Resources/config/routing/filiere.yml"
-    prefix:   /filiere
-
-ssfmb_parc:
-    resource: "@SSFMBBundle/Resources/config/routing/parc.yml"
-    prefix:   /parc
+ssfmb_lanterne:
+    resource: "@SSFMBBundle/Resources/config/routing/lanterne.yml"
+    prefix:   /laterne
 
 ssfmb_default:
     resource: "@SSFMBBundle/Resources/config/routing/default.yml"

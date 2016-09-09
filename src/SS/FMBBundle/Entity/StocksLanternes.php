@@ -46,10 +46,16 @@ class StocksLanternes
     private $pret;
 
     /**
-     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Articles")
-     * @ORM\JoinColumn(name="ref_article", referencedColumnName="ref_article")
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\StocksArticlesSn")
+     * @Orm\JoinColumns({  @ORM\JoinColumn(name="ref_stock_article", referencedColumnName="ref_stock_article"),@Orm\JoinColumn(name="numero_serie", referencedColumnName="numero_serie")} )
      */
     private $article;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="numero_serie", type="string", length=32)
+     */
+    private $numeroSerie;
     /**
      *
      * @ORM\Column(name="dateDeCreation", type="date")
@@ -68,17 +74,9 @@ class StocksLanternes
     }
 
     /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->poches = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -101,7 +99,7 @@ class StocksLanternes
     /**
      * Get pret
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getPret()
     {
@@ -124,7 +122,7 @@ class StocksLanternes
     /**
      * Get dateDeCreation
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDateDeCreation()
     {
@@ -147,7 +145,7 @@ class StocksLanternes
     /**
      * Get lanterne
      *
-     * @return \SS\FMBBundle\Entity\Lanterne 
+     * @return \SS\FMBBundle\Entity\Lanterne
      */
     public function getLanterne()
     {
@@ -163,7 +161,7 @@ class StocksLanternes
     public function addPoch(\SS\FMBBundle\Entity\Poche $poches)
     {
         $this->poches[] = $poches;
-
+        $poches->setStocklanterne($this);
         return $this;
     }
 
@@ -180,7 +178,7 @@ class StocksLanternes
     /**
      * Get poches
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getPoches()
     {
@@ -196,41 +194,17 @@ class StocksLanternes
     public function setEmplacement(\SS\FMBBundle\Entity\Emplacement $emplacement = null)
     {
         $this->emplacement = $emplacement;
-
         return $this;
     }
 
     /**
      * Get emplacement
      *
-     * @return \SS\FMBBundle\Entity\Emplacement 
+     * @return \SS\FMBBundle\Entity\Emplacement
      */
     public function getEmplacement()
     {
         return $this->emplacement;
-    }
-
-    /**
-     * Set article
-     *
-     * @param \SS\FMBBundle\Entity\Articles $article
-     * @return StocksLanternes
-     */
-    public function setArticle(\SS\FMBBundle\Entity\Articles $article = null)
-    {
-        $this->article = $article;
-
-        return $this;
-    }
-
-    /**
-     * Get article
-     *
-     * @return \SS\FMBBundle\Entity\Articles 
-     */
-    public function getArticle()
-    {
-        return $this->article;
     }
 
     /**
@@ -249,10 +223,64 @@ class StocksLanternes
     /**
      * Get docLine
      *
-     * @return \SS\FMBBundle\Entity\DocsLines 
+     * @return \SS\FMBBundle\Entity\DocsLines
      */
     public function getDocLine()
     {
         return $this->docLine;
+    }
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->poches = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set article
+     *
+     * @param \SS\FMBBundle\Entity\StocksArticlesSn $article
+     * @return StocksLanternes
+     */
+    public function setArticle(\SS\FMBBundle\Entity\StocksArticlesSn $article = null)
+    {
+        $this->article = $article;
+
+        return $this;
+    }
+
+    /**
+     * Get article
+     *
+     * @return \SS\FMBBundle\Entity\StocksArticlesSn
+     */
+    public function getArticle()
+    {
+        return $this->article;
+    }
+
+    /**
+     * Set numeroSerie
+     *
+     * @param string $numeroSerie
+     * @return StocksLanternes
+     */
+    public function setNumeroSerie($numeroSerie)
+    {
+        $this->numeroSerie = $numeroSerie;
+
+        return $this;
+    }
+
+    /**
+     * Get numeroSerie
+     *
+     * @return string
+     */
+    public function getNumeroSerie()
+    {
+        return $this->numeroSerie;
     }
 }

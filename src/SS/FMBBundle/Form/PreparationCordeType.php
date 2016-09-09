@@ -2,7 +2,6 @@
 
 namespace SS\FMBBundle\Form;
 
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Date;
@@ -19,7 +18,7 @@ class PreparationCordeType extends AbstractType
             'parc',
             'entity',
             array(
-                'class' => 'SSFMBBundle:Parc',
+                'class' => 'SSFMBBundle:Magasins',
                 'label' => 'parc',
             )
         );

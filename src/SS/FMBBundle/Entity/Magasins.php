@@ -46,6 +46,7 @@ class Magasins
      *
      * @ORM\Column(name="id_magasin", type="smallint")
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $idMagasin;
 
@@ -79,6 +80,10 @@ class Magasins
      */
     private $idStock;
 
+    /**
+     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Filiere", mappedBy="parc" ,cascade={"persist","remove"})
+     */
+    private $filieres;
 
 
     /**
@@ -97,7 +102,7 @@ class Magasins
     /**
      * Get libMagasin
      *
-     * @return string 
+     * @return string
      */
     public function getLibMagasin()
     {
@@ -120,7 +125,7 @@ class Magasins
     /**
      * Get abrevMagasin
      *
-     * @return string 
+     * @return string
      */
     public function getAbrevMagasin()
     {
@@ -143,7 +148,7 @@ class Magasins
     /**
      * Get modeVente
      *
-     * @return string 
+     * @return string
      */
     public function getModeVente()
     {
@@ -166,21 +171,11 @@ class Magasins
     /**
      * Get actif
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getActif()
     {
         return $this->actif;
-    }
-
-    /**
-     * Get idMagasin
-     *
-     * @return integer 
-     */
-    public function getIdMagasin()
-    {
-        return $this->idMagasin;
     }
 
     /**
@@ -251,24 +246,61 @@ class Magasins
     {
         return $this->idStock;
     }
+
+
     /**
-     * @ORM\PrePersist
+     * Get idMagasin
+     *
+     * @return integer
      */
-    public function generateIdMagasin()
+    public function getIdMagasin()
     {
-        $this->idMagasin = uniqid();
+        return $this->idMagasin;
     }
 
     /**
-     * Set idMagasin
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->filieres = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add filieres
      *
-     * @param integer $idMagasin
+     * @param \SS\FMBBundle\Entity\Filiere $filieres
      * @return Magasins
      */
-    public function setIdMagasin($idMagasin)
+    public function addFiliere(\SS\FMBBundle\Entity\Filiere $filieres)
     {
-        $this->idMagasin = $idMagasin;
+        $this->filieres[] = $filieres;
 
         return $this;
+    }
+
+    /**
+     * Remove filieres
+     *
+     * @param \SS\FMBBundle\Entity\Filiere $filieres
+     */
+    public function removeFiliere(\SS\FMBBundle\Entity\Filiere $filieres)
+    {
+        $this->filieres->removeElement($filieres);
+    }
+
+    /**
+     * Get filieres
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFilieres()
+    {
+        return $this->filieres;
+    }
+
+    public function __toString()
+    {
+        return $this->getAbrevMagasin();
     }
 }

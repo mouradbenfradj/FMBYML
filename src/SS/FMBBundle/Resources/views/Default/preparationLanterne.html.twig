@@ -1,19 +1,16 @@
 {% extends "SSFMBBundle::layout.html.twig" %}
 
 {% block title %}
-    preparer corde - {{ parent() }}
+    preparer lanterne - {{ parent() }}
 {% endblock %}
-
-{% block ssfmb_body %}
-    <br><br>
-    <br><br>
+{% block body %}
+    {{ parent() }}
     {{ form(form) }}
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
     {# Voici le script en question : #}
     <script type="text/javascript">
-
         $(document).ready(function () {
             // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
             var $container = $('div#ss_fmbbundle_preparationlanterne_document_docsLines');
@@ -49,7 +46,6 @@
                 // - le texte "__name__" qu'il contient par le numéro du champ
                 var $prototype = $($container.attr('data-prototype').replace(/__name__label__/g, 'DocsLine n°' + (index + 1))
                         .replace(/__name__/g, index));
-
                 // On ajoute au prototype un lien pour pouvoir supprimer la catégorie
                 addDeleteLink($prototype);
 
@@ -64,64 +60,96 @@
             function addDeleteLink($prototype) {
                 // Création du lien
                 $deleteLink = $('<a href="#" class="btn btn-danger">Supprimer</a>');
-
                 // Ajout du lien
                 $prototype.append($deleteLink);
 
                 // Ajout du listener sur le clic du lien
                 $deleteLink.click(function (e) {
                     $prototype.remove();
+
                     e.preventDefault(); // évite qu'un # apparaisse dans l'URL
                     return false;
                 });
             }
 
-            $('#ss_fmbbundle_preparationlanterne_libStock').hide();
-            $('#ss_fmbbundle_preparationlanterne_nomLanterne').hide();
-            $('#ss_fmbbundle_preparationlanterne_quantiterEnStock').hide();
-            $('#ss_fmbbundle_preparationlanterne_submit').hide();
+            jQuery('#ss_fmbbundle_preparationlanterne_libStock').hide();
+            jQuery('#ss_fmbbundle_preparationlanterne_nomLanterne').hide();
+            jQuery('#ss_fmbbundle_preparationlanterne_document_docsLines_0_qte').hide();
+            jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').hide();
+            jQuery('#ss_fmbbundle_preparationlanterne_submit').hide();
+            jQuery('#ss_fmbbundle_preparationlanterne_document_docsLines_0_numeroSerie').hide()
+            jQuery('#ss_fmbbundle_preparationlanterne_Parc').ready(function () {
+                var val = jQuery("#ss_fmbbundle_preparationlanterne_Parc").val();
 
-            $('#ss_fmbbundle_preparationlanterne_Parc').ready(function () {
-                var val = $("#ss_fmbbundle_preparationlanterne_Parc").val();
-                $.ajax({
+                jQuery.ajax({
                     type: "POST",
                     url: "{{ url('ssfmb_parcstock') }}?parc_id=" + val,
                     success: function (data) {
-                        if ($.trim(data)) {
-                            $('#ss_fmbbundle_preparationlanterne_libStock').show();
+                        if (jQuery.trim(data)) {
+                            jQuery('#ss_fmbbundle_preparationlanterne_libStock').show();
 
                             // Remove current options
-                            $('#ss_fmbbundle_preparationlanterne_libStock').html('');
-                            $.each(data, function (k, v) {
-                                $('#ss_fmbbundle_preparationlanterne_libStock').append('<option value="' + v + '">' + k + '</option>');
+                            jQuery('#ss_fmbbundle_preparationlanterne_libStock').html('');
+                            jQuery.each(data, function (k, v) {
+                                jQuery('#ss_fmbbundle_preparationlanterne_libStock').append('<option value="' + v + '">' + k + '</option>');
                             });
-                            $.ajax({
+                            jQuery.ajax({
                                 type: "POST",
                                 url: "{{ url('ssfmb_parclanterne') }}?parc_id=" + val,
                                 success: function (data) {
-                                    if ($.trim(data)) {
+                                    if (jQuery.trim(data)) {
                                         var pos = true;
                                         var lan = '';
-                                        $('#ss_fmbbundle_preparationlanterne_nomLanterne').show();
+                                        jQuery('#ss_fmbbundle_preparationlanterne_nomLanterne').show();
 
                                         // Remove current options
-                                        $('#ss_fmbbundle_preparationlanterne_nomLanterne').html('');
-                                        $.each(data, function (k, v) {
+                                        jQuery('#ss_fmbbundle_preparationlanterne_nomLanterne').html('');
+                                        jQuery.each(data, function (k, v) {
                                             if (pos) {
                                                 lan = k;
-                                                $('#ss_fmbbundle_preparationlanterne_nomLanterne').append('<option value="' + v + '">' + k + '</option>');
+                                                jQuery('#ss_fmbbundle_preparationlanterne_nomLanterne').append('<option value="' + v + '">' + k + '</option>');
                                                 pos = false;
                                             } else {
-                                                if ($('#ss_fmbbundle_preparationlanterne_nomLanterne').val() == lan) {
-                                                    $('#ss_fmbbundle_preparationlanterne_quantiterEnStock').show();
-                                                    console.log(v);
-                                                    $('#ss_fmbbundle_preparationlanterne_quantiterEnStock').val(v);
+                                                if (jQuery('#ss_fmbbundle_preparationlanterne_nomLanterne').val() == lan) {
+                                                    jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').show();
+                                                    jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').val(v);
                                                 }
                                                 pos = true;
 
                                             }
                                         });
-                                        $('#ss_fmbbundle_preparationlanterne_submit').show();
+                                        jQuery('#ss_fmbbundle_preparationlanterne_submit').show();
+                                    }
+                                }
+                            });
+                            jQuery.noConflict();
+                            jQuery.ajax({
+                                type: "POST",
+                                url: "{{ url('ssfmb_articlestock') }}?stock_id=" + jQuery('#ss_fmbbundle_preparationlanterne_libStock').val() + "&article=" + jQuery('#ss_fmbbundle_preparationlanterne_document_docsLines_0_refArticle').val(),
+                                success: function (data) {
+                                    if (jQuery.trim(data)) {
+                                        var pos = true;
+                                        var lan = '';
+                                        jQuery('#ss_fmbbundle_preparationlanterne_document_docsLines_0_numeroSerie').show();
+
+                                        // Remove current options
+                                        jQuery('#ss_fmbbundle_preparationlanterne_document_docsLines_0_numeroSerie').html('');
+                                        jQuery.each(data, function (k, v) {
+                                            console.log(k, v);
+                                            if (pos) {
+                                                lan = k;
+                                                jQuery('#ss_fmbbundle_preparationlanterne_document_docsLines_0_numeroSerie').append('<option value="' + v + '">' + k + '</option>');
+                                                pos = false;
+                                            } else {
+                                                if (jQuery('#ss_fmbbundle_preparationlanterne_document_docsLines_0_numeroSerie').val() == lan) {
+                                                    jQuery('#ss_fmbbundle_preparationlanterne_document_docsLines_0_qte').show();
+                                                    console.log(v);
+                                                    jQuery('#ss_fmbbundle_preparationlanterne_document_docsLines_0_qte').val(v);
+                                                }
+                                                pos = true;
+                                            }
+                                        });
+                                        jQuery('#ss_fmbbundle_preparationlanterne_submit').show();
                                     }
                                 }
                             });
@@ -131,52 +159,83 @@
                 return false;
             });
 
-
-            $('#ss_fmbbundle_preparationlanterne_Parc').change(function () {
-                $('#ss_fmbbundle_preparationlanterne_libStock').hide();
-                $('#ss_fmbbundle_preparationlanterne_nomLanterne').hide();
-                $('#ss_fmbbundle_preparationlanterne_quantiterEnStock').hide();
-                $('#ss_fmbbundle_preparationlanterne_submit').hide();
-                var val = $(this).val();
-                $.ajax({
+            jQuery('#ss_fmbbundle_preparationlanterne_Parc').change(function () {
+                jQuery('#ss_fmbbundle_preparationlanterne_libStock').hide();
+                jQuery('#ss_fmbbundle_preparationlanterne_nomLanterne').hide();
+                jQuery('#ss_fmbbundle_preparationlanterne_document_docsLines_0_qte').hide();
+                jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').hide();
+                jQuery('#ss_fmbbundle_preparationlanterne_submit').hide();
+                jQuery('#ss_fmbbundle_preparationlanterne_document_docsLines_0_numeroSerie').hide()
+                var val = jQuery(this).val();
+                jQuery.ajax({
                     type: "POST",
                     url: "{{ url('ssfmb_parcstock') }}?parc_id=" + val,
                     success: function (data) {
-                        if ($.trim(data)) {
-                            $('#ss_fmbbundle_preparationlanterne_libStock').show();
+                        if (jQuery.trim(data)) {
+                            jQuery('#ss_fmbbundle_preparationlanterne_libStock').show();
 
                             // Remove current options
-                            $('#ss_fmbbundle_preparationlanterne_libStock').html('');
-                            $.each(data, function (k, v) {
-                                $('#ss_fmbbundle_preparationlanterne_libStock').append('<option value="' + v + '">' + k + '</option>');
+                            jQuery('#ss_fmbbundle_preparationlanterne_libStock').html('');
+                            jQuery.each(data, function (k, v) {
+                                jQuery('#ss_fmbbundle_preparationlanterne_libStock').append('<option value="' + v + '">' + k + '</option>');
                             });
-                            $.ajax({
+                            jQuery.ajax({
                                 type: "POST",
                                 url: "{{ url('ssfmb_parclanterne') }}?parc_id=" + val,
                                 success: function (data) {
-                                    if ($.trim(data)) {
+                                    if (jQuery.trim(data)) {
                                         var pos = true;
                                         var lan = '';
-                                        $('#ss_fmbbundle_preparationlanterne_nomLanterne').show();
+                                        jQuery('#ss_fmbbundle_preparationlanterne_nomLanterne').show();
 
                                         // Remove current options
-                                        $('#ss_fmbbundle_preparationlanterne_nomLanterne').html('');
-                                        $.each(data, function (k, v) {
+                                        jQuery('#ss_fmbbundle_preparationlanterne_nomLanterne').html('');
+                                        jQuery.each(data, function (k, v) {
                                             if (pos) {
                                                 lan = k;
-                                                $('#ss_fmbbundle_preparationlanterne_nomLanterne').append('<option value="' + v + '">' + k + '</option>');
+                                                jQuery('#ss_fmbbundle_preparationlanterne_nomLanterne').append('<option value="' + v + '">' + k + '</option>');
                                                 pos = false;
                                             } else {
-                                                if ($('#ss_fmbbundle_preparationlanterne_nomLanterne').val() == lan) {
-                                                    $('#ss_fmbbundle_preparationlanterne_quantiterEnStock').show();
+                                                if (jQuery('#ss_fmbbundle_preparationlanterne_nomLanterne').val() == lan) {
+                                                    jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').show();
                                                     console.log(v);
-                                                    $('#ss_fmbbundle_preparationlanterne_quantiterEnStock').val(v);
+                                                    jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').val(v);
                                                 }
                                                 pos = true;
 
                                             }
                                         });
-                                        $('#ss_fmbbundle_preparationlanterne_submit').show();
+                                        jQuery('#ss_fmbbundle_preparationlanterne_submit').show();
+                                    }
+                                }
+                            });
+                            jQuery.ajax({
+                                type: "POST",
+                                url: "{{ url('ssfmb_articlestock') }}?stock_id=" + jQuery('#ss_fmbbundle_preparationlanterne_libStock').val() + "&article=" + jQuery('#ss_fmbbundle_preparationlanterne_document_docsLines_0_refArticle').val(),
+                                success: function (data) {
+                                    if (jQuery.trim(data)) {
+                                        var pos = true;
+                                        var lan = '';
+                                        jQuery('#ss_fmbbundle_preparationlanterne_document_docsLines_0_numeroSerie').show();
+
+                                        // Remove current options
+                                        jQuery('#ss_fmbbundle_preparationlanterne_document_docsLines_0_numeroSerie').html('');
+                                        jQuery.each(data, function (k, v) {
+                                            if (pos) {
+                                                lan = k;
+                                                jQuery('#ss_fmbbundle_preparationlanterne_document_docsLines_0_numeroSerie').append('<option value="' + v + '">' + k + '</option>');
+                                                pos = false;
+                                            } else {
+                                                if (jQuery('#ss_fmbbundle_preparationlanterne_document_docsLines_0_numeroSerie').val() == lan) {
+                                                    jQuery('#ss_fmbbundle_preparationlanterne_document_docsLines_0_qte').show();
+                                                    console.log(v);
+                                                    jQuery('#ss_fmbbundle_preparationlanterne_document_docsLines_0_qte').val(v);
+                                                }
+                                                pos = true;
+
+                                            }
+                                        });
+                                        jQuery('#ss_fmbbundle_preparationlanterne_submit').show();
                                     }
                                 }
                             });
@@ -185,39 +244,63 @@
                 });
                 return false;
             });
-            $('#ss_fmbbundle_preparationlanterne_nomLanterne').change(function () {
-                $('#ss_fmbbundle_preparationlanterne_submit').hide();
-                $('#ss_fmbbundle_preparationlanterne_nomLanterne').hide();
-                $('#ss_fmbbundle_preparationlanterne_quantiterEnStock').hide();
-                var val = $("#ss_fmbbundle_preparationlanterne_Parc").val();
+            jQuery('#ss_fmbbundle_preparationlanterne_nomLanterne').change(function () {
+                jQuery('#ss_fmbbundle_preparationlanterne_submit').hide();
+                jQuery('#ss_fmbbundle_preparationlanterne_nomLanterne').hide();
+                jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').hide();
+                var val = jQuery("#ss_fmbbundle_preparationlanterne_Parc").val();
 
-                $.ajax({
+                jQuery.ajax({
                     type: "POST",
                     url: "{{ url('ssfmb_parclanterne') }}?parc_id=" + val,
                     success: function (data) {
-                        if ($.trim(data)) {
+                        if (jQuery.trim(data)) {
                             var pos = true;
                             var lan = '';
-                            $('#ss_fmbbundle_preparationlanterne_nomLanterne').show();
-                            $.each(data, function (k, v) {
+                            jQuery('#ss_fmbbundle_preparationlanterne_nomLanterne').show();
+                            jQuery.each(data, function (k, v) {
                                 if (pos) {
                                     lan = k;
                                     pos = false;
                                 } else {
-                                    if ($('#ss_fmbbundle_preparationlanterne_nomLanterne').val() == lan) {
-                                        $('#ss_fmbbundle_preparationlanterne_quantiterEnStock').show();
+                                    if (jQuery('#ss_fmbbundle_preparationlanterne_nomLanterne').val() == lan) {
+                                        jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').show();
                                         console.log(v);
-                                        $('#ss_fmbbundle_preparationlanterne_quantiterEnStock').val(v);
+                                        jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').val(v);
                                     }
                                     pos = true;
 
                                 }
                             });
-                            $('#ss_fmbbundle_preparationlanterne_submit').show();
+                            jQuery('#ss_fmbbundle_preparationlanterne_submit').show();
                         }
                     }
                 });
             });
+
+            jQuery('#ss_fmbbundle_preparationlanterne_document_docsLines_0_numeroSerie').change(function () {
+                jQuery('#ss_fmbbundle_preparationlanterne_submit').hide();
+                jQuery('#ss_fmbbundle_preparationlanterne_document_docsLines_0_qte').hide();
+                var val = jQuery("#ss_fmbbundle_preparationlanterne_Parc").val();
+
+                jQuery.ajax({
+                    type: "POST",
+                    url: "{{ url('ssfmb_articlestocklot') }}?stock_id=" + jQuery('#ss_fmbbundle_preparationlanterne_libStock').val() + "&article=" + jQuery('#ss_fmbbundle_preparationlanterne_document_docsLines_0_refArticle').val() + "&lot=" + jQuery('#ss_fmbbundle_preparationlanterne_document_docsLines_0_numeroSerie').val(),
+                    success: function (data) {
+                        if (jQuery.trim(data)) {
+                            jQuery('#ss_fmbbundle_preparationlanterne_document_docsLines_0_qte').show();
+                            // Remove current options
+                            jQuery('#ss_fmbbundle_preparationlanterne_document_docsLines_0_qte').html('');
+                            jQuery.each(data, function (k, v) {
+                                        jQuery('#ss_fmbbundle_preparationlanterne_document_docsLines_0_qte').val(v);
+                            });
+                            jQuery('#ss_fmbbundle_preparationlanterne_submit').show();
+                        }
+                    }
+                });
+            });
+
+
         });
     </script>
 {% endblock %}

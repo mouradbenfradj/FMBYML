@@ -39,6 +39,7 @@ class PdfModeles
      *
      * @ORM\Column(name="id_pdf_modele", type="smallint")
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $idPdfModele;
 
@@ -145,34 +146,14 @@ class PdfModeles
         return $this;
     }
 
+
     /**
      * Get idPdfType
      *
-     * @return \SS\FMBBundle\Entity\PdfTypes
+     * @return \SS\FMBBundle\Entity\PdfTypes 
      */
     public function getIdPdfType()
     {
         return $this->idPdfType;
-    }
-
-    /**
-     * @ORM\PrePersist
-     */
-    public function generateIdPdfModele()
-    {
-        $this->idPdfModele = uniqid();
-    }
-
-    /**
-     * Set idPdfModele
-     *
-     * @param integer $idPdfModele
-     * @return PdfModeles
-     */
-    public function setIdPdfModele($idPdfModele)
-    {
-        $this->idPdfModele = $idPdfModele;
-
-        return $this;
     }
 }

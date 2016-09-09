@@ -4,6 +4,7 @@ namespace SS\FMBBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+
 /**
  * StocksArticles
  *
@@ -31,7 +32,7 @@ class StocksArticles
     /**
      * @var \SS\FMBBundle\Entity\Articles
      *
-     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Articles")
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Articles",cascade={"persist"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="ref_article", referencedColumnName="ref_article")
      * })
@@ -48,7 +49,28 @@ class StocksArticles
      */
     private $idStock;
 
+    /**
+     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\StocksArticlesSn", mappedBy="refStockArticle", cascade={"ALL"}, indexBy="numeroSerie")
+     */
+    private $stocksArticlesSns;
 
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function generateRefStockArticle()
+    {
+        $this->refStockArticle = uniqid();
+    }
+
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->stocksArticlesSns = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Set qte
@@ -72,6 +94,20 @@ class StocksArticles
     {
         return $this->qte;
     }
+
+    /**
+     * Set refStockArticle
+     *
+     * @param string $refStockArticle
+     * @return StocksArticles
+     */
+    public function setRefStockArticle($refStockArticle)
+    {
+        $this->refStockArticle = $refStockArticle;
+
+        return $this;
+    }
+
 
     /**
      * Get refStockArticle
@@ -128,24 +164,26 @@ class StocksArticles
     {
         return $this->idStock;
     }
-    /**
-     * @ORM\PrePersist
-     */
-    public function generateRefStockArticle()
-    {
-        $this->refStockArticle = uniqid();
-    }
 
     /**
-     * Set refStockArticle
+     * Add stocksArticlesSns
      *
-     * @param string $refStockArticle
+     * @param \SS\FMBBundle\Entity\SSFMBBundle:StocksArticlesSn $stocksArticlesSns
      * @return StocksArticles
      */
-    public function setRefStockArticle($refStockArticle)
+    public function addStocksArticlesSn($numeroSerie, $refStockArticle)
     {
-        $this->refStockArticle = $refStockArticle;
-
-        return $this;
+        $this->stocksArticlesSns[$numeroSerie] = new StocksArticlesSn($numeroSerie, $refStockArticle, $this);
     }
+
+    /**
+     * Get stocksArticlesSns
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getStocksArticlesSns()
+    {
+        return $this->stocksArticlesSns;
+    }
+
 }

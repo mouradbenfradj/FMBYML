@@ -118,7 +118,6 @@ class DocsLines
      */
     private $refDoc;
 
-
     /**
      * Set refArticle
      *
@@ -414,7 +413,6 @@ class DocsLines
     public function setRefDoc(\SS\FMBBundle\Entity\Documents $refDoc = null)
     {
         $this->refDoc = $refDoc;
-
         return $this;
     }
 

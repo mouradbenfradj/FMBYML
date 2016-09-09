@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class DocumentsType extends AbstractType
+class MagasinsType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -15,26 +15,24 @@ class DocumentsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('idTypeDoc')
-            ->add('docsLines','collection',array(
-                    'type' => new DocsLinesType(),
-                    'required' => true,
-                    'allow_add' => true,
-                    'allow_delete' => true,
-                )
-            );
+            ->add('libMagasin')
+            ->add('abrevMagasin')
+            ->add('modeVente')
+            ->add('actif')
+            ->add('idMagEnseigne')
+            ->add('idTarif')
+            ->add('idStock')
+        ;
     }
-
+    
     /**
      * @param OptionsResolverInterface $resolver
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(
-            array(
-                'data_class' => 'SS\FMBBundle\Entity\Documents',
-            )
-        );
+        $resolver->setDefaults(array(
+            'data_class' => 'SS\FMBBundle\Entity\Magasins'
+        ));
     }
 
     /**
@@ -42,6 +40,6 @@ class DocumentsType extends AbstractType
      */
     public function getName()
     {
-        return 'ss_fmbbundle_documents';
+        return 'ss_fmbbundle_magasins';
     }
 }

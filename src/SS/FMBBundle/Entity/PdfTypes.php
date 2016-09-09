@@ -9,7 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="pdf_types")
  * @ORM\Entity
- * @ORM\HasLifecycleCallbacks()
  */
 class PdfTypes
 {
@@ -62,14 +61,6 @@ class PdfTypes
     {
         return $this->idPdfType;
     }
-    /**
-     * @ORM\PrePersist
-     */
-    public function generateIdPdfType()
-    {
-        $this->idPdfType = uniqid();
-    }
-
     /**
      * Set idPdfType
      *

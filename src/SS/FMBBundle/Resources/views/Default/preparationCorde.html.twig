@@ -4,14 +4,9 @@
     preparer corde - {{ parent() }}
 {% endblock %}
 {% block body %}
-    {% block menu %}
-        {{ parent() }}
-    {% endblock %}
-    <br><br><br>
-    {% block ssfmb_body %}
-        {{ form(form) }}
+    {{ parent() }}
+    {{ form(form) }}
 
-    {% endblock %}
 {% endblock %}
         {% block javascripts %}
             {{ parent() }}

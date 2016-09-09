@@ -9,7 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="adresses_types")
  * @ORM\Entity
- * @ORM\HasLifecycleCallbacks()
  */
 class AdressesTypes
 {
@@ -32,6 +31,7 @@ class AdressesTypes
      *
      * @ORM\Column(name="id_adresse_type", type="smallint")
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $idAdresseType;
 
@@ -91,25 +91,5 @@ class AdressesTypes
     public function getIdAdresseType()
     {
         return $this->idAdresseType;
-    }
-    /**
-     * @ORM\PrePersist
-     */
-    public function generateIdAdresseType()
-    {
-        $this->idAdresseType = uniqid();
-    }
-
-    /**
-     * Set idAdresseType
-     *
-     * @param integer $idAdresseType
-     * @return AdressesTypes
-     */
-    public function setIdAdresseType($idAdresseType)
-    {
-        $this->idAdresseType = $idAdresseType;
-
-        return $this;
     }
 }

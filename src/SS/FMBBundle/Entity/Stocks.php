@@ -9,7 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="stocks", indexes={@ORM\Index(name="actif", columns={"actif"}), @ORM\Index(name="ref_adr_stock", columns={"ref_adr_stock"})})
  * @ORM\Entity
- * @ORM\HasLifecycleCallbacks()
  */
 class Stocks
 {
@@ -39,6 +38,7 @@ class Stocks
      *
      * @ORM\Column(name="id_stock", type="smallint")
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $idStock;
 
@@ -124,16 +124,6 @@ class Stocks
     }
 
     /**
-     * Get idStock
-     *
-     * @return integer
-     */
-    public function getIdStock()
-    {
-        return $this->idStock;
-    }
-
-    /**
      * Set refAdrStock
      *
      * @param \SS\FMBBundle\Entity\Adresses $refAdrStock
@@ -160,24 +150,14 @@ class Stocks
     {
         return $this->getLibStock();
     }
-    /**
-     * @ORM\PrePersist
-     */
-    public function generateIdStock()
-    {
-        $this->idStock = uniqid();
-    }
 
     /**
-     * Set idStock
+     * Get idStock
      *
-     * @param integer $idStock
-     * @return Stocks
+     * @return integer 
      */
-    public function setIdStock($idStock)
+    public function getIdStock()
     {
-        $this->idStock = $idStock;
-
-        return $this;
+        return $this->idStock;
     }
 }

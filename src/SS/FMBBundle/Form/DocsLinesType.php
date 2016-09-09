@@ -15,16 +15,11 @@ class DocsLinesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('refArticle')
+            ->add('refArticle', 'entity', array('class' => 'SSFMBBundle:Articles', 'label' => 'article'))
+            ->add('numeroSerie', 'entity', array('class' => 'SSFMBBundle:StocksArticlesSn', 'label' => 'lot','mapped' => false))
             ->add('qte')
-            ->add(
-                'nombre',
-                'number',
-                array(
-                    'label' => 'nombre',
-                    'mapped' => false,
-                )
-            );
+            ->add('nombre', 'number', array('label' => 'nombre', 'mapped' => false));
+
     }
 
     /**
@@ -33,9 +28,7 @@ class DocsLinesType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(
-            array(
-                'data_class' => 'SS\FMBBundle\Entity\DocsLines',
-            )
+            array('data_class' => 'SS\FMBBundle\Entity\DocsLines',)
         );
     }
 

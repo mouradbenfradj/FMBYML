@@ -19,43 +19,36 @@ class LoadStocks extends AbstractFixture implements OrderedFixtureInterface
         $stock1->setLibStock('stock1');
         $stock1->setAbrevStock('st1');
         $stock1->setActif(true);
-        $stock1->setRefAdrStock($this->getReference('fmb'));
         $manager->persist($stock1);
         $stock2 = new Stocks();
         $stock2->setLibStock('stock2');
         $stock2->setAbrevStock('st2');
         $stock2->setActif(true);
-        $stock2->setRefAdrStock($this->getReference('fmb'));
         $manager->persist($stock2);
         $stock6 = new Stocks();
         $stock6->setLibStock('stockLanterne');
         $stock6->setAbrevStock('stLnterne');
         $stock6->setActif(true);
-        $stock6->setRefAdrStock($this->getReference('fmb'));
         $manager->persist($stock6);
         $stock7 = new Stocks();
         $stock7->setLibStock('stockCorde');
         $stock7->setAbrevStock('stCorde');
         $stock7->setActif(true);
-        $stock7->setRefAdrStock($this->getReference('fmb'));
         $manager->persist($stock7);
         $stock5 = new Stocks();
         $stock5->setLibStock('stockArticle');
         $stock5->setAbrevStock('stArticle');
         $stock5->setActif(true);
-        $stock5->setRefAdrStock($this->getReference('fmb'));
         $manager->persist($stock5);
         $stock3 = new Stocks();
         $stock3->setLibStock('stock1');
         $stock3->setAbrevStock('st1');
         $stock3->setActif(true);
-        $stock3->setRefAdrStock($this->getReference('Marinor'));
         $manager->persist($stock3);
         $stock4 = new Stocks();
         $stock4->setLibStock('stock2');
         $stock4->setAbrevStock('st2');
         $stock4->setActif(true);
-        $stock4->setRefAdrStock($this->getReference('Marinor'));
         $manager->persist($stock4);
         $manager->flush();
         $this->addReference('stock1', $stock1);
@@ -74,7 +67,7 @@ class LoadStocks extends AbstractFixture implements OrderedFixtureInterface
      */
     public function getOrder()
     {
-        return 6;
+        return 1;
     }
 
 }

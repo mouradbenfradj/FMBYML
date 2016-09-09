@@ -9,7 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="articles_valorisations")
  * @ORM\Entity
- * @ORM\HasLifecycleCallbacks()
  */
 class ArticlesValorisations
 {
@@ -46,6 +45,7 @@ class ArticlesValorisations
      *
      * @ORM\Column(name="id_valo", type="smallint")
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $idValo;
 
@@ -151,25 +151,5 @@ class ArticlesValorisations
     public function getIdValo()
     {
         return $this->idValo;
-    }
-    /**
-     * @ORM\PrePersist
-     */
-    public function generateIdValo()
-    {
-        $this->idValo = uniqid();
-    }
-
-    /**
-     * Set idValo
-     *
-     * @param integer $idValo
-     * @return ArticlesValorisations
-     */
-    public function setIdValo($idValo)
-    {
-        $this->idValo = $idValo;
-
-        return $this;
     }
 }

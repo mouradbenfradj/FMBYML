@@ -21,22 +21,8 @@ class LoadStocksArticles extends AbstractFixture implements OrderedFixtureInterf
         $stockArNH->setRefStockArticle('00001');
         $stockArNH->setIdStock($this->getReference('stock1'));
         $manager->persist($stockArNH);
-        $stockArNM = new StocksArticles();
-        $stockArNM->setRefArticle($this->getReference('NaissainHuitre1'));
-        $stockArNM->setQte(50000000);
-        $stockArNM->setRefStockArticle('00002');
-        $stockArNM->setIdStock($this->getReference('stock1'));
-        $manager->persist($stockArNM);
-        $stockArNH2 = new StocksArticles();
-        $stockArNH2->setRefArticle($this->getReference('NaissainHuitre2'));
-        $stockArNH2->setQte(2000000);
-        $stockArNH2->setRefStockArticle('00003');
-        $stockArNH2->setIdStock($this->getReference('stock1'));
-        $manager->persist($stockArNH2);
         $manager->flush();
         $this->addReference('stockArNH', $stockArNH);
-        $this->addReference('stockArNM', $stockArNM);
-        $this->addReference('stockArNH2', $stockArNH2);
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace SS\FMBBundle\Controller;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -14,6 +15,46 @@ use SS\FMBBundle\Form\ArticlesType;
  */
 class ArticlesController extends Controller
 {
+    public function articleStocksAction(Request $request)
+    {// Get the province ID
+        $id = $request->query->get('stock_id');
+        $article = $request->query->get('article');
+        $sarticle = $request->query->get('sarticle');
+        $result = array();
+        $repo = $this->getDoctrine()->getManager()->getRepository('SSFMBBundle:StocksArticles');
+        if ($article != '')
+            $stocks = $repo->findBy(array('idStock' => $id, 'refArticle' => $article));
+        if ($sarticle != '')
+            $stocks = $repo->findBy(array('refStockArticle' =>$sarticle));
+
+
+        foreach ($stocks as $stock) {
+            $sn = $this->getDoctrine()->getManager()->getRepository('SSFMBBundle:StocksArticlesSn')->findByRefStockArticle($stock);
+            foreach ($sn as $lot) {
+                $result[$lot->getNumeroSerie()] = $lot->getNumeroSerie();
+                $result[$lot->getNumeroSerie() . $lot->getSnQte()] = $lot->getSnQte();
+            }
+        }
+        return new JsonResponse($result);
+    }
+
+    public function articleStockslotAction(Request $request)
+    {// Get the province ID
+        $id = $request->query->get('stock_id');
+        $article = $request->query->get('article');
+        $lot = $request->query->get('lot');
+        $result = array();
+        $repo = $this->getDoctrine()->getManager()->getRepository('SSFMBBundle:StocksArticles');
+        $stocks = $repo->findBy(array('idStock' => $id, 'refArticle' => $article));
+
+        foreach ($stocks as $stock) {
+            $sn = $this->getDoctrine()->getManager()->getRepository('SSFMBBundle:StocksArticlesSn')->findBy(array('refStockArticle' => $stock, 'numeroSerie' => $lot));
+            foreach ($sn as $lot) {
+                $result[$lot->getNumeroSerie() . $lot->getSnQte()] = $lot->getSnQte();
+            }
+        }
+        return new JsonResponse($result);
+    }
 
     /**
      * Lists all Articles entities.

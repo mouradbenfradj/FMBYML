@@ -3,7 +3,7 @@
 namespace SS\FMBBundle\Form;
 
 use Doctrine\ORM\EntityRepository;
-use SS\FMBBundle\Entity\Parc;
+use SS\FMBBundle\Entity\Magasins;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -36,7 +36,7 @@ class PreparationLanterneType extends AbstractType
 
     }
 
-    protected function addElements(FormInterface $form, Parc $parc = null)
+    protected function addElements(FormInterface $form, Magasins $parc = null)
     {
         $dt = $form->get('date');
         $do = $form->get('document');
@@ -44,7 +44,7 @@ class PreparationLanterneType extends AbstractType
         $form->remove('document');
         $form->add('Parc', 'entity', array(
                 'data' => $parc,
-                'class' => 'SSFMBBundle:Parc',
+                'class' => 'SSFMBBundle:Magasins',
                 'mapped' => false)
         );
         // Cities are empty, unless we actually supplied a province
@@ -54,14 +54,14 @@ class PreparationLanterneType extends AbstractType
             // Fetch the cities from specified province
             $repo = $this->em->getRepository('SSFMBBundle:Stocks');
             $repo2 = $this->em->getRepository('SSFMBBundle:Lanterne');
-            $stocks = $repo->findByRefAdrStock($parc);
+            $stocks = $parc->getIdStock();
             $lanternes = $repo2->findByParc($parc);
         }
         // Add the city element
         $form->add('libStock', 'entity', array(
             'empty_value' => '-- Selectionne le parc en premier lieu --',
             'class' => 'SSFMBBundle:Stocks',
-            'choices' => $stocks,
+            'choices' => array($stocks),
         ));
         $form->add('nomLanterne', 'entity', array(
             'empty_value' => '-- Selectionne le parc en premier lieu --',
@@ -89,7 +89,7 @@ class PreparationLanterneType extends AbstractType
         $form = $event->getForm();
         $data = $event->getData();
         // Note that the data is not yet hydrated into the entity.
-        $parc = $this->em->getRepository('SSFMBBundle:Parc')->find($data['Parc']);
+        $parc = $this->em->getRepository('SSFMBBundle:Magasins')->find($data['Parc']);
 
         $this->addElements($form, $parc);
     }

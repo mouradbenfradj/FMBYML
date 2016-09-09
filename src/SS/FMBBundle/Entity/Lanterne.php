@@ -133,7 +133,7 @@ class Lanterne
     /**
      * Get parc
      *
-     * @return \SS\FMBBundle\Entity\Parc
+     * @return \SS\FMBBundle\Entity\Magasins
      */
     public function getParc()
     {
@@ -143,10 +143,10 @@ class Lanterne
     /**
      * Set parc
      *
-     * @param \SS\FMBBundle\Entity\Parc $parc
+     * @param \SS\FMBBundle\Entity\Magasins $parc
      * @return StocksLanternes
      */
-    public function setParc(\SS\FMBBundle\Entity\Parc $parc)
+    public function setParc(\SS\FMBBundle\Entity\Magasins $parc)
     {
         $this->parc = $parc;
 

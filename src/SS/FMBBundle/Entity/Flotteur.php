@@ -131,7 +131,6 @@ class Flotteur
     public function setSegment(\SS\FMBBundle\Entity\Segment $segment)
     {
         $this->segment = $segment;
-
         return $this;
     }
 

@@ -9,7 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="documents_etats", indexes={@ORM\Index(name="ordre", columns={"ordre"}), @ORM\Index(name="id_type_doc", columns={"id_type_doc"})})
  * @ORM\Entity
- * @ORM\HasLifecycleCallbacks()
  */
 class DocumentsEtats
 {
@@ -39,6 +38,7 @@ class DocumentsEtats
      *
      * @ORM\Column(name="id_etat_doc", type="smallint")
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $idEtatDoc;
 
@@ -145,34 +145,14 @@ class DocumentsEtats
         return $this;
     }
 
+
     /**
      * Get idTypeDoc
      *
-     * @return \SS\FMBBundle\Entity\DocumentsTypes
+     * @return \SS\FMBBundle\Entity\DocumentsTypes 
      */
     public function getIdTypeDoc()
     {
         return $this->idTypeDoc;
-    }
-
-    /**
-     * @ORM\PrePersist
-     */
-    public function generateIdEtatDoc()
-    {
-        $this->idEtatDoc = uniqid();
-    }
-
-    /**
-     * Set idEtatDoc
-     *
-     * @param integer $idEtatDoc
-     * @return DocumentsEtats
-     */
-    public function setIdEtatDoc($idEtatDoc)
-    {
-        $this->idEtatDoc = $idEtatDoc;
-
-        return $this;
     }
 }

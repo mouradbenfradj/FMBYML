@@ -22,6 +22,18 @@ class DefaultImpl implements DefaultInterface
         $this->em = $entitymanager;
     }
 
+    public function calculerQuantiterLanterne($tableauPoches)
+    {
+        $somme = 0;
+        foreach ($tableauPoches->getPoches() as $poches) {
+            $somme = $somme + $poches->getQuantite();
+        }
+
+        if ($somme != 0) {
+            return $somme;
+        }
+    }
+
     public function viderPoche($poche, $qte)
     {
         // TODO: Implement viderPoche() method.

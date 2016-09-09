@@ -3,38 +3,15 @@
     Suivit - {{ parent() }}
 {% endblock %}
 {% block body %}
-    <div class="container-fluid">
-        {% block menu %}
-            {{ parent() }}
-        {% endblock %}
-        <br><br>
-        {% block alerte %}
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="alert alert-dismissable alert-danger" id="alerterouge" style="display: none">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                        <h4>Alert!</h4>
-                        <strong>Warning!</strong> l'article du parc nomparc de la filiere f1 contenu dans le segment A a
-                        partir du flotteur A1 a l'emplacement 10 a depasser le temps prevue
-                        <a href="#" class="alert-link">alert link</a>
-                    </div>
-                    <div class="alert alert-dismissable alert-warning" id="alertejaune" style="display: none"></div>
-                    <div class="alert alert-success alert-dismissable" id="alerteverte" style="display: none">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                        <h4>Alert!</h4>
-                        <strong>Warning!</strong> Best check yo self, you're not looking too good.
-                        <a href="#" class="alert-link">alertlink</a>
-                    </div>
-                </div>
-            </div>
-        {% endblock %}
-        <br><br><br>
-        {% block ssfmb_body %}
+    {{ parent() }}
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
                     <ul class="pagination pagination-lg">
                         {% for page in pages %}
-                            <li><a href="{{ path('ssfmb_homepage', { 'id': page.id }) }}">{{ page.nomParc }}</a></li>
+                            <li>
+                                <a href="{{ path('ssfmb_homepage', { 'id': page.idMagasin }) }}">{{ page.abrevMagasin }}</a>
+                            </li>
                         {% endfor %}
                     </ul>
                     <table class="table table-condensed table-bordered" border="1">
@@ -42,7 +19,7 @@
                         {% for entity in entities %}
                             <tr>
                                 <td>
-                                    <a href="{{ path('parc_show', { 'id': entity.id }) }}">{{ entity.nomParc }}</a>
+                                    {{ entity.abrevMagasin }}
                                 </td>
                             </tr>
                             <tr>
@@ -145,8 +122,10 @@
                                                                                 {% elseif emplacement.corde != null %}
                                                                                     <a title="article  {{ emplacement.corde.article.lot.lot }}-{{ emplacement.corde.article.libArticle }}
 -date de creation  {{ emplacement.corde.dateDeCreation|date('Y-m-d') }}
--date de MAE  {{ emplacement.dateDeRemplissage|date('Y-m-d') }}" href="{{ path('corde_show', {'id': emplacement.corde.id }) }} ">
-                                                                                        <font color="blue" class="emplacement"> {{ emplacement.place }}</font>
+-date de MAE  {{ emplacement.dateDeRemplissage|date('Y-m-d') }}"
+                                                                                       href="{{ path('corde_show', {'id': emplacement.corde.id }) }} ">
+                                                                                        <font color="blue"
+                                                                                              class="emplacement"> {{ emplacement.place }}</font>
                                                                                     </a>
                                                                                     {% if(emplacement.dateDeRemplissage != null) %}
                                                                                         <span class="dateemplacement"
@@ -154,11 +133,12 @@
                                                                                     {% endif %}
                                                                                 {% elseif emplacement.stockslanterne != null %}
                                                                                     <a title="{{ emplacement.stockslanterne.lanterne.nomlanterne }}
--article:{{ emplacement.stockslanterne.article.lot.lot }}-{{ emplacement.stockslanterne.article.libArticle }}
--date de creation  {{ emplacement.stockslanterne.dateDeCreation|date('Y-m-d') }}
--date de MAE  {{ emplacement.dateDeRemplissage|date('Y-m-d') }}"
-                                                                                       href="{{ path('stockslanternes_show', {'id': emplacement.stockslanterne.id }) }}">
-                                                                                        <font color="#adff2f" class="emplacement">{{ emplacement.place }}
+-article:
+-date de creation
+-date de MAE "
+                                                                                       href="#">
+                                                                                        <font color="#adff2f"
+                                                                                              class="emplacement">{{ emplacement.place }}
                                                                                         </font>
                                                                                     </a>
                                                                                     <span style="display: none"
@@ -184,8 +164,7 @@
                     </table>
                 </div>
             </div>
-        {% endblock %}
-    </div>
+        </div>
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
@@ -213,17 +192,17 @@
             }
 
             $('.dateemplacement').each(function (ele, val) {
-                console.log(ele + "     "  + val)
+                console.log(ele + "     " + val)
                 var datejour = $(this).text().split("-");
                 var Date1 = new Date(datejour[0], datejour[1] - 1, datejour[2]);
                 var Date2 = new Date();
-                if($(this).parent('.flotteur').has('dateemplacement'))
-                if (0 < diffdate(Date1, Date2, 'd') < 10) {
-                    if($(this).parent('.flotteur').has('dateemplacement'))
-                        var str = 'il reste ' + diffdate(Date1, Date2, 'd') + ' jours pour l article de la filiere ' + $(this).parent()+ ' contenu dans le segment ' + $('.segment').text() + ' a partir du flotteur ' + $('.flotteur').text() + ' a lemplacement ' + $('.emplacement').text() + '<br>'
-                    $('#alertejaune').html('<button type="button" class="close" data-dismiss="alert" aria-hidden="true">× </button> <h4> Alert! </h4> <strong>Warning!</strong> ' + str + '<a href="#" class="alert-link">alert link</a>');
-                    $('#alertejaune').show();
-                }
+                if ($(this).parent('.flotteur').has('dateemplacement'))
+                    if (0 < diffdate(Date1, Date2, 'd') < 10) {
+                        if ($(this).parent('.flotteur').has('dateemplacement'))
+                            var str = 'il reste ' + diffdate(Date1, Date2, 'd') + ' jours pour l article de la filiere ' + $(this).parent() + ' contenu dans le segment ' + $('.segment').text() + ' a partir du flotteur ' + $('.flotteur').text() + ' a lemplacement ' + $('.emplacement').text() + '<br>'
+                        $('#alertejaune').html('<button type="button" class="close" data-dismiss="alert" aria-hidden="true">× </button> <h4> Alert! </h4> <strong>Warning!</strong> ' + str + '<a href="#" class="alert-link">alert link</a>');
+                        $('#alertejaune').show();
+                    }
                 if (diffdate(Date1, Date2, 'd') <= 0) {
                     var str2 = 'il reste ' + (diffdate(Date1, Date2, 'd') * -1) + ' jours pour l article de la filiere ' + $('#filiere').text() + ' contenu dans le segment ' + $('#segment').text() + ' a partir du flotteur ' + $('#flotteur').text() + ' a lemplacement ' + $('#emplacement').text()
                     $('#alerterouge').html('<button type="button" class="close" data-dismiss="alert" aria-hidden="true">× </button> <h4> Alert! </h4> <strong>Warning!</strong> ' + str2 + '<a href="#" class="alert-link">alert link</a>');

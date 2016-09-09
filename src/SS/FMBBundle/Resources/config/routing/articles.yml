@@ -1,30 +1,10 @@
-articles:
-    path:     /
-    defaults: { _controller: "SSFMBBundle:Articles:index" }
+ssfmb_articlestock:
+    path:     /articlestock
+    defaults: { _controller: SSFMBBundle:Articles:articleStocks }
 
-articles_show:
-    path:     /{id}/show
-    defaults: { _controller: "SSFMBBundle:Articles:show" }
-
-articles_new:
-    path:     /new
-    defaults: { _controller: "SSFMBBundle:Articles:new" }
-
-articles_create:
-    path:     /create
-    defaults: { _controller: "SSFMBBundle:Articles:create" }
-    methods:  POST
-
-articles_edit:
-    path:     /{id}/edit
-    defaults: { _controller: "SSFMBBundle:Articles:edit" }
-
-articles_update:
-    path:     /{id}/update
-    defaults: { _controller: "SSFMBBundle:Articles:update" }
-    methods:  [POST, PUT]
-
-articles_delete:
-    path:     /{id}/delete
-    defaults: { _controller: "SSFMBBundle:Articles:delete" }
-    methods:  [POST, DELETE]
+ssfmb_snarticle:
+    path:     /articlestock
+    defaults: { _controller: SSFMBBundle:Articles:articleSn }
+ssfmb_articlestocklot:
+    path:     /articlestocklot
+    defaults: { _controller: SSFMBBundle:Articles:articleStockslot }

@@ -12,4 +12,19 @@ use Doctrine\ORM\EntityRepository;
  */
 class StocksLanternesRepository extends EntityRepository
 {
+    public function getLanternePreparer($stocksArticlesSn, $lanterne)
+    {
+        $qb = $this->createQueryBuilder('l');
+        $qb->where('l.pret = false')
+            ->andWhere('l.emplacement IS NULL')
+            ->join('l.article', 's')
+            ->addSelect('s')
+            ->andwhere('s.refStockArticle = ?1')
+            ->setParameter(1, $stocksArticlesSn->getRefStockArticle())
+            ->andWhere('s.numeroSerie = ?2')
+            ->setParameter(2, $stocksArticlesSn->getNumeroSerie())
+            ->andWhere('l.lanterne = ?3')
+            ->setParameter(3, $lanterne);
+        return $qb->getQuery()->getResult();
+    }
 }

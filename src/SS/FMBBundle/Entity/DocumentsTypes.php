@@ -9,7 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="documents_types", indexes={@ORM\Index(name="actif", columns={"actif"}), @ORM\Index(name="id_pdf_modele", columns={"id_pdf_modele"}), @ORM\Index(name="id_type_groupe", columns={"id_type_groupe"})})
  * @ORM\Entity
- * @ORM\HasLifecycleCallbacks()
  */
 class DocumentsTypes
 {
@@ -53,6 +52,7 @@ class DocumentsTypes
      *
      * @ORM\Column(name="id_type_doc", type="smallint")
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $idTypeDoc;
 
@@ -66,6 +66,10 @@ class DocumentsTypes
      */
     private $idPdfModele;
 
+    public function __toString()
+    {
+        return $this->getLibTypeDoc();
+    }
 
     /**
      * Set libTypeDoc
@@ -205,6 +209,7 @@ class DocumentsTypes
         return $this;
     }
 
+
     /**
      * Get idPdfModele
      *
@@ -213,26 +218,5 @@ class DocumentsTypes
     public function getIdPdfModele()
     {
         return $this->idPdfModele;
-    }
-
-    /**
-     * @ORM\PrePersist
-     */
-    public function generateIdTypeDoc()
-    {
-        $this->idTypeDoc = uniqid();
-    }
-
-    /**
-     * Set idTypeDoc
-     *
-     * @param integer $idTypeDoc
-     * @return DocumentsTypes
-     */
-    public function setIdTypeDoc($idTypeDoc)
-    {
-        $this->idTypeDoc = $idTypeDoc;
-
-        return $this;
     }
 }

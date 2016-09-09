@@ -9,7 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="tarifs_listes")
  * @ORM\Entity
- * @ORM\HasLifecycleCallbacks()
  */
 class TarifsListes
 {
@@ -46,6 +45,7 @@ class TarifsListes
      *
      * @ORM\Column(name="id_tarif", type="smallint")
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $idTarif;
 
@@ -142,34 +142,14 @@ class TarifsListes
         return $this->ordre;
     }
 
+
     /**
      * Get idTarif
      *
-     * @return integer
+     * @return integer 
      */
     public function getIdTarif()
     {
         return $this->idTarif;
-    }
-
-    /**
-     * @ORM\PrePersist
-     */
-    public function generateIdTarif()
-    {
-        $this->idTarif = uniqid();
-    }
-
-    /**
-     * Set idTarif
-     *
-     * @param integer $idTarif
-     * @return TarifsListes
-     */
-    public function setIdTarif($idTarif)
-    {
-        $this->idTarif = $idTarif;
-
-        return $this;
     }
 }

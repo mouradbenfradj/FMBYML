@@ -173,7 +173,6 @@ class Emplacement
     public function setStockslanterne(\SS\FMBBundle\Entity\StocksLanternes $stockslanterne = null)
     {
         $this->stockslanterne = $stockslanterne;
-
         return $this;
     }
 }

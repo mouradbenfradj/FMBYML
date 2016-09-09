@@ -9,7 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="annuaire_categories")
  * @ORM\Entity
- * @ORM\HasLifecycleCallbacks()
  */
 class AnnuaireCategories
 {
@@ -39,6 +38,7 @@ class AnnuaireCategories
      *
      * @ORM\Column(name="id_categorie", type="smallint")
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $idCategorie;
 
@@ -112,33 +112,14 @@ class AnnuaireCategories
         return $this->appTarifs;
     }
 
+
     /**
      * Get idCategorie
      *
-     * @return integer
+     * @return integer 
      */
     public function getIdCategorie()
     {
         return $this->idCategorie;
-    }
-    /**
-     * @ORM\PrePersist
-     */
-    public function generateIdCategorie()
-    {
-        $this->idCategorie = uniqid();
-    }
-
-    /**
-     * Set idCategorie
-     *
-     * @param integer $idCategorie
-     * @return AnnuaireCategories
-     */
-    public function setIdCategorie($idCategorie)
-    {
-        $this->idCategorie = $idCategorie;
-
-        return $this;
     }
 }

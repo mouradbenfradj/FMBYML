@@ -9,7 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="civilites", indexes={@ORM\Index(name="lib_civ_court", columns={"lib_civ_court"}), @ORM\Index(name="lib_civ_long", columns={"lib_civ_long"})})
  * @ORM\Entity
- * @ORM\HasLifecycleCallbacks()
  */
 class Civilites
 {
@@ -39,6 +38,7 @@ class Civilites
      *
      * @ORM\Column(name="id_civilite", type="smallint")
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $idCivilite;
 
@@ -121,25 +121,5 @@ class Civilites
     public function getIdCivilite()
     {
         return $this->idCivilite;
-    }
-    /**
-     * @ORM\PrePersist
-     */
-    public function generateIdCivilite()
-    {
-        $this->idCivilite = uniqid();
-    }
-
-    /**
-     * Set idCivilite
-     *
-     * @param integer $idCivilite
-     * @return Civilites
-     */
-    public function setIdCivilite($idCivilite)
-    {
-        $this->idCivilite = $idCivilite;
-
-        return $this;
     }
 }

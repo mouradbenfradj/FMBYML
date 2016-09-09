@@ -17,23 +17,28 @@ class LoadArticle extends AbstractFixture implements OrderedFixtureInterface
     {
         $NaissainHuitre = new Articles();
         $NaissainHuitre->setLibArticle('Naissain Huitre');
-        $NaissainHuitre->setRefArticle('0001');
-        $NaissainHuitre->setLot($this->getReference('lot'));
-        $manager->persist($NaissainHuitre);
-        $NaissainHuitre1 = new Articles();
-        $NaissainHuitre1->setLibArticle('Naissain Huitre');
-        $NaissainHuitre1->setRefArticle('0002');
-        $NaissainHuitre1->setLot($this->getReference('lo'));
-        $manager->persist($NaissainHuitre1);
-        $NaissainHuitre2 = new Articles();
-        $NaissainHuitre2->setLibArticle('Naissain Huitre');
-        $NaissainHuitre2->setRefArticle('0003');
-        $NaissainHuitre2->setLot($this->getReference('l'));
-        $manager->persist($NaissainHuitre2);
+        $NaissainHuitre->setLibTicket('l');
+        $NaissainHuitre->setDescCourte('e');
+        $NaissainHuitre->setDescLongue('e');
+        $NaissainHuitre->setRefArtCateg('r');
+        $NaissainHuitre->setModele('m');
+        $NaissainHuitre->setPaaLastMaj(new \DateTime());
+        $NaissainHuitre->setPromo(1);
+        $NaissainHuitre->setValoIndice(10);
+        $NaissainHuitre->setLot(true);
+        $NaissainHuitre->setComposant(true);
+        $NaissainHuitre->setVariante(true);
+        $NaissainHuitre->setGestionSn(true);
+        $NaissainHuitre->setDateDebutDispo(new \DateTime());
+        $NaissainHuitre->setDateFinDispo(new \DateTime());
+        $NaissainHuitre->setDispo(true);
+        $NaissainHuitre->setDateCreation(new \DateTime());
+        $NaissainHuitre->setDateModification(new \DateTime());
+        $NaissainHuitre->setIsAchetable(true);
+        $NaissainHuitre->setIsVendable(true);
 
         $manager->flush();
-        $this->addReference('NaissainHuitre1', $NaissainHuitre1);
-        $this->addReference('NaissainHuitre2', $NaissainHuitre2);
+
         $this->addReference('NaissainHuitre', $NaissainHuitre);
     }
 

@@ -9,7 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="pays", uniqueConstraints={@ORM\UniqueConstraint(name="pays", columns={"pays"})})
  * @ORM\Entity
- * @ORM\HasLifecycleCallbacks()
  */
 class Pays
 {
@@ -53,6 +52,7 @@ class Pays
      *
      * @ORM\Column(name="id_pays", type="smallint")
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $idPays;
 
@@ -172,34 +172,14 @@ class Pays
         return $this->affichage;
     }
 
+
     /**
      * Get idPays
      *
-     * @return integer
+     * @return integer 
      */
     public function getIdPays()
     {
         return $this->idPays;
-    }
-
-    /**
-     * @ORM\PrePersist
-     */
-    public function generateIdPays()
-    {
-        $this->idPays = uniqid();
-    }
-
-    /**
-     * Set idPays
-     *
-     * @param integer $idPays
-     * @return Pays
-     */
-    public function setIdPays($idPays)
-    {
-        $this->idPays = $idPays;
-
-        return $this;
     }
 }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b3c8a9044a64bb41029d673223a4c594",
+    "hash": "d619d792bfc67c2939cc6ca3e72bc6fb",
     "content-hash": "08e34bf243be7363a7019e23fc654cff",
     "packages": [
         {
@@ -1133,16 +1133,16 @@
         },
         {
             "name": "gedmo/doctrine-extensions",
-            "version": "v2.4.21",
+            "version": "v2.4.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Atlantic18/DoctrineExtensions.git",
-                "reference": "dcaab46a25e1baeb5142c3e25d5b6fd495ced504"
+                "reference": "b8188801bafc420b86908ee5229a5e92143ce514"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Atlantic18/DoctrineExtensions/zipball/dcaab46a25e1baeb5142c3e25d5b6fd495ced504",
-                "reference": "dcaab46a25e1baeb5142c3e25d5b6fd495ced504",
+                "url": "https://api.github.com/repos/Atlantic18/DoctrineExtensions/zipball/b8188801bafc420b86908ee5229a5e92143ce514",
+                "reference": "b8188801bafc420b86908ee5229a5e92143ce514",
                 "shasum": ""
             },
             "require": {
@@ -1208,7 +1208,7 @@
                 "tree",
                 "uploadable"
             ],
-            "time": "2016-08-17 16:52:00"
+            "time": "2016-08-30 18:42:36"
         },
         {
             "name": "incenteev/composer-parameter-handler",
@@ -2199,17 +2199,17 @@
         },
         {
             "name": "sensio/distribution-bundle",
-            "version": "v4.0.7",
+            "version": "v4.0.8",
             "target-dir": "Sensio/Bundle/DistributionBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioDistributionBundle.git",
-                "reference": "d738952285a1a7d969f9338f735108c9f65bb7f2"
+                "reference": "5ab8eac0af97f2c0abed337500a4a59286969e66"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/d738952285a1a7d969f9338f735108c9f65bb7f2",
-                "reference": "d738952285a1a7d969f9338f735108c9f65bb7f2",
+                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/5ab8eac0af97f2c0abed337500a4a59286969e66",
+                "reference": "5ab8eac0af97f2c0abed337500a4a59286969e66",
                 "shasum": ""
             },
             "require": {
@@ -2255,7 +2255,7 @@
                 "configuration",
                 "distribution"
             ],
-            "time": "2016-06-23 16:10:25"
+            "time": "2016-09-06 00:58:51"
         },
         {
             "name": "sensio/framework-extra-bundle",
@@ -3480,16 +3480,16 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "v2.7.16",
+            "version": "v2.7.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "42199fef6e9b448947d395add058642975e59127"
+                "reference": "d3ddb1a34e12e78fd763fbcf89513a38d7eb91ce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/42199fef6e9b448947d395add058642975e59127",
-                "reference": "42199fef6e9b448947d395add058642975e59127",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/d3ddb1a34e12e78fd763fbcf89513a38d7eb91ce",
+                "reference": "d3ddb1a34e12e78fd763fbcf89513a38d7eb91ce",
                 "shasum": ""
             },
             "require": {
@@ -3603,7 +3603,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2016-07-30 08:15:52"
+            "time": "2016-09-07 00:55:03"
         },
         {
             "name": "twbs/bootstrap",
@@ -3710,16 +3710,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.24.1",
+            "version": "v1.24.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "3566d311a92aae4deec6e48682dc5a4528c4a512"
+                "reference": "33093f6e310e6976baeac7b14f3a6ec02f2d79b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/3566d311a92aae4deec6e48682dc5a4528c4a512",
-                "reference": "3566d311a92aae4deec6e48682dc5a4528c4a512",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/33093f6e310e6976baeac7b14f3a6ec02f2d79b7",
+                "reference": "33093f6e310e6976baeac7b14f3a6ec02f2d79b7",
                 "shasum": ""
             },
             "require": {
@@ -3767,7 +3767,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2016-05-30 09:11:59"
+            "time": "2016-09-01 17:50:53"
         },
         {
             "name": "willdurand/jsonp-callback-validator",

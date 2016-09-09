@@ -134,6 +134,10 @@ class Documents
      */
     private $idTypeDoc;
 
+    /**
+     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\DocsLines", mappedBy="ref_doc" ,cascade={"persist","remove"})
+     */
+    private $docsLines;
 
 
     /**
@@ -492,5 +496,45 @@ class Documents
         $this->refDoc = $refDoc;
 
         return $this;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->docsLines = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add docsLines
+     *
+     * @param \SS\FMBBundle\Entity\DocsLines $docsLines
+     * @return Documents
+     */
+    public function addDocsLine(\SS\FMBBundle\Entity\DocsLines $docsLines)
+    {
+        $this->docsLines[] = $docsLines;
+
+        return $this;
+    }
+
+    /**
+     * Remove docsLines
+     *
+     * @param \SS\FMBBundle\Entity\DocsLines $docsLines
+     */
+    public function removeDocsLine(\SS\FMBBundle\Entity\DocsLines $docsLines)
+    {
+        $this->docsLines->removeElement($docsLines);
+    }
+
+    /**
+     * Get docsLines
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDocsLines()
+    {
+        return $this->docsLines;
     }
 }
