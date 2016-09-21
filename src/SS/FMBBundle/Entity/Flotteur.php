@@ -36,7 +36,7 @@ class Flotteur
     private $segment;
 
     /**
-     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Emplacement", mappedBy="flotteur",cascade={"persist","remove"})
+     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Emplacement", mappedBy="flotteur",cascade={"persist","remove"}, fetch="LAZY")
      */
     private $emplacements;
 

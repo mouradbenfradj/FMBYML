@@ -29,7 +29,7 @@ class Filiere
     private $nomFiliere;
 
     /**
-     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Magasins")
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Magasins", inversedBy="filieres",)
      * @ORM\JoinColumn(name="magasin", referencedColumnName="id_magasin",nullable=false)
      */
     private $parc;

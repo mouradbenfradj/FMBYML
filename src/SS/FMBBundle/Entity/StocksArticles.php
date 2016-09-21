@@ -186,4 +186,14 @@ class StocksArticles
         return $this->stocksArticlesSns;
     }
 
+
+    /**
+     * Remove stocksArticlesSns
+     *
+     * @param \SS\FMBBundle\Entity\StocksArticlesSn $stocksArticlesSns
+     */
+    public function removeStocksArticlesSn(\SS\FMBBundle\Entity\StocksArticlesSn $stocksArticlesSns)
+    {
+        $this->stocksArticlesSns->removeElement($stocksArticlesSns);
+    }
 }

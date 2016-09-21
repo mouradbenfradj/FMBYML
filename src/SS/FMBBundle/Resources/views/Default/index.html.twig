@@ -3,174 +3,196 @@
     Suivit - {{ parent() }}
 {% endblock %}
 {% block body %}
+
     {{ parent() }}
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                    <ul class="pagination pagination-lg">
-                        {% for page in pages %}
-                            <li>
-                                <a href="{{ path('ssfmb_homepage', { 'id': page.idMagasin }) }}">{{ page.abrevMagasin }}</a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                    <table class="table table-condensed table-bordered" border="1">
-                        <tbody>
-                        {% for entity in entities %}
-                            <tr>
-                                <td>
-                                    {{ entity.abrevMagasin }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <table class="table table-condensed table-bordered" border="1">
-                                        <tbody>
-                                        {% for filiere in entity.filieres %}
-                                            <tr>
-                                                <td class="filiere">{{ filiere.getNomFiliere }}
-                                                    <br/>
-                                                    {% set tailleFiliere =0 %}
-                                                    {% set totaleplace =0 %}
-                                                    {% set totalelanterne =0 %}
-                                                    {% set totalecorde =0 %}
-                                                    {% for segment in filiere.segments %}
-                                                        {% set tailleFiliere = tailleFiliere+segment.getLongeur %}
-                                                        {% for flotteur in segment.flotteurs %}
-                                                            {% for emplacement in flotteur.emplacements %}
-                                                                {% if emplacement.corde == null and emplacement.stockslanterne == null %}
-                                                                    {% set totaleplace = totaleplace + 1 %}
-                                                                {% elseif emplacement.corde != null %}
-                                                                    {% set totaleplace = totaleplace + 1 %}
-                                                                    {% set totalecorde = totalecorde + 1 %}
-                                                                {% elseif emplacement.stockslanterne != null %}
-                                                                    {% set totaleplace = totaleplace + 1 %}
-                                                                    {% set totalelanterne =totalelanterne + 1 %}
-                                                                {% endif %}
-                                                            {% endfor %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="pagination pagination-lg">
+                    {{ knp_menu_render('SSFMBBundle:Builder:parcHomeMenu') }}
+                </ul>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped active" role="progressbar"
+                         id="myBar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:0%">
+                        0%
+                    </div>
+                </div>
+                <table class="table table-condensed table-bordered" border="1">
+                    <tbody>
+                    {% if(entity != null) %}
+                        <tr>
+                            <td>
+                                {{ entity.abrevMagasin }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table class="table table-condensed table-bordered" border="1">
+                                    <tbody>
+                                    {% for filiere in entity.filieres %}
+                                        <tr>
+                                            <td class="filiere">{{ filiere.getNomFiliere }}
+                                                <br/>
+                                                {% set tailleFiliere =0 %}
+                                                {% set totaleplace =0 %}
+                                                {% set totalelanterne =0 %}
+                                                {% set totalecorde =0 %}
+                                                {% for segment in filiere.segments %}
+                                                    {% set tailleFiliere = tailleFiliere+segment.getLongeur %}
+                                                    {% for flotteur in segment.flotteurs %}
+                                                        {% for emplacement in flotteur.emplacements %}
+                                                            {% if emplacement.stockscorde == null and emplacement.stockslanterne == null %}
+                                                                {% set totaleplace = totaleplace + 1 %}
+                                                            {% elseif emplacement.stockscorde != null %}
+                                                                {% set totaleplace = totaleplace + 1 %}
+                                                                {% set totalecorde = totalecorde + 1 %}
+                                                            {% elseif emplacement.stockslanterne != null %}
+                                                                {% set totaleplace = totaleplace + 1 %}
+                                                                {% set totalelanterne =totalelanterne + 1 %}
+                                                            {% endif %}
                                                         {% endfor %}
                                                     {% endfor %}
-                                                    taille {{ tailleFiliere }} m <br>
-                                                    nombre de place totale : {{ totaleplace }} place <br> nombre de
-                                                    place vide :{{ (totaleplace -(totalecorde + totalelanterne)) }}
-                                                    place
-                                                    || {{ ((totaleplace -(totalecorde + totalelanterne))/totaleplace ) *100 }}
-                                                    %
-                                                    <br>nombre de place remplis
-                                                    :{{ totaleplace - (totaleplace -(totalecorde + totalelanterne)) }}
-                                                    place
-                                                    || {{ ((((totaleplace -(totaleplace -(totalecorde + totalelanterne))))/totaleplace )*100 ) }}
-                                                    %
-                                                    <br>nombre des corde:{{ totalecorde }}
-                                                    <br>nombre des lanterne:{{ totalelanterne }}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <table class="table table-condensed table-bordered" border="1">
-                                                        <tbody>
-                                                        <tr>
-                                                            {% for segment in filiere.segments %}
-                                                                {% set totaleplace =0 %}
-                                                                {% set totalelanterne =0 %}
-                                                                {% set totalecorde =0 %}
-                                                                {% for flotteur in segment.flotteurs %}
-                                                                    {% set tailleFiliere = tailleFiliere+segment.getLongeur %}
-                                                                    {% for emplacement in flotteur.emplacements %}
-                                                                        {% if emplacement.corde == null and emplacement.stockslanterne == null %}
-                                                                            {% set totaleplace = totaleplace + 1 %}
-                                                                        {% elseif emplacement.corde != null %}
-                                                                            {% set totaleplace = totaleplace + 1 %}
-                                                                            {% set totalecorde = totalecorde + 1 %}
-                                                                        {% elseif emplacement.stockslanterne != null %}
-                                                                            {% set totaleplace = totaleplace + 1 %}
-                                                                            {% set totalelanterne =totalelanterne + 1 %}
-                                                                        {% endif %}
-                                                                    {% endfor %}
+                                                {% endfor %}
+                                                taille {{ tailleFiliere }} m <br>
+                                                nombre de place totale : {{ totaleplace }} place <br> nombre de
+                                                place vide :{{ (totaleplace -(totalecorde + totalelanterne)) }}
+                                                place
+                                                || {{ ((totaleplace -(totalecorde + totalelanterne))/totaleplace ) *100 }}
+                                                %
+                                                <br>nombre de place remplis
+                                                :{{ totaleplace - (totaleplace -(totalecorde + totalelanterne)) }}
+                                                place
+                                                || {{ ((((totaleplace -(totaleplace -(totalecorde + totalelanterne))))/totaleplace )*100 ) }}
+                                                %
+                                                <br>nombre des corde:{{ totalecorde }}
+                                                <br>nombre des lanterne:{{ totalelanterne }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <table class="table table-condensed table-bordered" border="1">
+                                                    <tbody>
+                                                    <tr>
+                                                        {% for segment in filiere.segments %}
+                                                            {% set totaleplace =0 %}
+                                                            {% set totalelanterne =0 %}
+                                                            {% set totalecorde =0 %}
+                                                            {% for flotteur in segment.flotteurs %}
+                                                                {% set tailleFiliere = tailleFiliere+segment.getLongeur %}
+                                                                {% for emplacement in flotteur.emplacements %}
+                                                                    {% if emplacement.stockscorde == null and emplacement.stockslanterne == null %}
+                                                                        {% set totaleplace = totaleplace + 1 %}
+                                                                    {% elseif emplacement.stockscorde != null %}
+                                                                        {% set totaleplace = totaleplace + 1 %}
+                                                                        {% set totalecorde = totalecorde + 1 %}
+                                                                    {% elseif emplacement.stockslanterne != null %}
+                                                                        {% set totaleplace = totaleplace + 1 %}
+                                                                        {% set totalelanterne =totalelanterne + 1 %}
+                                                                    {% endif %}
                                                                 {% endfor %}
-                                                                <td valign="top">
-                                                                    <ul>
-                                                                        <li class="segment">
-                                                                            {{ segment.getNomSegment }}
-                                                                        </li>
-                                                                        <li>{{ segment.getLongeur }} m</li>
-                                                                        <li> nombre de place totale : {{ totaleplace }}
-                                                                            place
-                                                                        </li>
-                                                                        <li>nombre de place vide
-                                                                            :{{ (totaleplace -(totalecorde + totalelanterne)) }}
-                                                                            place
-                                                                            || {{ ((totaleplace -(totalecorde + totalelanterne))/totaleplace ) *100 }}
-                                                                            %
-                                                                        </li>
-                                                                        <li> nombre de place
-                                                                            remplis:{{ totaleplace - (totaleplace -(totalecorde + totalelanterne)) }}
-                                                                            place
-                                                                            || {{ ((((totaleplace -(totaleplace -(totalecorde + totalelanterne))))/totaleplace )*100 ) }}
-                                                                            %
-                                                                        </li>
-                                                                        <li>nombre des corde:{{ totalecorde }}</li>
-                                                                        <li>nombre des
-                                                                            lanterne:{{ totalelanterne }}</li>
-                                                                    </ul>
-                                                                    {% for flotteur in segment.flotteurs %}
-                                                                        <p class="flotteur">
-                                                                            {{ flotteur.getNomFlotteur }}
-                                                                            {% for emplacement in flotteur.emplacements %}
-                                                                                {% if emplacement.corde == null and emplacement.stockslanterne == null %}
-                                                                                    <font color="red"> {{ emplacement.place }}</font>
-                                                                                {% elseif emplacement.corde != null %}
-                                                                                    <a title="article  {{ emplacement.corde.article.lot.lot }}-{{ emplacement.corde.article.libArticle }}
--date de creation  {{ emplacement.corde.dateDeCreation|date('Y-m-d') }}
--date de MAE  {{ emplacement.dateDeRemplissage|date('Y-m-d') }}"
-                                                                                       href="{{ path('corde_show', {'id': emplacement.corde.id }) }} ">
-                                                                                        <font color="blue"
-                                                                                              class="emplacement"> {{ emplacement.place }}</font>
-                                                                                    </a>
-                                                                                    {% if(emplacement.dateDeRemplissage != null) %}
-                                                                                        <span class="dateemplacement"
-                                                                                              style="display: none">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</span>
-                                                                                    {% endif %}
-                                                                                {% elseif emplacement.stockslanterne != null %}
-                                                                                    <a title="{{ emplacement.stockslanterne.lanterne.nomlanterne }}
+                                                            {% endfor %}
+                                                            <td valign="top">
+                                                                <ul>
+                                                                    <li class="segment">
+                                                                        {{ segment.getNomSegment }}
+                                                                    </li>
+                                                                    <li>{{ segment.getLongeur }} m</li>
+                                                                    <li> nombre de place totale : {{ totaleplace }}
+                                                                        place
+                                                                    </li>
+                                                                    <li>nombre de place vide
+                                                                        :{{ (totaleplace -(totalecorde + totalelanterne)) }}
+                                                                        place
+                                                                        || {{ ((totaleplace -(totalecorde + totalelanterne))/totaleplace ) *100 }}
+                                                                        %
+                                                                    </li>
+                                                                    <li> nombre de place
+                                                                        remplis:{{ totaleplace - (totaleplace -(totalecorde + totalelanterne)) }}
+                                                                        place
+                                                                        || {{ ((((totaleplace -(totaleplace -(totalecorde + totalelanterne))))/totaleplace )*100 ) }}
+                                                                        %
+                                                                    </li>
+                                                                    <li>nombre des corde:{{ totalecorde }}</li>
+                                                                    <li>nombre des
+                                                                        lanterne:{{ totalelanterne }}</li>
+                                                                </ul>
+                                                                {% for flotteur in segment.flotteurs %}
+                                                                    <p class="flotteur">
+                                                                        {{ flotteur.getNomFlotteur }}
+                                                                        {% for emplacement in flotteur.emplacements %}
+                                                                            {% if emplacement.stockscorde == null and emplacement.stockslanterne == null %}
+                                                                                <font color="red"> {{ emplacement.place }}</font>
+                                                                            {% elseif emplacement.stockscorde != null %}
+                                                                                <a title="article
+-date de creation
+-date de MAE  "
+                                                                                   href="">
+                                                                                    <font color="blue"
+                                                                                          class="emplacement"> {{ emplacement.place }}</font>
+                                                                                </a>
+                                                                                {% if(emplacement.dateDeRemplissage != null) %}
+                                                                                    <span class="dateemplacement"
+                                                                                          style="display: none">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</span>
+                                                                                {% endif %}
+                                                                            {% elseif emplacement.stockslanterne != null %}
+                                                                                <a title="{{ emplacement.stockslanterne.lanterne.nomlanterne }}
 -article:
 -date de creation
 -date de MAE "
-                                                                                       href="#">
-                                                                                        <font color="#adff2f"
-                                                                                              class="emplacement">{{ emplacement.place }}
-                                                                                        </font>
-                                                                                    </a>
-                                                                                    <span style="display: none"
-                                                                                          id="dateemplacement">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</span>
-                                                                                {% endif %}
-                                                                            {% endfor %}
-                                                                        </p>
-                                                                    {% endfor %}
-                                                                </td>
-                                                            {% endfor %}
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                        {% endfor %}
-                                        </tbody>
-                                    </table>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+                                                                                   href="#">
+                                                                                    <font color="#adff2f"
+                                                                                          class="emplacement">{{ emplacement.place }}
+                                                                                    </font>
+                                                                                </a>
+                                                                                <span style="display: none"
+                                                                                      id="dateemplacement">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</span>
+                                                                            {% endif %}
+                                                                        {% endfor %}
+                                                                    </p>
+                                                                {% endfor %}
+                                                            </td>
+                                                        {% endfor %}
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    {% endif %}
+                    </tbody>
+                </table>
             </div>
         </div>
+    </div>
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
+        $(function () {
+            $("li.segment").lazyload();
+        });
+        function move() {
+            var elem = document.getElementById("myBar");
+            var width = 10;
+            var id = setInterval(frame, 10);
+
+            function frame() {
+                if (width >= 100) {
+                    clearInterval(id);
+                } else {
+                    width++;
+                    elem.style.width = width + '%';
+                    document.getElementById("myBar").innerHTML = width * 1 + '%';
+                }
+            }
+        }
         $(document).ready(function () {
-//display:none
+            move();
+
             function diffdate(d1, d2, u) {
                 div = 1
                 switch (u) {
@@ -192,7 +214,6 @@
             }
 
             $('.dateemplacement').each(function (ele, val) {
-                console.log(ele + "     " + val)
                 var datejour = $(this).text().split("-");
                 var Date1 = new Date(datejour[0], datejour[1] - 1, datejour[2]);
                 var Date2 = new Date();

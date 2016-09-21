@@ -27,10 +27,10 @@ class Emplacement
      */
     private $place;
     /**
-     * @ORM\OneToOne(targetEntity="SS\FMBBundle\Entity\Corde", inversedBy="emplacement")
+     * @ORM\OneToOne(targetEntity="SS\FMBBundle\Entity\StocksCordes", inversedBy="emplacement")
      * @ORM\JoinColumn(nullable=true)
      */
-    private $corde;
+    private $stockscorde;
     /**
      * @ORM\OneToOne(targetEntity="SS\FMBBundle\Entity\StocksLanternes", inversedBy="emplacement")
      * @ORM\JoinColumn(nullable=true)
@@ -108,28 +108,6 @@ class Emplacement
         return $this;
     }
 
-    /**
-     * Get corde
-     *
-     * @return \SS\FMBBundle\Entity\Corde
-     */
-    public function getCorde()
-    {
-        return $this->corde;
-    }
-
-    /**
-     * Set corde
-     *
-     * @param \SS\FMBBundle\Entity\Corde $corde
-     * @return Emplacement
-     */
-    public function setCorde(\SS\FMBBundle\Entity\Corde $corde = null)
-    {
-        $this->corde = $corde;
-
-        return $this;
-    }
 
     /**
      * Get dateDeRemplissage
@@ -174,5 +152,28 @@ class Emplacement
     {
         $this->stockslanterne = $stockslanterne;
         return $this;
+    }
+
+    /**
+     * Set stockscorde
+     *
+     * @param \SS\FMBBundle\Entity\StocksCordes $stockscorde
+     * @return Emplacement
+     */
+    public function setStockscorde(\SS\FMBBundle\Entity\StocksCordes $stockscorde = null)
+    {
+        $this->stockscorde = $stockscorde;
+
+        return $this;
+    }
+
+    /**
+     * Get stockscorde
+     *
+     * @return \SS\FMBBundle\Entity\StocksCordes 
+     */
+    public function getStockscorde()
+    {
+        return $this->stockscorde;
     }
 }

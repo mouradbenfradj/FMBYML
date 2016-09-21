@@ -1,0 +1,246 @@
+{% extends "SSFMBBundle::layout.html.twig" %}
+{% block title %}
+    Suivit - {{ parent() }}
+{% endblock %}
+{% block body %}
+    {{ parent() }}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="pagination pagination-lg">
+                    {{ knp_menu_render('SSFMBBundle:Builder:parcPlaningMenu') }}
+                </ul>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped active" role="progressbar"
+                         id="myBar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:0%">
+                        0%
+                    </div>
+                </div>
+                <table class="table table-condensed table-bordered" border="1">
+                    <thead>
+                    <tr bgcolor="#FEA7C7">
+                        <td colspan="2" align="center">Processus Urgent</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% if(entity != null) %}
+                        <tr bgcolor="#FEA7C7">
+                            <td>Pregrossisement</td>
+                            <td>nombre de tache a effectuer : {{ pregrossisementurgent|length }}
+                                <table border="1">
+                                    {% for emplacement in pregrossisementurgent %}
+                                        <tr>
+                                            <td>filiere :{{ emplacement.flotteur.segment.filiere.nomfiliere }}</td>
+                                            <td>segment : {{ emplacement.flotteur.segment.nomsegment }}</td>
+                                            <td>flotteur :{{ emplacement.flotteur.nomflotteur }}</td>
+                                            <td> emplacement : {{ emplacement.place }}</td>
+                                            <td> date de mise a eau
+                                                : {{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
+                                            <td> doit etre retirer le
+                                                : {{ emplacement.dateDeRemplissage|date_modify("+3 month")|date('Y-m-d') }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            </td>
+                        </tr>
+                        <tr bgcolor="#FEA7C7">
+                            <td>grossisement</td>
+                            <td>nombre de tache a effectuer : {{ grossisementurgent|length }}
+                                <table border="1">
+                                    {% for emplacement in grossisementurgent %}
+                                        <tr>
+                                            <td>filiere
+                                                :{{ emplacement.flotteur.segment.filiere.nomfiliere }}</td>
+                                            <td>segment : {{ emplacement.flotteur.segment.nomsegment }}</td>
+                                            <td>flotteur :{{ emplacement.flotteur.nomflotteur }}</td>
+                                            <td> emplacement : {{ emplacement.place }}</td>
+                                            <td> date de mise a eau
+                                                : {{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
+                                            <td> doit etre retirer le
+                                                : {{ emplacement.dateDeRemplissage|date_modify("+6 month")|date('Y-m-d') }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            </td>
+                        </tr>
+                        <tr bgcolor="#FEA7C7">
+                            <td>comerciale</td>
+                            <td></td>
+                        </tr>
+                    {% endif %}
+                    </tbody>
+                    <thead>
+                    <tr bgcolor="#FEFE5A">
+                        <td colspan="2" align="center">Processus a effectuer</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% if(entity != null) %}
+                        <tr bgcolor="#FEFE5A">
+                            <td>Pregrossisement</td>
+                            <td>nombre de tache a effectuer : {{ pregrossisementaeffectuer|length }}
+                                <table border="1">
+                                    {% for emplacement in pregrossisementaeffectuer %}
+                                        <tr>
+                                            <td>filiere
+                                                :{{ emplacement.flotteur.segment.filiere.nomfiliere }}</td>
+                                            <td>segment : {{ emplacement.flotteur.segment.nomsegment }}</td>
+                                            <td>flotteur :{{ emplacement.flotteur.nomflotteur }}</td>
+                                            <td> emplacement : {{ emplacement.place }}</td>
+                                            <td> date de mise a eau
+                                                : {{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
+                                            <td> doit etre retirer le
+                                                : {{ emplacement.dateDeRemplissage|date_modify("+3 month")|date('Y-m-d') }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            </td>
+                        </tr>
+                        <tr bgcolor="#FEFE5A">
+                            <td>grossisement</td>
+                            <td>nombre de tache a effectuer : {{ grossisementaeffectuer|length }}
+                                <table border="1">
+                                    {% for emplacement in grossisementaeffectuer %}
+                                        <tr>
+                                            <td>filiere
+                                                :{{ emplacement.flotteur.segment.filiere.nomfiliere }}</td>
+                                            <td>segment : {{ emplacement.flotteur.segment.nomsegment }}</td>
+                                            <td>flotteur :{{ emplacement.flotteur.nomflotteur }}</td>
+                                            <td> emplacement : {{ emplacement.place }}</td>
+                                            <td> date de mise a eau
+                                                : {{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
+                                            <td> doit etre retirer le
+                                                : {{ emplacement.dateDeRemplissage|date_modify("+6 month")|date('Y-m-d') }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            </td>
+                        </tr>
+                        <tr bgcolor="#FEFE5A">
+                            <td>comerciale</td>
+                            <td></td>
+                        </tr>
+                    {% endif %}
+
+                    </tbody>
+                    <thead>
+                    <tr bgcolor="#76FE72">
+                        <td colspan="2" align="center">Processus en cour</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% if(entity != null) %}
+                        <tr bgcolor="#76FE72">
+                            <td>Pregrossisement</td>
+                            <td>nombre de tache a effectuer : {{ pregrossisement|length }}
+                                <table border="1">
+                                    {% for emplacement in pregrossisement %}
+                                        <tr>
+                                            <td>filiere
+                                                :{{ emplacement.flotteur.segment.filiere.nomfiliere }}</td>
+                                            <td>segment : {{ emplacement.flotteur.segment.nomsegment }}</td>
+                                            <td>flotteur :{{ emplacement.flotteur.nomflotteur }}</td>
+                                            <td> emplacement : {{ emplacement.place }}</td>
+                                            <td> date de mise a eau
+                                                : {{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
+                                            <td> doit etre retirer le
+                                                : {{ emplacement.dateDeRemplissage|date_modify("+3 month")|date('Y-m-d') }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            </td>
+                        </tr>
+                        <tr bgcolor="#76FE72">
+                            <td>grossisement</td>
+                            <td>nombre de tache a effectuer : {{ grossisement|length }}
+                                <table border="1">
+                                    {% for emplacement in grossisement %}
+                                        <tr>
+                                            <td>filiere
+                                                :{{ emplacement.flotteur.segment.filiere.nomfiliere }}</td>
+                                            <td>segment : {{ emplacement.flotteur.segment.nomsegment }}</td>
+                                            <td>flotteur :{{ emplacement.flotteur.nomflotteur }}</td>
+                                            <td> emplacement : {{ emplacement.place }}</td>
+                                            <td> date de mise a eau
+                                                : {{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
+                                            <td> doit etre retirer le
+                                                : {{ emplacement.dateDeRemplissage|date_modify("+6 month")|date('Y-m-d') }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            </td>
+                        </tr>
+                        <tr bgcolor="#76FE72">
+                            <td>comerciale</td>
+                            <td></td>
+                        </tr>
+                    {% endif %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        function move() {
+            var elem = document.getElementById("myBar");
+            var width = 10;
+            var id = setInterval(frame, 10);
+
+            function frame() {
+                if (width >= 100) {
+                    clearInterval(id);
+                } else {
+                    width++;
+                    elem.style.width = width + '%';
+                    document.getElementById("myBar").innerHTML = width * 1 + '%';
+                }
+            }
+        }
+        $(document).ready(function () {
+            move();
+
+            function diffdate(d1, d2, u) {
+                div = 1
+                switch (u) {
+                    case 's':
+                        div = 1000;
+                        break;
+                    case 'm':
+                        div = 1000 * 60
+                        break;
+                    case 'h':
+                        div = 1000 * 60 * 60
+                        break;
+                    case 'd':
+                        div = 1000 * 60 * 60 * 24
+                        break;
+                }
+                var Diff = d2.getTime() - d1.getTime();
+                return Math.ceil((Diff / div))
+            }
+
+            $('.dateemplacement').each(function (ele, val) {
+                console.log(ele + "     " + val)
+                var datejour = $(this).text().split("-");
+                var Date1 = new Date(datejour[0], datejour[1] - 1, datejour[2]);
+                var Date2 = new Date();
+                if ($(this).parent('.flotteur').has('dateemplacement'))
+                    if (0 < diffdate(Date1, Date2, 'd') < 10) {
+                        if ($(this).parent('.flotteur').has('dateemplacement'))
+                            var str = 'il reste ' + diffdate(Date1, Date2, 'd') + ' jours pour l article de la filiere ' + $(this).parent() + ' contenu dans le segment ' + $('.segment').text() + ' a partir du flotteur ' + $('.flotteur').text() + ' a lemplacement ' + $('.emplacement').text() + '<br>'
+                        $('#alertejaune').html('<button type="button" class="close" data-dismiss="alert" aria-hidden="true">× </button> <h4> Alert! </h4> <strong>Warning!</strong> ' + str + '<a href="#" class="alert-link">alert link</a>');
+                        $('#alertejaune').show();
+                    }
+                if (diffdate(Date1, Date2, 'd') <= 0) {
+                    var str2 = 'il reste ' + (diffdate(Date1, Date2, 'd') * -1) + ' jours pour l article de la filiere ' + $('#filiere').text() + ' contenu dans le segment ' + $('#segment').text() + ' a partir du flotteur ' + $('#flotteur').text() + ' a lemplacement ' + $('#emplacement').text()
+                    $('#alerterouge').html('<button type="button" class="close" data-dismiss="alert" aria-hidden="true">× </button> <h4> Alert! </h4> <strong>Warning!</strong> ' + str2 + '<a href="#" class="alert-link">alert link</a>');
+                    $('#alerterouge').show();
+                }
+            });
+        });
+    </script>
+{% endblock %}

@@ -4,6 +4,9 @@ ssfmb_parcstock:
 ssfmb_parclanterne:
     path:     /parclanterne
     defaults: { _controller: SSFMBBundle:Magasins:parcLanternes }
+ssfmb_parccorde:
+    path:     /parccorde
+    defaults: { _controller: SSFMBBundle:Magasins:parccordes }
 
 magasins:
     path:     /

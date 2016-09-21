@@ -4,155 +4,167 @@
     Suivit - {{ parent() }}
 {% endblock %}
 {% block body %}
-    <div class="container-fluid">
+    <div class="container-fluid" xmlns="http://www.w3.org/1999/html">
+        {{ parent() }}
 
-        {% block menu %}
-            {{ parent() }}
-        {% endblock %}
-        <br>
-        <br>
-        {% block ssfmb_body %}
-            <div class="row">
-                <div class="col-md-12">
-                    <form action="" method="post">
-                        <ul class="pagination pagination-lg">
+        <div class="row">
+            <div class="col-md-12">
+                <form action="" method="post">
+                    <ul class="pagination pagination-lg">
+                        {{ knp_menu_render('SSFMBBundle:Builder:parcRCMenu') }}
 
-                            {% for page in pages %}
-                                <li>
-                                    <a href="{{ path('ssfmb_retraitcorde', { 'id': page.id }) }}">
-                                        {{ page.nomParc }}
-                                    </a>
-                                </li>
-                            {% endfor %}
 
-                        </ul>
-                        <table class="table table-condensed table-bordered" border="1">
-                            <tbody>
-                            {% for entity in entities %}
-                                <tr>
-                                    <td>
-                                        <a href="{{ path('parc_show', { 'id': entity.id }) }}">
-                                            {{ entity.nomParc }}
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <table class="table table-condensed table-bordered" border="1">
-                                            <tbody>
-                                            {% for filiere in entity.filieres %}
-                                                <tr>
-                                                    <td>{{ filiere.getNomFiliere }}
-                                                        <br/>
-                                                        {% set tailleFiliere =0 %}
+                    </ul>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped active" role="progressbar"
+                             id="myBar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:0%">
+                            0%
+                        </div>
+                    </div>
+                    <table class="table table-condensed table-bordered" border="1">
+                        <tbody>
+                        <tr>
+                            <td>
+                                {% if(entity != null) %}
+                                <div id="idstockparc" hidden="true">{{ entity.idStock.idStock }}</div>
+                                <div id="idparc" hidden="true">{{ entity.idMagasin }}</div>
+                                {{ entity.abrevMagasin }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table class="table table-condensed table-bordered" border="1">
+                                    <tbody>
+                                    {% for filiere in entity.filieres %}
+                                        <tr>
+                                            <td>{{ filiere.getNomFiliere }}
+                                                <br/>
+                                                {% set tailleFiliere =0 %}
+                                                {% for segment in filiere.segments %}
+                                                    {% set tailleFiliere = tailleFiliere+segment.getLongeur %}
+                                                {% endfor %}
+                                                taille {{ tailleFiliere }} m
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <table class="table table-condensed table-bordered" border="1">
+                                                    <tbody>
+                                                    <tr>
                                                         {% for segment in filiere.segments %}
-                                                            {% set tailleFiliere = tailleFiliere+segment.getLongeur %}
+                                                            <td valign="top">
+                                                                <ul>
+                                                                    <li> {{ segment.getNomSegment }}</li>
+                                                                    <li>{{ segment.getLongeur }} m</li>
+                                                                </ul>
+                                                                <table border="1">
+                                                                    {% for flotteur in segment.flotteurs %}
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div id="{{ filiere.getNomFiliere }}{{ segment.getNomSegment }}{{ flotteur.getNomFlotteur }}">
+                                                                                {{ flotteur.getNomFlotteur }}|
+                                                                                {% set verifexsistance = 0 %}
+
+                                                                                {% for emplacement in flotteur.emplacements %}
+                                                                                {% if emplacement.stockscorde == null and emplacement.stockslanterne == null %}
+                                                                                    <font color="red"> {{ emplacement.place }}</font>|
+                                                                                {% elseif emplacement.stockscorde != null %}
+                                                                                    <a title="article
+-date de creation
+-date de MAE  "
+                                                                                       href="">
+                                                                                        <font color="blue"> {{ emplacement.place }}</font></a>
+                                                                                    <input type="checkbox"
+                                                                                           name="placecorde[]"
+                                                                                           value="{{ emplacement.id }}"/>
+
+                                                                                    {% set verifexsistance =  verifexsistance + 1 %}
+                                                                                {% elseif emplacement.stockslanterne != null %}
+                                                                                    <a title="{{ emplacement.stockslanterne.lanterne.nomlanterne }}
+-article:
+-date de creation
+-date de MAE  "
+                                                                                       href="">
+                                                                                        <font color="#adff2f"> {{ emplacement.place }}</font></a>|
+                                                                                {% endif %}
+                                                                                {% endfor %}<br>
+                                                                                {% if verifexsistance != 0 %}
+                                                                                    <input type="button"
+                                                                                           value="Tout cocher"
+                                                                                           onClick="fillCheckbox('{{ filiere.getNomFiliere }}{{ segment.getNomSegment }}{{ flotteur.getNomFlotteur }}','1');">&nbsp;&nbsp;
+                                                                                    <input type="button"
+                                                                                           value="Tout décocher"
+                                                                                           onClick="fillCheckbox('{{ filiere.getNomFiliere }}{{ segment.getNomSegment }}{{ flotteur.getNomFlotteur }}','0');">
+                                                                                {% endif %}
+                                                                                {% endfor %}
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
                                                         {% endfor %}
-                                                        taille {{ tailleFiliere }} m
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <table class="table table-condensed table-bordered" border="1">
-                                                            <tbody>
-                                                            <tr>
-                                                                {% for segment in filiere.segments %}
-                                                                    <td valign="top">
-                                                                        <ul>
-                                                                            <li> {{ segment.getNomSegment }}</li>
-                                                                            <li>{{ segment.getLongeur }} m</li>
-                                                                        </ul>
-                                                                        <table border="1">
-                                                                            {% for flotteur in segment.flotteurs %}
-                                                                            <tr>
-                                                                                <td>
-                                                                                    <div id="{{ filiere.getNomFiliere }}{{ segment.getNomSegment }}{{ flotteur.getNomFlotteur }}">
-                                                                                        {{ flotteur.getNomFlotteur }}|
-                                                                                        {% set verifexsistance = 0 %}
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td>
+                                <p>date de retrait des cordes</p>
+                                {% set now =  "now"|date("Y-m-d") %}
+                                <p><input type="date" name="dateRetraitCorde" value="{{ now }}"></p>
+                                <p>quantiter retirer</p>
+                                <p><input type="number" id="quantit" readonly="true" value="0"></p>
+                                <p>stocks de reception</p>
+                                <p>
+                                    <input type="text" name="stockchoix" hidden="true" id="stockchoix"
+                                           value="{{ entity.idStock.idStock }}">
+                                    <input type="text" readonly="true" value="{{ entity.idStock.libStock }}">
+                                </p>
 
-                                                                                        {% for emplacement in flotteur.emplacements %}
-                                                                                        {% if emplacement.corde == null and emplacement.stockslanterne == null %}
-                                                                                            <font color="red"> {{ emplacement.place }}</font>
-                                                                                        {% elseif emplacement.corde != null %}
-                                                                                            {% set verifexsistance =  verifexsistance + 1 %}
-                                                                                            <a title="article  {{ emplacement.corde.article.lot.lot }}-{{ emplacement.corde.article.libArticle }}
--date de creation  {{ emplacement.corde.dateDeCreation|date('Y-m-d') }}
--date de MAE  {{ emplacement.dateDeRemplissage|date('Y-m-d') }}"
-                                                                                               href="{{ path('corde_show', {'id': emplacement.corde.id }) }}">
-                                                                                                <font color="blue"> {{ emplacement.place }}</font></a>
-                                                                                            <input type="checkbox"
-                                                                                                   name="placecorde[]"
-                                                                                                   value="{{ emplacement.id }}"/>
+                                <p><input type="submit" value="confirmer le retrait"/></p>
 
-                                                                                        {% elseif emplacement.stockslanterne != null %}
-                                                                                            <a title="{{ emplacement.stockslanterne.lanterne.nomlanterne }}
--article:{{ emplacement.stockslanterne.article.lot.lot }}-{{ emplacement.stockslanterne.article.libArticle }}
--date de creation  {{ emplacement.stockslanterne.dateDeCreation|date('Y-m-d') }}
--date de MAE  {{ emplacement.dateDeRemplissage|date('Y-m-d') }}"
-                                                                                               href="{{ path('stockslanternes_show', {'id': emplacement.stockslanterne.id }) }}">
-                                                                                                <font color="#adff2f"> {{ emplacement.place }}</font>
-                                                                                            </a>
-                                                                                            <span style="display: none"
-                                                                                                  id="dateemplacement">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</span>
+                            </td>
+                        </tr>
+                        {% endif %}
 
-                                                                                        {% endif %}
-                                                                                        {% endfor %}<br>
-                                                                                        {% if verifexsistance != 0 %}
-                                                                                            <input type="button"
-                                                                                                   value="Tout cocher"
-                                                                                                   onClick="fillCheckbox('{{ filiere.getNomFiliere }}{{ segment.getNomSegment }}{{ flotteur.getNomFlotteur }}','1');">&nbsp;&nbsp;
-                                                                                            <input type="button"
-                                                                                                   value="Tout décocher"
-                                                                                                   onClick="fillCheckbox('{{ filiere.getNomFiliere }}{{ segment.getNomSegment }}{{ flotteur.getNomFlotteur }}','0');">
-                                                                                        {% endif %}
-                                                                                        {% endfor %}
-                                                                                    </div>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </table>
-                                                                    </td>
-                                                                {% endfor %}
-                                                            </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                            {% endfor %}
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                    <td>
-                                        <p>date de MAE corde</p>
-                                        {% set now =  "now"|date("Y-m-d") %}
-                                        <p><input type="date" name="dateRMAECorde" value="{{ now }}"></p>
-
-                                        <p>quantiter disponible</p>
-                                        <p><input type="number" id="quantit" readonly="true" value="0"></p>
-                                        <p><input type="submit" value="confirmer le retrait"/></p>
-
-                                    </td>
-                                </tr>
-                            {% endfor %}
-
-                            </tbody>
-                        </table>
-                    </form>
-                </div>
+                        </tbody>
+                    </table>
+                </form>
             </div>
-        {% endblock %}
+        </div>
     </div>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
+        function move() {
+            var elem = document.getElementById("myBar");
+            var width = 10;
+            var id = setInterval(frame, 10);
+            function frame() {
+                if (width >= 100) {
+                    clearInterval(id);
+                } else {
+                    width++;
+                    elem.style.width = width + '%';
+                    document.getElementById("myBar").innerHTML = width * 1 + '%';
+                }
+            }
+        }
         $(document).ready(function () {
+            move();
             $('input:checkbox').change(
                     function () {
                         if ($(this).is(':checked')) {
                             $('#quantit').val(parseInt($('#quantit').val()) + 1);
                         } else {
                             $('#quantit').val(parseInt($('#quantit').val()) - 1);
+
                         }
                     });
         });
@@ -162,7 +174,6 @@
             var checkbox = $('#' + containerID);
             var checkbox = checkbox.find('input[type="checkbox"]');
             console.log(checkbox);
-
             checkbox.each(function () {
                 switch (fill) {
                     case '0':

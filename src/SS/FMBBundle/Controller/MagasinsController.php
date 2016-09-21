@@ -42,6 +42,20 @@ class MagasinsController extends Controller
         return new JsonResponse($result);
     }
 
+    public function parcCordesAction(Request $request)
+    {// Get the province ID
+        $id = $request->query->get('parc_id');
+        $result = array();
+        // Return a list of cities, based on the selected province
+        $repo = $this->getDoctrine()->getManager()->getRepository('SSFMBBundle:Corde');
+        $cordes = $repo->findByParc($id, array('parc' => 'asc'));
+        foreach ($cordes as $corde) {
+            $result[$corde->getId()] = $corde->getId();
+            $result[$corde->getId() . $corde->getNbrTotaleEnStock()] = $corde->getNbrTotaleEnStock();
+        }
+        return new JsonResponse($result);
+    }
+
 
     /**
      * Lists all Magasins entities.

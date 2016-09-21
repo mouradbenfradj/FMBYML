@@ -5,162 +5,194 @@
 {% endblock %}
 {% block body %}
     <div class="container-fluid">
-            {{ parent() }}
-            <div class="row">
-                <div class="col-md-12">
-                    <form action="" method="post">
-                        <ul class="pagination pagination-lg">
+        {{ parent() }}
+        <div class="row">
+            <div class="col-md-12">
+                <form action="" method="post">
+                    <ul class="pagination pagination-lg">
 
-                            {% for page in pages %}
+                        {{ knp_menu_render('SSFMBBundle:Builder:parcMAECMenu') }}
 
-                                <li>
-                                    <a href="{{ path('ssfmb_misaaeaucorde', { 'id': page.id }) }}">
-                                        {{ page.nomParc }}
-                                    </a>
-                                </li>
-                            {% endfor %}
 
-                        </ul>
-                        <table class="table table-condensed table-bordered" border="1">
-                            <tbody>
-                            {% for entity in entities %}
-                                <tr>
-                                    <td>
-                                        <a href="{{ path('parc_show', { 'id': entity.id }) }}">
-                                            {{ entity.nomParc }}
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <table class="table table-condensed table-bordered" border="1">
-                                            <tbody>
-                                            {% for filiere in entity.filieres %}
-                                                <tr>
-                                                    <td>{{ filiere.getNomFiliere }}
-                                                        <br/>
-                                                        {% set tailleFiliere =0 %}
-                                                        {% for segment in filiere.segments %}
-                                                            {% set tailleFiliere = tailleFiliere+segment.getLongeur %}
-                                                        {% endfor %}
-                                                        taille {{ tailleFiliere }} m
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <table class="table table-condensed table-bordered" border="1">
-                                                            <tbody>
-                                                            <tr>
-                                                                {% for segment in filiere.segments %}
-                                                                    <td valign="top">
-                                                                        <ul>
-                                                                            <li> {{ segment.getNomSegment }}</li>
-                                                                            <li>{{ segment.getLongeur }} m</li>
-                                                                        </ul>
-                                                                        <table>
-                                                                            {% for flotteur in segment.flotteurs %}
-                                                                            <tr>
-                                                                                <td>
-                                                                                    <div id="{{ filiere.getNomFiliere }}{{ segment.getNomSegment }}{{ flotteur.getNomFlotteur }}">
-                                                                                        {{ flotteur.getNomFlotteur }}|
-                                                                                        {% set verifexsistance = 0 %}
 
-                                                                                        {% for emplacement in flotteur.emplacements %}
-                                                                                        {% if emplacement.corde == null and emplacement.stockslanterne == null %}
-                                                                                            {% set verifexsistance =  verifexsistance + 1 %}
-
-                                                                                            <font color="red"> {{ emplacement.place }}</font>
-                                                                                            <input type="checkbox"
-                                                                                                   name="placecorde[]"
-                                                                                                   value="{{ emplacement.id }}"/>
-                                                                                            <span style="display: none"
-                                                                                                  id="dateemplacement">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</span>
-                                                                                        {% elseif emplacement.corde != null %}
-                                                                                            <a title="article  {{ emplacement.corde.article.lot.lot }}-{{ emplacement.corde.article.libArticle }}
--date de creation  {{ emplacement.corde.dateDeCreation|date('Y-m-d') }}
--date de MAE  {{ emplacement.dateDeRemplissage|date('Y-m-d') }}"
-                                                                                               href="{{ path('corde_show', {'id': emplacement.corde.id }) }}">
-                                                                                                <font color="blue"> {{ emplacement.place }}</font></a>
-                                                                                            <span style="display: none"
-                                                                                                  id="dateemplacement">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</span>
-
-                                                                                        {% elseif emplacement.stockslanterne != null %}
-                                                                                            <a title="{{ emplacement.stockslanterne.lanterne.nomlanterne }}
--article:{{ emplacement.stockslanterne.article.lot.lot }}-{{ emplacement.stockslanterne.article.libArticle }}
--date de creation  {{ emplacement.stockslanterne.dateDeCreation|date('Y-m-d') }}
--date de MAE  {{ emplacement.dateDeRemplissage|date('Y-m-d') }}"
-                                                                                               href="{{ path('stockslanternes_show', {'id': emplacement.stockslanterne.id }) }}">
-                                                                                                <font color="#adff2f"> {{ emplacement.place }}</font>
-                                                                                            </a>
-                                                                                            <span style="display: none"
-                                                                                                  id="dateemplacement">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</span>
-
-                                                                                        {% endif %}
-                                                                                        {% endfor %}<br>
-                                                                                        {% if verifexsistance != 0 %}
-                                                                                            <input type="button"
-                                                                                                   value="Tout cocher"
-                                                                                                   onClick="fillCheckbox('{{ filiere.getNomFiliere }}{{ segment.getNomSegment }}{{ flotteur.getNomFlotteur }}','1');">&nbsp;&nbsp;
-                                                                                            <input type="button"
-                                                                                                   value="Tout décocher"
-                                                                                                   onClick="fillCheckbox('{{ filiere.getNomFiliere }}{{ segment.getNomSegment }}{{ flotteur.getNomFlotteur }}','0');">
-                                                                                        {% endif %}
-                                                                                        {% endfor %}
-                                                                                    </div>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </table>
-                                                                    </td>
-                                                                {% endfor %}
-                                                            </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                            {% endfor %}
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                    <td>
-                                        <p>quantiter disponible</p>
-                                        <p><input type="number" id="quantit" readonly="true" value="0"></p>
-                                        <p>date de preparation des cordes</p>
-                                        {% set now =  "now"|date("Y-m-d") %}
-                                        <p><input type="date" name="dateMAECorde" value="{{ now }}"></p>
-                                        <p> choisir l'article a mettre</p>
-                                        <p>
-                                            <select name="articlechoix" id="articlechoix">
-                                                {% for article in articles %}
-                                                    <option value="{{ article.refArticle }}">{{ article.lot }}
-                                                        -{{ article.libArticle }}</option>
+                    </ul>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped active" role="progressbar"
+                             id="myBar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:0%">
+                            0%
+                        </div>
+                    </div>
+                    <table class="table table-condensed table-bordered" border="1">
+                        <tbody>
+                        <tr>
+                            <td>
+                                {% if(entity != null) %}
+                                <div id="idstockparc" hidden="true">{{ entity.idStock.idStock }}</div>
+                                <div id="idparc" hidden="true">{{ entity.idMagasin }}</div>
+                                {{ entity.abrevMagasin }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table class="table table-condensed table-bordered" border="1">
+                                    <tbody>
+                                    {% for filiere in entity.filieres %}
+                                        <tr>
+                                            <td>{{ filiere.getNomFiliere }}
+                                                <br/>
+                                                {% set tailleFiliere =0 %}
+                                                {% for segment in filiere.segments %}
+                                                    {% set tailleFiliere = tailleFiliere+segment.getLongeur %}
                                                 {% endfor %}
-                                            </select>
-                                        </p>
-                                        <div id="choixqtearticle">
-                                            <p> choix de la quantiter des corde</p>
-                                            <p>
-                                                <select name="quantierchoix" id="quantierchoix">
-                                                </select>
-                                            </p>
-                                            <p><input type="submit" value="confirmer la mise a l'eau"/></p>
+                                                taille {{ tailleFiliere }} m
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <table class="table table-condensed table-bordered" border="1">
+                                                    <tbody>
+                                                    <tr>
+                                                        {% for segment in filiere.segments %}
+                                                            <td valign="top">
+                                                                <ul>
+                                                                    <li> {{ segment.getNomSegment }}</li>
+                                                                    <li>{{ segment.getLongeur }} m</li>
+                                                                </ul>
+                                                                <table>
+                                                                    {% for flotteur in segment.flotteurs %}
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div id="{{ filiere.getNomFiliere }}{{ segment.getNomSegment }}{{ flotteur.getNomFlotteur }}">
+                                                                                {{ flotteur.getNomFlotteur }}|
+                                                                                {% set verifexsistance = 0 %}
 
-                                        </div>
-                                    </td>
-                                </tr>
-                            {% endfor %}
+                                                                                {% for emplacement in flotteur.emplacements %}
+                                                                                {% if emplacement.stockscorde == null and emplacement.stockslanterne == null %}
+                                                                                    {% set verifexsistance =  verifexsistance + 1 %}
+                                                                                    <font color="red"> {{ emplacement.place }}</font>
+                                                                                    <input type="checkbox"
+                                                                                           name="placecorde[]"
+                                                                                           value="{{ emplacement.id }}"/>|
+                                                                                    <span style="display: none"
+                                                                                          id="dateemplacement">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</span>
+                                                                                {% elseif emplacement.stockscorde != null %}
+                                                                                    <a title="article
+-date de creation  {{ emplacement.stockscorde.dateDeCreation|date('Y-m-d') }}
+-date de MAE  {{ emplacement.dateDeRemplissage|date('Y-m-d') }}"
+                                                                                       href="">
+                                                                                        <font color="blue"> {{ emplacement.place }}</font>
+                                                                                    </a>
+                                                                                    <span style="display: none"
+                                                                                          id="dateemplacement">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</span>
 
-                            </tbody>
-                        </table>
-                    </form>
-                </div>
+                                                                                {% elseif emplacement.stockslanterne != null %}
+                                                                                    <a title="{{ emplacement.stockslanterne.lanterne.nomlanterne }}
+-article:
+-date de creation
+-date de MAE  "
+                                                                                       href="">
+                                                                                        <font color="#adff2f"> {{ emplacement.place }}</font>
+                                                                                    </a>
+                                                                                    <span style="display: none"
+                                                                                          id="dateemplacement">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</span>
+
+                                                                                {% endif %}
+                                                                                {% endfor %}<br>
+                                                                                {% if verifexsistance != 0 %}
+                                                                                    <input type="button"
+                                                                                           value="Tout cocher"
+                                                                                           onClick="fillCheckbox('{{ filiere.getNomFiliere }}{{ segment.getNomSegment }}{{ flotteur.getNomFlotteur }}','1');">&nbsp;&nbsp;
+                                                                                    <input type="button"
+                                                                                           value="Tout décocher"
+                                                                                           onClick="fillCheckbox('{{ filiere.getNomFiliere }}{{ segment.getNomSegment }}{{ flotteur.getNomFlotteur }}','0');">
+                                                                                {% endif %}
+                                                                                {% endfor %}
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        {% endfor %}
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td>
+                                <p>quantiter disponible</p>
+                                <p><input type="number" id="quantit" readonly="true" value="0"></p>
+                                <p>date de preparation des laternes</p>
+                                {% set now =  "now"|date("Y-m-d") %}
+                                <p><input type="date" name="dateMAECorde" value="{{ now }}"></p>
+                                <p>choisir type cordes</p>
+                                <p>
+                                    <select name="cordechoix" id="cordechoix">
+                                        {% for corde in cordes %}
+                                            <option value="{{ corde.id }}">{{ corde.id }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </p>
+
+                                <p> choisir l'article a mettre</p>
+
+                                <p>
+                                    <select name="articlechoix" id="articlechoix">
+                                        {% for article in articles %}
+                                            <option value="{{ article.refStockArticle }}">{{ article.refArticle.libArticle }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </p>
+                                <p> choisir le lot de l'article</p>
+
+                                <p>
+                                    <select name="articlelotchoix" id="articlelotchoix">
+
+                                    </select>
+                                </p>
+
+                                <div id="choixqtearticle">
+                                    <p> choix de la quantiter des cordes</p>
+                                    <p>
+                                        <select name="quantierchoix" id="quantierchoix"></select>
+                                    </p>
+                                    <p><input type="submit" value="confirmer la mise a l'eau"/></p>
+
+                                </div>
+                            </td>
+                        </tr>
+                        {% endif %}
+
+                        </tbody>
+                    </table>
+                </form>
             </div>
+        </div>
     </div>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
+        function move() {
+            var elem = document.getElementById("myBar");
+            var width = 10;
+            var id = setInterval(frame, 10);
+            function frame() {
+                if (width >= 100) {
+                    clearInterval(id);
+                } else {
+                    width++;
+                    elem.style.width = width + '%';
+                    document.getElementById("myBar").innerHTML = width * 1 + '%';
+                }
+            }
+        }
         $(document).ready(function () {
+            move();
             $('#choixqtearticle').ready(function () {
                 $('#choixqtearticle').hide();
             });
@@ -172,37 +204,100 @@
                 }
             });
         });
+        $('#articlelotchoix').hide();
         $('#articlechoix').ready(function () {
             $.ajax({
-                type: 'get',
-                url: "{{ path('ssfmb_cordearticle') }}",
-                data: {'ida': $('#articlechoix').val()},
-                dataType: 'json',
+                type: "POST",
+                url: "{{ url('ssfmb_articlestock') }}?stock_id=" + $('#idstockparc').text() + "&sarticle=" + $('#articlechoix').val(),
+                success: function (data) {
+                    if ($.trim(data)) {
+                        var pos = true;
+                        var lan = '';
+                        $('#articlelotchoix').show();
 
-                beforeSend: function () {
-                    $('#quantierchoix').empty();
-                },
-                success: function (json) {
-                    $('#quantierchoix').html('');
-                    if (!$.trim(json)) {
-                        $('#choixqtearticle').ready(function () {
-                            $('#choixqtearticle').hide();
+                        // Remove current options
+                        $('#articlelotchoix').html('');
+                        $.each(data, function (k, v) {
+                            if (pos) {
+                                lan = k;
+                                $('#articlelotchoix').append('<option value="' + v + '">' + k + '</option>');
+                                pos = false;
+                            } else {
+                                pos = true;
+                            }
                         });
-                    };
-                    if ($.trim(json)) {
-                        $('#choixqtearticle').ready(function () {
-                            $('#choixqtearticle').show();
-                            $("input:checkbox").each(function () {
-                                $(this).prop('checked', false);
-                            });
+                        $('#ss_fmbbundle_preparationcorde_submit').show();
+                        $.ajax({
+                            type: 'get',
+                            url: "{{ path('ssfmb_cordearticle') }}",
+                            data: {
+                                'idp': $('#idparc').text(),
+                                'lot': $('#articlelotchoix').val(),
+                                'ida': $('#articlechoix').val(),
+                                'idl': $('#cordechoix').val()
+                            },
+                            dataType: 'json',
+                            beforeSend: function () {
+                                $('#quantierchoix').empty();
+                            },
+                            success: function (json) {
+                                $('#quantierchoix').html('');
+                                if (!$.trim(json)) {
+                                    $('#choixqtearticle').ready(function () {
+                                        $('#choixqtearticle').hide();
+                                    });
+                                }
+                                ;
+                                if ($.trim(json)) {
+                                    $('#choixqtearticle').ready(function () {
+                                        $('#choixqtearticle').show();
+                                        $.ajax({
+                                            type: 'get',
+                                            url: "{{ path('ssfmb_nombrecordearticle') }}",
+                                            data: {
+                                                'ida': $('#articlechoix').val(),
+                                                'lot': $('#articlelotchoix').val(),
+                                                'idl': $('#cordechoix').val(),
+                                                'qtech': $('#quantierchoix').val()
+                                            },
+                                            dataType: 'json',
+                                            beforeSend: function () {
+                                                $('#quantit').val('chargement');
+                                            },
+                                            success: function (json) {
+                                                $('#quantit').val(0);
+                                                if ($.trim(json)) {
+                                                    $('#choixqtearticle').ready(function () {
+                                                        $("input:checkbox").each(function () {
+                                                            $(this).prop('checked', false);
+                                                        });
 
+                                                        $('#choixqtearticle').show();
+                                                    });
+                                                }
+                                                $.each(json, function (index, value) {
+                                                    $('#quantit').val(value.nombre);
+                                                    $("input:checkbox").each(function () {
+                                                        $(this).attr('checked', false);
+                                                    });
+                                                });
+                                            }
+                                        });
+                                        $("input:checkbox").each(function () {
+                                            $(this).prop('checked', false);
+                                        });
+                                    });
+                                }
+                                ;
+
+                                $.each(json, function (index, value) {
+                                    $('#quantit').val(value.nombre);
+
+                                    $('#quantierchoix').append('<option value="' + value.qte + '">' + value.qte + '</option>');
+                                });
+                            }
                         });
-                    };
-                    $.each(json, function (index, value) {
-                        $('#quantit').val(value.nombre);
-
-                        $('#quantierchoix').append('<option value="' + value.qte + '">' + value.qte + '</option>');
-                    });
+                    }
                 }
             });
         });
@@ -210,12 +305,20 @@
             $.ajax({
                 type: 'get',
                 url: "{{ path('ssfmb_cordearticle') }}",
-                data: {'ida': $('#articlechoix').val()},
+                data: {
+                    'idp': $('#idparc').text(),
+                    'lot': $('#articlelotchoix').val(),
+                    'ida': $('#articlechoix').val(),
+                    'idl': $('#cordechoix').val()
+                },
                 dataType: 'json',
                 beforeSend: function () {
+                    $('#quantit').val('chargement');
+
                     $('#quantierchoix').empty();
                 },
                 success: function (json) {
+                    $('#quantit').val(0);
                     $('#quantierchoix').html('');
                     if (!$.trim(json)) {
                         $('#choixqtearticle').ready(function () {
@@ -227,6 +330,228 @@
                             $("input:checkbox").each(function () {
                                 $(this).prop('checked', false);
                             });
+
+                            $('#choixqtearticle').show();
+                            $.ajax({
+                                type: 'get',
+                                url: "{{ path('ssfmb_nombrecordearticle') }}",
+                                data: {
+                                    'ida': $('#articlechoix').val(),
+                                    'lot': $('#articlelotchoix').val(),
+                                    'idl': $('#cordechoix').val(),
+                                    'qtech': $('#quantierchoix').val()
+                                },
+                                dataType: 'json',
+                                beforeSend: function () {
+                                    $('#quantit').val('chargement');
+                                },
+                                success: function (json) {
+                                    $('#quantit').val(0);
+                                    if ($.trim(json)) {
+                                        $('#choixqtearticle').ready(function () {
+                                            $("input:checkbox").each(function () {
+                                                $(this).prop('checked', false);
+                                            });
+
+                                            $('#choixqtearticle').show();
+                                        });
+                                    }
+                                    $.each(json, function (index, value) {
+                                        $('#quantit').val(value.nombre);
+                                        $("input:checkbox").each(function () {
+                                            $(this).attr('checked', false);
+                                        });
+                                    });
+                                }
+                            });
+                        });
+                    }
+                    $.each(json, function (index, value) {
+                        $('#quantit').val(value.nombre);
+                        $("input:checkbox").each(function () {
+                            $(this).attr('checked', false);
+                        });
+                        // et  boucle sur la réponse contenu dans la variable passé à la function du success "json"
+                        $('#quantierchoix').append('<option value="' + value.qte + '">' + value.qte + '</option>');
+                    });
+                }
+            });
+        });
+        $('#cordechoix').change(function () {
+            $.ajax({
+                type: 'get',
+                url: "{{ path('ssfmb_cordearticle') }}",
+                data: {
+                    'idp': $('#idparc').text(),
+                    'lot': $('#articlelotchoix').val(),
+                    'ida': $('#articlechoix').val(),
+                    'idl': $('#cordechoix').val()
+                },
+                dataType: 'json',
+                beforeSend: function () {
+                    $('#quantit').val('chargement');
+
+                    $('#quantierchoix').empty();
+                },
+                success: function (json) {
+                    $('#quantit').val(0);
+                    $('#quantierchoix').html('');
+                    if (!$.trim(json)) {
+                        $('#choixqtearticle').ready(function () {
+                            $('#choixqtearticle').hide();
+                        });
+                    }
+                    if ($.trim(json)) {
+                        $('#choixqtearticle').ready(function () {
+                            $("input:checkbox").each(function () {
+                                $(this).prop('checked', false);
+                            });
+
+                            $('#choixqtearticle').show();
+                            $.ajax({
+                                type: 'get',
+                                url: "{{ path('ssfmb_nombrecordearticle') }}",
+                                data: {
+                                    'ida': $('#articlechoix').val(),
+                                    'lot': $('#articlelotchoix').val(),
+                                    'idl': $('#cordechoix').val(),
+                                    'qtech': $('#quantierchoix').val()
+                                },
+                                dataType: 'json',
+                                beforeSend: function () {
+                                    $('#quantit').val('chargement');
+                                },
+                                success: function (json) {
+                                    $('#quantit').val(0);
+
+                                    if ($.trim(json)) {
+                                        $('#choixqtearticle').ready(function () {
+                                            $("input:checkbox").each(function () {
+                                                $(this).prop('checked', false);
+                                            });
+
+                                            $('#choixqtearticle').show();
+                                        });
+                                    }
+                                    $.each(json, function (index, value) {
+                                        $('#quantit').val(value.nombre);
+                                        $("input:checkbox").each(function () {
+                                            $(this).attr('checked', false);
+                                        });
+                                    });
+                                }
+                            });
+                        });
+                    }
+                    $.each(json, function (index, value) {
+                        $('#quantit').val(value.nombre);
+                        $("input:checkbox").each(function () {
+                            $(this).attr('checked', false);
+                        });
+                        // et  boucle sur la réponse contenu dans la variable passé à la function du success "json"
+                        $('#quantierchoix').append('<option value="' + value.qte + '">' + value.qte + '</option>');
+                    });
+                }
+            });
+        });
+        $('#articlelotchoix').change(function () {
+            $.ajax({
+                type: 'get',
+                url: "{{ path('ssfmb_cordearticle') }}",
+                data: {
+                    'idp': $('#idparc').text(),
+                    'lot': $('#articlelotchoix').val(),
+                    'ida': $('#articlechoix').val(),
+                    'idl': $('#cordechoix').val()
+                },
+                dataType: 'json',
+                beforeSend: function () {
+                    $('#quantit').val('chargement');
+
+                    $('#quantierchoix').empty();
+                },
+                success: function (json) {
+                    $('#quantit').val(0);
+                    $('#quantierchoix').html('');
+                    if (!$.trim(json)) {
+                        $('#choixqtearticle').ready(function () {
+                            $('#choixqtearticle').hide();
+                        });
+                    }
+                    if ($.trim(json)) {
+                        $('#choixqtearticle').ready(function () {
+                            $("input:checkbox").each(function () {
+                                $(this).prop('checked', false);
+                            });
+
+                            $('#choixqtearticle').show();
+                            $.ajax({
+                                type: 'get',
+                                url: "{{ path('ssfmb_nombrecordearticle') }}",
+                                data: {
+                                    'ida': $('#articlechoix').val(),
+                                    'lot': $('#articlelotchoix').val(),
+                                    'idl': $('#cordechoix').val(),
+                                    'qtech': $('#quantierchoix').val()
+                                },
+                                dataType: 'json',
+                                beforeSend: function () {
+                                    $('#quantit').val('chargement');
+                                },
+                                success: function (json) {
+                                    $('#quantit').val(0);
+                                    if ($.trim(json)) {
+                                        $('#choixqtearticle').ready(function () {
+                                            $("input:checkbox").each(function () {
+                                                $(this).prop('checked', false);
+                                            });
+
+                                            $('#choixqtearticle').show();
+                                        });
+                                    }
+                                    $.each(json, function (index, value) {
+                                        $('#quantit').val(value.nombre);
+                                        $("input:checkbox").each(function () {
+                                            $(this).attr('checked', false);
+                                        });
+                                    });
+                                }
+                            });
+                        });
+                    }
+                    $.each(json, function (index, value) {
+                        $('#quantit').val(value.nombre);
+                        $("input:checkbox").each(function () {
+                            $(this).attr('checked', false);
+                        });
+                        // et  boucle sur la réponse contenu dans la variable passé à la function du success "json"
+                        $('#quantierchoix').append('<option value="' + value.qte + '">' + value.qte + '</option>');
+                    });
+                }
+            });
+        });
+        $('#quantierchoix').change(function () {
+            $.ajax({
+                type: 'get',
+                url: "{{ path('ssfmb_nombrecordearticle') }}",
+                data: {
+                    'ida': $('#articlechoix').val(),
+                    'lot': $('#articlelotchoix').val(),
+                    'idl': $('#cordechoix').val(),
+                    'qtech': $('#quantierchoix').val()
+                },
+                dataType: 'json',
+                beforeSend: function () {
+                    $('#quantit').val('chargement');
+                },
+                success: function (json) {
+                    $('#quantit').val(0);
+                    if ($.trim(json)) {
+                        $('#choixqtearticle').ready(function () {
+                            $("input:checkbox").each(function () {
+                                $(this).prop('checked', false);
+                            });
+
                             $('#choixqtearticle').show();
                         });
                     }
@@ -235,18 +560,15 @@
                         $("input:checkbox").each(function () {
                             $(this).attr('checked', false);
                         });
-                        $('#quantierchoix').append('<option value="' + value.qte + '">' + value.qte + '</option>');
                     });
                 }
             });
         });
+
+
         function fillCheckbox(containerID, fill) {
-            console.log(containerID);
-            console.log(fill);
             var checkbox = $('#' + containerID);
             var checkbox = checkbox.find('input[type="checkbox"]');
-            console.log(checkbox);
-
             checkbox.each(function () {
                 switch (fill) {
                     case '0':
@@ -260,11 +582,9 @@
                         this.checked = true;
                         break;
                     case 2:
-                        console.log(fill);
                         this.checked = !this.checked;
                         break;
                 }
             });
-        }
-    </script>
+        }    </script>
 {% endblock %}

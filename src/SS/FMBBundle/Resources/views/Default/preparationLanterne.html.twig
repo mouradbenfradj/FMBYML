@@ -5,13 +5,35 @@
 {% endblock %}
 {% block body %}
     {{ parent() }}
+    <div class="progress">
+        <div class="progress-bar progress-bar-striped active" role="progressbar"
+             id="myBar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:0%">
+            0%
+        </div>
+    </div>
+
     {{ form(form) }}
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
     {# Voici le script en question : #}
     <script type="text/javascript">
+        function move() {
+            var elem = document.getElementById("myBar");
+            var width = 10;
+            var id = setInterval(frame, 10);
+            function frame() {
+                if (width >= 100) {
+                    clearInterval(id);
+                } else {
+                    width++;
+                    elem.style.width = width + '%';
+                    document.getElementById("myBar").innerHTML = width * 1 + '%';
+                }
+            }
+        }
         $(document).ready(function () {
+            move();
             // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
             var $container = $('div#ss_fmbbundle_preparationlanterne_document_docsLines');
 
@@ -157,6 +179,40 @@
                     }
                 });
                 return false;
+            });
+            jQuery('#ss_fmbbundle_preparationlanterne_document_docsLines_0_refArticle').change(function () {
+                jQuery('#ss_fmbbundle_preparationlanterne_document_docsLines_0_numeroSerie').hide()
+                jQuery('#ss_fmbbundle_preparationlanterne_document_docsLines_0_qte').hide();
+                jQuery.ajax({
+                    type: "POST",
+                    url: "{{ url('ssfmb_articlestock') }}?stock_id=" + jQuery('#ss_fmbbundle_preparationlanterne_libStock').val() + "&article=" + jQuery('#ss_fmbbundle_preparationlanterne_document_docsLines_0_refArticle').val(),
+                    success: function (data) {
+                        if (jQuery.trim(data)) {
+                            var pos = true;
+                            var lan = '';
+                            jQuery('#ss_fmbbundle_preparationlanterne_document_docsLines_0_numeroSerie').show();
+
+                            // Remove current options
+                            jQuery('#ss_fmbbundle_preparationlanterne_document_docsLines_0_numeroSerie').html('');
+                            jQuery.each(data, function (k, v) {
+                                if (pos) {
+                                    lan = k;
+                                    jQuery('#ss_fmbbundle_preparationlanterne_document_docsLines_0_numeroSerie').append('<option value="' + v + '">' + k + '</option>');
+                                    pos = false;
+                                } else {
+                                    if (jQuery('#ss_fmbbundle_preparationlanterne_document_docsLines_0_numeroSerie').val() == lan) {
+                                        jQuery('#ss_fmbbundle_preparationlanterne_document_docsLines_0_qte').show();
+                                        console.log(v);
+                                        jQuery('#ss_fmbbundle_preparationlanterne_document_docsLines_0_qte').val(v);
+                                    }
+                                    pos = true;
+
+                                }
+                            });
+                            jQuery('#ss_fmbbundle_preparationlanterne_submit').show();
+                        }
+                    }
+                });
             });
 
             jQuery('#ss_fmbbundle_preparationlanterne_Parc').change(function () {

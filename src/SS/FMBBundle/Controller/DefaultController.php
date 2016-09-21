@@ -2,31 +2,29 @@
 
 namespace SS\FMBBundle\Controller;
 
+use DateTime;
 use SS\FMBBundle\Entity\Articles;
 use SS\FMBBundle\Entity\Corde;
 use SS\FMBBundle\Entity\StocksArticles;
 use SS\FMBBundle\Entity\StocksArticlesSn;
+use SS\FMBBundle\Entity\StocksCordes;
 use SS\FMBBundle\Entity\StocksLanternes;
 use SS\FMBBundle\Form\PreparationCordeType;
 use SS\FMBBundle\Form\PreparationLanterneType;
 use SS\FMBBundle\Implementation\DefaultImpl;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DefaultController extends Controller
 {
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $page = $em->getRepository('SSFMBBundle:Magasins')->findAll();
         if ($request->get('id') == null)
             $parcs = null;
         else
-            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findByIdMagasin($request->get('id'));
-        return $this->render('SSFMBBundle:Default:index.html.twig', array('entities' => $parcs, 'pages' => $page));
+            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('id'));
+        return $this->render('SSFMBBundle:Default:index.html.twig', array('entity' => $parcs));
     }
 
     public function preparationLanterneAction(Request $request)
@@ -95,7 +93,6 @@ class DefaultController extends Controller
     public function miseAEauLanterneAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $page = $em->getRepository('SSFMBBundle:Magasins')->findAll();
         $defaultmetier = new DefaultImpl($em);
 
         if ($request->get('id') == null) {
@@ -130,7 +127,6 @@ class DefaultController extends Controller
             '@SSFMB/Default/miseAEauLanterne.html.twig',
             array(
                 'entity' => $parcs,
-                'pages' => $page,
                 'articles' => $articles,
                 'lanternes' => $lanternes,
             )
@@ -140,7 +136,6 @@ class DefaultController extends Controller
     public function retraitLanterneAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $page = $em->getRepository('SSFMBBundle:Magasins')->findAll();
         if ($request->get('id') == null) {
             $parcs = null;
             $stock = null;
@@ -199,7 +194,6 @@ class DefaultController extends Controller
                 } else {
                     $sarticle->setQte($sarticle->getQte() + $implementation->calculerQuantiterLanterne($slanterne));
                     $sarticlesn = $em->getRepository('SSFMBBundle:StocksArticlesSN')->getSAS($sarticle->getRefStockArticle(), $slanterne->getArticle()->getNumeroSerie());
-                    var_dump($sarticlesn);
                     if (!$sarticlesn) {
                         $sarticlesn = new StocksArticlesSn($slanterne->getArticle()->getNumeroSerie(), $implementation->calculerQuantiterLanterne($slanterne), $sarticle);
                         $em->persist($sarticlesn);
@@ -210,6 +204,8 @@ class DefaultController extends Controller
                 }
 
                 $slanterne->setPret(true);
+                $slanterne->setDateDeRetirement(new \DateTime($request->request->get('dateRetraitLanterne')));
+
                 $slanterne->getLanterne()->setNbrTotaleEnStock($slanterne->getLanterne()->getNbrTotaleEnStock() + 1);
                 $slanterne->setEmplacement(null);
                 $place->setStockslanterne(null);
@@ -224,7 +220,6 @@ class DefaultController extends Controller
         return $this->render('SSFMBBundle:Default:retraitLanterne.html.twig',
             array(
                 'entity' => $parcs,
-                'pages' => $page,
                 'articles' => $articles,
             )
         );
@@ -232,57 +227,60 @@ class DefaultController extends Controller
 
     public function preparationCordeAction(Request $request)
     {
-        $form = $this->createForm(new PreparationCordeType(), null, array('action' => $this->generateUrl('ssfmb_preparationcorde'), 'method' => 'POST',));
+        $em = $this->getDoctrine()->getManager();
+        $form = $this->createForm(new PreparationCordeType($em), null, array('action' => $this->generateUrl('ssfmb_preparationcorde'), 'method' => 'POST',));
         $form->add('submit', 'submit', array('label' => 'preparer'));
         if ($request->isMethod('POST')) {
-            $em = $this->getDoctrine()->getManager();
             $form->handleRequest($request);
             $document = $form['document']->getData();
+            $document->setCodeAffaire("");
+            $document->setNomContact("");
+            $document->setAdresseContact("");
+            $document->setCodePostalContact("");
+            $document->setVilleContact("");
+            $document->setAppTarifs("");
+            $document->setDescription("");
+            $document->setDateCreationDoc(new \DateTime());
+            $document->setCodeFile("");
             $em->persist($document);
-            $i = 0;
+
+            $corde = $form['id']->getData();
             foreach ($form['document']['docsLines']->getData() as $doclin) {
-                $result = $em->getRepository('SSFMBBundle:StocksArticles')->findBy(
-                    array(
-                        'idStock' => $form->get('stock')->getData()->getIdStock(),
-                        'refArticle' => $doclin->getRefArticle(),
-                    )
-                );
-                if (empty($result)) {
-                    return $this->render(
-                        '@SSFMB/Default/preparationCorde.html.twig',
-                        array(
-                            'form' => $form->createView(),
-                        )
-                    );
-                }
-                if (empty($result)) {
-                    return $this->render(
-                        '@SSFMB/Default/preparationCorde.html.twig',
-                        array(
-                            'form' => $form->createView(),
-                        )
-                    );
-                }
-                $stockarticles = $result[0];
+                $stockarticles = $em->getRepository('SSFMBBundle:StocksArticles')->findOneBy(array('idStock' => $form->get('libStock')->getData()->getIdStock(), 'refArticle' => $doclin->getRefArticle()));
+                if (!empty($stockarticles)) {
+                    for ($j = 0; $j < $request->request->get("ss_fmbbundle_preparationcorde")['document']['docsLines'][0]['nombre']; $j++) {
+                        $stocksarticlessn = $em->getRepository('SSFMBBundle:StocksArticlesSn')->findOneBy(array('refStockArticle' => $stockarticles, 'numeroSerie' => $request->request->get("ss_fmbbundle_preparationcorde")['document']['docsLines'][0]['numeroSerie']));
+                        $doclin->setRefDoc($document);
+                        $doclin->setLibArticle($doclin->getRefArticle()->getLibArticle());
+                        $doclin->setDescArticle("");
+                        $doclin->setPuHt(0);
+                        $doclin->setRemise(0);
+                        $doclin->setTva(0);
+                        $doclin->setOrdre(false);
+                        $doclin->setVisible(false);
+                        $doclin->setPaForced(false);
 
-                for ($j = 0; $j < $request->request->get(
-                    "ss_fmbbundle_preparationcorde"
-                )['document']['docsLines'][$i]['nombre']; $j++) {
-                    $corde = new Corde();
-                    $corde->setPret(false);
-                    $corde->setDateDeCreation($form->getData('date')['date']);
-                    $stockarticles->setQte($stockarticles->getQte() - $doclin->getQte());
-                    $corde->setQuantiter($doclin->getQte());
-                    $corde->setArticle($doclin->getRefArticle());
-                    $em->persist($corde);
-
+                        $stockscordes = new StocksCordes();
+                        $stockscordes->setDateDeCreation($form->getData('date')['date']);
+                        $stockscordes->setPret(false);
+                        $stockscordes->setArticle($stocksarticlessn);
+                        $stockscordes->setCorde($corde);
+                        $stockscordes->setQuantiter($doclin->getQte());
+                        $stockscordes->setDocLine($doclin);
+                        $stockarticles->setQte($stockarticles->getQte() - $doclin->getQte());
+                        $stocksarticlessn->setSnQte($stocksarticlessn->getSnQte() - $doclin->getQte());
+                        $em->persist($stockscordes);
+                    }
+                } else {
+                    return $this->render('@SSFMB/Default/preparationCorde.html.twig', array('form' => $form->createView(),));
                 }
-                $i++;
             }
-            $em->flush();
+            $corde->setNbrTotaleEnStock($corde->getNbrTotaleEnStock() - $request->request->get("ss_fmbbundle_preparationcorde")['document']['docsLines'][0]['nombre']);
 
+            $em->flush();
             return $this->redirectToRoute('ssfmb_homepage');
         }
+
 
         return $this->render(
             '@SSFMB/Default/preparationCorde.html.twig',
@@ -296,81 +294,220 @@ class DefaultController extends Controller
     function miseAEauCordeAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $page = $em->getRepository('SSFMBBundle:Magasins')->findAll();
+        $defaultmetier = new DefaultImpl($em);
 
         if ($request->get('id') == null) {
             $parcs = null;
+            $stock = null;
+            $cordes = null;
             $articles = null;
         } else {
-            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findByIdMagasin($request->get('id'));
-            $articles = $em->getRepository('SSFMBBundle:Articles')->findAll();
+            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('id'));
+            $cordes = $em->getRepository('SSFMBBundle:Corde')->findByParc($parcs);
+            $articles = $em->getRepository('SSFMBBundle:StocksArticles')->findByIdStock($parcs->getIdStock());
         }
         if ($request->isMethod('POST')) {
             foreach ($request->request->get('placecorde') as $emplacementcorde) {
                 $place = $em->getRepository('SSFMBBundle:Emplacement')->find($emplacementcorde);
-                $cordearticle = $em->getRepository('SSFMBBundle:Corde')->findOneBy(
-                    array(
-                        'article' => $request->request->get('articlechoix'),
-                        'emplacement' => null,
-                        'quantiter' => $request->request->get('quantierchoix'),
-                        'pret' => false,
-                    )
-                );
-                $cordearticle->setEmplacement($place);
-                $cordearticle->setPret(false);
-                $place->setCorde($cordearticle);
-                $place->setDateDeRemplissage(new \DateTime($request->request->get('dateMAECorde')));
+                $corde = $em->getRepository('SSFMBBundle:Corde')->find($request->request->get('cordechoix'));
+                $cordearticle = $em->getRepository('SSFMBBundle:StocksCordes')->getCordePreparer($em->getRepository('SSFMBBundle:StocksArticlesSn')->getSAS($request->request->get('articlechoix'), $request->request->get('articlelotchoix')), $corde);
+                $position = 0;
+                while (($cordearticle[$position]->getQuantiter() != $request->request->get('quantierchoix')) && (count($cordearticle) > $position)) {
+                    $position++;
+                }
+                if ($cordearticle[$position]->getQuantiter() == $request->request->get('quantierchoix')) {
+                    $cordearticle[$position]->setEmplacement($place);
+                    $place->setStocksCorde($cordearticle[$position]);
+                    $place->setDateDeRemplissage(new \DateTime($request->request->get('dateMAECorde')));
+                }
                 $em->flush();
             }
-
             return $this->redirectToRoute('ssfmb_homepage');
         }
-
         return $this->render(
-            'SSFMBBundle:Default:miseAEauCorde.html.twig',
+            '@SSFMB/Default/miseAEauCorde.html.twig',
             array(
-                'entities' => $parcs,
-                'pages' => $page,
+                'entity' => $parcs,
+                'articles' => $articles,
+                'cordes' => $cordes,
+            )
+        );
+    }
+
+    public function retraitCordeAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        if ($request->get('id') == null) {
+            $parcs = null;
+            $stock = null;
+            $articles = null;
+        } else {
+            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('id'));
+            $articles = $em->getRepository('SSFMBBundle:StocksArticles')->findByIdStock($parcs->getIdStock());
+        }
+
+        if ($request->isMethod('POST')) {
+            $stock = $em->getRepository('SSFMBBundle:Stocks')->find($request->request->get('stockchoix'));
+            foreach ($request->request->get('placecorde') as $emplacementcorde) {
+                $place = $em->getRepository('SSFMBBundle:Emplacement')->find($emplacementcorde);
+                $scorde = $place->getStockscorde();
+
+                $article = $em->getRepository('SSFMBBundle:Articles')->findOneByLibArticle(substr($scorde->getArticle()->getRefStockArticle()->getRefArticle()->getLibArticle(), strrpos($scorde->getArticle()->getRefStockArticle()->getRefArticle()->getLibArticle(), ' ', 0) + 1) . " comercial");
+                if (!$article) {
+                    $article = new Articles();
+                    $article->setLibArticle(substr($scorde->getArticle()->getRefStockArticle()->getRefArticle()->getLibArticle(), strrpos($scorde->getArticle()->getRefStockArticle()->getRefArticle()->getLibArticle(), ' ', 0)) . " comercial");
+                    $article->setLibTicket('l');
+                    $article->setDescCourte('e');
+                    $article->setDescLongue('e');
+                    $article->setRefArtCateg('r');
+                    $article->setModele('m');
+                    $article->setPaaLastMaj(new \DateTime());
+                    $article->setPromo(1);
+                    $article->setValoIndice(10);
+                    $article->setLot(true);
+                    $article->setComposant(true);
+                    $article->setVariante(true);
+                    $article->setGestionSn(true);
+                    $article->setDateDebutDispo(new \DateTime());
+                    $article->setDateFinDispo(new \DateTime());
+                    $article->setDispo(true);
+                    $article->setDateCreation(new \DateTime());
+                    $article->setDateModification(new \DateTime());
+                    $article->setIsAchetable(true);
+                    $article->setIsVendable(true);
+                    $em->persist($article);
+                    $em->flush();
+                }
+                $sarticle = $em->getRepository('SSFMBBundle:StocksArticles')->findOneByRefArticle($article);
+                if (!$sarticle) {
+                    $sarticle = new StocksArticles();
+                    $sarticle->setRefArticle($article);
+                    $sarticle->setQte($scorde->getQuantiter());
+                    $sarticle->setIdStock($stock);
+                    $em->persist($sarticle);
+                    $sarticlesn = $em->getRepository('SSFMBBundle:StocksArticlesSN')->getSAS($sarticle->getRefStockArticle(), $scorde->getArticle()->getNumeroSerie());
+                    if (!$sarticlesn) {
+                        $sarticlesn = new StocksArticlesSn($scorde->getArticle()->getNumeroSerie(), $scorde->getQuantiter(), $sarticle);
+                        $em->persist($sarticlesn);
+                        $em->flush();
+                    }
+
+                } else {
+                    $sarticle->setQte($sarticle->getQte() + $scorde->getQuantiter());
+                    $sarticlesn = $em->getRepository('SSFMBBundle:StocksArticlesSN')->getSAS($sarticle->getRefStockArticle(), $scorde->getArticle()->getNumeroSerie());
+                    if (!$sarticlesn) {
+                        $sarticlesn = new StocksArticlesSn($scorde->getArticle()->getNumeroSerie(), $scorde->getQuantiter(), $sarticle);
+                        $em->persist($sarticlesn);
+                    } else {
+                        $sarticlesn->setSnQte($sarticlesn->getSnQte() + $scorde->getQuantiter());
+                    }
+
+                }
+
+                $scorde->setPret(true);
+                $scorde->setDateDeRetirement(new \DateTime($request->request->get('dateRetraitCorde')));
+                $scorde->getCorde()->setNbrTotaleEnStock($scorde->getCorde()->getNbrTotaleEnStock() + 1);
+                $scorde->setEmplacement(null);
+                $place->setStockscorde(null);
+                $place->setDateDeRemplissage(null);
+            }
+
+            $em->flush();
+            return $this->redirectToRoute('ssfmb_homepage');
+
+        }
+
+        return $this->render('@SSFMB/Default/retraitCorde.html.twig',
+            array(
+                'entity' => $parcs,
                 'articles' => $articles,
             )
         );
     }
 
-    public
-    function retraitCordeAction(Request $request)
+    public function planingdetravailleAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        $page = $em->getRepository('SSFMBBundle:Magasins')->findAll();
+        $date1 = new DateTime("now");
+        $pregrossisementurgent = array();
+        $grossisementurgent = array();
+        $comercialeurgent = array();
+        $pregrossisementaeffectuer = array();
+        $grossisementaeffectuer = array();
+        $comercialeaeffectuer = array();
+        $pregrossisement = array();
+        $grossisement = array();
+        $comerciale = array();
 
+        $em = $this->getDoctrine()->getManager();
         if ($request->get('id') == null) {
             $parcs = null;
-            $articles = null;
+            $pregrossisement = array();
+            $grossisement = array();
+            $comerciale = array();
         } else {
-            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findByIdMagasin($request->get('id'));
-            $articles = $em->getRepository('SSFMBBundle:Articles')->findAll();
-        }
-        if ($request->isMethod('POST')) {
-            foreach ($request->request->get('placecorde') as $emplacementcorde) {
-                $place = $em->getRepository('SSFMBBundle:Emplacement')->find($emplacementcorde);
-
-                $corde = $place->getCorde();
-                $corde->setPret(true);
-                $corde->setEmplacement(null);
-                $place->setCorde(null);
-                $place->setDateDeRemplissage(null);
-                $em->flush();
+            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('id'));
+            if ($parcs) {
+                $filiers = $em->getRepository('SSFMBBundle:Filiere')->findByParc($parcs);
+                foreach ($filiers as $filiere) {
+                    $segments = $em->getRepository('SSFMBBundle:Segment')->findByFiliere($filiere);
+                    foreach ($segments as $segment) {
+                        $flotteurs = $em->getRepository('SSFMBBundle:Flotteur')->findBySegment($segment);
+                        foreach ($flotteurs as $flotteur) {
+                            $emplacements = $em->getRepository('SSFMBBundle:Emplacement')->findByFlotteur($flotteur);
+                            foreach ($emplacements as $emplacement) {
+                                if ($emplacement->getDateDeRemplissage()) {
+                                    $interval = date_diff($emplacement->getDateDeRemplissage(), $date1);
+                                    if ($emplacement->getStockslanterne()) {
+                                        if ($interval->format('%R%m') >= 3) {
+                                            $pregrossisementurgent = array_merge($pregrossisementurgent, array($emplacement));
+                                        } elseif (($interval->format('%R%m') >= 2) && ($interval->format('%R%a') > 2) && ($interval->format('%R%m') < 3)) {
+                                            $pregrossisementaeffectuer = array_merge($pregrossisementaeffectuer, array($emplacement));
+                                        } elseif (($interval->format('%R%m') >= 2) && ($interval->format('%R%a') <= 2) || ($interval->format('%R%m') < 2)) {
+                                            $pregrossisement = array_merge($pregrossisement, array($emplacement));
+                                        }
+                                    } elseif ($emplacement->getStockscorde()) {
+                                        if ($interval->format('%R%m') >= 6) {
+                                            $grossisementurgent = array_merge($grossisementurgent, array($emplacement));
+                                        } elseif (($interval->format('%R%m') >= 5) && ($interval->format('%R%a') > 2) && ($interval->format('%R%m') < 5)) {
+                                            $grossisementaeffectuer = array_merge($grossisementaeffectuer, array($emplacement));
+                                        } elseif (($interval->format('%R%m') >= 5) && ($interval->format('%R%a') <= 2) || ($interval->format('%R%m') < 5)) {
+                                            $grossisement = array_merge($grossisement, array($emplacement));
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
 
-            return $this->redirectToRoute('ssfmb_homepage');
-        }
 
-        return $this->render(
-            'SSFMBBundle:Default:retraitCorde.html.twig',
-            array(
-                'entities' => $parcs,
-                'pages' => $page,
-                'articles' => $articles,
-            )
-        );
+            $pretacomercialisation = $em->getRepository('StocksCordes')->findByPret(true);
+            if ($pretacomercialisation) {
+                foreach ($pretacomercialisation as $emplacement) {
+                    if ($emplacement->getDateDeRemplissage()) {
+                        $interval = date_diff($emplacement->getDateDeRemplissage(), $date1);
+                        if ($emplacement->getStockslanterne()) {
+                            if ($interval->format('%R%m') >= 3) {
+                                $pregrossisementurgent = array_merge($pregrossisementurgent, array($emplacement));
+                            } elseif (($interval->format('%R%m') >= 2) && ($interval->format('%R%a') > 2) && ($interval->format('%R%m') < 3)) {
+                                $pregrossisementaeffectuer = array_merge($pregrossisementaeffectuer, array($emplacement));
+                            } elseif (($interval->format('%R%m') >= 2) && ($interval->format('%R%a') <= 2) || ($interval->format('%R%m') < 2)) {
+                                $pregrossisement = array_merge($pregrossisement, array($emplacement));
+                            }
+                        } elseif ($emplacement->getStockscorde()) {
+                            if ($interval->format('%R%m') >= 6) {
+                                $grossisementurgent = array_merge($grossisementurgent, array($emplacement));
+                            } elseif (($interval->format('%R%m') >= 5) && ($interval->format('%R%a') > 2) && ($interval->format('%R%m') < 5)) {
+                                $grossisementaeffectuer = array_merge($grossisementaeffectuer, array($emplacement));
+                            } elseif (($interval->format('%R%m') >= 5) && ($interval->format('%R%a') <= 2) || ($interval->format('%R%m') < 5)) {
+                                $grossisement = array_merge($grossisement, array($emplacement));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return $this->render('@SSFMB/Default/planingdetravaille.html.twig', array('entity' => $parcs, 'pregrossisement' => $pregrossisement, 'grossisement' => $grossisement, 'comerciale' => $comerciale, 'pregrossisementaeffectuer' => $pregrossisementaeffectuer, 'grossisementaeffectuer' => $grossisementaeffectuer, 'comercialeaeffectuer' => $comercialeaeffectuer, 'pregrossisementurgent' => $pregrossisementurgent, 'grossisementurgent' => $grossisementurgent, 'comercialeurgent' => $comercialeurgent));
     }
 }

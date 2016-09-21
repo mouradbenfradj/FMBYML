@@ -31,7 +31,7 @@ class Lanterne
      */
     private $stockslanternes;
     /**
-     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Magasins")
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Magasins", fetch="EAGER")
      * @ORM\JoinColumn(name="magasin", referencedColumnName="id_magasin",nullable=false)
      */
     private $parc;

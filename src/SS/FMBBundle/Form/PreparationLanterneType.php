@@ -2,7 +2,6 @@
 
 namespace SS\FMBBundle\Form;
 
-use Doctrine\ORM\EntityRepository;
 use SS\FMBBundle\Entity\Magasins;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -52,7 +51,6 @@ class PreparationLanterneType extends AbstractType
         $lanternes = array();
         if ($parc) {
             // Fetch the cities from specified province
-            $repo = $this->em->getRepository('SSFMBBundle:Stocks');
             $repo2 = $this->em->getRepository('SSFMBBundle:Lanterne');
             $stocks = $parc->getIdStock();
             $lanternes = $repo2->findByParc($parc);

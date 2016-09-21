@@ -1,71 +1,15 @@
+
 <div class="row">
     <div class="col-md-12">
-        <nav class="navbar navbar-default navbar-inverse" role="navigation">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            </div>
+        <nav role="navigation">
 
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li class="active">
-                        <a class="navbar-brand" href="{{ path('ssfmb_homepage') }}">suivit</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('ssfmb_preparationlanterne') }}">preparer lanterne</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('ssfmb_preparationcorde') }}">preparer corde</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('ssfmb_misaaeaulanterne') }}">MAE lanterne</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('ssfmb_misaaeaucorde') }}">MAE corde</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('ssfmb_retraitLanterne') }}">Retrait lanterne</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('ssfmb_retraitcorde') }}">Retrait corde</a>
-                    </li>
-                </ul>
-                <ul class="nav nav-pills">
-                    <li role="presentation" class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                            {% if app.request.hasPreviousSession %}
-                                {% for type, messages in app.session.flashbag.all() %}
-                                    {% for message in messages %}
-                                        <div class="flash-{{ type }}">{{ message }}</div>
-                                    {% endfor %}
-                                {% endfor %}
-                            {% endif %}
-                            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}
-                            {% else %}
-                                <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
-                            {% endif %}
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="{{ path('sonata_admin_dashboard') }}">Zone Administrateur</a>
-                            </li>
-                            <li>
-                                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                                    <a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a>
-                                {% else %}
-                                    <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
-                                {% endif %}
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
+            {{ knp_menu_render('SSFMBBundle:Builder:mainMenu') }}
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}
+            {% else %}
+                <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+            {% endif %}
+
         </nav>
     </div>
 </div>

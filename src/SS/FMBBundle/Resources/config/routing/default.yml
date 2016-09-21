@@ -22,3 +22,6 @@ ssfmb_retraitcorde:
 ssfmb_retraitLanterne:
     path:     /retraitlanterne
     defaults: { _controller: SSFMBBundle:Default:retraitLanterne }
+ssfmb_planingdetravaille:
+    path:     /planing
+    defaults: { _controller: SSFMBBundle:Default:planingdetravaille}

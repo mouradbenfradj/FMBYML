@@ -33,7 +33,7 @@ class StocksLanternes
     private $poches;
 
     /**
-     * @ORM\OneToOne(targetEntity="SS\FMBBundle\Entity\Emplacement", mappedBy="lanterne")
+     * @ORM\OneToOne(targetEntity="SS\FMBBundle\Entity\Emplacement", mappedBy="stockslanterne")
      * @ORM\JoinColumn(nullable=true)
      */
     private $emplacement;
@@ -61,6 +61,12 @@ class StocksLanternes
      * @ORM\Column(name="dateDeCreation", type="date")
      */
     private $dateDeCreation;
+    /**
+     *
+     * @ORM\Column(name="dateDeRetirement", type="date")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $dateDeRetirement;
 
     /**
      * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\DocsLines")
@@ -282,5 +288,29 @@ class StocksLanternes
     public function getNumeroSerie()
     {
         return $this->numeroSerie;
+    }
+
+
+    /**
+     * Set dateDeRetirement
+     *
+     * @param \DateTime $dateDeRetirement
+     * @return StocksLanternes
+     */
+    public function setDateDeRetirement($dateDeRetirement)
+    {
+        $this->dateDeRetirement = $dateDeRetirement;
+
+        return $this;
+    }
+
+    /**
+     * Get dateDeRetirement
+     *
+     * @return \DateTime 
+     */
+    public function getDateDeRetirement()
+    {
+        return $this->dateDeRetirement;
     }
 }

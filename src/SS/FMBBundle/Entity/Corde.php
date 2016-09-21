@@ -20,47 +20,32 @@ class Corde
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
-
     /**
      * @var integer
-     *
-     * @ORM\Column(name="quantiter", type="integer")
+     * @ORM\Column(name="nbrtotaleEnStock", type="integer")
      */
-    private $quantiter;
+    private $nbrTotaleEnStock;
     /**
-     * @var boolean
-     *
-     * @ORM\Column(name="pret", type="boolean")
+     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\StocksCordes", mappedBy="corde",cascade={"persist","remove"})
      */
-    private $pret;
+    private $stockscordes;
     /**
-     * @ORM\OneToOne(targetEntity="SS\FMBBundle\Entity\Emplacement", mappedBy="corde")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Magasins", fetch="EAGER")
+     * @ORM\JoinColumn(name="magasin", referencedColumnName="id_magasin",nullable=false)
      */
-    private $emplacement;
-
+    private $parc;
     /**
-     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Articles")
-     * @ORM\JoinColumn(name="ref_article", referencedColumnName="ref_article")
+     * Constructor
      */
-    private $article;
-
-    /**
-     *
-     * @ORM\Column(name="dateDeCreation", type="date")
-     */
-    private $dateDeCreation;
-
-    public function __toString()
+    public function __construct()
     {
-        return "".$this->id;
+        $this->stockscordes = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -68,117 +53,81 @@ class Corde
     }
 
     /**
-     * Get quantiter
+     * Set nbrTotaleEnStock
      *
-     * @return integer
-     */
-    public function getQuantiter()
-    {
-        return $this->quantiter;
-    }
-
-    /**
-     * Set quantiter
-     *
-     * @param integer $quantiter
+     * @param integer $nbrTotaleEnStock
      * @return Corde
      */
-    public function setQuantiter($quantiter)
+    public function setNbrTotaleEnStock($nbrTotaleEnStock)
     {
-        $this->quantiter = $quantiter;
+        $this->nbrTotaleEnStock = $nbrTotaleEnStock;
 
         return $this;
     }
 
     /**
-     * Get emplacement
+     * Get nbrTotaleEnStock
      *
-     * @return \SS\FMBBundle\Entity\Emplacement
+     * @return integer 
      */
-    public function getEmplacement()
+    public function getNbrTotaleEnStock()
     {
-        return $this->emplacement;
+        return $this->nbrTotaleEnStock;
     }
 
     /**
-     * Set emplacement
+     * Add stockscordes
      *
-     * @param \SS\FMBBundle\Entity\Emplacement $emplacement
+     * @param \SS\FMBBundle\Entity\StocksCordes $stockscordes
      * @return Corde
      */
-    public function setEmplacement(\SS\FMBBundle\Entity\Emplacement $emplacement = null)
+    public function addStockscorde(\SS\FMBBundle\Entity\StocksCordes $stockscordes)
     {
-        $this->emplacement = $emplacement;
+        $this->stockscordes[] = $stockscordes;
 
         return $this;
     }
 
     /**
-     * Get article
+     * Remove stockscordes
      *
-     * @return \SS\FMBBundle\Entity\Articles
+     * @param \SS\FMBBundle\Entity\StocksCordes $stockscordes
      */
-    public function getArticle()
+    public function removeStockscorde(\SS\FMBBundle\Entity\StocksCordes $stockscordes)
     {
-        return $this->article;
+        $this->stockscordes->removeElement($stockscordes);
     }
 
     /**
-     * Set article
+     * Get stockscordes
      *
-     * @param \SS\FMBBundle\Entity\Articles $article
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getStockscordes()
+    {
+        return $this->stockscordes;
+    }
+
+    /**
+     * Set parc
+     *
+     * @param \SS\FMBBundle\Entity\Magasins $parc
      * @return Corde
      */
-    public function setArticle(\SS\FMBBundle\Entity\Articles $article = null)
+    public function setParc(\SS\FMBBundle\Entity\Magasins $parc)
     {
-        $this->article = $article;
+        $this->parc = $parc;
 
         return $this;
     }
 
     /**
-     * Get pret
+     * Get parc
      *
-     * @return boolean
+     * @return \SS\FMBBundle\Entity\Magasins 
      */
-    public function getPret()
+    public function getParc()
     {
-        return $this->pret;
-    }
-
-    /**
-     * Set pret
-     *
-     * @param boolean $pret
-     * @return Corde
-     */
-    public function setPret($pret)
-    {
-        $this->pret = $pret;
-
-        return $this;
-    }
-
-    /**
-     * Set dateDeCreation
-     *
-     * @param \DateTime $dateDeCreation
-     * @return Corde
-     */
-    public function setDateDeCreation($dateDeCreation)
-    {
-        $this->dateDeCreation = $dateDeCreation;
-
-        return $this;
-    }
-
-    /**
-     * Get dateDeCreation
-     *
-     * @return \DateTime
-     */
-    public function getDateDeCreation()
-    {
-        return $this->dateDeCreation;
+        return $this->parc;
     }
 }
