@@ -179,6 +179,7 @@ class DefaultController extends Controller
                     if (!$sarticlesn) {
                         $sarticlesn = new StocksArticlesSn($slanterne->getArticle()->getNumeroSerie(), $implementation->calculerQuantiterLanterne($slanterne), $sarticle);
                         $em->persist($sarticlesn);
+                        $em->flush();
                     } else {
                         $sarticlesn->setSnQte($sarticlesn->getSnQte() + $implementation->calculerQuantiterLanterne($slanterne));
                     }
@@ -353,6 +354,7 @@ class DefaultController extends Controller
                     if (!$sarticlesn) {
                         $sarticlesn = new StocksArticlesSn($scorde->getArticle()->getNumeroSerie(), $scorde->getQuantiter(), $sarticle);
                         $em->persist($sarticlesn);
+                        $scorde->setArticle($sarticlesn);
                         $em->flush();
                     }
 
@@ -361,9 +363,13 @@ class DefaultController extends Controller
                     $sarticlesn = $em->getRepository('SSFMBBundle:StocksArticlesSN')->getSAS($sarticle->getRefStockArticle(), $scorde->getArticle()->getNumeroSerie());
                     if (!$sarticlesn) {
                         $sarticlesn = new StocksArticlesSn($scorde->getArticle()->getNumeroSerie(), $scorde->getQuantiter(), $sarticle);
+                        $scorde->setArticle($sarticlesn);
                         $em->persist($sarticlesn);
+                        $em->flush();
                     } else {
                         $sarticlesn->setSnQte($sarticlesn->getSnQte() + $scorde->getQuantiter());
+                        $scorde->setArticle($sarticlesn);
+
                     }
 
                 }
@@ -448,25 +454,15 @@ class DefaultController extends Controller
 
             $pretacomercialisation = $em->getRepository('SSFMBBundle:StocksCordes')->findByPret(true);
             if ($pretacomercialisation) {
-                foreach ($pretacomercialisation as $emplacement) {
-                    if ($emplacement->getDateDeRemplissage()) {
-                        $interval = date_diff($emplacement->getDateDeRemplissage(), $date1);
-                        if ($emplacement->getStockslanterne()) {
-                            if ($interval->format('%R%m') >= 3) {
-                                $pregrossisementurgent = array_merge($pregrossisementurgent, array($emplacement));
-                            } elseif (($interval->format('%R%m') >= 2) && ($interval->format('%R%a') > 2) && ($interval->format('%R%m') < 3)) {
-                                $pregrossisementaeffectuer = array_merge($pregrossisementaeffectuer, array($emplacement));
-                            } elseif (($interval->format('%R%m') >= 2) && ($interval->format('%R%a') <= 2) || ($interval->format('%R%m') < 2)) {
-                                $pregrossisement = array_merge($pregrossisement, array($emplacement));
-                            }
-                        } elseif ($emplacement->getStockscorde()) {
-                            if ($interval->format('%R%m') >= 6) {
-                                $grossisementurgent = array_merge($grossisementurgent, array($emplacement));
-                            } elseif (($interval->format('%R%m') >= 5) && ($interval->format('%R%a') > 2) && ($interval->format('%R%m') < 5)) {
-                                $grossisementaeffectuer = array_merge($grossisementaeffectuer, array($emplacement));
-                            } elseif (($interval->format('%R%m') >= 5) && ($interval->format('%R%a') <= 2) || ($interval->format('%R%m') < 5)) {
-                                $grossisement = array_merge($grossisement, array($emplacement));
-                            }
+                foreach ($pretacomercialisation as $stocksCordes) {
+                    if ($stocksCordes->getDateDeRetirement()) {
+                        $interval = date_diff($stocksCordes->getDateDeRetirement(), $date1);
+                        if ($interval->format('%R%m') >= 2) {
+                            $comercialeurgent = array_merge($comercialeurgent, array($stocksCordes));
+                        } elseif (($interval->format('%R%m') < 2) && ($interval->format('%R%m') >= 1)) {
+                            $comercialeaeffectuer = array_merge($comercialeaeffectuer, array($stocksCordes));
+                        } elseif ($interval->format('%R%m') < 1) {
+                            $comerciale = array_merge($comerciale, array($stocksCordes));
                         }
                     }
                 }

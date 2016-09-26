@@ -41,6 +41,7 @@ class StocksArticlesSn
      */
     private $refStockArticle;
 
+
     public function __toString()
     {
         return $this->getNumeroSerie();
@@ -115,7 +116,7 @@ class StocksArticlesSn
         return $this->refStockArticle;
     }
 
-    public function __construct($numeroSerie, $snQte, $refStockArticle)
+    public function __construct($numeroSerie, $snQte, StocksArticles $refStockArticle)
     {
         $this->numeroSerie = $numeroSerie;
         $this->snQte = $snQte;

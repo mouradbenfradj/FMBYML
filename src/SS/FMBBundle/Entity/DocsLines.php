@@ -118,6 +118,11 @@ class DocsLines
      */
     private $refDoc;
 
+    public function __toString()
+    {
+        return $this->getRefDocLine();
+    }
+
     /**
      * Set refArticle
      *

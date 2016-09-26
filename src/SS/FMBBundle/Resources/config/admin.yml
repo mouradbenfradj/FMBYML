@@ -289,13 +289,13 @@ services:
         calls:
             - [ setTranslationDomain, [SSFMBBundle]]
 
-    sonata.admin.stockcorde:
+    sonata.admin.stockscorde:
         class: SS\FMBBundle\Admin\StocksCordeAdmin
         tags:
             - { name: sonata.admin, manager_type: orm,group: "Stock",  label: "stockcorde",label_catalogue: "StocksCorde" }
         arguments:
             - ~
-            - SS\FMBBundle\Entity\StocksCorde
+            - SS\FMBBundle\Entity\StocksCordes
             - ~
         calls:
             - [ setTranslationDomain, [SSFMBBundle]]

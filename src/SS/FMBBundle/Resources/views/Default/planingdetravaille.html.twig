@@ -65,7 +65,20 @@
                         </tr>
                         <tr bgcolor="#FEA7C7">
                             <td>comerciale</td>
-                            <td></td>
+                            <td>nombre de tache a effectuer : {{ comercialeurgent|length }}
+                                <table border="1">
+                                    {% for emplacement in comercialeurgent %}
+                                        <tr>
+                                            <td>{{ emplacement.article.refStockArticle.idStock.libStock }}</td>
+                                            <td>{{ emplacement.article.refStockArticle.refArticle }}</td>
+                                            <td>{{ emplacement.article.snQte }}</td>
+                                            <td>{{ emplacement.article.numeroSerie }}</td>
+                                            <td>{{ emplacement.article.numeroSerie }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            </td>
+                        </tr>
                         </tr>
                     {% endif %}
                     </tbody>
@@ -118,7 +131,20 @@
                         </tr>
                         <tr bgcolor="#FEFE5A">
                             <td>comerciale</td>
-                            <td></td>
+                            <td>nombre de tache a effectuer : {{ comercialeaeffectuer|length }}
+                                <table border="1">
+                                    {% for emplacement in comercialeaeffectuer %}
+                                        <tr>
+                                            <td>{{ emplacement.article.refStockArticle.idStock.libStock }}</td>
+                                            <td>{{ emplacement.article.refStockArticle.refArticle }}</td>
+                                            <td>{{ emplacement.article.snQte }}</td>
+                                            <td>{{ emplacement.article.numeroSerie }}</td>
+                                            <td>{{ emplacement.article.numeroSerie }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            </td>
+                        </tr>
                         </tr>
                     {% endif %}
 
@@ -172,7 +198,19 @@
                         </tr>
                         <tr bgcolor="#76FE72">
                             <td>comerciale</td>
-                            <td></td>
+                            <td>nombre de tache a effectuer : {{ comerciale|length }}
+                                <table border="1">
+                                    {% for emplacement in comerciale %}
+                                        <tr>
+                                            <td>{{ emplacement.article.refStockArticle.idStock.libStock }}</td>
+                                            <td>{{ emplacement.article.refStockArticle.refArticle }}</td>
+                                            <td>{{ emplacement.article.snQte }}</td>
+                                            <td>{{ emplacement.article.numeroSerie }}</td>
+                                            <td>{{ emplacement.article.numeroSerie }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            </td>
                         </tr>
                     {% endif %}
 

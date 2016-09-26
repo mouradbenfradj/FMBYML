@@ -18,16 +18,16 @@ class StocksCordeAdmin extends Admin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('id')->add('quantiter')->add('pret')->add('emplacement')->add('article')->add('dateDeCreation');
+        $formMapper->add('id')->add('quantiter')->add('pret')->add('emplacement')->add('numeroSerie')->add('dateDeCreation')->add('dateDeRetirement');
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('id')->add('quantiter')->add('pret')->add('emplacement')->add('article')->add('dateDeCreation');
+        $datagridMapper->add('id')->add('quantiter')->add('pret')->add('emplacement')->add('numeroSerie')->add('dateDeCreation')->add('dateDeRetirement');
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('id')->addIdentifier('quantiter')->addIdentifier('pret')->addIdentifier('emplacement')->addIdentifier('article')->addIdentifier('dateDeCreation');
+        $listMapper->addIdentifier('id')->add('quantiter')->add('pret')->add('emplacement')->add('numeroSerie')->add('dateDeCreation')->add('dateDeRetirement');
     }
 }

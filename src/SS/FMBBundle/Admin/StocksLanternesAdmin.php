@@ -18,16 +18,16 @@ class StocksLanternesAdmin extends Admin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('id')->add('lanterne')->add('poches')->add('emplacement')->add('pret')->add('article')->add('dateDeCreation')->add('docLine');
+        $formMapper->add('id')->add('lanterne')->add('poches')->add('emplacement')->add('pret')->add('numeroSerie')->add('dateDeCreation')->add('docLine');
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('id')->add('lanterne')->add('poches')->add('emplacement')->add('pret')->add('article')->add('dateDeCreation')->add('docLine');
+        $datagridMapper->add('id')->add('lanterne')->add('poches')->add('emplacement')->add('pret')->add('numeroSerie')->add('dateDeCreation')->add('docLine');
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('id')->add('lanterne')->add('poches')->add('emplacement')->add('pret')->add('article')->add('dateDeCreation')->add('docLine');
+        $listMapper->addIdentifier('id')->add('lanterne')->add('poches')->add('emplacement')->add('pret')->add('numeroSerie')->add('dateDeCreation')->add('docLine');
     }
 }
