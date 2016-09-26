@@ -63,8 +63,7 @@ class StocksCordes
     private $dateDeCreation;
     /**
      *
-     * @ORM\Column(name="dateDeRetirement", type="date")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\Column(name="dateDeRetirement", type="date", nullable=true)
      */
     private $dateDeRetirement;
     /**
@@ -271,7 +270,6 @@ class StocksCordes
     {
         return $this->docLine;
     }
-
 
     /**
      * Set dateDeRetirement

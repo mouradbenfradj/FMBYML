@@ -17,7 +17,7 @@ class LoadStocksArticlesSn extends AbstractFixture implements OrderedFixtureInte
      */
     public function getOrder()
     {
-        return 7;
+        return 6;
     }
 
     /**

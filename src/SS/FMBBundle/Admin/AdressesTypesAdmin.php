@@ -14,20 +14,20 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 
 
-class DocumentAdmin extends Admin
+class AdressesTypesAdmin extends Admin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('refDoc')->add('idTypeDoc')->add('docsLines');
+        $formMapper->add('idAdresseType')->add('adresseType')->add('defaut');
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('refDoc')->add('idTypeDoc')->add('docsLines');
+        $datagridMapper->add('idAdresseType')->add('adresseType')->add('defaut');
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('refDoc')->add('idTypeDoc')->add('docsLines');
+        $listMapper->addIdentifier('idAdresseType')->add('adresseType')->add('defaut');
     }
 }

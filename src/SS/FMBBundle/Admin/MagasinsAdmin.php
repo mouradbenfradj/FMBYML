@@ -10,16 +10,16 @@ class MagasinsAdmin extends Admin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('libMagasin');
+        $formMapper->add('idMagasin')->add('libMagasin')->add('abrevMagasin')->add('modeVente')->add('actif')->add('idMagEnseigne')->add('filieres')->add('idTarif')->add('idStock');
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('libMagasin');
+        $datagridMapper->add('idMagasin')->add('libMagasin')->add('abrevMagasin')->add('modeVente')->add('actif')->add('idMagEnseigne')->add('filieres')->add('idTarif')->add('idStock');
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('libMagasin')->addIdentifier('filieres');
+        $listMapper->addIdentifier('idMagasin')->add('libMagasin')->add('abrevMagasin')->add('modeVente')->add('actif')->add('idMagEnseigne')->add('filieres')->add('idTarif')->add('idStock');
     }
 }

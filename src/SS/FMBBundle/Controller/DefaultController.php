@@ -36,19 +36,9 @@ class DefaultController extends Controller
             $defaultmetier = new DefaultImpl($em);
             $form->handleRequest($request);
             $document = $form['document']->getData();
-            $document->setCodeAffaire("");
-            $document->setNomContact("");
-            $document->setAdresseContact("");
-            $document->setCodePostalContact("");
-            $document->setVilleContact("");
-            $document->setAppTarifs("");
-            $document->setDescription("");
             $document->setDateCreationDoc(new \DateTime());
-            $document->setCodeFile("");
             $em->persist($document);
-
             $lant = $form['nomLanterne']->getData();
-
             foreach ($form['document']['docsLines']->getData() as $doclin) {
                 $stockarticles = $em->getRepository('SSFMBBundle:StocksArticles')->findOneBy(array('idStock' => $form->get('libStock')->getData()->getIdStock(), 'refArticle' => $doclin->getRefArticle()));
                 if (!empty($stockarticles)) {
@@ -56,17 +46,9 @@ class DefaultController extends Controller
                         $stocksarticlessn = $em->getRepository('SSFMBBundle:StocksArticlesSn')->findOneBy(array('refStockArticle' => $stockarticles, 'numeroSerie' => $request->request->get("ss_fmbbundle_preparationlanterne")['document']['docsLines'][0]['numeroSerie']));
                         $doclin->setRefDoc($document);
                         $doclin->setLibArticle($doclin->getRefArticle()->getLibArticle());
-                        $doclin->setDescArticle("");
-                        $doclin->setPuHt(0);
-                        $doclin->setRemise(0);
-                        $doclin->setTva(0);
-                        $doclin->setOrdre(false);
-                        $doclin->setVisible(false);
-                        $doclin->setPaForced(false);
 
                         $stockslanternes = new StocksLanternes();
                         $stockslanternes->setDateDeCreation($form->getData('date')['date']);
-                        $stockslanternes->setPret(false);
                         $stockslanternes->setArticle($stocksarticlessn);
                         $stockslanternes->setLanterne($lant);
                         $stockslanternes->setDocLine($doclin);
@@ -121,7 +103,7 @@ class DefaultController extends Controller
                 }
                 $em->flush();
             }
-            return $this->redirectToRoute('ssfmb_homepage');
+            return $this->redirectToRoute('ssfmb_misaaeaulanterne');
         }
         return $this->render(
             '@SSFMB/Default/miseAEauLanterne.html.twig',
@@ -155,14 +137,14 @@ class DefaultController extends Controller
                 if (!$article) {
                     $article = new Articles();
                     $article->setLibArticle(substr($slanterne->getArticle()->getRefStockArticle()->getRefArticle()->getLibArticle(), strrpos($slanterne->getArticle()->getRefStockArticle()->getRefArticle()->getLibArticle(), ' ', 0) + 1));
-                    $article->setLibTicket('l');
-                    $article->setDescCourte('e');
-                    $article->setDescLongue('e');
-                    $article->setRefArtCateg('r');
-                    $article->setModele('m');
+                    $article->setLibTicket('');
+                    $article->setDescCourte('');
+                    $article->setDescLongue('');
+                    $article->setRefArtCateg('');
+                    $article->setModele('');
                     $article->setPaaLastMaj(new \DateTime());
-                    $article->setPromo(1);
-                    $article->setValoIndice(10);
+                    $article->setPromo(0);
+                    $article->setValoIndice(0);
                     $article->setLot(true);
                     $article->setComposant(true);
                     $article->setVariante(true);
@@ -172,8 +154,8 @@ class DefaultController extends Controller
                     $article->setDispo(true);
                     $article->setDateCreation(new \DateTime());
                     $article->setDateModification(new \DateTime());
-                    $article->setIsAchetable(true);
-                    $article->setIsVendable(true);
+                    $article->setIsAchetable(false);
+                    $article->setIsVendable(false);
                     $em->persist($article);
                     $em->flush();
                 }
@@ -200,12 +182,10 @@ class DefaultController extends Controller
                     } else {
                         $sarticlesn->setSnQte($sarticlesn->getSnQte() + $implementation->calculerQuantiterLanterne($slanterne));
                     }
-
                 }
 
                 $slanterne->setPret(true);
                 $slanterne->setDateDeRetirement(new \DateTime($request->request->get('dateRetraitLanterne')));
-
                 $slanterne->getLanterne()->setNbrTotaleEnStock($slanterne->getLanterne()->getNbrTotaleEnStock() + 1);
                 $slanterne->setEmplacement(null);
                 $place->setStockslanterne(null);
@@ -214,7 +194,7 @@ class DefaultController extends Controller
 
             $em->flush();
 
-            return $this->redirectToRoute('ssfmb_homepage');
+            return $this->redirectToRoute('ssfmb_retraitLanterne');
         }
 
         return $this->render('SSFMBBundle:Default:retraitLanterne.html.twig',
@@ -233,17 +213,9 @@ class DefaultController extends Controller
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             $document = $form['document']->getData();
-            $document->setCodeAffaire("");
-            $document->setNomContact("");
-            $document->setAdresseContact("");
-            $document->setCodePostalContact("");
-            $document->setVilleContact("");
-            $document->setAppTarifs("");
-            $document->setDescription("");
             $document->setDateCreationDoc(new \DateTime());
             $document->setCodeFile("");
             $em->persist($document);
-
             $corde = $form['id']->getData();
             foreach ($form['document']['docsLines']->getData() as $doclin) {
                 $stockarticles = $em->getRepository('SSFMBBundle:StocksArticles')->findOneBy(array('idStock' => $form->get('libStock')->getData()->getIdStock(), 'refArticle' => $doclin->getRefArticle()));
@@ -252,13 +224,6 @@ class DefaultController extends Controller
                         $stocksarticlessn = $em->getRepository('SSFMBBundle:StocksArticlesSn')->findOneBy(array('refStockArticle' => $stockarticles, 'numeroSerie' => $request->request->get("ss_fmbbundle_preparationcorde")['document']['docsLines'][0]['numeroSerie']));
                         $doclin->setRefDoc($document);
                         $doclin->setLibArticle($doclin->getRefArticle()->getLibArticle());
-                        $doclin->setDescArticle("");
-                        $doclin->setPuHt(0);
-                        $doclin->setRemise(0);
-                        $doclin->setTva(0);
-                        $doclin->setOrdre(false);
-                        $doclin->setVisible(false);
-                        $doclin->setPaForced(false);
 
                         $stockscordes = new StocksCordes();
                         $stockscordes->setDateDeCreation($form->getData('date')['date']);
@@ -290,8 +255,7 @@ class DefaultController extends Controller
         );
     }
 
-    public
-    function miseAEauCordeAction(Request $request)
+    public function miseAEauCordeAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $defaultmetier = new DefaultImpl($em);
@@ -322,7 +286,7 @@ class DefaultController extends Controller
                 }
                 $em->flush();
             }
-            return $this->redirectToRoute('ssfmb_homepage');
+            return $this->redirectToRoute('ssfmb_misaaeaucorde');
         }
         return $this->render(
             '@SSFMB/Default/miseAEauCorde.html.twig',
@@ -352,7 +316,7 @@ class DefaultController extends Controller
                 $place = $em->getRepository('SSFMBBundle:Emplacement')->find($emplacementcorde);
                 $scorde = $place->getStockscorde();
 
-                $article = $em->getRepository('SSFMBBundle:Articles')->findOneByLibArticle(substr($scorde->getArticle()->getRefStockArticle()->getRefArticle()->getLibArticle(), strrpos($scorde->getArticle()->getRefStockArticle()->getRefArticle()->getLibArticle(), ' ', 0) + 1) . " comercial");
+                $article = $em->getRepository('SSFMBBundle:Articles')->findOneByLibArticle(substr($scorde->getArticle()->getRefStockArticle()->getRefArticle()->getLibArticle(), strrpos($scorde->getArticle()->getRefStockArticle()->getRefArticle()->getLibArticle(), ' ', 0)) . " comercial");
                 if (!$article) {
                     $article = new Articles();
                     $article->setLibArticle(substr($scorde->getArticle()->getRefStockArticle()->getRefArticle()->getLibArticle(), strrpos($scorde->getArticle()->getRefStockArticle()->getRefArticle()->getLibArticle(), ' ', 0)) . " comercial");
@@ -413,7 +377,7 @@ class DefaultController extends Controller
             }
 
             $em->flush();
-            return $this->redirectToRoute('ssfmb_homepage');
+            return $this->redirectToRoute('ssfmb_retraitcorde');
 
         }
 
@@ -482,7 +446,7 @@ class DefaultController extends Controller
             }
 
 
-            $pretacomercialisation = $em->getRepository('StocksCordes')->findByPret(true);
+            $pretacomercialisation = $em->getRepository('SSFMBBundle:StocksCordes')->findByPret(true);
             if ($pretacomercialisation) {
                 foreach ($pretacomercialisation as $emplacement) {
                     if ($emplacement->getDateDeRemplissage()) {

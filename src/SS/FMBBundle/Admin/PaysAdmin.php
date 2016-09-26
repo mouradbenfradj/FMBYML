@@ -14,20 +14,20 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 
 
-class CordeAdmin extends Admin
+class PaysAdmin extends Admin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('id')->add('stockscordes')->add('nbrTotaleEnStock')->add('parc');
+        $formMapper->add('idPays')->add('pays')->add('codePays')->add('defautIdLangage')->add('useEtat')->add('affichage');
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('id')->add('stockscordes')->add('nbrTotaleEnStock')->add('parc');
+        $datagridMapper->add('idPays')->add('pays')->add('codePays')->add('defautIdLangage')->add('useEtat')->add('affichage');
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('id')->add('parc')->add('stockscordes')->add('nbrTotaleEnStock');
+        $listMapper->addIdentifier('idPays')->add('pays')->add('codePays')->add('defautIdLangage')->add('useEtat')->add('affichage');
     }
 }

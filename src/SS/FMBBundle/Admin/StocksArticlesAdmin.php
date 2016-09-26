@@ -18,17 +18,16 @@ class StocksArticlesAdmin extends Admin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('idStock')->add('refArticle')->add('qte');
+        $formMapper->add('refStockArticle')->add('idStock')->add('refArticle')->add('qte')->add('stocksArticlesSns');
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('idStock')->add('refArticle')->add('qte');
+        $datagridMapper->add('refStockArticle')->add('idStock')->add('refArticle')->add('qte')->add('stocksArticlesSns');
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('idStock')->addIdentifier('refArticle'
-        )->addIdentifier('qte');
+        $listMapper->addIdentifier('refStockArticle')->add('idStock')->add('refArticle')->add('qte')->add('stocksArticlesSns');
     }
 }

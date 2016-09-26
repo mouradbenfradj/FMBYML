@@ -14,20 +14,20 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 
 
-class TypeDocumentsAdmin extends Admin
+class ArticlesValorisationsAdmin extends Admin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('article')->add('role');
+        $formMapper->add('idValo')->add('groupe')->add('libValo')->add('abrevValo')->add('popup');
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('article')->add('role');
+        $datagridMapper->add('idValo')->add('groupe')->add('libValo')->add('abrevValo')->add('popup');
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('article')->addIdentifier('role');
+        $listMapper->addIdentifier('idValo')->add('groupe')->add('libValo')->add('abrevValo')->add('popup');
     }
 }

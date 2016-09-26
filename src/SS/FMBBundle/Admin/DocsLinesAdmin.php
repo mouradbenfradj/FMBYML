@@ -18,16 +18,16 @@ class DocsLinesAdmin extends Admin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('refDocLine')->add('refDoc')->add('refArticle')->add('libArticle')->add('descArticle')->add('qte');
+        $formMapper->add('refDocLine')->add('refDoc')->add('refArticle')->add('libArticle')->add('descArticle')->add('qte')->add('puHt')->add('remise')->add('tva')->add('ordre')->add('visible')->add('paHt')->add('paForced');
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('refDocLine')->add('refDoc')->add('refArticle')->add('libArticle')->add('descArticle')->add('qte');
+        $datagridMapper->add('refDocLine')->add('refDoc')->add('refArticle')->add('libArticle')->add('descArticle')->add('qte')->add('puHt')->add('remise')->add('tva')->add('ordre')->add('visible')->add('paHt')->add('paForced');
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('refDocLine')->addIdentifier('refDoc')->addIdentifier('refArticle')->addIdentifier('libArticle')->addIdentifier('descArticle')->addIdentifier('qte');
+        $listMapper->addIdentifier('refDocLine')->add('refDoc')->add('refArticle')->add('libArticle')->add('descArticle')->add('qte')->add('puHt')->add('remise')->add('tva')->add('ordre')->add('visible')->add('paHt')->add('paForced');
     }
 }

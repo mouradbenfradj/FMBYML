@@ -1,4 +1,11 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: Sniper
+ * Date: 01/04/2016
+ * Time: 00:38
+ */
+
 namespace SS\FMBBundle\Admin;
 
 use Sonata\AdminBundle\Admin\Admin;
@@ -6,20 +13,21 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 
-class LotAdmin extends Admin
+
+class ArtCategsSpecificitesAdmin extends Admin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('lot');
+        $formMapper->add('idModeleSpe')->add('libModeleSpe');
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('lot');
+        $datagridMapper->add('idModeleSpe')->add('libModeleSpe');
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('lot');
+        $listMapper->addIdentifier('idModeleSpe')->add('libModeleSpe');
     }
 }

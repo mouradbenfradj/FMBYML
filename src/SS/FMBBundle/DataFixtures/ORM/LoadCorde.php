@@ -4,9 +4,9 @@ namespace SS\FMBBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use SS\FMBBundle\Entity\StocksArticles;
+use SS\FMBBundle\Entity\Corde;
 
-class LoadStocksArticles extends AbstractFixture implements OrderedFixtureInterface
+class LoadCorde extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
      * Load data fixtures with the passed EntityManager
@@ -15,14 +15,12 @@ class LoadStocksArticles extends AbstractFixture implements OrderedFixtureInterf
      */
     public function load(ObjectManager $manager)
     {
-        $stockArNH = new StocksArticles();
-        $stockArNH->setRefArticle($this->getReference('NaissainHuitre'));
-        $stockArNH->setQte(10000000);
-        $stockArNH->setRefStockArticle('00001');
-        $stockArNH->setIdStock($this->getReference('stock1'));
-        $manager->persist($stockArNH);
+        $corde = new Corde();
+        $corde->setNbrTotaleEnStock(300);
+        $corde->setParc($this->getReference('fmb'));
+        $manager->persist($corde);
         $manager->flush();
-        $this->addReference('stockArNH', $stockArNH);
+        $this->addReference('corde', $corde);
     }
 
     /**
@@ -32,7 +30,7 @@ class LoadStocksArticles extends AbstractFixture implements OrderedFixtureInterf
      */
     public function getOrder()
     {
-        return 5;
+        return 8;
     }
 
 }

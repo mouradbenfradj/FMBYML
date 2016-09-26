@@ -1,4 +1,54 @@
 services:
+    sonata.admin.adresses:
+        class: SS\FMBBundle\Admin\AdressesAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: "Adresse"}
+        arguments:
+            - ~
+            - SS\FMBBundle\Entity\Adresses
+            - ~
+        calls:
+            - [ setTranslationDomain, [SSFMBBundle]]
+    sonata.admin.adressesTypes:
+        class: SS\FMBBundle\Admin\AdressesTypesAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: "Adresse Types"}
+        arguments:
+            - ~
+            - SS\FMBBundle\Entity\AdressesTypes
+            - ~
+        calls:
+            - [ setTranslationDomain, [SSFMBBundle]]
+    sonata.admin.annuaire:
+        class: SS\FMBBundle\Admin\AnnuaireAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: "Annuaire"}
+        arguments:
+            - ~
+            - SS\FMBBundle\Entity\Annuaire
+            - ~
+        calls:
+            - [ setTranslationDomain, [SSFMBBundle]]
+    sonata.admin.annuairecategories:
+        class: SS\FMBBundle\Admin\AnnuaireCategoriesAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: "Annuaire Categories"}
+        arguments:
+            - ~
+            - SS\FMBBundle\Entity\AnnuaireCategories
+            - ~
+        calls:
+            - [ setTranslationDomain, [SSFMBBundle]]
+    sonata.admin.artcategsspecificites:
+        class: SS\FMBBundle\Admin\ArtCategsSpecificitesAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: "Art Categs Specificites"}
+        arguments:
+            - ~
+            - SS\FMBBundle\Entity\ArtCategsSpecificites
+            - ~
+        calls:
+            - [ setTranslationDomain, [SSFMBBundle]]
     sonata.admin.articles:
         class: SS\FMBBundle\Admin\ArticlesAdmin
         tags:
@@ -6,6 +56,26 @@ services:
         arguments:
             - ~
             - SS\FMBBundle\Entity\Articles
+            - ~
+        calls:
+            - [ setTranslationDomain, [SSFMBBundle]]
+    sonata.admin.articlesvalorisations:
+        class: SS\FMBBundle\Admin\ArticlesValorisationsAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: "Articles Valorisations"}
+        arguments:
+            - ~
+            - SS\FMBBundle\Entity\ArticlesValorisations
+            - ~
+        calls:
+            - [ setTranslationDomain, [SSFMBBundle]]
+    sonata.admin.civilites:
+        class: SS\FMBBundle\Admin\CivilitesAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: "Civilites"}
+        arguments:
+            - ~
+            - SS\FMBBundle\Entity\Civilites
             - ~
         calls:
             - [ setTranslationDomain, [SSFMBBundle]]
@@ -19,27 +89,6 @@ services:
             - ~
         calls:
             - [ setTranslationDomain, [SSFMBBundle]]
-    sonata.admin.docblf:
-        class: SS\FMBBundle\Admin\DocBlfAdmin
-        tags:
-            - { name: sonata.admin, manager_type: orm,group: "Document",  label: "DocBlf",label_catalogue: "Docuemnt" }
-        arguments:
-            - ~
-            - SS\FMBBundle\Entity\DocBlf
-            - ~
-        calls:
-            - [ setTranslationDomain, [SSFMBBundle]]
-    sonata.admin.document:
-            class: SS\FMBBundle\Admin\DocumentAdmin
-            tags:
-                - { name: sonata.admin, manager_type: orm,group: "Document",  label: "Document",label_catalogue: "Docuemnt" }
-            arguments:
-                - ~
-                - SS\FMBBundle\Entity\Documents
-                - ~
-            calls:
-                - [ setTranslationDomain, [SSFMBBundle]]
-
     sonata.admin.docslines:
         class: SS\FMBBundle\Admin\DocsLinesAdmin
         tags:
@@ -50,6 +99,48 @@ services:
             - ~
         calls:
             - [ setTranslationDomain, [SSFMBBundle]]
+    sonata.admin.docslinessn:
+        class: SS\FMBBundle\Admin\DocsLinesSnAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm,group: "Document",  label: "DocsLinesSn",label_catalogue: "DocsLinesSn" }
+        arguments:
+            - ~
+            - SS\FMBBundle\Entity\DocsLinesSn
+            - ~
+        calls:
+            - [ setTranslationDomain, [SSFMBBundle]]
+    sonata.admin.documents:
+        class: SS\FMBBundle\Admin\DocumentsAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm,group: "Document",  label: "Documents",label_catalogue: "Docuemnts" }
+        arguments:
+            - ~
+            - SS\FMBBundle\Entity\Documents
+            - ~
+        calls:
+            - [ setTranslationDomain, [SSFMBBundle]]
+
+    sonata.admin.documentsetats:
+        class: SS\FMBBundle\Admin\DocumentsEtatsAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm,group: "Document",  label: "DocumentsEtats",label_catalogue: "DocumentsEtats" }
+        arguments:
+            - ~
+            - SS\FMBBundle\Entity\DocumentsEtats
+            - ~
+        calls:
+            - [ setTranslationDomain, [SSFMBBundle]]
+    sonata.admin.documentstypes:
+        class: SS\FMBBundle\Admin\DocumentsTypesAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm,group: "Document",  label: "DocumentsTypes",label_catalogue: "DocumentsTypes" }
+        arguments:
+            - ~
+            - SS\FMBBundle\Entity\DocumentsTypes
+            - ~
+        calls:
+            - [ setTranslationDomain, [SSFMBBundle]]
+
     sonata.admin.emplacement:
         class: SS\FMBBundle\Admin\EmplacementAdmin
         tags:
@@ -92,24 +183,53 @@ services:
             - ~
         calls:
             - [ setTranslationDomain, [SSFMBBundle]]
-    sonata.admin.lot:
-        class: SS\FMBBundle\Admin\LotAdmin
-        tags:
-            - { name: sonata.admin, manager_type: orm, label: "Lot"}
-        arguments:
-            - ~
-            - SS\FMBBundle\Entity\Lot
-            - ~
-        calls:
-            - [ setTranslationDomain, [SSFMBBundle]]
-
-    sonata.admin.parc:
-        class: SS\FMBBundle\Admin\ParcAdmin
+    sonata.admin.magasins:
+        class: SS\FMBBundle\Admin\MagasinsAdmin
         tags:
             - { name: sonata.admin, manager_type: orm, label: "Parc"}
         arguments:
             - ~
-            - SS\FMBBundle\Entity\Parc
+            - SS\FMBBundle\Entity\Magasins
+            - ~
+        calls:
+            - [ setTranslationDomain, [SSFMBBundle]]
+    sonata.admin.magasinsenseignes:
+        class: SS\FMBBundle\Admin\MagasinsEnseignesAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: "Magasins Enseignes"}
+        arguments:
+            - ~
+            - SS\FMBBundle\Entity\MagasinsEnseignes
+            - ~
+        calls:
+            - [ setTranslationDomain, [SSFMBBundle]]
+    sonata.admin.pays:
+        class: SS\FMBBundle\Admin\PaysAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: "Pays"}
+        arguments:
+            - ~
+            - SS\FMBBundle\Entity\Pays
+            - ~
+        calls:
+            - [ setTranslationDomain, [SSFMBBundle]]
+    sonata.admin.pdfmodeles:
+        class: SS\FMBBundle\Admin\PdfModelesAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: "Pdf Modeles"}
+        arguments:
+            - ~
+            - SS\FMBBundle\Entity\PdfModeles
+            - ~
+        calls:
+            - [ setTranslationDomain, [SSFMBBundle]]
+    sonata.admin.pdftypes:
+        class: SS\FMBBundle\Admin\PdfTypesAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: "Pdf Types"}
+        arguments:
+            - ~
+            - SS\FMBBundle\Entity\PdfTypes
             - ~
         calls:
             - [ setTranslationDomain, [SSFMBBundle]]
@@ -158,6 +278,28 @@ services:
             - ~
         calls:
             - [ setTranslationDomain, [SSFMBBundle]]
+    sonata.admin.stocksarticlessn:
+        class: SS\FMBBundle\Admin\StocksArticlesSnAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm,group: "Stock",  label: "stockarticleSn",label_catalogue: "StocksArticlesSn" }
+        arguments:
+            - ~
+            - SS\FMBBundle\Entity\StocksArticlesSn
+            - ~
+        calls:
+            - [ setTranslationDomain, [SSFMBBundle]]
+
+    sonata.admin.stockcorde:
+        class: SS\FMBBundle\Admin\StocksCordeAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm,group: "Stock",  label: "stockcorde",label_catalogue: "StocksCorde" }
+        arguments:
+            - ~
+            - SS\FMBBundle\Entity\StocksCorde
+            - ~
+        calls:
+            - [ setTranslationDomain, [SSFMBBundle]]
+
     sonata.admin.stocklanterne:
         class: SS\FMBBundle\Admin\StocksLanternesAdmin
         tags:
@@ -169,13 +311,3 @@ services:
         calls:
             - [ setTranslationDomain, [SSFMBBundle]]
 
-    sonata.admin.typeDocuments:
-        class: SS\FMBBundle\Admin\TypeDocumentsAdmin
-        tags:
-            - { name: sonata.admin, manager_type: orm,group: "Document",  label: "TypeDocument",label_catalogue: "TypeDocuemnt" }
-        arguments:
-            - ~
-            - SS\FMBBundle\Entity\TypeDocuments
-            - ~
-        calls:
-            - [ setTranslationDomain, [SSFMBBundle]]

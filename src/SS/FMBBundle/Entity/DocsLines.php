@@ -32,7 +32,7 @@ class DocsLines
      *
      * @ORM\Column(name="desc_article", type="text", length=16777215, nullable=false)
      */
-    private $descArticle;
+    private $descArticle = "";
 
     /**
      * @var float
@@ -46,35 +46,35 @@ class DocsLines
      *
      * @ORM\Column(name="pu_ht", type="float", precision=10, scale=0, nullable=false)
      */
-    private $puHt;
+    private $puHt = 0;
 
     /**
      * @var float
      *
      * @ORM\Column(name="remise", type="float", precision=10, scale=0, nullable=false)
      */
-    private $remise;
+    private $remise = 0;
 
     /**
      * @var float
      *
      * @ORM\Column(name="tva", type="float", precision=10, scale=0, nullable=false)
      */
-    private $tva;
+    private $tva = 0;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="ordre", type="smallint", nullable=false)
      */
-    private $ordre;
+    private $ordre = false;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="visible", type="boolean", nullable=false)
      */
-    private $visible;
+    private $visible = false;
 
     /**
      * @var float
@@ -88,7 +88,7 @@ class DocsLines
      *
      * @ORM\Column(name="pa_forced", type="boolean", nullable=false)
      */
-    private $paForced;
+    private $paForced = false;
 
     /**
      * @var string
@@ -111,7 +111,7 @@ class DocsLines
     /**
      * @var \SS\FMBBundle\Entity\Documents
      *
-     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Documents")
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Documents", inversedBy="docsLines")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="ref_doc", referencedColumnName="ref_doc")
      * })

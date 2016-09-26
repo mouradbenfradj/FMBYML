@@ -43,7 +43,7 @@ class StocksLanternes
      *
      * @ORM\Column(name="pret", type="boolean")
      */
-    private $pret;
+    private $pret =false;
 
     /**
      * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\StocksArticlesSn")
@@ -63,8 +63,7 @@ class StocksLanternes
     private $dateDeCreation;
     /**
      *
-     * @ORM\Column(name="dateDeRetirement", type="date")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\Column(name="dateDeRetirement", type="date", nullable=true)
      */
     private $dateDeRetirement;
 

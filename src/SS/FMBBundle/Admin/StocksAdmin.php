@@ -28,6 +28,6 @@ class StocksAdmin extends Admin
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('libStock')->addIdentifier('refAdrStock')->addIdentifier('actif');
+        $listMapper->addIdentifier('libStock')->add('refAdrStock')->add('actif');
     }
 }

@@ -31,6 +31,7 @@ class Builder implements ContainerAwareInterface
         $menu->addChild('Retrait corde', array('route' => 'ssfmb_retraitcorde'));
         $menu->addChild('planing de travaille', array('route' => 'ssfmb_planingdetravaille'));
         $menu->addChild('Logout', array('route' => 'fos_user_security_logout'));
+        $menu->addChild('Zone Administrateur', array('route' => 'sonata_admin_dashboard'));
         return $menu;
     }
 

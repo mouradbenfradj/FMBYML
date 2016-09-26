@@ -14,20 +14,20 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 
 
-class CordeAdmin extends Admin
+class PdfModelesAdmin extends Admin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('id')->add('stockscordes')->add('nbrTotaleEnStock')->add('parc');
+        $formMapper->add('idPdfModele')->add('libModele')->add('descModele')->add('codePdfModele')->add('idPdfType');
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('id')->add('stockscordes')->add('nbrTotaleEnStock')->add('parc');
+        $datagridMapper->add('idPdfModele')->add('libModele')->add('descModele')->add('codePdfModele')->add('idPdfType');
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('id')->add('parc')->add('stockscordes')->add('nbrTotaleEnStock');
+        $listMapper->addIdentifier('idPdfModele')->add('libModele')->add('descModele')->add('codePdfModele')->add('idPdfType');
     }
 }

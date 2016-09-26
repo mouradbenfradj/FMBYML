@@ -18,16 +18,16 @@ class EmplacementAdmin extends Admin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('id')->add('place')->add('corde')->add('stockslanterne')->add('flotteur')->add('dateDeRemplissage');
+        $formMapper->add('id')->add('place')->add('stockscorde')->add('stockslanterne')->add('flotteur')->add('dateDeRemplissage');
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('id')->add('place')->add('corde')->add('stockslanterne')->add('flotteur')->add('dateDeRemplissage');
+        $datagridMapper->add('id')->add('place')->add('stockscorde')->add('stockslanterne')->add('flotteur')->add('dateDeRemplissage');
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('id')->addIdentifier('place')->addIdentifier('corde')->addIdentifier('stockslanterne')->addIdentifier('flotteur')->addIdentifier('dateDeRemplissage');
+        $listMapper->addIdentifier('id')->add('place')->add('stockscorde')->add('stockslanterne')->add('flotteur')->add('dateDeRemplissage');
     }
 }

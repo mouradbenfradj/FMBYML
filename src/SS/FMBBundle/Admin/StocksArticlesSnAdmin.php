@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Sniper
- * Date: 01/04/2016
- * Time: 00:38
- */
-
 namespace SS\FMBBundle\Admin;
 
 use Sonata\AdminBundle\Admin\Admin;
@@ -13,21 +6,20 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 
-
-class CordeAdmin extends Admin
+class StocksArticlesSnAdmin extends Admin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('id')->add('stockscordes')->add('nbrTotaleEnStock')->add('parc');
+        $formMapper->add('refStockArticle')->add('numeroSerie')->add('snQte');
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('id')->add('stockscordes')->add('nbrTotaleEnStock')->add('parc');
+        $datagridMapper->add('refStockArticle')->add('numeroSerie')->add('snQte');
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('id')->add('parc')->add('stockscordes')->add('nbrTotaleEnStock');
+        $listMapper->addIdentifier('refStockArticle')->addIdentifier('numeroSerie')->add('snQte');
     }
 }

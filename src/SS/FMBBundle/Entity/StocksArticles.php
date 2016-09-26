@@ -54,6 +54,10 @@ class StocksArticles
      */
     private $stocksArticlesSns;
 
+    public function __toString()
+    {
+        return $this->getRefStockArticle();
+    }
 
     /**
      * @ORM\PrePersist

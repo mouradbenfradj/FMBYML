@@ -195,7 +195,7 @@
             move();
             console.log('document ready');
             $('#choixqtearticle').ready(function () {
-                console.log('choixqtearticle ready1');
+                $('input:checkbox').hide();
                 $('#choixqtearticle').hide();
             });
             $('input:checkbox').change(function () {
@@ -251,15 +251,15 @@
                                 if (!$.trim(json)) {
                                     $('#choixqtearticle').ready(function () {
                                         move();
-                                        console.log('choixqtearticle ready2');
                                         $('#choixqtearticle').hide();
+                                        $('input:checkbox').hide();
                                     });
                                 }
                                 ;
                                 if ($.trim(json)) {
                                     $('#choixqtearticle').ready(function () {
                                         move();
-                                        console.log('choixqtearticle ready2');
+                                        $('input:checkbox').show();
                                         $('#choixqtearticle').show();
                                         $.ajax({
                                             type: 'get',
@@ -278,11 +278,10 @@
                                                 if ($.trim(json)) {
                                                     $('#choixqtearticle').ready(function () {
                                                         move();
-                                                        console.log('choixqtearticle ready4');
                                                         $("input:checkbox").each(function () {
                                                             $(this).prop('checked', false);
                                                         });
-
+                                                        $('input:checkbox').show();
                                                         $('#choixqtearticle').show();
                                                     });
                                                 }
@@ -333,7 +332,7 @@
                     if (!$.trim(json)) {
                         $('#choixqtearticle').ready(function () {
                             move();
-                            console.log('choixqtearticle ready');
+                            $('input:checkbox').hide();
                             $('#choixqtearticle').hide();
                         });
                     }
@@ -418,6 +417,7 @@
                         $('#choixqtearticle').ready(function () {
                             move();
                             console.log('choixqtearticle ready ! trim');
+                            $('input:checkbox').hide();
                             $('#choixqtearticle').hide();
                         });
                     }
@@ -502,6 +502,7 @@
                         $('#choixqtearticle').ready(function () {
                             move();
                             console.log('choixqtearticle ready');
+                            $('input:checkbox').hide();
                             $('#choixqtearticle').hide();
                         });
                     }

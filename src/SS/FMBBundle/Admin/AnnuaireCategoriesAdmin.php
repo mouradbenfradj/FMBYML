@@ -14,20 +14,20 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 
 
-class DocBlfAdmin extends Admin
+class AnnuaireCategoriesAdmin extends Admin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('refDoc')->add('refDocExterne')->add('idStock');
+        $formMapper->add('idCategorie')->add('libCategorie')->add('ordre')->add('appTarifs');
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('refDoc')->add('refDocExterne')->add('idStock');
+        $datagridMapper->add('idCategorie')->add('libCategorie')->add('ordre')->add('appTarifs');
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('refDoc')->addIdentifier('refDocExterne')->addIdentifier('idStock');
+        $listMapper->addIdentifier('idCategorie')->add('libCategorie')->add('ordre')->add('appTarifs');
     }
 }

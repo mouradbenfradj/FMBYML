@@ -18,49 +18,49 @@ class Documents
      *
      * @ORM\Column(name="code_affaire", type="string", length=64, nullable=false)
      */
-    private $codeAffaire;
+    private $codeAffaire = "";
 
     /**
      * @var string
      *
      * @ORM\Column(name="nom_contact", type="string", length=128, nullable=false)
      */
-    private $nomContact;
+    private $nomContact = "";
 
     /**
      * @var string
      *
      * @ORM\Column(name="adresse_contact", type="text", length=16777215, nullable=false)
      */
-    private $adresseContact;
+    private $adresseContact = "";
 
     /**
      * @var string
      *
      * @ORM\Column(name="code_postal_contact", type="string", length=9, nullable=false)
      */
-    private $codePostalContact;
+    private $codePostalContact = "";
 
     /**
      * @var string
      *
      * @ORM\Column(name="ville_contact", type="string", length=28, nullable=false)
      */
-    private $villeContact;
+    private $villeContact = "";
 
     /**
      * @var string
      *
      * @ORM\Column(name="app_tarifs", type="string", nullable=false)
      */
-    private $appTarifs;
+    private $appTarifs = "";
 
     /**
      * @var string
      *
      * @ORM\Column(name="description", type="text", length=16777215, nullable=false)
      */
-    private $description;
+    private $description = "";
 
     /**
      * @var \DateTime
@@ -74,7 +74,7 @@ class Documents
      *
      * @ORM\Column(name="code_file", type="string", length=32, nullable=false)
      */
-    private $codeFile;
+    private $codeFile = "";
 
     /**
      * @var string
@@ -135,7 +135,7 @@ class Documents
     private $idTypeDoc;
 
     /**
-     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\DocsLines", mappedBy="ref_doc" ,cascade={"persist","remove"})
+     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\DocsLines", mappedBy="refDoc" ,cascade={"persist","remove"})
      */
     private $docsLines;
 
@@ -497,6 +497,7 @@ class Documents
 
         return $this;
     }
+
     /**
      * Constructor
      */
