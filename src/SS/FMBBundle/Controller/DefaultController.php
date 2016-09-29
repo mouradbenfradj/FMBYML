@@ -454,15 +454,37 @@ class DefaultController extends Controller
 
             $pretacomercialisation = $em->getRepository('SSFMBBundle:StocksCordes')->findByPret(true);
             if ($pretacomercialisation) {
+                $p1 = array();
+                $p2 = array();
+                $p3 = array();
                 foreach ($pretacomercialisation as $stocksCordes) {
                     if ($stocksCordes->getDateDeRetirement()) {
                         $interval = date_diff($stocksCordes->getDateDeRetirement(), $date1);
                         if ($interval->format('%R%m') >= 2) {
-                            $comercialeurgent = array_merge($comercialeurgent, array($stocksCordes));
+                            if (in_array($stocksCordes->getArticle(), $p1)) {
+                                $key = array_search($stocksCordes->getArticle(), $p1);
+                                $comercialeurgent[$key]->setQuantiter($stocksCordes->getQuantiter() + $comercialeurgent[$key]->getQuantiter());
+                            } else {
+                                $p1 = array_merge($p1, array($stocksCordes->getArticle()));
+                                $comercialeurgent = array_merge($comercialeurgent, array($stocksCordes));
+                            }
                         } elseif (($interval->format('%R%m') < 2) && ($interval->format('%R%m') >= 1)) {
-                            $comercialeaeffectuer = array_merge($comercialeaeffectuer, array($stocksCordes));
+                            if (in_array($stocksCordes->getArticle(), $p2)) {
+                                $key = array_search($stocksCordes->getArticle(), $p2);
+                                $comercialeaeffectuer[$key]->setQuantiter($stocksCordes->getQuantiter() + $comercialeaeffectuer[$key]->getQuantiter());
+                            } else {
+                                $p2 = array_merge($p2, array($stocksCordes->getArticle()));
+                                $comercialeaeffectuer = array_merge($comercialeaeffectuer, array($stocksCordes));
+                            }
                         } elseif ($interval->format('%R%m') < 1) {
-                            $comerciale = array_merge($comerciale, array($stocksCordes));
+                            if (in_array($stocksCordes->getArticle(), $p3)) {
+                                $key = array_search($stocksCordes->getArticle(), $p3);
+                                $comerciale[$key]->setQuantiter($stocksCordes->getQuantiter() + $comerciale[$key]->getQuantiter());
+                            } else {
+                                $p3 = array_merge($p3, array($stocksCordes->getArticle()));
+                                $comerciale = array_merge($comerciale, array($stocksCordes));
+
+                            }
                         }
                     }
                 }

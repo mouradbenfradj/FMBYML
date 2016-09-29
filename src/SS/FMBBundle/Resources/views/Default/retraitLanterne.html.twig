@@ -15,13 +15,6 @@
                         {{ knp_menu_render('SSFMBBundle:Builder:parcRLMenu') }}
 
                     </ul>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-striped active" role="progressbar"
-                             id="myBar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:0%">
-                            0%
-                        </div>
-                    </div>
-
                     <table class="table table-condensed table-bordered" border="1">
                         <tbody>
                         <tr>
@@ -144,23 +137,7 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
-        function move() {
-            var elem = document.getElementById("myBar");
-            var width = 10;
-            var id = setInterval(frame, 10);
-
-            function frame() {
-                if (width >= 100) {
-                    clearInterval(id);
-                } else {
-                    width++;
-                    elem.style.width = width + '%';
-                    document.getElementById("myBar").innerHTML = width * 1 + '%';
-                }
-            }
-        }
         $(document).ready(function () {
-            move();
             $('input:checkbox').change(
                     function () {
                         if ($(this).is(':checked')) {
@@ -171,11 +148,8 @@
                     });
         });
         function fillCheckbox(containerID, fill) {
-            console.log(containerID);
-            console.log(fill);
             var checkbox = $('#' + containerID);
             var checkbox = checkbox.find('input[type="checkbox"]');
-            console.log(checkbox);
             checkbox.each(function () {
                 switch (fill) {
                     case '0':
@@ -189,7 +163,6 @@
                         this.checked = true;
                         break;
                     case 2:
-                        console.log(fill);
                         this.checked = !this.checked;
                         break;
                 }

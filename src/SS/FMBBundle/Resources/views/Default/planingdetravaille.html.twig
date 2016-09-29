@@ -10,12 +10,6 @@
                 <ul class="pagination pagination-lg">
                     {{ knp_menu_render('SSFMBBundle:Builder:parcPlaningMenu') }}
                 </ul>
-                <div class="progress">
-                    <div class="progress-bar progress-bar-striped active" role="progressbar"
-                         id="myBar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:0%">
-                        0%
-                    </div>
-                </div>
                 <table class="table table-condensed table-bordered" border="1">
                     <thead>
                     <tr bgcolor="#FEA7C7">
@@ -71,9 +65,8 @@
                                         <tr>
                                             <td>{{ emplacement.article.refStockArticle.idStock.libStock }}</td>
                                             <td>{{ emplacement.article.refStockArticle.refArticle }}</td>
-                                            <td>{{ emplacement.article.snQte }}</td>
                                             <td>{{ emplacement.article.numeroSerie }}</td>
-                                            <td>{{ emplacement.article.numeroSerie }}</td>
+                                            <td>{{ emplacement.quantiter }}</td>
                                         </tr>
                                     {% endfor %}
                                 </table>
@@ -137,9 +130,8 @@
                                         <tr>
                                             <td>{{ emplacement.article.refStockArticle.idStock.libStock }}</td>
                                             <td>{{ emplacement.article.refStockArticle.refArticle }}</td>
-                                            <td>{{ emplacement.article.snQte }}</td>
                                             <td>{{ emplacement.article.numeroSerie }}</td>
-                                            <td>{{ emplacement.article.numeroSerie }}</td>
+                                            <td>{{ emplacement.quantiter }}</td>
                                         </tr>
                                     {% endfor %}
                                 </table>
@@ -199,14 +191,16 @@
                         <tr bgcolor="#76FE72">
                             <td>comerciale</td>
                             <td>nombre de tache a effectuer : {{ comerciale|length }}
+                                <br>
                                 <table border="1">
+
                                     {% for emplacement in comerciale %}
+
                                         <tr>
                                             <td>{{ emplacement.article.refStockArticle.idStock.libStock }}</td>
                                             <td>{{ emplacement.article.refStockArticle.refArticle }}</td>
-                                            <td>{{ emplacement.article.snQte }}</td>
                                             <td>{{ emplacement.article.numeroSerie }}</td>
-                                            <td>{{ emplacement.article.numeroSerie }}</td>
+                                            <td>{{ emplacement.quantiter }}</td>
                                         </tr>
                                     {% endfor %}
                                 </table>
@@ -223,23 +217,7 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
-        function move() {
-            var elem = document.getElementById("myBar");
-            var width = 10;
-            var id = setInterval(frame, 10);
-
-            function frame() {
-                if (width >= 100) {
-                    clearInterval(id);
-                } else {
-                    width++;
-                    elem.style.width = width + '%';
-                    document.getElementById("myBar").innerHTML = width * 1 + '%';
-                }
-            }
-        }
         $(document).ready(function () {
-            move();
 
             function diffdate(d1, d2, u) {
                 div = 1

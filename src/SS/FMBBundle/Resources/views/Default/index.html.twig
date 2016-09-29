@@ -3,7 +3,6 @@
     Suivit - {{ parent() }}
 {% endblock %}
 {% block body %}
-
     {{ parent() }}
     <div class="container-fluid">
         <div class="row">
@@ -11,12 +10,6 @@
                 <ul class="pagination pagination-lg">
                     {{ knp_menu_render('SSFMBBundle:Builder:parcHomeMenu') }}
                 </ul>
-                <div class="progress">
-                    <div class="progress-bar progress-bar-striped active" role="progressbar"
-                         id="myBar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:0%">
-                        0%
-                    </div>
-                </div>
                 <table class="table table-condensed table-bordered" border="1">
                     <tbody>
                     {% if(entity != null) %}
@@ -172,27 +165,8 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
-        $(function () {
-            $("li.segment").lazyload();
-        });
-        function move() {
-            var elem = document.getElementById("myBar");
-            var width = 10;
-            var id = setInterval(frame, 10);
 
-            function frame() {
-                if (width >= 100) {
-                    clearInterval(id);
-                } else {
-                    width++;
-                    elem.style.width = width + '%';
-                    document.getElementById("myBar").innerHTML = width * 1 + '%';
-                }
-            }
-        }
         $(document).ready(function () {
-            move();
-
             function diffdate(d1, d2, u) {
                 div = 1
                 switch (u) {

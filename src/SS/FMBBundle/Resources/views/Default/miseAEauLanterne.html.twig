@@ -8,16 +8,11 @@
         {{ parent() }}
         <div class="row">
             <div class="col-md-12">
-                <form action="" method="post">
-                    <ul class="pagination pagination-lg">
-                        {{ knp_menu_render('SSFMBBundle:Builder:parcMAELMenu') }}
-                    </ul>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-striped active" role="progressbar"
-                             id="myBar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:0%">
-                            0%
-                        </div>
-                    </div>
+                <ul class="pagination pagination-lg">
+                    {{ knp_menu_render('SSFMBBundle:Builder:parcMAELMenu') }}
+                </ul>
+                <form action="" method="post" id="formulaie">
+
                     <table class="table table-condensed table-bordered" border="1">
                         <tbody>
                         <tr>
@@ -119,44 +114,46 @@
                                 </table>
                             </td>
                             <td>
-                                <p>quantiter disponible</p>
-                                <p><input type="number" id="quantit" readonly="true" value="0"></p>
-                                <p>date de preparation des laternes</p>
-                                {% set now =  "now"|date("Y-m-d") %}
-                                <p><input type="date" name="dateMAELanterne" value="{{ now }}"></p>
-                                <p>choisir type lanternes</p>
-                                <p>
-                                    <select name="lanternechoix" id="lanternechoix">
-                                        {% for lanterne in lanternes %}
-                                            <option value="{{ lanterne.nomLanterne }}">{{ lanterne.nomLanterne }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </p>
-
-                                <p> choisir l'article a mettre</p>
-
-                                <p>
-                                    <select name="articlechoix" id="articlechoix">
-                                        {% for article in articles %}
-                                            <option value="{{ article.refStockArticle }}">{{ article.refArticle.libArticle }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </p>
-                                <p> choisir le lot de l'article</p>
-
-                                <p>
-                                    <select name="articlelotchoix" id="articlelotchoix">
-
-                                    </select>
-                                </p>
-
-                                <div id="choixqtearticle">
-                                    <p> choix de la quantiter des lanternes</p>
+                                <div id="menuform">
+                                    <p>quantiter disponible</p>
+                                    <p><input type="number" id="quantit" readonly="true" value="0"></p>
+                                    <p>date de preparation des lanternes</p>
+                                    {% set now =  "now"|date("Y-m-d") %}
+                                    <p><input type="date" name="dateMAELanterne" value="{{ now }}"></p>
+                                    <p>choisir type lanternes</p>
                                     <p>
-                                        <select name="quantierchoix" id="quantierchoix"></select>
+                                        <select name="lanternechoix" id="lanternechoix">
+                                            {% for lanterne in lanternes %}
+                                                <option value="{{ lanterne.nomLanterne }}">{{ lanterne.nomLanterne }}</option>
+                                            {% endfor %}
+                                        </select>
                                     </p>
-                                    <p><input type="submit" value="confirmer la mise a l'eau"/></p>
 
+                                    <p> choisir l'article a mettre</p>
+
+                                    <p>
+                                        <select name="articlechoix" id="articlechoix">
+                                            {% for article in articles %}
+                                                <option value="{{ article.refStockArticle }}">{{ article.refArticle.libArticle }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </p>
+                                    <p> choisir le lot de l'article</p>
+
+                                    <p>
+                                        <select name="articlelotchoix" id="articlelotchoix">
+
+                                        </select>
+                                    </p>
+
+                                    <div id="choixqtearticle">
+                                        <p> choix de la quantiter des lanternes</p>
+                                        <p>
+                                            <select name="quantierchoix" id="quantierchoix"></select>
+                                        </p>
+                                        <p><input type="submit" value="confirmer la mise a l'eau"/></p>
+
+                                    </div>
                                 </div>
                             </td>
                         </tr>
@@ -173,33 +170,13 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
-        function move() {
-            var elem = document.getElementById("myBar");
-            var width = 1;
 
-            var id = setInterval(frame, 1);
-
-            function frame() {
-                if (width >= 100) {
-                    clearInterval(id);
-
-                } else {
-                    width++;
-                    elem.style.width = width + '%';
-                    document.getElementById("myBar").innerHTML = width * 1 + '%';
-                }
-            }
-
-        }
         $(document).ready(function () {
-            move();
-            console.log('document ready');
             $('#choixqtearticle').ready(function () {
                 $('input:checkbox').hide();
                 $('#choixqtearticle').hide();
             });
             $('input:checkbox').change(function () {
-                move();
                 if ($(this).is(':checked')) {
                     $('#quantit').val(parseInt($('#quantit').val()) - 1);
                 } else {
@@ -209,12 +186,13 @@
         });
         $('#articlelotchoix').hide();
         $('#articlechoix').ready(function () {
-            move();
-            console.log('articlechoix ready');
-
             $.ajax({
                 type: "POST",
                 url: "{{ url('ssfmb_articlestock') }}?stock_id=" + $('#idstockparc').text() + "&sarticle=" + $('#articlechoix').val(),
+                beforeSend: function () {
+                    circle.play();
+                    $('#menuform').insertAfter(circle.canvas);
+                },
                 success: function (data) {
                     if ($.trim(data)) {
                         var pos = true;
@@ -250,7 +228,6 @@
                                 $('#quantierchoix').html('');
                                 if (!$.trim(json)) {
                                     $('#choixqtearticle').ready(function () {
-                                        move();
                                         $('#choixqtearticle').hide();
                                         $('input:checkbox').hide();
                                     });
@@ -258,7 +235,6 @@
                                 ;
                                 if ($.trim(json)) {
                                     $('#choixqtearticle').ready(function () {
-                                        move();
                                         $('input:checkbox').show();
                                         $('#choixqtearticle').show();
                                         $.ajax({
@@ -277,7 +253,6 @@
                                                 $('#quantit').val(0);
                                                 if ($.trim(json)) {
                                                     $('#choixqtearticle').ready(function () {
-                                                        move();
                                                         $("input:checkbox").each(function () {
                                                             $(this).prop('checked', false);
                                                         });
@@ -297,7 +272,8 @@
                                             $(this).prop('checked', false);
                                         });
                                     });
-                                };
+                                }
+                                ;
 
                                 $.each(json, function (index, value) {
                                     $('#quantit').val(value.nombre);
@@ -311,7 +287,6 @@
         });
 
         $('#articlechoix').change(function () {
-            move();
             $.ajax({
                 type: 'get',
                 url: "{{ path('ssfmb_lanternearticle') }}",
@@ -331,16 +306,12 @@
                     $('#quantierchoix').html('');
                     if (!$.trim(json)) {
                         $('#choixqtearticle').ready(function () {
-                            move();
                             $('input:checkbox').hide();
                             $('#choixqtearticle').hide();
                         });
                     }
                     if ($.trim(json)) {
                         $('#choixqtearticle').ready(function () {
-                            move();
-                            console.log('choixqtearticle ready');
-
                             $("input:checkbox").each(function () {
                                 $(this).prop('checked', false);
                             });
@@ -362,8 +333,6 @@
                                     $('#quantit').val(0);
                                     if ($.trim(json)) {
                                         $('#choixqtearticle').ready(function () {
-                                            move();
-                                            console.log('choixqtearticle ready 2');
                                             $("input:checkbox").each(function () {
                                                 $(this).prop('checked', false);
                                             });
@@ -393,9 +362,6 @@
             });
         });
         $('#lanternechoix').change(function () {
-            move();
-            console.log('lanternechoix change');
-
             $.ajax({
                 type: 'get',
                 url: "{{ path('ssfmb_lanternearticle') }}",
@@ -415,17 +381,12 @@
                     $('#quantierchoix').html('');
                     if (!$.trim(json)) {
                         $('#choixqtearticle').ready(function () {
-                            move();
-                            console.log('choixqtearticle ready ! trim');
                             $('input:checkbox').hide();
                             $('#choixqtearticle').hide();
                         });
                     }
                     if ($.trim(json)) {
                         $('#choixqtearticle').ready(function () {
-                            move();
-                            console.log('choixqtearticle ready trim');
-
                             $("input:checkbox").each(function () {
                                 $(this).prop('checked', false);
                             });
@@ -448,8 +409,6 @@
 
                                     if ($.trim(json)) {
                                         $('#choixqtearticle').ready(function () {
-                                            move();
-                                            console.log('choixqtearticle ready');
                                             $("input:checkbox").each(function () {
                                                 $(this).prop('checked', false);
                                             });
@@ -479,8 +438,6 @@
             });
         });
         $('#articlelotchoix').change(function () {
-            move();
-
             $.ajax({
                 type: 'get',
                 url: "{{ path('ssfmb_lanternearticle') }}",
@@ -500,16 +457,12 @@
                     $('#quantierchoix').html('');
                     if (!$.trim(json)) {
                         $('#choixqtearticle').ready(function () {
-                            move();
-                            console.log('choixqtearticle ready');
                             $('input:checkbox').hide();
                             $('#choixqtearticle').hide();
                         });
                     }
                     if ($.trim(json)) {
                         $('#choixqtearticle').ready(function () {
-                            move();
-                            console.log('choixqtearticle ready');
                             $("input:checkbox").each(function () {
                                 $(this).prop('checked', false);
                             });
@@ -531,8 +484,6 @@
                                     $('#quantit').val(0);
                                     if ($.trim(json)) {
                                         $('#choixqtearticle').ready(function () {
-                                            move();
-                                            console.log('choixqtearticle ready');
                                             $("input:checkbox").each(function () {
                                                 $(this).prop('checked', false);
                                             });
@@ -562,8 +513,6 @@
             });
         });
         $('#quantierchoix').change(function () {
-            move();
-
             $.ajax({
                 type: 'get',
                 url: "{{ path('ssfmb_nombrelanternearticle') }}",
@@ -580,8 +529,6 @@
                     $('#quantit').val(0);
                     if ($.trim(json)) {
                         $('#choixqtearticle').ready(function () {
-                            move();
-                            console.log('choixqtearticle ready');
                             $("input:checkbox").each(function () {
                                 $(this).prop('checked', false);
                             });

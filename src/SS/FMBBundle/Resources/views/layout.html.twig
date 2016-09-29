@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block body %}
-        {% include "SSFMBBundle:Default:menu.html.twig" %}
-        {% include "SSFMBBundle:Default:alerte.html.twig" %}
+    {{ parent() }}
+    {% include "SSFMBBundle:Default:menu.html.twig" %}
+    {% include "SSFMBBundle:Default:alerte.html.twig" %}
 {% endblock %}
