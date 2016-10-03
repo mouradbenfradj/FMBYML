@@ -9,10 +9,23 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="adresses", indexes={@ORM\Index(name="id_pays", columns={"id_pays"}), @ORM\Index(name="ref_contact", columns={"ref_contact"}), @ORM\Index(name="id_type_adresse", columns={"id_type_adresse"})})
  * @ORM\Entity
- * @ORM\HasLifecycleCallbacks()
  */
 class Adresses
 {
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ref_contact", type="string", length=32, nullable=false)
+     */
+    private $refContact;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_type_adresse", type="smallint", nullable=true)
+     */
+    private $idTypeAdresse;
+
     /**
      * @var string
      *
@@ -42,6 +55,13 @@ class Adresses
     private $ville;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_pays", type="smallint", nullable=true)
+     */
+    private $idPays;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="note", type="blob", length=16777215, nullable=false)
@@ -60,40 +80,57 @@ class Adresses
      *
      * @ORM\Column(name="ref_adresse", type="string", length=32)
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $refAdresse;
 
-    /**
-     * @var \SS\FMBBundle\Entity\AdressesTypes
-     *
-     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\AdressesTypes")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_type_adresse", referencedColumnName="id_adresse_type")
-     * })
-     */
-    private $idTypeAdresse;
+
 
     /**
-     * @var \SS\FMBBundle\Entity\Pays
+     * Set refContact
      *
-     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Pays")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_pays", referencedColumnName="id_pays")
-     * })
+     * @param string $refContact
+     * @return Adresses
      */
-    private $idPays;
+    public function setRefContact($refContact)
+    {
+        $this->refContact = $refContact;
+
+        return $this;
+    }
 
     /**
-     * @var \SS\FMBBundle\Entity\Annuaire
+     * Get refContact
      *
-     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Annuaire")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="ref_contact", referencedColumnName="ref_contact")
-     * })
+     * @return string 
      */
-    private $refContact;
+    public function getRefContact()
+    {
+        return $this->refContact;
+    }
 
+    /**
+     * Set idTypeAdresse
+     *
+     * @param integer $idTypeAdresse
+     * @return Adresses
+     */
+    public function setIdTypeAdresse($idTypeAdresse)
+    {
+        $this->idTypeAdresse = $idTypeAdresse;
 
+        return $this;
+    }
+
+    /**
+     * Get idTypeAdresse
+     *
+     * @return integer 
+     */
+    public function getIdTypeAdresse()
+    {
+        return $this->idTypeAdresse;
+    }
 
     /**
      * Set libAdresse
@@ -188,6 +225,29 @@ class Adresses
     }
 
     /**
+     * Set idPays
+     *
+     * @param integer $idPays
+     * @return Adresses
+     */
+    public function setIdPays($idPays)
+    {
+        $this->idPays = $idPays;
+
+        return $this;
+    }
+
+    /**
+     * Get idPays
+     *
+     * @return integer 
+     */
+    public function getIdPays()
+    {
+        return $this->idPays;
+    }
+
+    /**
      * Set note
      *
      * @param string $note
@@ -241,94 +301,5 @@ class Adresses
     public function getRefAdresse()
     {
         return $this->refAdresse;
-    }
-
-    /**
-     * Set idTypeAdresse
-     *
-     * @param \SS\FMBBundle\Entity\AdressesTypes $idTypeAdresse
-     * @return Adresses
-     */
-    public function setIdTypeAdresse(\SS\FMBBundle\Entity\AdressesTypes $idTypeAdresse = null)
-    {
-        $this->idTypeAdresse = $idTypeAdresse;
-
-        return $this;
-    }
-
-    /**
-     * Get idTypeAdresse
-     *
-     * @return \SS\FMBBundle\Entity\AdressesTypes
-     */
-    public function getIdTypeAdresse()
-    {
-        return $this->idTypeAdresse;
-    }
-
-    /**
-     * Set idPays
-     *
-     * @param \SS\FMBBundle\Entity\Pays $idPays
-     * @return Adresses
-     */
-    public function setIdPays(\SS\FMBBundle\Entity\Pays $idPays = null)
-    {
-        $this->idPays = $idPays;
-
-        return $this;
-    }
-
-    /**
-     * Get idPays
-     *
-     * @return \SS\FMBBundle\Entity\Pays
-     */
-    public function getIdPays()
-    {
-        return $this->idPays;
-    }
-
-    /**
-     * Set refContact
-     *
-     * @param \SS\FMBBundle\Entity\Annuaire $refContact
-     * @return Adresses
-     */
-    public function setRefContact(\SS\FMBBundle\Entity\Annuaire $refContact = null)
-    {
-        $this->refContact = $refContact;
-
-        return $this;
-    }
-
-    /**
-     * Get refContact
-     *
-     * @return \SS\FMBBundle\Entity\Annuaire
-     */
-    public function getRefContact()
-    {
-        return $this->refContact;
-    }
-    /**
-     * @ORM\PrePersist
-     */
-    public function generateRefAdresse()
-    {
-        $this->refAdresse = uniqid();
-    }
-
-    /**
-     * Set refAdresse
-     *
-     * @param string $refAdresse
-     * @return Adresses
-     */
-    public function setRefAdresse($refAdresse)
-    {
-        $this->refAdresse = $refAdresse;
-
-        return $this;
     }
 }

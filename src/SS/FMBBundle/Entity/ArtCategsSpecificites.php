@@ -24,7 +24,7 @@ class ArtCategsSpecificites
      *
      * @ORM\Column(name="id_modele_spe", type="smallint")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $idModeleSpe;
 
@@ -52,7 +52,6 @@ class ArtCategsSpecificites
     {
         return $this->libModeleSpe;
     }
-
 
     /**
      * Get idModeleSpe

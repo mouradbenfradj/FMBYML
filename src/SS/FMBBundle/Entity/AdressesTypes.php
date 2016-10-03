@@ -31,7 +31,7 @@ class AdressesTypes
      *
      * @ORM\Column(name="id_adresse_type", type="smallint")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $idAdresseType;
 

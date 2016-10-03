@@ -9,7 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="magasins", indexes={@ORM\Index(name="id_stock", columns={"id_stock"}), @ORM\Index(name="id_tarif", columns={"id_tarif"}), @ORM\Index(name="actif", columns={"actif"}), @ORM\Index(name="id_mag_enseigne", columns={"id_mag_enseigne"})})
  * @ORM\Entity
- * @ORM\HasLifecycleCallbacks()
  */
 class Magasins
 {
@@ -26,6 +25,27 @@ class Magasins
      * @ORM\Column(name="abrev_magasin", type="string", length=32, nullable=false)
      */
     private $abrevMagasin;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_mag_enseigne", type="smallint", nullable=true)
+     */
+    private $idMagEnseigne;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_stock", type="smallint", nullable=false)
+     */
+    private $idStock;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_tarif", type="smallint", nullable=false)
+     */
+    private $idTarif;
 
     /**
      * @var string
@@ -46,44 +66,10 @@ class Magasins
      *
      * @ORM\Column(name="id_magasin", type="smallint")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $idMagasin;
 
-    /**
-     * @var \SS\FMBBundle\Entity\MagasinsEnseignes
-     *
-     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\MagasinsEnseignes")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_mag_enseigne", referencedColumnName="id_mag_enseigne")
-     * })
-     */
-    private $idMagEnseigne;
-
-    /**
-     * @var \SS\FMBBundle\Entity\TarifsListes
-     *
-     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\TarifsListes")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_tarif", referencedColumnName="id_tarif")
-     * })
-     */
-    private $idTarif;
-
-    /**
-     * @var \SS\FMBBundle\Entity\Stocks
-     *
-     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Stocks")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_stock", referencedColumnName="id_stock")
-     * })
-     */
-    private $idStock;
-
-    /**
-     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Filiere", mappedBy="parc" ,cascade={"persist","remove"})
-     */
-    private $filieres;
 
 
     /**
@@ -102,7 +88,7 @@ class Magasins
     /**
      * Get libMagasin
      *
-     * @return string
+     * @return string 
      */
     public function getLibMagasin()
     {
@@ -125,11 +111,80 @@ class Magasins
     /**
      * Get abrevMagasin
      *
-     * @return string
+     * @return string 
      */
     public function getAbrevMagasin()
     {
         return $this->abrevMagasin;
+    }
+
+    /**
+     * Set idMagEnseigne
+     *
+     * @param integer $idMagEnseigne
+     * @return Magasins
+     */
+    public function setIdMagEnseigne($idMagEnseigne)
+    {
+        $this->idMagEnseigne = $idMagEnseigne;
+
+        return $this;
+    }
+
+    /**
+     * Get idMagEnseigne
+     *
+     * @return integer 
+     */
+    public function getIdMagEnseigne()
+    {
+        return $this->idMagEnseigne;
+    }
+
+    /**
+     * Set idStock
+     *
+     * @param integer $idStock
+     * @return Magasins
+     */
+    public function setIdStock($idStock)
+    {
+        $this->idStock = $idStock;
+
+        return $this;
+    }
+
+    /**
+     * Get idStock
+     *
+     * @return integer 
+     */
+    public function getIdStock()
+    {
+        return $this->idStock;
+    }
+
+    /**
+     * Set idTarif
+     *
+     * @param integer $idTarif
+     * @return Magasins
+     */
+    public function setIdTarif($idTarif)
+    {
+        $this->idTarif = $idTarif;
+
+        return $this;
+    }
+
+    /**
+     * Get idTarif
+     *
+     * @return integer 
+     */
+    public function getIdTarif()
+    {
+        return $this->idTarif;
     }
 
     /**
@@ -148,7 +203,7 @@ class Magasins
     /**
      * Get modeVente
      *
-     * @return string
+     * @return string 
      */
     public function getModeVente()
     {
@@ -171,7 +226,7 @@ class Magasins
     /**
      * Get actif
      *
-     * @return boolean
+     * @return boolean 
      */
     public function getActif()
     {
@@ -179,128 +234,12 @@ class Magasins
     }
 
     /**
-     * Set idMagEnseigne
-     *
-     * @param \SS\FMBBundle\Entity\MagasinsEnseignes $idMagEnseigne
-     * @return Magasins
-     */
-    public function setIdMagEnseigne(\SS\FMBBundle\Entity\MagasinsEnseignes $idMagEnseigne = null)
-    {
-        $this->idMagEnseigne = $idMagEnseigne;
-
-        return $this;
-    }
-
-    /**
-     * Get idMagEnseigne
-     *
-     * @return \SS\FMBBundle\Entity\MagasinsEnseignes
-     */
-    public function getIdMagEnseigne()
-    {
-        return $this->idMagEnseigne;
-    }
-
-    /**
-     * Set idTarif
-     *
-     * @param \SS\FMBBundle\Entity\TarifsListes $idTarif
-     * @return Magasins
-     */
-    public function setIdTarif(\SS\FMBBundle\Entity\TarifsListes $idTarif = null)
-    {
-        $this->idTarif = $idTarif;
-
-        return $this;
-    }
-
-    /**
-     * Get idTarif
-     *
-     * @return \SS\FMBBundle\Entity\TarifsListes
-     */
-    public function getIdTarif()
-    {
-        return $this->idTarif;
-    }
-
-    /**
-     * Set idStock
-     *
-     * @param \SS\FMBBundle\Entity\Stocks $idStock
-     * @return Magasins
-     */
-    public function setIdStock(\SS\FMBBundle\Entity\Stocks $idStock = null)
-    {
-        $this->idStock = $idStock;
-
-        return $this;
-    }
-
-    /**
-     * Get idStock
-     *
-     * @return \SS\FMBBundle\Entity\Stocks
-     */
-    public function getIdStock()
-    {
-        return $this->idStock;
-    }
-
-
-    /**
      * Get idMagasin
      *
-     * @return integer
+     * @return integer 
      */
     public function getIdMagasin()
     {
         return $this->idMagasin;
-    }
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->filieres = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add filieres
-     *
-     * @param \SS\FMBBundle\Entity\Filiere $filieres
-     * @return Magasins
-     */
-    public function addFiliere(\SS\FMBBundle\Entity\Filiere $filieres)
-    {
-        $this->filieres[] = $filieres;
-
-        return $this;
-    }
-
-    /**
-     * Remove filieres
-     *
-     * @param \SS\FMBBundle\Entity\Filiere $filieres
-     */
-    public function removeFiliere(\SS\FMBBundle\Entity\Filiere $filieres)
-    {
-        $this->filieres->removeElement($filieres);
-    }
-
-    /**
-     * Get filieres
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getFilieres()
-    {
-        return $this->filieres;
-    }
-
-    public function __toString()
-    {
-        return $this->getAbrevMagasin();
     }
 }

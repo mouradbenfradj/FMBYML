@@ -10,7 +10,7 @@ class MagasinsAdmin extends Admin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('idMagasin')->add('libMagasin')->add('abrevMagasin')->add('modeVente')->add('actif')->add('idMagEnseigne')->add('filieres')->add('idTarif')->add('idStock');
+        $formMapper->add('libMagasin')->add('abrevMagasin')->add('modeVente')->add('actif')->add('idMagEnseigne')->add('filieres')->add('idTarif')->add('idStock');
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)

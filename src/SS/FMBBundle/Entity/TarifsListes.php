@@ -45,9 +45,10 @@ class TarifsListes
      *
      * @ORM\Column(name="id_tarif", type="smallint")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $idTarif;
+
 
 
     /**
@@ -66,7 +67,7 @@ class TarifsListes
     /**
      * Get libTarif
      *
-     * @return string
+     * @return string 
      */
     public function getLibTarif()
     {
@@ -89,7 +90,7 @@ class TarifsListes
     /**
      * Get descTarif
      *
-     * @return string
+     * @return string 
      */
     public function getDescTarif()
     {
@@ -112,7 +113,7 @@ class TarifsListes
     /**
      * Get margeMoyenne
      *
-     * @return string
+     * @return string 
      */
     public function getMargeMoyenne()
     {
@@ -135,13 +136,12 @@ class TarifsListes
     /**
      * Get ordre
      *
-     * @return integer
+     * @return integer 
      */
     public function getOrdre()
     {
         return $this->ordre;
     }
-
 
     /**
      * Get idTarif

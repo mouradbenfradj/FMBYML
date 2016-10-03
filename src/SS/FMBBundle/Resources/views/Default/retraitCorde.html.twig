@@ -61,9 +61,10 @@
                                                                                 {% if emplacement.stockscorde == null and emplacement.stockslanterne == null %}
                                                                                     <font color="red"> {{ emplacement.place }}</font>|
                                                                                 {% elseif emplacement.stockscorde != null %}
-                                                                                    <a title="article
--date de creation
--date de MAE  "
+                                                                                    <a title="article: {{ emplacement.stockscorde.article.refStockArticle.refArticle.libArticle }}
+-lot : {{ emplacement.stockscorde.article.numeroSerie }}
+-processus : {% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}G{{ difference.m }}
+-date de MAE :{{ emplacement.dateDeRemplissage|date('Y-m-d') }}"
                                                                                        href="">
                                                                                         <font color="blue"> {{ emplacement.place }}</font></a>
                                                                                     <input type="checkbox"
@@ -73,10 +74,11 @@
                                                                                     {% set verifexsistance =  verifexsistance + 1 %}
                                                                                 {% elseif emplacement.stockslanterne != null %}
                                                                                     <a title="{{ emplacement.stockslanterne.lanterne.nomlanterne }}
--article:
--date de creation
--date de MAE  "
-                                                                                       href="">
+-article: {{ emplacement.stockslanterne.article.refStockArticle.refArticle.libArticle }}
+-lot : {{ emplacement.stockslanterne.article.numeroSerie }}
+-processus : {% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}PG{{ difference.m }}
+-date de MAE :{{ emplacement.dateDeRemplissage|date('Y-m-d') }}"
+                                                                                       href="#">
                                                                                         <font color="#adff2f"> {{ emplacement.place }}</font></a>|
                                                                                 {% endif %}
                                                                                 {% endfor %}<br>

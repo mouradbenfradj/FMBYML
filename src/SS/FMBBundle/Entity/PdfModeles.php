@@ -9,10 +9,16 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="pdf_modeles", indexes={@ORM\Index(name="id_pdf_type", columns={"id_pdf_type"})})
  * @ORM\Entity
- * @ORM\HasLifecycleCallbacks()
  */
 class PdfModeles
 {
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="id_pdf_type", type="boolean", nullable=false)
+     */
+    private $idPdfType;
+
     /**
      * @var string
      *
@@ -39,20 +45,34 @@ class PdfModeles
      *
      * @ORM\Column(name="id_pdf_modele", type="smallint")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $idPdfModele;
 
-    /**
-     * @var \SS\FMBBundle\Entity\PdfTypes
-     *
-     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\PdfTypes")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_pdf_type", referencedColumnName="id_pdf_type")
-     * })
-     */
-    private $idPdfType;
 
+
+    /**
+     * Set idPdfType
+     *
+     * @param boolean $idPdfType
+     * @return PdfModeles
+     */
+    public function setIdPdfType($idPdfType)
+    {
+        $this->idPdfType = $idPdfType;
+
+        return $this;
+    }
+
+    /**
+     * Get idPdfType
+     *
+     * @return boolean 
+     */
+    public function getIdPdfType()
+    {
+        return $this->idPdfType;
+    }
 
     /**
      * Set libModele
@@ -70,7 +90,7 @@ class PdfModeles
     /**
      * Get libModele
      *
-     * @return string
+     * @return string 
      */
     public function getLibModele()
     {
@@ -93,7 +113,7 @@ class PdfModeles
     /**
      * Get descModele
      *
-     * @return string
+     * @return string 
      */
     public function getDescModele()
     {
@@ -116,7 +136,7 @@ class PdfModeles
     /**
      * Get codePdfModele
      *
-     * @return string
+     * @return string 
      */
     public function getCodePdfModele()
     {
@@ -126,34 +146,10 @@ class PdfModeles
     /**
      * Get idPdfModele
      *
-     * @return integer
+     * @return integer 
      */
     public function getIdPdfModele()
     {
         return $this->idPdfModele;
-    }
-
-    /**
-     * Set idPdfType
-     *
-     * @param \SS\FMBBundle\Entity\PdfTypes $idPdfType
-     * @return PdfModeles
-     */
-    public function setIdPdfType(\SS\FMBBundle\Entity\PdfTypes $idPdfType = null)
-    {
-        $this->idPdfType = $idPdfType;
-
-        return $this;
-    }
-
-
-    /**
-     * Get idPdfType
-     *
-     * @return \SS\FMBBundle\Entity\PdfTypes 
-     */
-    public function getIdPdfType()
-    {
-        return $this->idPdfType;
     }
 }

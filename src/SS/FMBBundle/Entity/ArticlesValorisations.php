@@ -45,7 +45,7 @@ class ArticlesValorisations
      *
      * @ORM\Column(name="id_valo", type="smallint")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $idValo;
 

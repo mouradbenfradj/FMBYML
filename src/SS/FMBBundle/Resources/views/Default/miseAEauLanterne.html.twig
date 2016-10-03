@@ -67,9 +67,10 @@
                                                                                     <span style="display: none"
                                                                                           id="dateemplacement">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</span>
                                                                                 {% elseif emplacement.stockscorde != null %}
-                                                                                    <a title="article
--date de creation
--date de MAE  "
+                                                                                    <a title="article: {{ emplacement.stockscorde.article.refStockArticle.refArticle.libArticle }}
+-lot : {{ emplacement.stockscorde.article.numeroSerie }}
+-processus : {% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}G{{ difference.m }}
+-date de MAE :{{ emplacement.dateDeRemplissage|date('Y-m-d') }}"
                                                                                        href="">
                                                                                         <font color="blue"> {{ emplacement.place }}</font>
                                                                                     </a>
@@ -78,10 +79,11 @@
 
                                                                                 {% elseif emplacement.stockslanterne != null %}
                                                                                     <a title="{{ emplacement.stockslanterne.lanterne.nomlanterne }}
--article:
--date de creation
--date de MAE  "
-                                                                                       href="">
+-article: {{ emplacement.stockslanterne.article.refStockArticle.refArticle.libArticle }}
+-lot : {{ emplacement.stockslanterne.article.numeroSerie }}
+-processus : {% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}PG{{ difference.m }}
+-date de MAE :{{ emplacement.dateDeRemplissage|date('Y-m-d') }}"
+                                                                                       href="#">
                                                                                         <font color="#adff2f"> {{ emplacement.place }}</font>
                                                                                     </a>
                                                                                     <span style="display: none"
@@ -190,8 +192,6 @@
                 type: "POST",
                 url: "{{ url('ssfmb_articlestock') }}?stock_id=" + $('#idstockparc').text() + "&sarticle=" + $('#articlechoix').val(),
                 beforeSend: function () {
-                    circle.play();
-                    $('#menuform').insertAfter(circle.canvas);
                 },
                 success: function (data) {
                     if ($.trim(data)) {
@@ -315,6 +315,7 @@
                             $("input:checkbox").each(function () {
                                 $(this).prop('checked', false);
                             });
+                            $('input:checkbox').show();
 
                             $('#choixqtearticle').show();
                             $.ajax({
@@ -336,7 +337,7 @@
                                             $("input:checkbox").each(function () {
                                                 $(this).prop('checked', false);
                                             });
-
+                                            $('input:checkbox').show();
                                             $('#choixqtearticle').show();
                                         });
                                     }
@@ -390,6 +391,7 @@
                             $("input:checkbox").each(function () {
                                 $(this).prop('checked', false);
                             });
+                            $('input:checkbox').show();
 
                             $('#choixqtearticle').show();
                             $.ajax({
@@ -412,6 +414,7 @@
                                             $("input:checkbox").each(function () {
                                                 $(this).prop('checked', false);
                                             });
+                                            $('input:checkbox').show();
 
                                             $('#choixqtearticle').show();
                                         });
@@ -466,6 +469,7 @@
                             $("input:checkbox").each(function () {
                                 $(this).prop('checked', false);
                             });
+                            $('input:checkbox').show();
 
                             $('#choixqtearticle').show();
                             $.ajax({
@@ -487,6 +491,7 @@
                                             $("input:checkbox").each(function () {
                                                 $(this).prop('checked', false);
                                             });
+                                            $('input:checkbox').show();
 
                                             $('#choixqtearticle').show();
                                         });
@@ -532,6 +537,7 @@
                             $("input:checkbox").each(function () {
                                 $(this).prop('checked', false);
                             });
+                            $('input:checkbox').show();
 
                             $('#choixqtearticle').show();
                         });

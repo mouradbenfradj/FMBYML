@@ -4,16 +4,28 @@ namespace SS\FMBBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-
 /**
  * StocksArticles
  *
  * @ORM\Table(name="stocks_articles", indexes={@ORM\Index(name="id_stock", columns={"id_stock"}), @ORM\Index(name="ref_article", columns={"ref_article"})})
  * @ORM\Entity
- * @ORM\HasLifecycleCallbacks()
  */
 class StocksArticles
 {
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_stock", type="smallint", nullable=false)
+     */
+    private $idStock;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ref_article", type="string", length=32, nullable=false)
+     */
+    private $refArticle;
+
     /**
      * @var float
      *
@@ -26,54 +38,56 @@ class StocksArticles
      *
      * @ORM\Column(name="ref_stock_article", type="string", length=32)
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $refStockArticle;
 
+
+
     /**
-     * @var \SS\FMBBundle\Entity\Articles
+     * Set idStock
      *
-     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Articles",cascade={"persist"})
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="ref_article", referencedColumnName="ref_article")
-     * })
+     * @param integer $idStock
+     * @return StocksArticles
      */
-    private $refArticle;
-
-    /**
-     * @var \SS\FMBBundle\Entity\Stocks
-     *
-     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Stocks")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_stock", referencedColumnName="id_stock")
-     * })
-     */
-    private $idStock;
-
-    /**
-     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\StocksArticlesSn", mappedBy="refStockArticle", cascade={"ALL"}, indexBy="numeroSerie")
-     */
-    private $stocksArticlesSns;
-
-    public function __toString()
+    public function setIdStock($idStock)
     {
-        return $this->getRefStockArticle();
+        $this->idStock = $idStock;
+
+        return $this;
     }
 
     /**
-     * @ORM\PrePersist
+     * Get idStock
+     *
+     * @return integer 
      */
-    public function generateRefStockArticle()
+    public function getIdStock()
     {
-        $this->refStockArticle = uniqid();
+        return $this->idStock;
     }
 
+    /**
+     * Set refArticle
+     *
+     * @param string $refArticle
+     * @return StocksArticles
+     */
+    public function setRefArticle($refArticle)
+    {
+        $this->refArticle = $refArticle;
+
+        return $this;
+    }
 
     /**
-     * Constructor
+     * Get refArticle
+     *
+     * @return string 
      */
-    public function __construct()
+    public function getRefArticle()
     {
-        $this->stocksArticlesSns = new \Doctrine\Common\Collections\ArrayCollection();
+        return $this->refArticle;
     }
 
     /**
@@ -92,7 +106,7 @@ class StocksArticles
     /**
      * Get qte
      *
-     * @return float
+     * @return float 
      */
     public function getQte()
     {
@@ -100,104 +114,12 @@ class StocksArticles
     }
 
     /**
-     * Set refStockArticle
-     *
-     * @param string $refStockArticle
-     * @return StocksArticles
-     */
-    public function setRefStockArticle($refStockArticle)
-    {
-        $this->refStockArticle = $refStockArticle;
-
-        return $this;
-    }
-
-
-    /**
      * Get refStockArticle
      *
-     * @return string
+     * @return string 
      */
     public function getRefStockArticle()
     {
         return $this->refStockArticle;
-    }
-
-    /**
-     * Set refArticle
-     *
-     * @param \SS\FMBBundle\Entity\Articles $refArticle
-     * @return StocksArticles
-     */
-    public function setRefArticle(\SS\FMBBundle\Entity\Articles $refArticle = null)
-    {
-        $this->refArticle = $refArticle;
-
-        return $this;
-    }
-
-    /**
-     * Get refArticle
-     *
-     * @return \SS\FMBBundle\Entity\Articles
-     */
-    public function getRefArticle()
-    {
-        return $this->refArticle;
-    }
-
-    /**
-     * Set idStock
-     *
-     * @param \SS\FMBBundle\Entity\Stocks $idStock
-     * @return StocksArticles
-     */
-    public function setIdStock(\SS\FMBBundle\Entity\Stocks $idStock = null)
-    {
-        $this->idStock = $idStock;
-
-        return $this;
-    }
-
-    /**
-     * Get idStock
-     *
-     * @return \SS\FMBBundle\Entity\Stocks
-     */
-    public function getIdStock()
-    {
-        return $this->idStock;
-    }
-
-    /**
-     * Add stocksArticlesSns
-     *
-     * @param \SS\FMBBundle\Entity\SSFMBBundle:StocksArticlesSn $stocksArticlesSns
-     * @return StocksArticles
-     */
-    public function addStocksArticlesSn($numeroSerie, $refStockArticle)
-    {
-        $this->stocksArticlesSns[$numeroSerie] = new StocksArticlesSn($numeroSerie, $refStockArticle, $this);
-    }
-
-    /**
-     * Get stocksArticlesSns
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getStocksArticlesSns()
-    {
-        return $this->stocksArticlesSns;
-    }
-
-
-    /**
-     * Remove stocksArticlesSns
-     *
-     * @param \SS\FMBBundle\Entity\StocksArticlesSn $stocksArticlesSns
-     */
-    public function removeStocksArticlesSn(\SS\FMBBundle\Entity\StocksArticlesSn $stocksArticlesSns)
-    {
-        $this->stocksArticlesSns->removeElement($stocksArticlesSns);
     }
 }

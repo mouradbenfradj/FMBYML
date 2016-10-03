@@ -13,6 +13,13 @@ use Doctrine\ORM\Mapping as ORM;
 class DocumentsEtats
 {
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_type_doc", type="smallint", nullable=false)
+     */
+    private $idTypeDoc;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="lib_etat_doc", type="string", length=32, nullable=false)
@@ -38,20 +45,34 @@ class DocumentsEtats
      *
      * @ORM\Column(name="id_etat_doc", type="smallint")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $idEtatDoc;
 
-    /**
-     * @var \SS\FMBBundle\Entity\DocumentsTypes
-     *
-     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\DocumentsTypes")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_type_doc", referencedColumnName="id_type_doc")
-     * })
-     */
-    private $idTypeDoc;
 
+
+    /**
+     * Set idTypeDoc
+     *
+     * @param integer $idTypeDoc
+     * @return DocumentsEtats
+     */
+    public function setIdTypeDoc($idTypeDoc)
+    {
+        $this->idTypeDoc = $idTypeDoc;
+
+        return $this;
+    }
+
+    /**
+     * Get idTypeDoc
+     *
+     * @return integer 
+     */
+    public function getIdTypeDoc()
+    {
+        return $this->idTypeDoc;
+    }
 
     /**
      * Set libEtatDoc
@@ -69,7 +90,7 @@ class DocumentsEtats
     /**
      * Get libEtatDoc
      *
-     * @return string
+     * @return string 
      */
     public function getLibEtatDoc()
     {
@@ -92,7 +113,7 @@ class DocumentsEtats
     /**
      * Get ordre
      *
-     * @return boolean
+     * @return boolean 
      */
     public function getOrdre()
     {
@@ -115,7 +136,7 @@ class DocumentsEtats
     /**
      * Get isOpen
      *
-     * @return boolean
+     * @return boolean 
      */
     public function getIsOpen()
     {
@@ -125,34 +146,10 @@ class DocumentsEtats
     /**
      * Get idEtatDoc
      *
-     * @return integer
+     * @return integer 
      */
     public function getIdEtatDoc()
     {
         return $this->idEtatDoc;
-    }
-
-    /**
-     * Set idTypeDoc
-     *
-     * @param \SS\FMBBundle\Entity\DocumentsTypes $idTypeDoc
-     * @return DocumentsEtats
-     */
-    public function setIdTypeDoc(\SS\FMBBundle\Entity\DocumentsTypes $idTypeDoc = null)
-    {
-        $this->idTypeDoc = $idTypeDoc;
-
-        return $this;
-    }
-
-
-    /**
-     * Get idTypeDoc
-     *
-     * @return \SS\FMBBundle\Entity\DocumentsTypes 
-     */
-    public function getIdTypeDoc()
-    {
-        return $this->idTypeDoc;
     }
 }

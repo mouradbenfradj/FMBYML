@@ -9,7 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="articles", uniqueConstraints={@ORM\UniqueConstraint(name="ref_interne", columns={"ref_interne"})}, indexes={@ORM\Index(name="lib_article", columns={"lib_article"}), @ORM\Index(name="ref_art_categ", columns={"ref_art_categ"}), @ORM\Index(name="ref_constructeur", columns={"ref_constructeur"}), @ORM\Index(name="dispo", columns={"dispo"}), @ORM\Index(name="ref_oem", columns={"ref_oem"}), @ORM\Index(name="id_tva", columns={"id_tva"}), @ORM\Index(name="id_valo", columns={"id_valo"}), @ORM\Index(name="id_modele_spe", columns={"id_modele_spe"})})
  * @ORM\Entity
- * @ORM\HasLifecycleCallbacks()
  */
 class Articles
 {
@@ -70,6 +69,13 @@ class Articles
     private $modele;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_modele_spe", type="smallint", nullable=true)
+     */
+    private $idModeleSpe;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="ref_constructeur", type="string", length=32, nullable=true)
@@ -117,6 +123,13 @@ class Articles
      * @ORM\Column(name="promo", type="smallint", nullable=false)
      */
     private $promo;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_valo", type="smallint", nullable=false)
+     */
+    private $idValo;
 
     /**
      * @var float
@@ -221,41 +234,11 @@ class Articles
      *
      * @ORM\Column(name="ref_article", type="string", length=32)
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $refArticle;
 
-    /**
-     * @var \SS\FMBBundle\Entity\ArtCategsSpecificites
-     *
-     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\ArtCategsSpecificites")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_modele_spe", referencedColumnName="id_modele_spe")
-     * })
-     */
-    private $idModeleSpe;
 
-    /**
-     * @var \SS\FMBBundle\Entity\ArticlesValorisations
-     *
-     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\ArticlesValorisations")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_valo", referencedColumnName="id_valo")
-     * })
-     */
-    private $idValo;
-
-    public function __toString()
-    {
-        return $this->getLibArticle();
-    }
-
-    /**
-     * @ORM\PrePersist
-     */
-    public function generateRefArticle()
-    {
-        $this->refArticle = uniqid();
-    }
 
     /**
      * Set refOem
@@ -273,7 +256,7 @@ class Articles
     /**
      * Get refOem
      *
-     * @return string 
+     * @return string
      */
     public function getRefOem()
     {
@@ -296,7 +279,7 @@ class Articles
     /**
      * Get refInterne
      *
-     * @return string 
+     * @return string
      */
     public function getRefInterne()
     {
@@ -319,7 +302,7 @@ class Articles
     /**
      * Get libArticle
      *
-     * @return string 
+     * @return string
      */
     public function getLibArticle()
     {
@@ -342,7 +325,7 @@ class Articles
     /**
      * Get libTicket
      *
-     * @return string 
+     * @return string
      */
     public function getLibTicket()
     {
@@ -365,7 +348,7 @@ class Articles
     /**
      * Get descCourte
      *
-     * @return string 
+     * @return string
      */
     public function getDescCourte()
     {
@@ -388,7 +371,7 @@ class Articles
     /**
      * Get descLongue
      *
-     * @return string 
+     * @return string
      */
     public function getDescLongue()
     {
@@ -411,7 +394,7 @@ class Articles
     /**
      * Get refArtCateg
      *
-     * @return string 
+     * @return string
      */
     public function getRefArtCateg()
     {
@@ -434,11 +417,34 @@ class Articles
     /**
      * Get modele
      *
-     * @return string 
+     * @return string
      */
     public function getModele()
     {
         return $this->modele;
+    }
+
+    /**
+     * Set idModeleSpe
+     *
+     * @param integer $idModeleSpe
+     * @return Articles
+     */
+    public function setIdModeleSpe($idModeleSpe)
+    {
+        $this->idModeleSpe = $idModeleSpe;
+
+        return $this;
+    }
+
+    /**
+     * Get idModeleSpe
+     *
+     * @return integer
+     */
+    public function getIdModeleSpe()
+    {
+        return $this->idModeleSpe;
     }
 
     /**
@@ -457,7 +463,7 @@ class Articles
     /**
      * Get refConstructeur
      *
-     * @return string 
+     * @return string
      */
     public function getRefConstructeur()
     {
@@ -480,7 +486,7 @@ class Articles
     /**
      * Get prixPublicHt
      *
-     * @return float 
+     * @return float
      */
     public function getPrixPublicHt()
     {
@@ -503,7 +509,7 @@ class Articles
     /**
      * Get prixAchatHt
      *
-     * @return float 
+     * @return float
      */
     public function getPrixAchatHt()
     {
@@ -526,7 +532,7 @@ class Articles
     /**
      * Get paaHt
      *
-     * @return float 
+     * @return float
      */
     public function getPaaHt()
     {
@@ -549,7 +555,7 @@ class Articles
     /**
      * Get paaLastMaj
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getPaaLastMaj()
     {
@@ -572,7 +578,7 @@ class Articles
     /**
      * Get idTva
      *
-     * @return integer 
+     * @return integer
      */
     public function getIdTva()
     {
@@ -595,11 +601,34 @@ class Articles
     /**
      * Get promo
      *
-     * @return integer 
+     * @return integer
      */
     public function getPromo()
     {
         return $this->promo;
+    }
+
+    /**
+     * Set idValo
+     *
+     * @param integer $idValo
+     * @return Articles
+     */
+    public function setIdValo($idValo)
+    {
+        $this->idValo = $idValo;
+
+        return $this;
+    }
+
+    /**
+     * Get idValo
+     *
+     * @return integer
+     */
+    public function getIdValo()
+    {
+        return $this->idValo;
     }
 
     /**
@@ -618,7 +647,7 @@ class Articles
     /**
      * Get valoIndice
      *
-     * @return float 
+     * @return float
      */
     public function getValoIndice()
     {
@@ -641,7 +670,7 @@ class Articles
     /**
      * Get lot
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getLot()
     {
@@ -664,7 +693,7 @@ class Articles
     /**
      * Get composant
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getComposant()
     {
@@ -687,7 +716,7 @@ class Articles
     /**
      * Get variante
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getVariante()
     {
@@ -710,7 +739,7 @@ class Articles
     /**
      * Get gestionSn
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getGestionSn()
     {
@@ -733,7 +762,7 @@ class Articles
     /**
      * Get dateDebutDispo
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDateDebutDispo()
     {
@@ -756,7 +785,7 @@ class Articles
     /**
      * Get dateFinDispo
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDateFinDispo()
     {
@@ -779,7 +808,7 @@ class Articles
     /**
      * Get dispo
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getDispo()
     {
@@ -802,7 +831,7 @@ class Articles
     /**
      * Get dateCreation
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDateCreation()
     {
@@ -825,7 +854,7 @@ class Articles
     /**
      * Get dateModification
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDateModification()
     {
@@ -848,7 +877,7 @@ class Articles
     /**
      * Get numeroCompteAchat
      *
-     * @return string 
+     * @return string
      */
     public function getNumeroCompteAchat()
     {
@@ -871,7 +900,7 @@ class Articles
     /**
      * Get numeroCompteVente
      *
-     * @return string 
+     * @return string
      */
     public function getNumeroCompteVente()
     {
@@ -894,7 +923,7 @@ class Articles
     /**
      * Get isAchetable
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsAchetable()
     {
@@ -917,7 +946,7 @@ class Articles
     /**
      * Get isVendable
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsVendable()
     {
@@ -925,71 +954,12 @@ class Articles
     }
 
     /**
-     * Set refArticle
-     *
-     * @param string $refArticle
-     * @return Articles
-     */
-    public function setRefArticle($refArticle)
-    {
-        $this->refArticle = $refArticle;
-
-        return $this;
-    }
-
-    /**
      * Get refArticle
      *
-     * @return string 
+     * @return string
      */
     public function getRefArticle()
     {
         return $this->refArticle;
-    }
-
-    /**
-     * Set idModeleSpe
-     *
-     * @param \SS\FMBBundle\Entity\ArtCategsSpecificites $idModeleSpe
-     * @return Articles
-     */
-    public function setIdModeleSpe(\SS\FMBBundle\Entity\ArtCategsSpecificites $idModeleSpe = null)
-    {
-        $this->idModeleSpe = $idModeleSpe;
-
-        return $this;
-    }
-
-    /**
-     * Get idModeleSpe
-     *
-     * @return \SS\FMBBundle\Entity\ArtCategsSpecificites 
-     */
-    public function getIdModeleSpe()
-    {
-        return $this->idModeleSpe;
-    }
-
-    /**
-     * Set idValo
-     *
-     * @param \SS\FMBBundle\Entity\ArticlesValorisations $idValo
-     * @return Articles
-     */
-    public function setIdValo(\SS\FMBBundle\Entity\ArticlesValorisations $idValo = null)
-    {
-        $this->idValo = $idValo;
-
-        return $this;
-    }
-
-    /**
-     * Get idValo
-     *
-     * @return \SS\FMBBundle\Entity\ArticlesValorisations 
-     */
-    public function getIdValo()
-    {
-        return $this->idValo;
     }
 }

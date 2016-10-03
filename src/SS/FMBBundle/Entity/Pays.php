@@ -52,9 +52,10 @@ class Pays
      *
      * @ORM\Column(name="id_pays", type="smallint")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $idPays;
+
 
 
     /**
@@ -73,7 +74,7 @@ class Pays
     /**
      * Get pays
      *
-     * @return string
+     * @return string 
      */
     public function getPays()
     {
@@ -96,7 +97,7 @@ class Pays
     /**
      * Get codePays
      *
-     * @return string
+     * @return string 
      */
     public function getCodePays()
     {
@@ -119,7 +120,7 @@ class Pays
     /**
      * Get defautIdLangage
      *
-     * @return boolean
+     * @return boolean 
      */
     public function getDefautIdLangage()
     {
@@ -142,7 +143,7 @@ class Pays
     /**
      * Get useEtat
      *
-     * @return boolean
+     * @return boolean 
      */
     public function getUseEtat()
     {
@@ -165,13 +166,12 @@ class Pays
     /**
      * Get affichage
      *
-     * @return boolean
+     * @return boolean 
      */
     public function getAffichage()
     {
         return $this->affichage;
     }
-
 
     /**
      * Get idPays

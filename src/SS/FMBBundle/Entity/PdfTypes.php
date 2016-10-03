@@ -24,6 +24,7 @@ class PdfTypes
      *
      * @ORM\Column(name="id_pdf_type", type="boolean")
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $idPdfType;
 
@@ -60,17 +61,5 @@ class PdfTypes
     public function getIdPdfType()
     {
         return $this->idPdfType;
-    }
-    /**
-     * Set idPdfType
-     *
-     * @param boolean $idPdfType
-     * @return PdfTypes
-     */
-    public function setIdPdfType($idPdfType)
-    {
-        $this->idPdfType = $idPdfType;
-
-        return $this;
     }
 }

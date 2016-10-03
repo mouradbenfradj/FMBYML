@@ -398,6 +398,10 @@ class DefaultController extends Controller
     public function planingdetravailleAction(Request $request)
     {
         $date1 = new DateTime("now");
+        $lanternefabriquer = array();
+        $lanternefabriquerurgent = array();
+        $cordefabriquer = array();
+        $cordefabriquerurgent = array();
         $pregrossisementurgent = array();
         $grossisementurgent = array();
         $comercialeurgent = array();
@@ -411,12 +415,26 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
         if ($request->get('id') == null) {
             $parcs = null;
-            $pregrossisement = array();
-            $grossisement = array();
-            $comerciale = array();
         } else {
             $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('id'));
             if ($parcs) {
+
+                $crd = $em->getRepository('SSFMBBundle:StocksCordes')->findBy(array("pret" => false, "emplacement" => null, "corde" => $em->getRepository('SSFMBBundle:Corde')->findOneByParc($parcs)));
+                if ($crd) {
+                    $cordefabriquer = array();
+                    $cordefabriquerurgent = array();
+                    foreach ($crd as $corde) {
+                        if ($corde->getDateDeCreation()) {
+                            $diff = date_diff($corde->getDateDeCreation(), $date1);
+                            if ($diff->d < 1) {
+                                $cordefabriquer = array_merge($cordefabriquer, array($corde));
+                            } else {
+                                $cordefabriquerurgent = array_merge($cordefabriquerurgent, array($corde));
+                            }
+                        }
+                    }
+                }
+
                 $filiers = $em->getRepository('SSFMBBundle:Filiere')->findByParc($parcs);
                 foreach ($filiers as $filiere) {
                     $segments = $em->getRepository('SSFMBBundle:Segment')->findByFiliere($filiere);
@@ -428,19 +446,19 @@ class DefaultController extends Controller
                                 if ($emplacement->getDateDeRemplissage()) {
                                     $interval = date_diff($emplacement->getDateDeRemplissage(), $date1);
                                     if ($emplacement->getStockslanterne()) {
-                                        if ($interval->format('%R%m') >= 3) {
+                                        if (($interval->m >= 3) || ($interval->y >= 1)) {
                                             $pregrossisementurgent = array_merge($pregrossisementurgent, array($emplacement));
-                                        } elseif (($interval->format('%R%m') >= 2) && ($interval->format('%R%a') > 2) && ($interval->format('%R%m') < 3)) {
+                                        } elseif (($interval->m > 2) && ($interval->d > 23) && ($interval->m < 3)) {
                                             $pregrossisementaeffectuer = array_merge($pregrossisementaeffectuer, array($emplacement));
-                                        } elseif (($interval->format('%R%m') >= 2) && ($interval->format('%R%a') <= 2) || ($interval->format('%R%m') < 2)) {
+                                        } else {
                                             $pregrossisement = array_merge($pregrossisement, array($emplacement));
                                         }
                                     } elseif ($emplacement->getStockscorde()) {
-                                        if ($interval->format('%R%m') >= 6) {
+                                        if (($interval->m >= 6) || ($interval->y >= 1)) {
                                             $grossisementurgent = array_merge($grossisementurgent, array($emplacement));
-                                        } elseif (($interval->format('%R%m') >= 5) && ($interval->format('%R%a') > 2) && ($interval->format('%R%m') < 5)) {
+                                        } elseif (($interval->m > 5) && ($interval->d > 23) && ($interval->m < 6)) {
                                             $grossisementaeffectuer = array_merge($grossisementaeffectuer, array($emplacement));
-                                        } elseif (($interval->format('%R%m') >= 5) && ($interval->format('%R%a') <= 2) || ($interval->format('%R%m') < 5)) {
+                                        } else {
                                             $grossisement = array_merge($grossisement, array($emplacement));
                                         }
                                     }
@@ -452,7 +470,7 @@ class DefaultController extends Controller
             }
 
 
-            $pretacomercialisation = $em->getRepository('SSFMBBundle:StocksCordes')->findByPret(true);
+            $pretacomercialisation = $em->getRepository('SSFMBBundle:StocksCordes')->findBy(array("pret" => true, "corde" => $em->getRepository('SSFMBBundle:Corde')->findOneByParc($parcs)));
             if ($pretacomercialisation) {
                 $p1 = array();
                 $p2 = array();

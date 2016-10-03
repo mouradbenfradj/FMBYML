@@ -38,9 +38,10 @@ class AnnuaireCategories
      *
      * @ORM\Column(name="id_categorie", type="smallint")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $idCategorie;
+
 
 
     /**
@@ -59,7 +60,7 @@ class AnnuaireCategories
     /**
      * Get libCategorie
      *
-     * @return string
+     * @return string 
      */
     public function getLibCategorie()
     {
@@ -82,7 +83,7 @@ class AnnuaireCategories
     /**
      * Get ordre
      *
-     * @return boolean
+     * @return boolean 
      */
     public function getOrdre()
     {
@@ -105,13 +106,12 @@ class AnnuaireCategories
     /**
      * Get appTarifs
      *
-     * @return string
+     * @return string 
      */
     public function getAppTarifs()
     {
         return $this->appTarifs;
     }
-
 
     /**
      * Get idCategorie

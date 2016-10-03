@@ -9,16 +9,29 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="annuaire", indexes={@ORM\Index(name="nom", columns={"nom"}), @ORM\Index(name="id_civilite", columns={"id_civilite"}), @ORM\Index(name="id_categorie", columns={"id_categorie"})})
  * @ORM\Entity
- * @ORM\HasLifecycleCallbacks()
  */
 class Annuaire
 {
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_civilite", type="smallint", nullable=true)
+     */
+    private $idCivilite;
+
     /**
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=128, nullable=false)
      */
     private $nom;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_categorie", type="smallint", nullable=true)
+     */
+    private $idCategorie;
 
     /**
      * @var string
@@ -67,30 +80,34 @@ class Annuaire
      *
      * @ORM\Column(name="ref_contact", type="string", length=32)
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $refContact;
 
-    /**
-     * @var \SS\FMBBundle\Entity\AnnuaireCategories
-     *
-     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\AnnuaireCategories")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_categorie", referencedColumnName="id_categorie")
-     * })
-     */
-    private $idCategorie;
+
 
     /**
-     * @var \SS\FMBBundle\Entity\Civilites
+     * Set idCivilite
      *
-     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Civilites")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_civilite", referencedColumnName="id_civilite")
-     * })
+     * @param integer $idCivilite
+     * @return Annuaire
      */
-    private $idCivilite;
+    public function setIdCivilite($idCivilite)
+    {
+        $this->idCivilite = $idCivilite;
 
+        return $this;
+    }
 
+    /**
+     * Get idCivilite
+     *
+     * @return integer 
+     */
+    public function getIdCivilite()
+    {
+        return $this->idCivilite;
+    }
 
     /**
      * Set nom
@@ -113,6 +130,29 @@ class Annuaire
     public function getNom()
     {
         return $this->nom;
+    }
+
+    /**
+     * Set idCategorie
+     *
+     * @param integer $idCategorie
+     * @return Annuaire
+     */
+    public function setIdCategorie($idCategorie)
+    {
+        $this->idCategorie = $idCategorie;
+
+        return $this;
+    }
+
+    /**
+     * Get idCategorie
+     *
+     * @return integer 
+     */
+    public function getIdCategorie()
+    {
+        return $this->idCategorie;
     }
 
     /**
@@ -261,72 +301,5 @@ class Annuaire
     public function getRefContact()
     {
         return $this->refContact;
-    }
-
-    /**
-     * Set idCategorie
-     *
-     * @param \SS\FMBBundle\Entity\AnnuaireCategories $idCategorie
-     * @return Annuaire
-     */
-    public function setIdCategorie(\SS\FMBBundle\Entity\AnnuaireCategories $idCategorie = null)
-    {
-        $this->idCategorie = $idCategorie;
-
-        return $this;
-    }
-
-    /**
-     * Get idCategorie
-     *
-     * @return \SS\FMBBundle\Entity\AnnuaireCategories
-     */
-    public function getIdCategorie()
-    {
-        return $this->idCategorie;
-    }
-
-    /**
-     * Set idCivilite
-     *
-     * @param \SS\FMBBundle\Entity\Civilites $idCivilite
-     * @return Annuaire
-     */
-    public function setIdCivilite(\SS\FMBBundle\Entity\Civilites $idCivilite = null)
-    {
-        $this->idCivilite = $idCivilite;
-
-        return $this;
-    }
-
-    /**
-     * Get idCivilite
-     *
-     * @return \SS\FMBBundle\Entity\Civilites
-     */
-    public function getIdCivilite()
-    {
-        return $this->idCivilite;
-    }
-    /**
-     * @ORM\PrePersist
-     */
-    public function generateRefContact()
-    {
-        $this->refContact = uniqid();
-    }
-
-
-    /**
-     * Set refContact
-     *
-     * @param string $refContact
-     * @return Annuaire
-     */
-    public function setRefContact($refContact)
-    {
-        $this->refContact = $refContact;
-
-        return $this;
     }
 }
