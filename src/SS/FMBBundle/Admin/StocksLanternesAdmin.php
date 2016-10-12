@@ -23,7 +23,7 @@ class StocksLanternesAdmin extends Admin
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('id')->add('lanterne')->add('poches')->add('emplacement')->add('pret')->add('numeroSerie')->add('dateDeCreation')->add('docLine');
+        $datagridMapper->add('id')->add('lanterne')->add('poches')->add('emplacement')->add('pret')->add('numeroSerie')->add('dateDeCreation')->add('dateDeRetirement')->add('docLine');
     }
 
     protected function configureListFields(ListMapper $listMapper)

@@ -22,20 +22,23 @@ class DocsLinesSn
     /**
      * @var string
      *
-     * @ORM\Column(name="ref_doc_line", type="string", length=32)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     */
-    private $refDocLine;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="numero_serie", type="string", length=32)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
      */
     private $numeroSerie;
+
+    /**
+     * @var \SS\FMBBundle\Entity\DocsLines
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="SS\FMBBundle\Entity\DocsLines")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="ref_doc_line", referencedColumnName="ref_doc_line")
+     * })
+     */
+    private $refDocLine;
 
 
 
@@ -63,29 +66,6 @@ class DocsLinesSn
     }
 
     /**
-     * Set refDocLine
-     *
-     * @param string $refDocLine
-     * @return DocsLinesSn
-     */
-    public function setRefDocLine($refDocLine)
-    {
-        $this->refDocLine = $refDocLine;
-
-        return $this;
-    }
-
-    /**
-     * Get refDocLine
-     *
-     * @return string 
-     */
-    public function getRefDocLine()
-    {
-        return $this->refDocLine;
-    }
-
-    /**
      * Set numeroSerie
      *
      * @param string $numeroSerie
@@ -106,5 +86,28 @@ class DocsLinesSn
     public function getNumeroSerie()
     {
         return $this->numeroSerie;
+    }
+
+    /**
+     * Set refDocLine
+     *
+     * @param \SS\FMBBundle\Entity\DocsLines $refDocLine
+     * @return DocsLinesSn
+     */
+    public function setRefDocLine(\SS\FMBBundle\Entity\DocsLines $refDocLine)
+    {
+        $this->refDocLine = $refDocLine;
+
+        return $this;
+    }
+
+    /**
+     * Get refDocLine
+     *
+     * @return \SS\FMBBundle\Entity\DocsLines
+     */
+    public function getRefDocLine()
+    {
+        return $this->refDocLine;
     }
 }

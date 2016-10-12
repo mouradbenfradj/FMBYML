@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="articles", uniqueConstraints={@ORM\UniqueConstraint(name="ref_interne", columns={"ref_interne"})}, indexes={@ORM\Index(name="lib_article", columns={"lib_article"}), @ORM\Index(name="ref_art_categ", columns={"ref_art_categ"}), @ORM\Index(name="ref_constructeur", columns={"ref_constructeur"}), @ORM\Index(name="dispo", columns={"dispo"}), @ORM\Index(name="ref_oem", columns={"ref_oem"}), @ORM\Index(name="id_tva", columns={"id_tva"}), @ORM\Index(name="id_valo", columns={"id_valo"}), @ORM\Index(name="id_modele_spe", columns={"id_modele_spe"})})
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks()
  */
 class Articles
 {
@@ -69,13 +70,6 @@ class Articles
     private $modele;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="id_modele_spe", type="smallint", nullable=true)
-     */
-    private $idModeleSpe;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="ref_constructeur", type="string", length=32, nullable=true)
@@ -123,13 +117,6 @@ class Articles
      * @ORM\Column(name="promo", type="smallint", nullable=false)
      */
     private $promo;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id_valo", type="smallint", nullable=false)
-     */
-    private $idValo;
 
     /**
      * @var float
@@ -234,11 +221,41 @@ class Articles
      *
      * @ORM\Column(name="ref_article", type="string", length=32)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $refArticle;
 
+    /**
+     * @var \SS\FMBBundle\Entity\ArtCategsSpecificites
+     *
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\ArtCategsSpecificites")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_modele_spe", referencedColumnName="id_modele_spe")
+     * })
+     */
+    private $idModeleSpe;
 
+    /**
+     * @var \SS\FMBBundle\Entity\ArticlesValorisations
+     *
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\ArticlesValorisations")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_valo", referencedColumnName="id_valo")
+     * })
+     */
+    private $idValo;
+
+    public function __toString()
+    {
+        return $this->libArticle;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setRefArticle()
+    {
+        $this->refArticle = uniqid();
+    }
 
     /**
      * Set refOem
@@ -425,29 +442,6 @@ class Articles
     }
 
     /**
-     * Set idModeleSpe
-     *
-     * @param integer $idModeleSpe
-     * @return Articles
-     */
-    public function setIdModeleSpe($idModeleSpe)
-    {
-        $this->idModeleSpe = $idModeleSpe;
-
-        return $this;
-    }
-
-    /**
-     * Get idModeleSpe
-     *
-     * @return integer
-     */
-    public function getIdModeleSpe()
-    {
-        return $this->idModeleSpe;
-    }
-
-    /**
      * Set refConstructeur
      *
      * @param string $refConstructeur
@@ -606,29 +600,6 @@ class Articles
     public function getPromo()
     {
         return $this->promo;
-    }
-
-    /**
-     * Set idValo
-     *
-     * @param integer $idValo
-     * @return Articles
-     */
-    public function setIdValo($idValo)
-    {
-        $this->idValo = $idValo;
-
-        return $this;
-    }
-
-    /**
-     * Get idValo
-     *
-     * @return integer
-     */
-    public function getIdValo()
-    {
-        return $this->idValo;
     }
 
     /**
@@ -961,5 +932,51 @@ class Articles
     public function getRefArticle()
     {
         return $this->refArticle;
+    }
+
+    /**
+     * Set idModeleSpe
+     *
+     * @param \SS\FMBBundle\Entity\ArtCategsSpecificites $idModeleSpe
+     * @return Articles
+     */
+    public function setIdModeleSpe(\SS\FMBBundle\Entity\ArtCategsSpecificites $idModeleSpe = null)
+    {
+        $this->idModeleSpe = $idModeleSpe;
+
+        return $this;
+    }
+
+    /**
+     * Get idModeleSpe
+     *
+     * @return \SS\FMBBundle\Entity\ArtCategsSpecificites
+     */
+    public function getIdModeleSpe()
+    {
+        return $this->idModeleSpe;
+    }
+
+    /**
+     * Set idValo
+     *
+     * @param \SS\FMBBundle\Entity\ArticlesValorisations $idValo
+     * @return Articles
+     */
+    public function setIdValo(\SS\FMBBundle\Entity\ArticlesValorisations $idValo = null)
+    {
+        $this->idValo = $idValo;
+
+        return $this;
+    }
+
+    /**
+     * Get idValo
+     *
+     * @return \SS\FMBBundle\Entity\ArticlesValorisations
+     */
+    public function getIdValo()
+    {
+        return $this->idValo;
     }
 }

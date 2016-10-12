@@ -30,6 +30,7 @@ class Builder implements ContainerAwareInterface
         $menu->addChild('Retrait lanterne', array('route' => 'ssfmb_retraitLanterne'));
         $menu->addChild('Retrait corde', array('route' => 'ssfmb_retraitcorde'));
         $menu->addChild('planing de travaille', array('route' => 'ssfmb_planingdetravaille'));
+        $menu->addChild('Processus', array('route' => 'ssfmb_processusgrocissement'));
         $menu->addChild('Logout', array('route' => 'fos_user_security_logout'));
         $menu->addChild('Zone Administrateur', array('route' => 'sonata_admin_dashboard'));
         return $menu;
@@ -127,6 +128,7 @@ class Builder implements ContainerAwareInterface
         }
         return $menu;
     }
+
     public function parcPlaningMenu(FactoryInterface $factory, array $options)
     {
         $menu = $factory->createItem('root');
@@ -138,6 +140,24 @@ class Builder implements ContainerAwareInterface
             foreach ($parcs as $parc) {
                 $menu->addChild($parc->getAbrevMagasin(), array(
                     'route' => 'ssfmb_planingdetravaille',
+                    'routeParameters' => array('id' => $parc->getIdMagasin())
+                ));
+            }
+        }
+        return $menu;
+    }
+
+    public function parcProcessusMenu(FactoryInterface $factory, array $options)
+    {
+        $menu = $factory->createItem('root');
+        $menu->setChildrenAttribute('class', 'nav navbar-nav');
+        $em = $this->container->get('doctrine')->getManager();
+        // findMostRecent and Blog are just imaginary examples
+        $parcs = $em->getRepository('SSFMBBundle:Magasins')->findAll();
+        if ($parcs) {
+            foreach ($parcs as $parc) {
+                $menu->addChild($parc->getAbrevMagasin(), array(
+                    'route' => 'ssfmb_processusgrocissement',
                     'routeParameters' => array('id' => $parc->getIdMagasin())
                 ));
             }

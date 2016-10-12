@@ -26,8 +26,8 @@ class PreparationCordeType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('date','date',array('data' => new \DateTime(),));
-        $builder->add('document',new DocumentsType());
+        $builder->add('date', 'date', array('data' => new \DateTime(),));
+        $builder->add('document', new DocumentsType());
         $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'));
         $builder->addEventListener(FormEvents::PRE_SUBMIT, array($this, 'onPreSubmit'));
 
@@ -59,14 +59,15 @@ class PreparationCordeType extends AbstractType
             'class' => 'SSFMBBundle:Stocks',
             'choices' => array($stocks),
         ));
-        $form->add('id', 'entity', array(
+        $form->add('nomCorde', 'entity', array(
             'empty_value' => '-- Selectionne le parc en premier lieu --',
+            'property'=>'id',
             'class' => 'SSFMBBundle:Corde',
             'choices' => $cordes,
         ));
         $form->add('quantiterEnStock', 'integer', array(
             'mapped' => false,
-            'read_only' =>'true'
+            'read_only' => 'true'
         ));
         $form->add($dt);
         $form->add($do);
@@ -81,7 +82,9 @@ class PreparationCordeType extends AbstractType
         $parc = $data ? $data->getParc() : null;
         $this->addElements($form, $parc);
     }
-    function onPreSubmit(FormEvent $event) {
+
+    function onPreSubmit(FormEvent $event)
+    {
         $form = $event->getForm();
         $data = $event->getData();
         // Note that the data is not yet hydrated into the entity.

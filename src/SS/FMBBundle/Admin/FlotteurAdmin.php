@@ -18,7 +18,7 @@ class FlotteurAdmin extends Admin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('id')->add('nomFlotteur')->add('segment')->add('emplacements');
+        $formMapper->add('nomFlotteur')->add('segment');
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)

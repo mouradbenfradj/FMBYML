@@ -10,7 +10,7 @@ class StocksArticlesSnAdmin extends Admin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('refStockArticle')->add('numeroSerie')->add('snQte');
+        $formMapper->add('numeroSerie')->add('snQte');
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)

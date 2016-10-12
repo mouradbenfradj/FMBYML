@@ -16,13 +16,10 @@ use SS\FMBBundle\Form\MagasinsType;
 class MagasinsController extends Controller
 {
     public function parcStocksAction(Request $request)
-    {// Get the province ID
-
-        $id = $request->query->get('parc_id');
+    {
         $result = array();
-        // Return a list of cities, based on the selected province
         $repo = $this->getDoctrine()->getManager()->getRepository('SSFMBBundle:Magasins');
-        $parc = $repo->find($id);
+        $parc = $repo->find($request->query->get('parc_id'));
         $stocks = $parc->getIdStock();
         $result[$stocks->getLibStock()] = $stocks->getIdStock();
         return new JsonResponse($result);
@@ -50,8 +47,8 @@ class MagasinsController extends Controller
         $repo = $this->getDoctrine()->getManager()->getRepository('SSFMBBundle:Corde');
         $cordes = $repo->findByParc($id, array('parc' => 'asc'));
         foreach ($cordes as $corde) {
-            $result[$corde->getId()] = $corde->getId();
-            $result[$corde->getId() . $corde->getNbrTotaleEnStock()] = $corde->getNbrTotaleEnStock();
+            $result[$corde->getNomCorde()] = $corde->getNomCorde();
+            $result[$corde->getNomCorde() . $corde->getNbrTotaleEnStock()] = $corde->getNbrTotaleEnStock();
         }
         return new JsonResponse($result);
     }

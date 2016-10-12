@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * StocksArticlesSn
  *
  * @ORM\Table(name="stocks_articles_sn", indexes={@ORM\Index(name="numero_serie", columns={"numero_serie"}), @ORM\Index(name="ref_stock_article", columns={"ref_stock_article"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="SS\FMBBundle\Repository\StocksArticlesSnRepository")
  */
 class StocksArticlesSn
 {
@@ -22,21 +22,35 @@ class StocksArticlesSn
     /**
      * @var string
      *
-     * @ORM\Column(name="ref_stock_article", type="string", length=32)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     */
-    private $refStockArticle;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="numero_serie", type="string", length=32)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
      */
     private $numeroSerie;
 
+    /**
+     * @var \SS\FMBBundle\Entity\StocksArticles
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="SS\FMBBundle\Entity\StocksArticles")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="ref_stock_article", referencedColumnName="ref_stock_article")
+     * })
+     */
+    private $refStockArticle;
+
+    public function __construct($numeroSerie, $snQte, StocksArticles $refStockArticle)
+    {
+        $this->numeroSerie = $numeroSerie;
+        $this->snQte = $snQte;
+        $this->refStockArticle = $refStockArticle;
+    }
+
+    public function __toString()
+    {
+        return $this->numeroSerie;
+    }
 
 
     /**
@@ -55,34 +69,11 @@ class StocksArticlesSn
     /**
      * Get snQte
      *
-     * @return float 
+     * @return float
      */
     public function getSnQte()
     {
         return $this->snQte;
-    }
-
-    /**
-     * Set refStockArticle
-     *
-     * @param string $refStockArticle
-     * @return StocksArticlesSn
-     */
-    public function setRefStockArticle($refStockArticle)
-    {
-        $this->refStockArticle = $refStockArticle;
-
-        return $this;
-    }
-
-    /**
-     * Get refStockArticle
-     *
-     * @return string 
-     */
-    public function getRefStockArticle()
-    {
-        return $this->refStockArticle;
     }
 
     /**
@@ -101,10 +92,32 @@ class StocksArticlesSn
     /**
      * Get numeroSerie
      *
-     * @return string 
+     * @return string
      */
     public function getNumeroSerie()
     {
         return $this->numeroSerie;
+    }
+
+    /**
+     * Set refStockArticle
+     *
+     * @param \SS\FMBBundle\Entity\StocksArticles $refStockArticle
+     * @return StocksArticlesSn
+     */
+    public function setRefStockArticle(\SS\FMBBundle\Entity\StocksArticles $refStockArticle)
+    {
+        $this->refStockArticle = $refStockArticle;
+        return $this;
+    }
+
+    /**
+     * Get refStockArticle
+     *
+     * @return \SS\FMBBundle\Entity\StocksArticles
+     */
+    public function getRefStockArticle()
+    {
+        return $this->refStockArticle;
     }
 }

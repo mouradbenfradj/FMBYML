@@ -29,7 +29,7 @@
                                     <tbody>
                                     {% for filiere in entity.filieres %}
                                         <tr>
-                                            <td>{{ filiere.getNomFiliere }}
+                                            <td id="{{ filiere.nomFiliere }}">{{ filiere.nomFiliere }}
                                                 <br/>
                                                 {% set tailleFiliere =0 %}
                                                 {% for segment in filiere.segments %}
@@ -58,38 +58,42 @@
                                                                                 {% set verifexsistance = 0 %}
 
                                                                                 {% for emplacement in flotteur.emplacements %}
-                                                                                {% if emplacement.stockscorde == null and emplacement.stockslanterne == null %}
-                                                                                    <font color="red"> {{ emplacement.place }}</font>|
-                                                                                {% elseif emplacement.stockscorde != null %}
-                                                                                    <a title="article: {{ emplacement.stockscorde.article.refStockArticle.refArticle.libArticle }}
+                                                                                    {% if emplacement.stockscorde == null and emplacement.stockslanterne == null %}
+                                                                                        <font color="red"> {{ emplacement.place }}</font>|
+                                                                                    {% elseif emplacement.stockscorde != null %}
+                                                                                        <a title="article: {{ emplacement.stockscorde.article.refStockArticle.refArticle.libArticle }}
 -lot : {{ emplacement.stockscorde.article.numeroSerie }}
 -processus : {% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}G{{ difference.m }}
 -date de MAE :{{ emplacement.dateDeRemplissage|date('Y-m-d') }}"
-                                                                                       href="">
-                                                                                        <font color="blue"> {{ emplacement.place }}</font></a>
-                                                                                    <input type="checkbox"
-                                                                                           name="placecorde[]"
-                                                                                           value="{{ emplacement.id }}"/>
+                                                                                           href="">
+                                                                                            <font color="blue"> {{ emplacement.place }}</font></a>
+                                                                                        {% if difference.m >= 6 %}
+                                                                                            <input type="checkbox"
+                                                                                                   name="placecorde[]"
+                                                                                                   value="{{ emplacement.id }}"/>
+                                                                                            {% if verifexsistance != 0 %}
+                                                                                                <br>
+                                                                                                <input
+                                                                                                        type="button"
+                                                                                                        value="Tout cocher"
+                                                                                                        onClick="fillCheckbox('{{ filiere.getNomFiliere }}{{ segment.getNomSegment }}{{ flotteur.getNomFlotteur }}','1');">&nbsp;&nbsp;
+                                                                                                <input type="button"
+                                                                                                       value="Tout décocher"
+                                                                                                       onClick="fillCheckbox('{{ filiere.getNomFiliere }}{{ segment.getNomSegment }}{{ flotteur.getNomFlotteur }}','0');">
+                                                                                            {% endif %}
 
-                                                                                    {% set verifexsistance =  verifexsistance + 1 %}
-                                                                                {% elseif emplacement.stockslanterne != null %}
-                                                                                    <a title="{{ emplacement.stockslanterne.lanterne.nomlanterne }}
+                                                                                        {% endif %}
+                                                                                        {% set verifexsistance =  verifexsistance + 1 %}
+                                                                                    {% elseif emplacement.stockslanterne != null %}
+                                                                                        <a title="{{ emplacement.stockslanterne.lanterne.nomlanterne }}
 -article: {{ emplacement.stockslanterne.article.refStockArticle.refArticle.libArticle }}
 -lot : {{ emplacement.stockslanterne.article.numeroSerie }}
 -processus : {% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}PG{{ difference.m }}
 -date de MAE :{{ emplacement.dateDeRemplissage|date('Y-m-d') }}"
-                                                                                       href="#">
-                                                                                        <font color="#adff2f"> {{ emplacement.place }}</font></a>|
-                                                                                {% endif %}
-                                                                                {% endfor %}<br>
-                                                                                {% if verifexsistance != 0 %}
-                                                                                    <input type="button"
-                                                                                           value="Tout cocher"
-                                                                                           onClick="fillCheckbox('{{ filiere.getNomFiliere }}{{ segment.getNomSegment }}{{ flotteur.getNomFlotteur }}','1');">&nbsp;&nbsp;
-                                                                                    <input type="button"
-                                                                                           value="Tout décocher"
-                                                                                           onClick="fillCheckbox('{{ filiere.getNomFiliere }}{{ segment.getNomSegment }}{{ flotteur.getNomFlotteur }}','0');">
-                                                                                {% endif %}
+                                                                                           href="#">
+                                                                                            <font color="#adff2f"> {{ emplacement.place }}</font></a>|
+                                                                                    {% endif %}
+                                                                                {% endfor %}
                                                                                 {% endfor %}
                                                                             </div>
                                                                         </td>
@@ -106,21 +110,31 @@
                                     </tbody>
                                 </table>
                             </td>
-                            <td>
-                                <p>date de retrait des cordes</p>
-                                {% set now =  "now"|date("Y-m-d") %}
-                                <p><input type="date" name="dateRetraitCorde" value="{{ now }}"></p>
-                                <p>quantiter retirer</p>
-                                <p><input type="number" id="quantit" readonly="true" value="0"></p>
-                                <p>stocks de reception</p>
-                                <p>
-                                    <input type="text" name="stockchoix" hidden="true" id="stockchoix"
-                                           value="{{ entity.idStock.idStock }}">
-                                    <input type="text" readonly="true" value="{{ entity.idStock.libStock }}">
-                                </p>
+                            <td width="20%">
+                                <div data-spy="affix" data-offset-top="60" data-offset-bottom="200" id="menuform">
+                                    <p>
+                                    <div><a href="#menuprincipale">menu</a></div>
+                                    <div>Listez des filieres</div>
+                                    {% for filiere in entity.filieres %}
+                                        <span class="lienfiliereint">
+                                            <a href="#{{ filiere.nomFiliere }}">{{ filiere.nomFiliere }}</a>
+                                        </span>
+                                    {% endfor %}
+                                    </p>
+                                    <p>date de retrait des cordes</p>
+                                    {% set now =  "now"|date("Y-m-d") %}
+                                    <p><input type="date" name="dateRetraitCorde" value="{{ now }}"></p>
+                                    <p>quantiter retirer</p>
+                                    <p><input type="number" id="quantit" readonly="true" value="0"></p>
+                                    <p>stocks de reception</p>
+                                    <p>
+                                        <input type="text" name="stockchoix" hidden="true" id="stockchoix"
+                                               value="{{ entity.idStock.idStock }}">
+                                        <input type="text" readonly="true" value="{{ entity.idStock.libStock }}">
+                                    </p>
 
-                                <p><input type="submit" value="confirmer le retrait"/></p>
-
+                                    <p><input type="submit" value="confirmer le retrait"/></p>
+                                </div>
                             </td>
                         </tr>
                         {% endif %}

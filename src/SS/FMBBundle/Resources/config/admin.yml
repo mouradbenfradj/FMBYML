@@ -285,6 +285,7 @@ services:
         arguments:
             - ~
             - SS\FMBBundle\Entity\StocksArticlesSn
+            - 'SonataAdminBundle:CRUD'
             - ~
         calls:
             - [ setTranslationDomain, [SSFMBBundle]]

@@ -26,6 +26,12 @@ class Corde
      */
     private $nbrTotaleEnStock;
     /**
+     * @var string
+     * @ORM\Column(name="nomCorde", type="string", length=255)
+     */
+    private $nomCorde;
+
+    /**
      * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\StocksCordes", mappedBy="corde",cascade={"persist","remove"})
      */
     private $stockscordes;
@@ -129,5 +135,28 @@ class Corde
     public function getParc()
     {
         return $this->parc;
+    }
+
+    /**
+     * Set nomCorde
+     *
+     * @param string $nomCorde
+     * @return Corde
+     */
+    public function setNomCorde($nomCorde)
+    {
+        $this->nomCorde = $nomCorde;
+
+        return $this;
+    }
+
+    /**
+     * Get nomCorde
+     *
+     * @return string 
+     */
+    public function getNomCorde()
+    {
+        return $this->nomCorde;
     }
 }

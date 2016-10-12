@@ -24,7 +24,18 @@
                                     <tbody>
                                     {% for filiere in entity.filieres %}
                                         <tr>
-                                            <td class="filiere">{{ filiere.getNomFiliere }}
+                                            <td id="{{ filiere.nomFiliere }}" class="filiere">
+                                                <p>
+                                                <div>Listez des filieres</div>
+                                                {% for filiere in entity.filieres %}
+                                                    <span class="lienfiliereint"> <a
+                                                                href="#{{ filiere.nomFiliere }}">{{ filiere.nomFiliere }}</a></span>
+                                                {% endfor %}
+                                                </p>
+
+
+                                                {{ filiere.nomFiliere }}
+
                                                 <br/>
                                                 {% set tailleFiliere =0 %}
                                                 {% set totaleplace =0 %}

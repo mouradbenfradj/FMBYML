@@ -18,16 +18,28 @@ class StocksArticlesAdmin extends Admin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('refStockArticle')->add('idStock')->add('refArticle')->add('qte')->add('stocksArticlesSns');
+        $formMapper->add('idStock')->add('refArticle')->add('qte')->add(
+            'stocksArticlesSn',
+            'sonata_type_collection',
+            array(
+                'required' => true,
+                'by_reference' => false,
+            ),
+            array(
+                'edit' => 'inline',
+                'inline' => 'table',
+                'sortable' => 'id',
+            )
+        );
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('refStockArticle')->add('idStock')->add('refArticle')->add('qte')->add('stocksArticlesSns');
+        $datagridMapper->add('refStockArticle')->add('idStock')->add('refArticle')->add('qte');
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('refStockArticle')->add('idStock')->add('refArticle')->add('qte')->add('stocksArticlesSns');
+        $listMapper->addIdentifier('refStockArticle')->add('idStock')->add('refArticle')->add('qte');
     }
 }

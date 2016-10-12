@@ -50,20 +50,26 @@ class DocumentsTypes
     /**
      * @var integer
      *
-     * @ORM\Column(name="id_pdf_modele", type="smallint", nullable=false)
-     */
-    private $idPdfModele;
-
-    /**
-     * @var integer
-     *
      * @ORM\Column(name="id_type_doc", type="smallint")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $idTypeDoc;
 
+    /**
+     * @var \SS\FMBBundle\Entity\PdfModeles
+     *
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\PdfModeles")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_pdf_modele", referencedColumnName="id_pdf_modele")
+     * })
+     */
+    private $idPdfModele;
 
+    public function __toString()
+    {
+        return $this->getLibTypeDoc();
+    }
 
     /**
      * Set libTypeDoc
@@ -81,7 +87,7 @@ class DocumentsTypes
     /**
      * Get libTypeDoc
      *
-     * @return string 
+     * @return string
      */
     public function getLibTypeDoc()
     {
@@ -104,7 +110,7 @@ class DocumentsTypes
     /**
      * Get libTypePrinted
      *
-     * @return string 
+     * @return string
      */
     public function getLibTypePrinted()
     {
@@ -127,7 +133,7 @@ class DocumentsTypes
     /**
      * Get codeDoc
      *
-     * @return string 
+     * @return string
      */
     public function getCodeDoc()
     {
@@ -150,7 +156,7 @@ class DocumentsTypes
     /**
      * Get idTypeGroupe
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIdTypeGroupe()
     {
@@ -173,7 +179,7 @@ class DocumentsTypes
     /**
      * Get actif
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getActif()
     {
@@ -181,35 +187,36 @@ class DocumentsTypes
     }
 
     /**
+     * Get idTypeDoc
+     *
+     * @return integer
+     */
+    public function getIdTypeDoc()
+    {
+        return $this->idTypeDoc;
+    }
+
+    /**
      * Set idPdfModele
      *
-     * @param integer $idPdfModele
+     * @param \SS\FMBBundle\Entity\PdfModeles $idPdfModele
      * @return DocumentsTypes
      */
-    public function setIdPdfModele($idPdfModele)
+    public function setIdPdfModele(\SS\FMBBundle\Entity\PdfModeles $idPdfModele = null)
     {
         $this->idPdfModele = $idPdfModele;
 
         return $this;
     }
 
+
     /**
      * Get idPdfModele
      *
-     * @return integer 
+     * @return \SS\FMBBundle\Entity\PdfModeles
      */
     public function getIdPdfModele()
     {
         return $this->idPdfModele;
-    }
-
-    /**
-     * Get idTypeDoc
-     *
-     * @return integer 
-     */
-    public function getIdTypeDoc()
-    {
-        return $this->idTypeDoc;
     }
 }

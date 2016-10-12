@@ -19,10 +19,8 @@ class CordeController extends Controller
     {
         $request->get('id');
         $em = $this->getDoctrine()->getManager();
-        $cordearticle = $em->getRepository('SSFMBBundle:StocksCordes')->getCordePreparer(
-            $em->getRepository('SSFMBBundle:StocksArticlesSn')
-                ->findOneBy(array('refStockArticle' => $request->get('ida'), 'numeroSerie' => $request->get('lot')))
-            , $request->get('idl')
+             $cordearticle = $em->getRepository('SSFMBBundle:StocksCordes')->getCordePreparer(
+            $em->getRepository('SSFMBBundle:StocksArticlesSn')->findOneBy(array('refStockArticle' => $request->get('ida'), 'numeroSerie' => $request->get('lot'))), $request->get('idl')
         );
         count($cordearticle);
         $tabEnsembles = array();
@@ -32,7 +30,7 @@ class CordeController extends Controller
             if (!in_array($e->getQuantiter(), $tabtest)) {
                 $tabEnsembles[$i]['id'] = $e->getId();
                 $tabEnsembles[$i]['nombre'] = count($cordearticle);
-                $tabEnsembles[$i]['qte'] = $e->getQuantiter();
+                $tabEnsembles[$i]['qte'] =$e->getQuantiter();
                 $tabtest[] = $e->getQuantiter();
             }
             $i++;
@@ -41,6 +39,7 @@ class CordeController extends Controller
         $data = json_encode($tabEnsembles); // formater le résultat de la requête en json
         $response->headers->set('Content-Type', 'miseaeaucorde/json');
         $response->setContent($data);
+
         return $response;
     }
 
@@ -48,8 +47,7 @@ class CordeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $cordearticle = $em->getRepository('SSFMBBundle:StocksCordes')->getCordePreparer(
-            $em->getRepository('SSFMBBundle:StocksArticlesSn')
-                ->findOneBy(array('refStockArticle' => $request->get('ida'), 'numeroSerie' => $request->get('lot')))
+            $em->getRepository('SSFMBBundle:StocksArticlesSn')->findOneBy(array('refStockArticle' => $request->get('ida'), 'numeroSerie' => $request->get('lot')))
             , $request->get('idl')
         );
         count($cordearticle);
@@ -73,7 +71,5 @@ class CordeController extends Controller
         $response->setContent($data);
 
         return $response;
-
     }
-
 }

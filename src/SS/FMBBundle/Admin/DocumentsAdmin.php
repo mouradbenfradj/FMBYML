@@ -18,16 +18,16 @@ class DocumentsAdmin extends Admin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('refDoc')->add('codeAffaire')->add('nomContact')->add('adresseContact')->add('codePostalContact')->add('villeContact')->add('appTarifs')->add('description')->add('dateCreationDoc')->add('codeFile')->add('idPaysContact')->add('refAdrContact')->add('refContact')->add('idEtatDoc')->add('idTypeDoc')->add('docsLines');
+        $formMapper->add('refDoc')->add('codeAffaire')->add('nomContact')->add('adresseContact')->add('codePostalContact')->add('villeContact')->add('appTarifs')->add('description')->add('dateCreationDoc')->add('codeFile')->add('idPaysContact')->add('refAdrContact')->add('refContact')->add('idEtatDoc')->add('idTypeDoc');
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('refDoc')->add('codeAffaire')->add('nomContact')->add('adresseContact')->add('codePostalContact')->add('villeContact')->add('appTarifs')->add('description')->add('dateCreationDoc')->add('codeFile')->add('idPaysContact')->add('refAdrContact')->add('refContact')->add('idEtatDoc')->add('idTypeDoc')->add('docsLines');
+        $datagridMapper->add('refDoc')->add('codeAffaire')->add('nomContact')->add('adresseContact')->add('codePostalContact')->add('villeContact')->add('appTarifs')->add('description')->add('dateCreationDoc')->add('codeFile')->add('idPaysContact')->add('refAdrContact')->add('refContact')->add('idEtatDoc')->add('idTypeDoc');
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('refDoc')->add('codeAffaire')->add('nomContact')->add('adresseContact')->add('codePostalContact')->add('villeContact')->add('appTarifs')->add('description')->add('dateCreationDoc')->add('codeFile')->add('idPaysContact')->add('refAdrContact')->add('refContact')->add('idEtatDoc')->add('idTypeDoc')->add('docsLines');
+        $listMapper->addIdentifier('refDoc')->add('codeAffaire')->add('nomContact')->add('adresseContact')->add('codePostalContact')->add('villeContact')->add('appTarifs')->add('description')->add('dateCreationDoc')->add('codeFile')->add('idPaysContact')->add('refAdrContact')->add('refContact')->add('idEtatDoc')->add('idTypeDoc');
     }
 }

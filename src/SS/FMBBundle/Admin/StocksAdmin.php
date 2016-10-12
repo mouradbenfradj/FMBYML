@@ -18,16 +18,16 @@ class StocksAdmin extends Admin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('libStock')->add('refAdrStock')->add('actif');
+        $formMapper->add('libStock')->add('abrevStock')->add('actif');
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('libStock')->add('refAdrStock')->add('actif');
+        $datagridMapper->add('libStock')->add('abrevStock')->add('actif');
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('libStock')->add('refAdrStock')->add('actif');
+        $listMapper->addIdentifier('libStock')->add('abrevStock')->add('actif');
     }
 }

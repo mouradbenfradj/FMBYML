@@ -1,0 +1,160 @@
+{% extends "SSFMBBundle::layout.html.twig" %}
+{% block title %}
+    Suivit - {{ parent() }}
+{% endblock %}
+{% block body %}
+    {{ parent() }}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="pagination pagination-lg">
+                    {{ knp_menu_render('SSFMBBundle:Builder:parcProcessusMenu') }}
+                </ul>
+                <table class="table table-condensed table-bordered" border="1">
+                    <tbody>
+                    {% if(entity != null) %}
+                        <tr>
+                            <td>Pregrossisement</td>
+                            <td>
+                                <table border="1">
+                                    {% for emplacementpg in pg %}
+                                        <tr>
+                                        <td rowspan="{{ emplacementpg|length +1 }}">pg{{ loop.index0 }}</td>
+                                        {% for emplacement in emplacementpg %}
+                                            <tr>
+                                                <td>
+                                                    filiere
+                                                    :{{ emplacement.flotteur.segment.filiere.nomfiliere }}
+                                                    segment : {{ emplacement.flotteur.segment.nomsegment }}
+                                                    flotteur :{{ emplacement.flotteur.nomflotteur }}
+                                                    emplacement : {{ emplacement.place }}
+                                                    date de mise a eau
+                                                    : {{ emplacement.dateDeRemplissage|date('Y-m-d') }}
+                                                    doit etre retirer le
+                                                    : {{ emplacement.dateDeRemplissage|date_modify("+6 month")|date('Y-m-d') }}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>grossisement</td>
+                            <td>
+                                <table border="1">
+                                    {% for emplacementgr in gr %}
+                                        <tr>
+                                        <td rowspan="{{ emplacementgr|length }}">
+                                            {% if loop.index0 == 6 %}
+                                                h3
+                                            {% elseif loop.index0 == 7 %}
+                                                h2
+                                            {% elseif loop.index0 == 8 %}
+                                                h1
+                                            {% elseif loop.index0 == 9 %}
+                                                h0
+                                            {% elseif loop.index0 == 10 %}
+                                                h00
+                                            {% elseif loop.index0 >= 11 %}
+                                                h000
+                                            {% else %}
+                                                g{{ loop.index0 }}
+                                            {% endif %}
+                                        </td>
+                                        {% for emplacement in emplacementgr %}
+                                            <td>
+                                                filiere :{{ emplacement.flotteur.segment.filiere.nomfiliere }}
+                                                segment : {{ emplacement.flotteur.segment.nomsegment }}
+                                                flotteur :{{ emplacement.flotteur.nomflotteur }}
+                                                emplacement : {{ emplacement.place }}
+                                                date de mise a eau: {{ emplacement.dateDeRemplissage|date('Y-m-d') }}
+                                                doit etre retirer
+                                                le: {{ emplacement.dateDeRemplissage|date_modify("+6 month")|date('Y-m-d') }}
+                                            </td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>comerciale</td>
+                            <td>
+                                <table border="1">
+                                    {% for emplacementcr in cr %}
+                                        <tr>
+                                        <td rowspan="{{ emplacementcr|length }}">h
+                                            {% if ((((cr|length - loop.index0)-2)<0)and(((cr|length - loop.index0)-2)>= -1)) %}
+                                                0{{ (cr|length - loop.index0)-1 }}
+                                            {% else %}
+                                                {{ (cr|length - loop.index0)-2 }}
+                                            {% endif %}
+                                        </td>
+                                        {% for emplacement in emplacementcr %}
+                                            <td>
+                                                {{ emplacement.article.refStockArticle.idStock.libStock }}
+                                                {{ emplacement.article.refStockArticle.refArticle }}
+                                                {{ emplacement.article.numeroSerie }}
+                                                {{ emplacement.quantiter }}
+                                            </td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </table>
+                            </td>
+                        </tr>
+                        </tr>
+                    {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            function diffdate(d1, d2, u) {
+                div = 1
+                switch (u) {
+                    case 's':
+                        div = 1000;
+                        break;
+                    case 'm':
+                        div = 1000 * 60
+                        break;
+                    case 'h':
+                        div = 1000 * 60 * 60
+                        break;
+                    case 'd':
+                        div = 1000 * 60 * 60 * 24
+                        break;
+                }
+                var Diff = d2.getTime() - d1.getTime();
+                return Math.ceil((Diff / div))
+            }
+
+            $('.dateemplacement').each(function (ele, val) {
+                console.log(ele + "     " + val)
+                var datejour = $(this).text().split("-");
+                var Date1 = new Date(datejour[0], datejour[1] - 1, datejour[2]);
+                var Date2 = new Date();
+                if ($(this).parent('.flotteur').has('dateemplacement'))
+                    if (0 < diffdate(Date1, Date2, 'd') < 10) {
+                        if ($(this).parent('.flotteur').has('dateemplacement'))
+                            var str = 'il reste ' + diffdate(Date1, Date2, 'd') + ' jours pour l article de la filiere ' + $(this).parent() + ' contenu dans le segment ' + $('.segment').text() + ' a partir du flotteur ' + $('.flotteur').text() + ' a lemplacement ' + $('.emplacement').text() + '<br>'
+                        $('#alertejaune').html('<button type="button" class="close" data-dismiss="alert" aria-hidden="true">× </button> <h4> Alert! </h4> <strong>Warning!</strong> ' + str + '<a href="#" class="alert-link">alert link</a>');
+                        $('#alertejaune').show();
+                    }
+                if (diffdate(Date1, Date2, 'd') <= 0) {
+                    var str2 = 'il reste ' + (diffdate(Date1, Date2, 'd') * -1) + ' jours pour l article de la filiere ' + $('#filiere').text() + ' contenu dans le segment ' + $('#segment').text() + ' a partir du flotteur ' + $('#flotteur').text() + ' a lemplacement ' + $('#emplacement').text()
+                    $('#alerterouge').html('<button type="button" class="close" data-dismiss="alert" aria-hidden="true">× </button> <h4> Alert! </h4> <strong>Warning!</strong> ' + str2 + '<a href="#" class="alert-link">alert link</a>');
+                    $('#alerterouge').show();
+                }
+            });
+        });
+    </script>
+{% endblock %}

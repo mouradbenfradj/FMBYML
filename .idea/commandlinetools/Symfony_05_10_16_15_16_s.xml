@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<framework xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/frameworkDescriptionVersion1.1.4.xsd" frameworkId="com.symfony" name="Symfony_23/02/16 14:31_s" invoke="php.exe C:\wamp\www\FMBYML\app\console" alias="s" enabled="true" version="2">
+<framework xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/frameworkDescriptionVersion1.1.4.xsd" frameworkId="com.symfony" name="Symfony_05/10/16 15:16_s" invoke="php.exe C:\wamp64\www\FMBYML\app\console" alias="s" enabled="true" version="2">
+  <extraData><![CDATA[version:2]]></extraData>
   <command>
     <name>help</name>
-    <help><![CDATA[The <b>help</b> command displays help for a given command:<br> <br> <b>php C:\wamp\www\FMBYML\app\console help list</b><br> <br> You can also output the help in other formats by using the <comment>--format</comment> option:<br> <br> <b>php C:\wamp\www\FMBYML\app\console help --format=xml list</b><br> <br> To display the list of available commands, please use the <b>list</b> command.<br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--xml</td><td></td><td>To output help as XML</td></tr> <tr><td>--format</td><td></td><td>The output format (txt, xml, json, or md)</td></tr> <tr><td>--raw</td><td></td><td>To output raw command help</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <help><![CDATA[The <b>help</b> command displays help for a given command:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console help list</b><br> <br> You can also output the help in other formats by using the <comment>--format</comment> option:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console help --format=xml list</b><br> <br> To display the list of available commands, please use the <b>list</b> command.<br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--xml</td><td></td><td>To output help as XML</td></tr> <tr><td>--format</td><td></td><td>The output format (txt, xml, json, or md)</td></tr> <tr><td>--raw</td><td></td><td>To output raw command help</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
     <params>command_name[=null]</params>
     <optionsBefore>
       <option name="--xml" shortcut="">
@@ -51,7 +52,7 @@
   </command>
   <command>
     <name>list</name>
-    <help><![CDATA[The <b>list</b> command lists all commands:<br> <br> <b>php C:\wamp\www\FMBYML\app\console list</b><br> <br> You can also display the commands for a specific namespace:<br> <br> <b>php C:\wamp\www\FMBYML\app\console list test</b><br> <br> You can also output the information in other formats by using the <comment>--format</comment> option:<br> <br> <b>php C:\wamp\www\FMBYML\app\console list --format=xml</b><br> <br> It's also possible to get raw list of commands (useful for embedding command runner):<br> <br> <b>php C:\wamp\www\FMBYML\app\console list --raw</b><br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--xml</td><td></td><td>To output list as XML</td></tr> <tr><td>--raw</td><td></td><td>To output raw command list</td></tr> <tr><td>--format</td><td></td><td>The output format (txt, xml, json, or md)</td></tr> </table> <br/>]]></help>
+    <help><![CDATA[The <b>list</b> command lists all commands:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console list</b><br> <br> You can also display the commands for a specific namespace:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console list test</b><br> <br> You can also output the information in other formats by using the <comment>--format</comment> option:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console list --format=xml</b><br> <br> It's also possible to get raw list of commands (useful for embedding command runner):<br> <br> <b>php C:\wamp64\www\FMBYML\app\console list --raw</b><br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--xml</td><td></td><td>To output list as XML</td></tr> <tr><td>--raw</td><td></td><td>To output raw command list</td></tr> <tr><td>--format</td><td></td><td>The output format (txt, xml, json, or md)</td></tr> </table> <br/>]]></help>
     <params>namespace[=null]</params>
     <optionsBefore>
       <option name="--xml" shortcut="">
@@ -62,6 +63,55 @@
       </option>
       <option name="--format" shortcut="" pattern="equals">
         <help><![CDATA[The output format (txt, xml, json, or md)]]></help>
+      </option>
+    </optionsBefore>
+  </command>
+  <command>
+    <name>acl:set</name>
+    <help><![CDATA[The <b>acl:set</b> command sets ACL.<br> The ACL system must have been initialized with the <b>init:acl</b> command.<br> <br> To set <comment>VIEW</comment> and <comment>EDIT</comment> permissions for the user <comment>kevin</comment> on the instance of<br> <comment>Acme\MyClass</comment> having the identifier <comment>42</comment>:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console acl:set --user=Symfony/Component/Security/Core/User/User:kevin VIEW EDIT Acme/MyClass:42</b><br> <br> Note that you can use <comment>/</comment> instead of <comment>\ </comment>for the namespace delimiter to avoid any<br> problem.<br> <br> To set permissions for a role, use the <b>--role</b> option:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console acl:set --role=ROLE_USER VIEW Acme/MyClass:1936</b><br> <br> To set permissions at the class scope, use the <b>--class-scope</b> option:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console acl:set --class-scope --user=Symfony/Component/Security/Core/User/User:anne OWNER Acme/MyClass:42</b><br> <br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--user</td><td></td><td>A list of security identities</td></tr> <tr><td>--role</td><td></td><td>A list of roles</td></tr> <tr><td>--class-scope</td><td></td><td>Use class-scope entries</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <params>arguments</params>
+    <optionsBefore>
+      <option name="--user" shortcut="" pattern="equals">
+        <help><![CDATA[A list of security identities]]></help>
+      </option>
+      <option name="--role" shortcut="" pattern="equals">
+        <help><![CDATA[A list of roles]]></help>
+      </option>
+      <option name="--class-scope" shortcut="">
+        <help><![CDATA[Use class-scope entries]]></help>
+      </option>
+      <option name="--help" shortcut="-h">
+        <help><![CDATA[Display this help message]]></help>
+      </option>
+      <option name="--quiet" shortcut="-q">
+        <help><![CDATA[Do not output any message]]></help>
+      </option>
+      <option name="--verbose" shortcut="-v">
+        <help><![CDATA[Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug]]></help>
+      </option>
+      <option name="--version" shortcut="-V">
+        <help><![CDATA[Display this application version]]></help>
+      </option>
+      <option name="--ansi" shortcut="">
+        <help><![CDATA[Force ANSI output]]></help>
+      </option>
+      <option name="--no-ansi" shortcut="">
+        <help><![CDATA[Disable ANSI output]]></help>
+      </option>
+      <option name="--no-interaction" shortcut="-n">
+        <help><![CDATA[Do not ask any interactive question]]></help>
+      </option>
+      <option name="--shell" shortcut="-s">
+        <help><![CDATA[Launch the shell.]]></help>
+      </option>
+      <option name="--process-isolation" shortcut="">
+        <help><![CDATA[Launch commands from shell as a separate process.]]></help>
+      </option>
+      <option name="--env" shortcut="-e" pattern="equals">
+        <help><![CDATA[The Environment name.]]></help>
+      </option>
+      <option name="--no-debug" shortcut="">
+        <help><![CDATA[Switches off debug mode.]]></help>
       </option>
     </optionsBefore>
   </command>
@@ -165,7 +215,7 @@
   </command>
   <command>
     <name>assets:install</name>
-    <help><![CDATA[The <b>assets:install</b> command installs bundle assets into a given<br> directory (e.g. the <comment>web</comment> directory).<br> <br> <b>php C:\wamp\www\FMBYML\app\console assets:install web</b><br> <br> A "bundles" directory will be created inside the target directory and the<br> "Resources/public" directory of each bundle will be copied into it.<br> <br> To create a symlink to each bundle instead of copying its assets, use the<br> <b>--symlink</b> option (will fall back to hard copies when symbolic links aren't possible:<br> <br> <b>php C:\wamp\www\FMBYML\app\console assets:install web --symlink</b><br> <br> To make symlink relative, add the <b>--relative</b> option:<br> <br> <b>php C:\wamp\www\FMBYML\app\console assets:install web --symlink --relative</b><br> <br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--symlink</td><td></td><td>Symlinks the assets instead of copying it</td></tr> <tr><td>--relative</td><td></td><td>Make relative symlinks</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <help><![CDATA[The <b>assets:install</b> command installs bundle assets into a given<br> directory (e.g. the <comment>web</comment> directory).<br> <br> <b>php C:\wamp64\www\FMBYML\app\console assets:install web</b><br> <br> A "bundles" directory will be created inside the target directory and the<br> "Resources/public" directory of each bundle will be copied into it.<br> <br> To create a symlink to each bundle instead of copying its assets, use the<br> <b>--symlink</b> option (will fall back to hard copies when symbolic links aren't possible:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console assets:install web --symlink</b><br> <br> To make symlink relative, add the <b>--relative</b> option:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console assets:install web --symlink --relative</b><br> <br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--symlink</td><td></td><td>Symlinks the assets instead of copying it</td></tr> <tr><td>--relative</td><td></td><td>Make relative symlinks</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
     <params>target[=null]</params>
     <optionsBefore>
       <option name="--symlink" shortcut="">
@@ -211,7 +261,7 @@
   </command>
   <command>
     <name>cache:clear</name>
-    <help><![CDATA[The <b>cache:clear</b> command clears the application cache for a given environment<br> and debug mode:<br> <br> <b>php C:\wamp\www\FMBYML\app\console cache:clear --env=dev</b><br> <b>php C:\wamp\www\FMBYML\app\console cache:clear --env=prod --no-debug</b><br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--no-warmup</td><td></td><td>Do not warm up the cache</td></tr> <tr><td>--no-optional-warmers</td><td></td><td>Skip optional cache warmers (faster)</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <help><![CDATA[The <b>cache:clear</b> command clears the application cache for a given environment<br> and debug mode:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console cache:clear --env=dev</b><br> <b>php C:\wamp64\www\FMBYML\app\console cache:clear --env=prod --no-debug</b><br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--no-warmup</td><td></td><td>Do not warm up the cache</td></tr> <tr><td>--no-optional-warmers</td><td></td><td>Skip optional cache warmers (faster)</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
     <optionsBefore>
       <option name="--no-warmup" shortcut="">
         <help><![CDATA[Do not warm up the cache]]></help>
@@ -219,6 +269,45 @@
       <option name="--no-optional-warmers" shortcut="">
         <help><![CDATA[Skip optional cache warmers (faster)]]></help>
       </option>
+      <option name="--help" shortcut="-h">
+        <help><![CDATA[Display this help message]]></help>
+      </option>
+      <option name="--quiet" shortcut="-q">
+        <help><![CDATA[Do not output any message]]></help>
+      </option>
+      <option name="--verbose" shortcut="-v">
+        <help><![CDATA[Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug]]></help>
+      </option>
+      <option name="--version" shortcut="-V">
+        <help><![CDATA[Display this application version]]></help>
+      </option>
+      <option name="--ansi" shortcut="">
+        <help><![CDATA[Force ANSI output]]></help>
+      </option>
+      <option name="--no-ansi" shortcut="">
+        <help><![CDATA[Disable ANSI output]]></help>
+      </option>
+      <option name="--no-interaction" shortcut="-n">
+        <help><![CDATA[Do not ask any interactive question]]></help>
+      </option>
+      <option name="--shell" shortcut="-s">
+        <help><![CDATA[Launch the shell.]]></help>
+      </option>
+      <option name="--process-isolation" shortcut="">
+        <help><![CDATA[Launch commands from shell as a separate process.]]></help>
+      </option>
+      <option name="--env" shortcut="-e" pattern="equals">
+        <help><![CDATA[The Environment name.]]></help>
+      </option>
+      <option name="--no-debug" shortcut="">
+        <help><![CDATA[Switches off debug mode.]]></help>
+      </option>
+    </optionsBefore>
+  </command>
+  <command>
+    <name>cache:create-cache-class</name>
+    <help><![CDATA[Generate the classes.php files<br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <optionsBefore>
       <option name="--help" shortcut="-h">
         <help><![CDATA[Display this help message]]></help>
       </option>
@@ -298,7 +387,7 @@
   </command>
   <command>
     <name>config:dump-reference</name>
-    <help><![CDATA[The <b>config:dump-reference</b> command dumps the default configuration for an<br> extension/bundle.<br> <br> Either the extension alias or bundle name can be used:<br> <br> <b>php C:\wamp\www\FMBYML\app\console config:dump-reference framework</b><br> <b>php C:\wamp\www\FMBYML\app\console config:dump-reference FrameworkBundle</b><br> <br> With the <b>--format</b> option specifies the format of the configuration,<br> this is either <comment>yaml</comment> or <comment>xml</comment>.<br> When the option is not provided, <comment>yaml</comment> is used.<br> <br> <b>php C:\wamp\www\FMBYML\app\console config:dump-reference FrameworkBundle --format=xml</b><br> <br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--format</td><td></td><td>The output format (yaml or xml)</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <help><![CDATA[The <b>config:dump-reference</b> command dumps the default configuration for an<br> extension/bundle.<br> <br> Either the extension alias or bundle name can be used:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console config:dump-reference framework</b><br> <b>php C:\wamp64\www\FMBYML\app\console config:dump-reference FrameworkBundle</b><br> <br> With the <b>--format</b> option specifies the format of the configuration,<br> this is either <comment>yaml</comment> or <comment>xml</comment>.<br> When the option is not provided, <comment>yaml</comment> is used.<br> <br> <b>php C:\wamp64\www\FMBYML\app\console config:dump-reference FrameworkBundle --format=xml</b><br> <br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--format</td><td></td><td>The output format (yaml or xml)</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
     <params>name[=null]</params>
     <optionsBefore>
       <option name="--format" shortcut="" pattern="equals">
@@ -341,7 +430,7 @@
   </command>
   <command>
     <name>debug:config</name>
-    <help><![CDATA[The <b>debug:config</b> command dumps the current configuration for an<br> extension/bundle.<br> <br> Either the extension alias or bundle name can be used:<br> <br> <b>php C:\wamp\www\FMBYML\app\console debug:config framework</b><br> <b>php C:\wamp\www\FMBYML\app\console debug:config FrameworkBundle</b><br> <br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <help><![CDATA[The <b>debug:config</b> command dumps the current configuration for an<br> extension/bundle.<br> <br> Either the extension alias or bundle name can be used:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console debug:config framework</b><br> <b>php C:\wamp64\www\FMBYML\app\console debug:config FrameworkBundle</b><br> <br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
     <params>name[=null]</params>
     <optionsBefore>
       <option name="--help" shortcut="-h">
@@ -381,7 +470,7 @@
   </command>
   <command>
     <name>debug:container</name>
-    <help><![CDATA[The <b>debug:container</b> command displays all configured <comment>public</comment> services:<br> <br> <b>php C:\wamp\www\FMBYML\app\console debug:container</b><br> <br> To get specific information about a service, specify its name:<br> <br> <b>php C:\wamp\www\FMBYML\app\console debug:container validator</b><br> <br> By default, private services are hidden. You can display all services by<br> using the <b>--show-private</b> flag:<br> <br> <b>php C:\wamp\www\FMBYML\app\console debug:container --show-private</b><br> <br> Use the --tags option to display tagged <comment>public</comment> services grouped by tag:<br> <br> <b>php C:\wamp\www\FMBYML\app\console debug:container --tags</b><br> <br> Find all services with a specific tag by specifying the tag name with the <b>--tag</b> option:<br> <br> <b>php C:\wamp\www\FMBYML\app\console debug:container --tag=form.type</b><br> <br> Use the <b>--parameters</b> option to display all parameters:<br> <br> <b>php C:\wamp\www\FMBYML\app\console debug:container --parameters</b><br> <br> Display a specific parameter by specifying his name with the <b>--parameter</b> option:<br> <br> <b>php C:\wamp\www\FMBYML\app\console debug:container --parameter=kernel.debug</b><br> <br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--show-private</td><td></td><td>Used to show public *and* private services</td></tr> <tr><td>--tag</td><td></td><td>Shows all services with a specific tag</td></tr> <tr><td>--tags</td><td></td><td>Displays tagged services for an application</td></tr> <tr><td>--parameter</td><td></td><td>Displays a specific parameter for an application</td></tr> <tr><td>--parameters</td><td></td><td>Displays parameters for an application</td></tr> <tr><td>--format</td><td></td><td>The output format (txt, xml, json, or md)</td></tr> <tr><td>--raw</td><td></td><td>To output raw description</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <help><![CDATA[The <b>debug:container</b> command displays all configured <comment>public</comment> services:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console debug:container</b><br> <br> To get specific information about a service, specify its name:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console debug:container validator</b><br> <br> By default, private services are hidden. You can display all services by<br> using the <b>--show-private</b> flag:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console debug:container --show-private</b><br> <br> Use the --tags option to display tagged <comment>public</comment> services grouped by tag:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console debug:container --tags</b><br> <br> Find all services with a specific tag by specifying the tag name with the <b>--tag</b> option:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console debug:container --tag=form.type</b><br> <br> Use the <b>--parameters</b> option to display all parameters:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console debug:container --parameters</b><br> <br> Display a specific parameter by specifying its name with the <b>--parameter</b> option:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console debug:container --parameter=kernel.debug</b><br> <br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--show-private</td><td></td><td>Used to show public *and* private services</td></tr> <tr><td>--tag</td><td></td><td>Shows all services with a specific tag</td></tr> <tr><td>--tags</td><td></td><td>Displays tagged services for an application</td></tr> <tr><td>--parameter</td><td></td><td>Displays a specific parameter for an application</td></tr> <tr><td>--parameters</td><td></td><td>Displays parameters for an application</td></tr> <tr><td>--format</td><td></td><td>The output format (txt, xml, json, or md)</td></tr> <tr><td>--raw</td><td></td><td>To output raw description</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
     <params>name[=null]</params>
     <optionsBefore>
       <option name="--show-private" shortcut="">
@@ -442,7 +531,7 @@
   </command>
   <command>
     <name>debug:event-dispatcher</name>
-    <help><![CDATA[The <b>debug:event-dispatcher</b> command displays all configured listeners:<br> <br> <b>php C:\wamp\www\FMBYML\app\console debug:event-dispatcher</b><br> <br> To get specific listeners for an event, specify its name:<br> <br> <b>php C:\wamp\www\FMBYML\app\console debug:event-dispatcher kernel.request</b><br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--format</td><td></td><td>The output format (txt, xml, json, or md)</td></tr> <tr><td>--raw</td><td></td><td>To output raw description</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <help><![CDATA[The <b>debug:event-dispatcher</b> command displays all configured listeners:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console debug:event-dispatcher</b><br> <br> To get specific listeners for an event, specify its name:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console debug:event-dispatcher kernel.request</b><br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--format</td><td></td><td>The output format (txt, xml, json, or md)</td></tr> <tr><td>--raw</td><td></td><td>To output raw description</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
     <params>event[=null]</params>
     <optionsBefore>
       <option name="--format" shortcut="" pattern="equals">
@@ -488,7 +577,7 @@
   </command>
   <command>
     <name>debug:router</name>
-    <help><![CDATA[The <b>debug:router</b> displays the configured routes:<br> <br> <b>php C:\wamp\www\FMBYML\app\console debug:router</b><br> <br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--show-controllers</td><td></td><td>Show assigned controllers in overview</td></tr> <tr><td>--format</td><td></td><td>The output format (txt, xml, json, or md)</td></tr> <tr><td>--raw</td><td></td><td>To output raw route(s)</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <help><![CDATA[The <b>debug:router</b> displays the configured routes:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console debug:router</b><br> <br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--show-controllers</td><td></td><td>Show assigned controllers in overview</td></tr> <tr><td>--format</td><td></td><td>The output format (txt, xml, json, or md)</td></tr> <tr><td>--raw</td><td></td><td>To output raw route(s)</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
     <params>name[=null]</params>
     <optionsBefore>
       <option name="--show-controllers" shortcut="">
@@ -537,7 +626,7 @@
   </command>
   <command>
     <name>debug:swiftmailer</name>
-    <help><![CDATA[The <b>debug:swiftmailer</b> displays the configured mailers:<br> <br> <b>php C:\wamp\www\FMBYML\app\console debug:swiftmailer mailer-name</b><br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <help><![CDATA[The <b>debug:swiftmailer</b> displays the configured mailers:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console debug:swiftmailer mailer-name</b><br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
     <params>name[=null]</params>
     <optionsBefore>
       <option name="--help" shortcut="-h">
@@ -577,7 +666,7 @@
   </command>
   <command>
     <name>debug:translation</name>
-    <help><![CDATA[The <b>debug:translation</b> command helps finding unused or missing translation<br> messages and comparing them with the fallback ones by inspecting the<br> templates and translation files of a given bundle or the app folder.<br> <br> You can display information about bundle translations in a specific locale:<br> <br> <b>php C:\wamp\www\FMBYML\app\console debug:translation en AcmeDemoBundle</b><br> <br> You can also specify a translation domain for the search:<br> <br> <b>php C:\wamp\www\FMBYML\app\console debug:translation --domain=messages en AcmeDemoBundle</b><br> <br> You can only display missing messages:<br> <br> <b>php C:\wamp\www\FMBYML\app\console debug:translation --only-missing en AcmeDemoBundle</b><br> <br> You can only display unused messages:<br> <br> <b>php C:\wamp\www\FMBYML\app\console debug:translation --only-unused en AcmeDemoBundle</b><br> <br> You can display information about app translations in a specific locale:<br> <br> <b>php C:\wamp\www\FMBYML\app\console debug:translation en</b><br> <br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--domain</td><td></td><td>The messages domain</td></tr> <tr><td>--only-missing</td><td></td><td>Displays only missing messages</td></tr> <tr><td>--only-unused</td><td></td><td>Displays only unused messages</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <help><![CDATA[The <b>debug:translation</b> command helps finding unused or missing translation<br> messages and comparing them with the fallback ones by inspecting the<br> templates and translation files of a given bundle or the app folder.<br> <br> You can display information about bundle translations in a specific locale:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console debug:translation en AcmeDemoBundle</b><br> <br> You can also specify a translation domain for the search:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console debug:translation --domain=messages en AcmeDemoBundle</b><br> <br> You can only display missing messages:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console debug:translation --only-missing en AcmeDemoBundle</b><br> <br> You can only display unused messages:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console debug:translation --only-unused en AcmeDemoBundle</b><br> <br> You can display information about app translations in a specific locale:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console debug:translation en</b><br> <br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--domain</td><td></td><td>The messages domain</td></tr> <tr><td>--only-missing</td><td></td><td>Displays only missing messages</td></tr> <tr><td>--only-unused</td><td></td><td>Displays only unused messages</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
     <params>locale bundle[=null]</params>
     <optionsBefore>
       <option name="--domain" shortcut="" pattern="equals">
@@ -626,7 +715,7 @@
   </command>
   <command>
     <name>debug:twig</name>
-    <help><![CDATA[The <b>debug:twig</b> command outputs a list of twig functions,<br> filters, globals and tests. Output can be filtered with an optional argument.<br> <br> <b>php C:\wamp\www\FMBYML\app\console debug:twig</b><br> <br> The command lists all functions, filters, etc.<br> <br> <b>php C:\wamp\www\FMBYML\app\console debug:twig date</b><br> <br> The command lists everything that contains the word date.<br> <br> <b>php C:\wamp\www\FMBYML\app\console debug:twig --format=json</b><br> <br> The command lists everything in a machine readable json format.<br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--format</td><td></td><td>The output format (text or json)</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <help><![CDATA[The <b>debug:twig</b> command outputs a list of twig functions,<br> filters, globals and tests. Output can be filtered with an optional argument.<br> <br> <b>php C:\wamp64\www\FMBYML\app\console debug:twig</b><br> <br> The command lists all functions, filters, etc.<br> <br> <b>php C:\wamp64\www\FMBYML\app\console debug:twig date</b><br> <br> The command lists everything that contains the word date.<br> <br> <b>php C:\wamp64\www\FMBYML\app\console debug:twig --format=json</b><br> <br> The command lists everything in a machine readable json format.<br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--format</td><td></td><td>The output format (text or json)</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
     <params>filter[=null]</params>
     <optionsBefore>
       <option name="--format" shortcut="" pattern="equals">
@@ -804,8 +893,11 @@
   </command>
   <command>
     <name>doctrine:database:create</name>
-    <help><![CDATA[The <b>doctrine:database:create</b> command creates the default connections database:<br> <br> <b>php C:\wamp\www\FMBYML\app\console doctrine:database:create</b><br> <br> You can also optionally specify the name of a connection to create the database for:<br> <br> <b>php C:\wamp\www\FMBYML\app\console doctrine:database:create --connection=default</b><br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--connection</td><td></td><td>The connection to use for this command</td></tr> <tr><td>--if-not-exists</td><td></td><td>Don't trigger an error, when the database already exists</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <help><![CDATA[The <b>doctrine:database:create</b> command creates the default connections database:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console doctrine:database:create</b><br> <br> You can also optionally specify the name of a connection to create the database for:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console doctrine:database:create --connection=default</b><br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--shard</td><td></td><td>The shard connection to use for this command</td></tr> <tr><td>--connection</td><td></td><td>The connection to use for this command</td></tr> <tr><td>--if-not-exists</td><td></td><td>Don't trigger an error, when the database already exists</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
     <optionsBefore>
+      <option name="--shard" shortcut="" pattern="equals">
+        <help><![CDATA[The shard connection to use for this command]]></help>
+      </option>
       <option name="--connection" shortcut="" pattern="equals">
         <help><![CDATA[The connection to use for this command]]></help>
       </option>
@@ -849,16 +941,62 @@
   </command>
   <command>
     <name>doctrine:database:drop</name>
-    <help><![CDATA[The <b>doctrine:database:drop</b> command drops the default connections database:<br> <br> <b>php C:\wamp\www\FMBYML\app\console doctrine:database:drop</b><br> <br> The <b>--force</b> parameter has to be used to actually drop the database.<br> <br> You can also optionally specify the name of a connection to drop the database for:<br> <br> <b>php C:\wamp\www\FMBYML\app\console doctrine:database:drop --connection=default</b><br> <br> <error>Be careful: All data in a given database will be lost when executing this command.</error><br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--connection</td><td></td><td>The connection to use for this command</td></tr> <tr><td>--if-exists</td><td></td><td>Don't trigger an error, when the database doesn't exist</td></tr> <tr><td>--force</td><td></td><td>Set this parameter to execute this action</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <help><![CDATA[The <b>doctrine:database:drop</b> command drops the default connections database:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console doctrine:database:drop</b><br> <br> The <b>--force</b> parameter has to be used to actually drop the database.<br> <br> You can also optionally specify the name of a connection to drop the database for:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console doctrine:database:drop --connection=default</b><br> <br> <error>Be careful: All data in a given database will be lost when executing this command.</error><br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--connection</td><td></td><td>The connection to use for this command</td></tr> <tr><td>--shard</td><td></td><td>The shard connection to use for this command</td></tr> <tr><td>--if-exists</td><td></td><td>Don't trigger an error, when the database doesn't exist</td></tr> <tr><td>--force</td><td></td><td>Set this parameter to execute this action</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
     <optionsBefore>
       <option name="--connection" shortcut="" pattern="equals">
         <help><![CDATA[The connection to use for this command]]></help>
+      </option>
+      <option name="--shard" shortcut="" pattern="equals">
+        <help><![CDATA[The shard connection to use for this command]]></help>
       </option>
       <option name="--if-exists" shortcut="">
         <help><![CDATA[Don't trigger an error, when the database doesn't exist]]></help>
       </option>
       <option name="--force" shortcut="">
         <help><![CDATA[Set this parameter to execute this action]]></help>
+      </option>
+      <option name="--help" shortcut="-h">
+        <help><![CDATA[Display this help message]]></help>
+      </option>
+      <option name="--quiet" shortcut="-q">
+        <help><![CDATA[Do not output any message]]></help>
+      </option>
+      <option name="--verbose" shortcut="-v">
+        <help><![CDATA[Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug]]></help>
+      </option>
+      <option name="--version" shortcut="-V">
+        <help><![CDATA[Display this application version]]></help>
+      </option>
+      <option name="--ansi" shortcut="">
+        <help><![CDATA[Force ANSI output]]></help>
+      </option>
+      <option name="--no-ansi" shortcut="">
+        <help><![CDATA[Disable ANSI output]]></help>
+      </option>
+      <option name="--no-interaction" shortcut="-n">
+        <help><![CDATA[Do not ask any interactive question]]></help>
+      </option>
+      <option name="--shell" shortcut="-s">
+        <help><![CDATA[Launch the shell.]]></help>
+      </option>
+      <option name="--process-isolation" shortcut="">
+        <help><![CDATA[Launch commands from shell as a separate process.]]></help>
+      </option>
+      <option name="--env" shortcut="-e" pattern="equals">
+        <help><![CDATA[The Environment name.]]></help>
+      </option>
+      <option name="--no-debug" shortcut="">
+        <help><![CDATA[Switches off debug mode.]]></help>
+      </option>
+    </optionsBefore>
+  </command>
+  <command>
+    <name>doctrine:database:import</name>
+    <help><![CDATA[Import SQL file(s) directly to Database.<br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--connection</td><td></td><td>The connection to use for this command</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <params>file</params>
+    <optionsBefore>
+      <option name="--connection" shortcut="" pattern="equals">
+        <help><![CDATA[The connection to use for this command]]></help>
       </option>
       <option name="--help" shortcut="-h">
         <help><![CDATA[Display this help message]]></help>
@@ -1048,7 +1186,7 @@
   </command>
   <command>
     <name>doctrine:generate:entities</name>
-    <help><![CDATA[The <b>doctrine:generate:entities</b> command generates entity classes<br> and method stubs from your mapping information:<br> <br> You have to limit generation of entities:<br> <br> * To a bundle:<br> <br> <b>php C:\wamp\www\FMBYML\app\console doctrine:generate:entities MyCustomBundle</b><br> <br> * To a single entity:<br> <br> <b>php C:\wamp\www\FMBYML\app\console doctrine:generate:entities MyCustomBundle:User</b><br> <b>php C:\wamp\www\FMBYML\app\console doctrine:generate:entities MyCustomBundle/Entity/User</b><br> <br> * To a namespace<br> <br> <b>php C:\wamp\www\FMBYML\app\console doctrine:generate:entities MyCustomBundle/Entity</b><br> <br> If the entities are not stored in a bundle, and if the classes do not exist,<br> the command has no way to guess where they should be generated. In this case,<br> you must provide the <comment>--path</comment> option:<br> <br> <b>php C:\wamp\www\FMBYML\app\console doctrine:generate:entities Blog/Entity --path=src/</b><br> <br> By default, the unmodified version of each entity is backed up and saved<br> (e.g. Product.php~). To prevent this task from creating the backup file,<br> pass the <comment>--no-backup</comment> option:<br> <br> <b>php C:\wamp\www\FMBYML\app\console doctrine:generate:entities Blog/Entity --no-backup</b><br> <br> <error>Important:</error> Even if you specified Inheritance options in your<br> XML or YAML Mapping files the generator cannot generate the base and<br> child classes for you correctly, because it doesn't know which<br> class is supposed to extend which. You have to adjust the entity<br> code manually for inheritance to work!<br> <br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--path</td><td></td><td>The path where to generate entities when it cannot be guessed</td></tr> <tr><td>--no-backup</td><td></td><td>Do not backup existing entities files.</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <help><![CDATA[The <b>doctrine:generate:entities</b> command generates entity classes<br> and method stubs from your mapping information:<br> <br> You have to limit generation of entities:<br> <br> * To a bundle:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console doctrine:generate:entities MyCustomBundle</b><br> <br> * To a single entity:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console doctrine:generate:entities MyCustomBundle:User</b><br> <b>php C:\wamp64\www\FMBYML\app\console doctrine:generate:entities MyCustomBundle/Entity/User</b><br> <br> * To a namespace<br> <br> <b>php C:\wamp64\www\FMBYML\app\console doctrine:generate:entities MyCustomBundle/Entity</b><br> <br> If the entities are not stored in a bundle, and if the classes do not exist,<br> the command has no way to guess where they should be generated. In this case,<br> you must provide the <comment>--path</comment> option:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console doctrine:generate:entities Blog/Entity --path=src/</b><br> <br> By default, the unmodified version of each entity is backed up and saved<br> (e.g. Product.php~). To prevent this task from creating the backup file,<br> pass the <comment>--no-backup</comment> option:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console doctrine:generate:entities Blog/Entity --no-backup</b><br> <br> <error>Important:</error> Even if you specified Inheritance options in your<br> XML or YAML Mapping files the generator cannot generate the base and<br> child classes for you correctly, because it doesn't know which<br> class is supposed to extend which. You have to adjust the entity<br> code manually for inheritance to work!<br> <br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--path</td><td></td><td>The path where to generate entities when it cannot be guessed</td></tr> <tr><td>--no-backup</td><td></td><td>Do not backup existing entities files.</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
     <params>name</params>
     <optionsBefore>
       <option name="--path" shortcut="" pattern="equals">
@@ -1246,11 +1384,14 @@
   </command>
   <command>
     <name>doctrine:mapping:import</name>
-    <help><![CDATA[The <b>doctrine:mapping:import</b> command imports mapping information<br> from an existing database:<br> <br> <b>php C:\wamp\www\FMBYML\app\console doctrine:mapping:import "MyCustomBundle" xml</b><br> <br> You can also optionally specify which entity manager to import from with the<br> <b>--em</b> option:<br> <br> <b>php C:\wamp\www\FMBYML\app\console doctrine:mapping:import "MyCustomBundle" xml --em=default</b><br> <br> If you don't want to map every entity that can be found in the database, use the<br> <b>--filter</b> option. It will try to match the targeted mapped entity with the<br> provided pattern string.<br> <br> <b>php C:\wamp\www\FMBYML\app\console doctrine:mapping:import "MyCustomBundle" xml --filter=MyMatchedEntity</b><br> <br> Use the <b>--force</b> option, if you want to override existing mapping files:<br> <br> <b>php C:\wamp\www\FMBYML\app\console doctrine:mapping:import "MyCustomBundle" xml --force</b><br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--em</td><td></td><td>The entity manager to use for this command</td></tr> <tr><td>--filter</td><td></td><td>A string pattern used to match entities that should be mapped.</td></tr> <tr><td>--force</td><td></td><td>Force to overwrite existing mapping files.</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <help><![CDATA[The <b>doctrine:mapping:import</b> command imports mapping information<br> from an existing database:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console doctrine:mapping:import "MyCustomBundle" xml</b><br> <br> You can also optionally specify which entity manager to import from with the<br> <b>--em</b> option:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console doctrine:mapping:import "MyCustomBundle" xml --em=default</b><br> <br> If you don't want to map every entity that can be found in the database, use the<br> <b>--filter</b> option. It will try to match the targeted mapped entity with the<br> provided pattern string.<br> <br> <b>php C:\wamp64\www\FMBYML\app\console doctrine:mapping:import "MyCustomBundle" xml --filter=MyMatchedEntity</b><br> <br> Use the <b>--force</b> option, if you want to override existing mapping files:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console doctrine:mapping:import "MyCustomBundle" xml --force</b><br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--em</td><td></td><td>The entity manager to use for this command</td></tr> <tr><td>--shard</td><td></td><td>The shard connection to use for this command</td></tr> <tr><td>--filter</td><td></td><td>A string pattern used to match entities that should be mapped.</td></tr> <tr><td>--force</td><td></td><td>Force to overwrite existing mapping files.</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
     <params>bundle mapping-type[=null]</params>
     <optionsBefore>
       <option name="--em" shortcut="" pattern="equals">
         <help><![CDATA[The entity manager to use for this command]]></help>
+      </option>
+      <option name="--shard" shortcut="" pattern="equals">
+        <help><![CDATA[The shard connection to use for this command]]></help>
       </option>
       <option name="--filter" shortcut="" pattern="equals">
         <help><![CDATA[A string pattern used to match entities that should be mapped.]]></help>
@@ -1337,7 +1478,7 @@
   </command>
   <command>
     <name>doctrine:query:dql</name>
-    <help><![CDATA[The <b>doctrine:query:dql</b> command executes the given DQL query and<br> outputs the results:<br> <br> <b>php C:\wamp\www\FMBYML\app\console doctrine:query:dql "SELECT u FROM UserBundle:User u"</b><br> <br> You can also optional specify some additional options like what type of<br> hydration to use when executing the query:<br> <br> <b>php C:\wamp\www\FMBYML\app\console doctrine:query:dql "SELECT u FROM UserBundle:User u" --hydrate=array</b><br> <br> Additionally you can specify the first result and maximum amount of results to<br> show:<br> <br> <b>php C:\wamp\www\FMBYML\app\console doctrine:query:dql "SELECT u FROM UserBundle:User u" --first-result=0 --max-result=30</b><br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--hydrate</td><td></td><td>Hydration mode of result set. Should be either: object, array, scalar or single-scalar.</td></tr> <tr><td>--first-result</td><td></td><td>The first result in the result set.</td></tr> <tr><td>--max-result</td><td></td><td>The maximum number of results in the result set.</td></tr> <tr><td>--depth</td><td></td><td>Dumping depth of Entity graph.</td></tr> <tr><td>--em</td><td></td><td>The entity manager to use for this command</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <help><![CDATA[The <b>doctrine:query:dql</b> command executes the given DQL query and<br> outputs the results:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console doctrine:query:dql "SELECT u FROM UserBundle:User u"</b><br> <br> You can also optional specify some additional options like what type of<br> hydration to use when executing the query:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console doctrine:query:dql "SELECT u FROM UserBundle:User u" --hydrate=array</b><br> <br> Additionally you can specify the first result and maximum amount of results to<br> show:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console doctrine:query:dql "SELECT u FROM UserBundle:User u" --first-result=0 --max-result=30</b><br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--hydrate</td><td></td><td>Hydration mode of result set. Should be either: object, array, scalar or single-scalar.</td></tr> <tr><td>--first-result</td><td></td><td>The first result in the result set.</td></tr> <tr><td>--max-result</td><td></td><td>The maximum number of results in the result set.</td></tr> <tr><td>--depth</td><td></td><td>Dumping depth of Entity graph.</td></tr> <tr><td>--em</td><td></td><td>The entity manager to use for this command</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
     <params>dql</params>
     <optionsBefore>
       <option name="--hydrate" shortcut="" pattern="equals">
@@ -1392,7 +1533,7 @@
   </command>
   <command>
     <name>doctrine:query:sql</name>
-    <help><![CDATA[The <b>doctrine:query:sql</b> command executes the given SQL query and<br> outputs the results:<br> <br> <b>php C:\wamp\www\FMBYML\app\console doctrine:query:sql "SELECT * from user"</b><br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--depth</td><td></td><td>Dumping depth of result set.</td></tr> <tr><td>--connection</td><td></td><td>The connection to use for this command</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <help><![CDATA[The <b>doctrine:query:sql</b> command executes the given SQL query and<br> outputs the results:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console doctrine:query:sql "SELECT * from user"</b><br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--depth</td><td></td><td>Dumping depth of result set.</td></tr> <tr><td>--connection</td><td></td><td>The connection to use for this command</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
     <params>sql</params>
     <optionsBefore>
       <option name="--depth" shortcut="" pattern="equals">
@@ -1627,7 +1768,7 @@
   </command>
   <command>
     <name>fos:user:activate</name>
-    <help><![CDATA[The <b>fos:user:activate</b> command activates a user (so they will be able to log in): <br> <br> <b>php app/console fos:user:activate matthieu</b><br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <help><![CDATA[The <b>fos:user:activate</b> command activates a user (so they will be able to log in):<br> <br> <b>php app/console fos:user:activate matthieu</b><br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
     <params>username</params>
     <optionsBefore>
       <option name="--help" shortcut="-h">
@@ -1667,7 +1808,7 @@
   </command>
   <command>
     <name>fos:user:change-password</name>
-    <help><![CDATA[The <b>fos:user:change-password</b> command changes the password of a user: <br> <br> <b>php app/console fos:user:change-password matthieu</b> <br> <br> This interactive shell will first ask you for a password. <br> <br> You can alternatively specify the password as a second argument: <br> <br> <b>php app/console fos:user:change-password matthieu mypassword</b> <br> <br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <help><![CDATA[The <b>fos:user:change-password</b> command changes the password of a user:<br> <br> <b>php app/console fos:user:change-password matthieu</b><br> <br> This interactive shell will first ask you for a password.<br> <br> You can alternatively specify the password as a second argument:<br> <br> <b>php app/console fos:user:change-password matthieu mypassword</b><br> <br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
     <params>username password</params>
     <optionsBefore>
       <option name="--help" shortcut="-h">
@@ -1707,7 +1848,7 @@
   </command>
   <command>
     <name>fos:user:create</name>
-    <help><![CDATA[The <b>fos:user:create</b> command creates a user: <br> <br> <b>php app/console fos:user:create matthieu</b> <br> <br> This interactive shell will ask you for an email and then a password. <br> <br> You can alternatively specify the email and password as the second and third arguments: <br> <br> <b>php app/console fos:user:create matthieu matthieu@example.com mypassword</b> <br> <br> You can create a super admin via the super-admin flag: <br> <br> <b>php app/console fos:user:create admin --super-admin</b> <br> <br> You can create an inactive user (will not be able to log in): <br> <br> <b>php app/console fos:user:create thibault --inactive</b> <br> <br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--super-admin</td><td></td><td>Set the user as super admin</td></tr> <tr><td>--inactive</td><td></td><td>Set the user as inactive</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <help><![CDATA[The <b>fos:user:create</b> command creates a user:<br> <br> <b>php app/console fos:user:create matthieu</b><br> <br> This interactive shell will ask you for an email and then a password.<br> <br> You can alternatively specify the email and password as the second and third arguments:<br> <br> <b>php app/console fos:user:create matthieu matthieu@example.com mypassword</b><br> <br> You can create a super admin via the super-admin flag:<br> <br> <b>php app/console fos:user:create admin --super-admin</b><br> <br> You can create an inactive user (will not be able to log in):<br> <br> <b>php app/console fos:user:create thibault --inactive</b><br> <br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--super-admin</td><td></td><td>Set the user as super admin</td></tr> <tr><td>--inactive</td><td></td><td>Set the user as inactive</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
     <params>username email password</params>
     <optionsBefore>
       <option name="--super-admin" shortcut="">
@@ -1753,7 +1894,7 @@
   </command>
   <command>
     <name>fos:user:deactivate</name>
-    <help><![CDATA[The <b>fos:user:deactivate</b> command deactivates a user (will not be able to log in) <br> <br> <b>php app/console fos:user:deactivate matthieu</b><br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <help><![CDATA[The <b>fos:user:deactivate</b> command deactivates a user (will not be able to log in)<br> <br> <b>php app/console fos:user:deactivate matthieu</b><br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
     <params>username</params>
     <optionsBefore>
       <option name="--help" shortcut="-h">
@@ -1793,7 +1934,7 @@
   </command>
   <command>
     <name>fos:user:demote</name>
-    <help><![CDATA[The <b>fos:user:demote</b> command demotes a user by removing a role <br> <br> <b>php app/console fos:user:demote matthieu ROLE_CUSTOM</b> <br> <b>php app/console fos:user:demote --super matthieu</b><br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--super</td><td></td><td>Instead specifying role, use this to quickly add the super administrator role</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <help><![CDATA[The <b>fos:user:demote</b> command demotes a user by removing a role<br> <br> <b>php app/console fos:user:demote matthieu ROLE_CUSTOM</b><br> <b>php app/console fos:user:demote --super matthieu</b><br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--super</td><td></td><td>Instead specifying role, use this to quickly add the super administrator role</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
     <params>username role[=null]</params>
     <optionsBefore>
       <option name="--super" shortcut="">
@@ -1836,7 +1977,7 @@
   </command>
   <command>
     <name>fos:user:promote</name>
-    <help><![CDATA[The <b>fos:user:promote</b> command promotes a user by adding a role <br> <br> <b>php app/console fos:user:promote matthieu ROLE_CUSTOM</b> <br> <b>php app/console fos:user:promote --super matthieu</b><br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--super</td><td></td><td>Instead specifying role, use this to quickly add the super administrator role</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <help><![CDATA[The <b>fos:user:promote</b> command promotes a user by adding a role<br> <br> <b>php app/console fos:user:promote matthieu ROLE_CUSTOM</b><br> <b>php app/console fos:user:promote --super matthieu</b><br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--super</td><td></td><td>Instead specifying role, use this to quickly add the super administrator role</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
     <params>username role[=null]</params>
     <optionsBefore>
       <option name="--super" shortcut="">
@@ -1983,8 +2124,47 @@
     </optionsBefore>
   </command>
   <command>
+    <name>init:acl</name>
+    <help><![CDATA[The <b>init:acl</b> command mounts ACL tables in the database.<br> <br> <b>php C:\wamp64\www\FMBYML\app\console init:acl</b><br> <br> The name of the DBAL connection must be configured in your <b>app/config/security.yml</b> configuration file in the <b>security.acl.connection</b> variable.<br> <br> <b>security:<br> acl:<br> connection: default</b><br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <optionsBefore>
+      <option name="--help" shortcut="-h">
+        <help><![CDATA[Display this help message]]></help>
+      </option>
+      <option name="--quiet" shortcut="-q">
+        <help><![CDATA[Do not output any message]]></help>
+      </option>
+      <option name="--verbose" shortcut="-v">
+        <help><![CDATA[Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug]]></help>
+      </option>
+      <option name="--version" shortcut="-V">
+        <help><![CDATA[Display this application version]]></help>
+      </option>
+      <option name="--ansi" shortcut="">
+        <help><![CDATA[Force ANSI output]]></help>
+      </option>
+      <option name="--no-ansi" shortcut="">
+        <help><![CDATA[Disable ANSI output]]></help>
+      </option>
+      <option name="--no-interaction" shortcut="-n">
+        <help><![CDATA[Do not ask any interactive question]]></help>
+      </option>
+      <option name="--shell" shortcut="-s">
+        <help><![CDATA[Launch the shell.]]></help>
+      </option>
+      <option name="--process-isolation" shortcut="">
+        <help><![CDATA[Launch commands from shell as a separate process.]]></help>
+      </option>
+      <option name="--env" shortcut="-e" pattern="equals">
+        <help><![CDATA[The Environment name.]]></help>
+      </option>
+      <option name="--no-debug" shortcut="">
+        <help><![CDATA[Switches off debug mode.]]></help>
+      </option>
+    </optionsBefore>
+  </command>
+  <command>
     <name>lint:twig</name>
-    <help><![CDATA[The <b>lint:twig</b> command lints a template and outputs to STDOUT<br> the first encountered syntax error.<br> <br> You can validate the syntax of a file:<br> <br> <b>php C:\wamp\www\FMBYML\app\console lint:twig filename</b><br> <br> Or of a whole directory:<br> <br> <b>php C:\wamp\www\FMBYML\app\console lint:twig dirname</b><br> <b>php C:\wamp\www\FMBYML\app\console lint:twig dirname --format=json</b><br> <br> You can also pass the template contents from STDIN:<br> <br> <b>cat filename | php C:\wamp\www\FMBYML\app\console lint:twig</b><br> Or all template files in a bundle:<br> <br> <b>php C:\wamp\www\FMBYML\app\console lint:twig @AcmeDemoBundle</b><br> <br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--format</td><td></td><td>The output format</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <help><![CDATA[The <b>lint:twig</b> command lints a template and outputs to STDOUT<br> the first encountered syntax error.<br> <br> You can validate the syntax of contents passed from STDIN:<br> <br> <b>cat filename | php C:\wamp64\www\FMBYML\app\console lint:twig</b><br> <br> Or the syntax of a file:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console lint:twig filename</b><br> <br> Or of a whole directory:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console lint:twig dirname</b><br> <b>php C:\wamp64\www\FMBYML\app\console lint:twig dirname --format=json</b><br> <br> Or all template files in a bundle:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console lint:twig @AcmeDemoBundle</b><br> <br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--format</td><td></td><td>The output format</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
     <params>filename[=null]</params>
     <optionsBefore>
       <option name="--format" shortcut="" pattern="equals">
@@ -2027,7 +2207,7 @@
   </command>
   <command>
     <name>lint:yaml</name>
-    <help><![CDATA[The <b>lint:yaml</b> command lints a YAML file and outputs to STDOUT<br> the first encountered syntax error.<br> <br> You can validate the syntax of a file:<br> <br> <b>php C:\wamp\www\FMBYML\app\console lint:yaml filename</b><br> <br> Or of a whole directory:<br> <br> <b>php C:\wamp\www\FMBYML\app\console lint:yaml dirname</b><br> <b>php C:\wamp\www\FMBYML\app\console lint:yaml dirname --format=json</b><br> <br> Or all YAML files in a bundle:<br> <br> <b>php C:\wamp\www\FMBYML\app\console lint:yaml @AcmeDemoBundle</b><br> <br> You can also pass the YAML contents from STDIN:<br> <br> <b>cat filename | php C:\wamp\www\FMBYML\app\console lint:yaml</b><br> <br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--format</td><td></td><td>The output format</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <help><![CDATA[The <b>lint:yaml</b> command lints a YAML file and outputs to STDOUT<br> the first encountered syntax error.<br> <br> You can validate the syntax of a file:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console lint:yaml filename</b><br> <br> Or of a whole directory:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console lint:yaml dirname</b><br> <b>php C:\wamp64\www\FMBYML\app\console lint:yaml dirname --format=json</b><br> <br> Or all YAML files in a bundle:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console lint:yaml @AcmeDemoBundle</b><br> <br> You can also pass the YAML contents from STDIN:<br> <br> <b>cat filename | php C:\wamp64\www\FMBYML\app\console lint:yaml</b><br> <br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--format</td><td></td><td>The output format</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
     <params>filename[=null]</params>
     <optionsBefore>
       <option name="--format" shortcut="" pattern="equals">
@@ -2070,7 +2250,7 @@
   </command>
   <command>
     <name>router:dump-apache</name>
-    <help><![CDATA[The <b>router:dump-apache</b> dumps all routes as Apache rewrite rules.<br> These can then be used with the ApacheUrlMatcher to use Apache for route<br> matching.<br> <br> <b>php C:\wamp\www\FMBYML\app\console router:dump-apache</b><br> <br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--base-uri</td><td></td><td>The base URI</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <help><![CDATA[The <b>router:dump-apache</b> dumps all routes as Apache rewrite rules.<br> These can then be used with the ApacheUrlMatcher to use Apache for route<br> matching.<br> <br> <b>php C:\wamp64\www\FMBYML\app\console router:dump-apache</b><br> <br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--base-uri</td><td></td><td>The base URI</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
     <params>script_name[=null]</params>
     <optionsBefore>
       <option name="--base-uri" shortcut="" pattern="equals">
@@ -2113,7 +2293,7 @@
   </command>
   <command>
     <name>router:match</name>
-    <help><![CDATA[The <b>router:match</b> shows which routes match a given request and which don't and for what reason:<br> <br> <b>php C:\wamp\www\FMBYML\app\console router:match /foo</b><br> <br> or<br> <br> <b>php C:\wamp\www\FMBYML\app\console router:match /foo --method POST --scheme https --host symfony.com --verbose</b><br> <br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--method</td><td></td><td>Sets the HTTP method</td></tr> <tr><td>--scheme</td><td></td><td>Sets the URI scheme (usually http or https)</td></tr> <tr><td>--host</td><td></td><td>Sets the URI host</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <help><![CDATA[The <b>router:match</b> shows which routes match a given request and which don't and for what reason:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console router:match /foo</b><br> <br> or<br> <br> <b>php C:\wamp64\www\FMBYML\app\console router:match /foo --method POST --scheme https --host symfony.com --verbose</b><br> <br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--method</td><td></td><td>Sets the HTTP method</td></tr> <tr><td>--scheme</td><td></td><td>Sets the URI scheme (usually http or https)</td></tr> <tr><td>--host</td><td></td><td>Sets the URI host</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
     <params>path_info</params>
     <optionsBefore>
       <option name="--method" shortcut="" pattern="equals">
@@ -2162,7 +2342,7 @@
   </command>
   <command>
     <name>security:check</name>
-    <help><![CDATA[The <b>security:check</b> command looks for security issues in the<br> project dependencies:<br> <br> <b>php C:\wamp\www\FMBYML\app\console security:check</b><br> <br> You can also pass the path to a <b>composer.lock</b> file as an argument:<br> <br> <b>php C:\wamp\www\FMBYML\app\console security:check /path/to/composer.lock</b><br> <br> By default, the command displays the result in plain text, but you can also<br> configure it to output JSON instead by using the <b>--format</b> option:<br> <br> <b>php C:\wamp\www\FMBYML\app\console security:check /path/to/composer.lock --format=json</b><br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--format</td><td></td><td>The output format</td></tr> <tr><td>--end-point</td><td></td><td>The security checker server URL</td></tr> <tr><td>--timeout</td><td></td><td>The HTTP timeout in seconds</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <help><![CDATA[The <b>security:check</b> command looks for security issues in the<br> project dependencies:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console security:check</b><br> <br> You can also pass the path to a <b>composer.lock</b> file as an argument:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console security:check /path/to/composer.lock</b><br> <br> By default, the command displays the result in plain text, but you can also<br> configure it to output JSON instead by using the <b>--format</b> option:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console security:check /path/to/composer.lock --format=json</b><br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--format</td><td></td><td>The output format</td></tr> <tr><td>--end-point</td><td></td><td>The security checker server URL</td></tr> <tr><td>--timeout</td><td></td><td>The HTTP timeout in seconds</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
     <params>lockfile[=null]</params>
     <optionsBefore>
       <option name="--format" shortcut="" pattern="equals">
@@ -2211,7 +2391,7 @@
   </command>
   <command>
     <name>security:encode-password</name>
-    <help><![CDATA[<br> The <b>security:encode-password</b> command encodes passwords according to your<br> security configuration. This command is mainly used to generate passwords for<br> the <comment>in_memory</comment> user provider type and for changing passwords<br> in the database while developing the application.<br> <br> Suppose that you have the following security configuration in your application:<br> <br> <comment><br> # app/config/security.yml<br> security:<br> encoders:<br> Symfony\Component\Security\Core\User\User: plaintext<br> AppBundle\Entity\User: bcrypt<br> </comment><br> <br> If you execute the command non-interactively, the default Symfony User class<br> is used and a random salt is generated to encode the password:<br> <br> <b>php C:\wamp\www\FMBYML\app\console security:encode-password --no-interaction [password]</b><br> <br> Pass the full user class path as the second argument to encode passwords for<br> your own entities:<br> <br> <b>php C:\wamp\www\FMBYML\app\console security:encode-password --no-interaction [password] AppBundle\Entity\User</b><br> <br> Executing the command interactively allows you to generate a random salt for<br> encoding the password:<br> <br> <b>php C:\wamp\www\FMBYML\app\console security:encode-password [password] AppBundle\Entity\User</b><br> <br> In case your encoder doesn't require a salt, add the <comment>empty-salt</comment> option:<br> <br> <b>php C:\wamp\www\FMBYML\app\console security:encode-password --empty-salt [password] AppBundle\Entity\User</b><br> <br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--empty-salt</td><td></td><td>Do not generate a salt or let the encoder generate one.</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <help><![CDATA[<br> The <b>security:encode-password</b> command encodes passwords according to your<br> security configuration. This command is mainly used to generate passwords for<br> the <comment>in_memory</comment> user provider type and for changing passwords<br> in the database while developing the application.<br> <br> Suppose that you have the following security configuration in your application:<br> <br> <comment><br> # app/config/security.yml<br> security:<br> encoders:<br> Symfony\Component\Security\Core\User\User: plaintext<br> AppBundle\Entity\User: bcrypt<br> </comment><br> <br> If you execute the command non-interactively, the default Symfony User class<br> is used and a random salt is generated to encode the password:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console security:encode-password --no-interaction [password]</b><br> <br> Pass the full user class path as the second argument to encode passwords for<br> your own entities:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console security:encode-password --no-interaction [password] AppBundle\Entity\User</b><br> <br> Executing the command interactively allows you to generate a random salt for<br> encoding the password:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console security:encode-password [password] AppBundle\Entity\User</b><br> <br> In case your encoder doesn't require a salt, add the <comment>empty-salt</comment> option:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console security:encode-password --empty-salt [password] AppBundle\Entity\User</b><br> <br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--empty-salt</td><td></td><td>Do not generate a salt or let the encoder generate one.</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
     <params>password[=null] user-class[=null]</params>
     <optionsBefore>
       <option name="--empty-salt" shortcut="">
@@ -2254,7 +2434,7 @@
   </command>
   <command>
     <name>server:run</name>
-    <help><![CDATA[The <b>server:run</b> runs PHP built-in web server:<br> <br> <b>C:\wamp\www\FMBYML\app\console server:run</b><br> <br> To change default bind address and port use the <b>address</b> argument:<br> <br> <b>C:\wamp\www\FMBYML\app\console server:run 127.0.0.1:8080</b><br> <br> To change default docroot directory use the <b>--docroot</b> option:<br> <br> <b>C:\wamp\www\FMBYML\app\console server:run --docroot=htdocs/</b><br> <br> If you have custom docroot directory layout, you can specify your own<br> router script using <b>--router</b> option:<br> <br> <b>C:\wamp\www\FMBYML\app\console server:run --router=app/config/router.php</b><br> <br> Specifing a router script is required when the used environment is not "dev",<br> "prod", or "test".<br> <br> See also: http://www.php.net/manual/en/features.commandline.webserver.php<br> <br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--docroot</td><td>(-d)</td><td>Document root</td></tr> <tr><td>--router</td><td>(-r)</td><td>Path to custom router script</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <help><![CDATA[The <b>server:run</b> runs PHP built-in web server:<br> <br> <b>C:\wamp64\www\FMBYML\app\console server:run</b><br> <br> To change default bind address and port use the <b>address</b> argument:<br> <br> <b>C:\wamp64\www\FMBYML\app\console server:run 127.0.0.1:8080</b><br> <br> To change default docroot directory use the <b>--docroot</b> option:<br> <br> <b>C:\wamp64\www\FMBYML\app\console server:run --docroot=htdocs/</b><br> <br> If you have custom docroot directory layout, you can specify your own<br> router script using <b>--router</b> option:<br> <br> <b>C:\wamp64\www\FMBYML\app\console server:run --router=app/config/router.php</b><br> <br> Specifing a router script is required when the used environment is not "dev",<br> "prod", or "test".<br> <br> See also: http://www.php.net/manual/en/features.commandline.webserver.php<br> <br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--docroot</td><td>(-d)</td><td>Document root</td></tr> <tr><td>--router</td><td>(-r)</td><td>Path to custom router script</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
     <params>address[=null]</params>
     <optionsBefore>
       <option name="--docroot" shortcut="-d" pattern="equals">
@@ -2300,7 +2480,7 @@
   </command>
   <command>
     <name>server:start</name>
-    <help><![CDATA[The <b>server:start</b> runs PHP's built-in web server:<br> <br> <b>php C:\wamp\www\FMBYML\app\console server:start</b><br> <br> To change the default bind address and the default port use the <b>address</b> argument:<br> <br> <b>php C:\wamp\www\FMBYML\app\console server:start 127.0.0.1:8080</b><br> <br> To change the default document root directory use the <b>--docroot</b> option:<br> <br> <b>php C:\wamp\www\FMBYML\app\console server:start --docroot=htdocs/</b><br> <br> If you have a custom document root directory layout, you can specify your own<br> router script using the <b>--router</b> option:<br> <br> <b>php C:\wamp\www\FMBYML\app\console server:start --router=app/config/router.php</b><br> <br> Specifying a router script is required when the used environment is not <comment>"dev"</comment> or<br> <comment>"prod"</comment>.<br> <br> See also: http://www.php.net/manual/en/features.commandline.webserver.php<br> <br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--docroot</td><td>(-d)</td><td>Document root</td></tr> <tr><td>--router</td><td>(-r)</td><td>Path to custom router script</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <help><![CDATA[The <b>server:start</b> runs PHP's built-in web server:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console server:start</b><br> <br> To change the default bind address and the default port use the <b>address</b> argument:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console server:start 127.0.0.1:8080</b><br> <br> To change the default document root directory use the <b>--docroot</b> option:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console server:start --docroot=htdocs/</b><br> <br> If you have a custom document root directory layout, you can specify your own<br> router script using the <b>--router</b> option:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console server:start --router=app/config/router.php</b><br> <br> Specifying a router script is required when the used environment is not <comment>"dev"</comment> or<br> <comment>"prod"</comment>.<br> <br> See also: http://www.php.net/manual/en/features.commandline.webserver.php<br> <br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--docroot</td><td>(-d)</td><td>Document root</td></tr> <tr><td>--router</td><td>(-r)</td><td>Path to custom router script</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
     <params>address[=null]</params>
     <optionsBefore>
       <option name="--docroot" shortcut="-d" pattern="equals">
@@ -2346,9 +2526,12 @@
   </command>
   <command>
     <name>server:status</name>
-    <help><![CDATA[Outputs the status of the built-in web server for the given address<br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <help><![CDATA[Outputs the status of the built-in web server for the given address<br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--port</td><td>(-p)</td><td>Address port number</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
     <params>address[=null]</params>
     <optionsBefore>
+      <option name="--port" shortcut="-p" pattern="equals">
+        <help><![CDATA[Address port number]]></help>
+      </option>
       <option name="--help" shortcut="-h">
         <help><![CDATA[Display this help message]]></help>
       </option>
@@ -2386,7 +2569,7 @@
   </command>
   <command>
     <name>server:stop</name>
-    <help><![CDATA[The <b>server:stop</b> stops PHP's built-in web server:<br> <br> <b>php C:\wamp\www\FMBYML\app\console server:stop</b><br> <br> To change the default bind address and the default port use the <b>address</b> argument:<br> <br> <b>php C:\wamp\www\FMBYML\app\console server:stop 127.0.0.1:8080</b><br> <br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <help><![CDATA[The <b>server:stop</b> stops PHP's built-in web server:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console server:stop</b><br> <br> To change the default bind address and the default port use the <b>address</b> argument:<br> <br> <b>php C:\wamp64\www\FMBYML\app\console server:stop 127.0.0.1:8080</b><br> <br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
     <params>address[=null]</params>
     <optionsBefore>
       <option name="--help" shortcut="-h">
@@ -2425,8 +2608,490 @@
     </optionsBefore>
   </command>
   <command>
+    <name>sonata:admin:explain</name>
+    <help><![CDATA[Explain an admin service<br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <params>admin</params>
+    <optionsBefore>
+      <option name="--help" shortcut="-h">
+        <help><![CDATA[Display this help message]]></help>
+      </option>
+      <option name="--quiet" shortcut="-q">
+        <help><![CDATA[Do not output any message]]></help>
+      </option>
+      <option name="--verbose" shortcut="-v">
+        <help><![CDATA[Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug]]></help>
+      </option>
+      <option name="--version" shortcut="-V">
+        <help><![CDATA[Display this application version]]></help>
+      </option>
+      <option name="--ansi" shortcut="">
+        <help><![CDATA[Force ANSI output]]></help>
+      </option>
+      <option name="--no-ansi" shortcut="">
+        <help><![CDATA[Disable ANSI output]]></help>
+      </option>
+      <option name="--no-interaction" shortcut="-n">
+        <help><![CDATA[Do not ask any interactive question]]></help>
+      </option>
+      <option name="--shell" shortcut="-s">
+        <help><![CDATA[Launch the shell.]]></help>
+      </option>
+      <option name="--process-isolation" shortcut="">
+        <help><![CDATA[Launch commands from shell as a separate process.]]></help>
+      </option>
+      <option name="--env" shortcut="-e" pattern="equals">
+        <help><![CDATA[The Environment name.]]></help>
+      </option>
+      <option name="--no-debug" shortcut="">
+        <help><![CDATA[Switches off debug mode.]]></help>
+      </option>
+    </optionsBefore>
+  </command>
+  <command>
+    <name>sonata:admin:generate</name>
+    <help><![CDATA[Generates an admin class based on the given model class<br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--bundle</td><td>(-b)</td><td>The bundle name</td></tr> <tr><td>--admin</td><td>(-a)</td><td>The admin class basename</td></tr> <tr><td>--controller</td><td>(-c)</td><td>The controller class basename</td></tr> <tr><td>--manager</td><td>(-m)</td><td>The model manager type</td></tr> <tr><td>--services</td><td>(-y)</td><td>The services YAML file</td></tr> <tr><td>--id</td><td>(-i)</td><td>The admin service ID</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <params>model</params>
+    <optionsBefore>
+      <option name="--bundle" shortcut="-b" pattern="equals">
+        <help><![CDATA[The bundle name]]></help>
+      </option>
+      <option name="--admin" shortcut="-a" pattern="equals">
+        <help><![CDATA[The admin class basename]]></help>
+      </option>
+      <option name="--controller" shortcut="-c" pattern="equals">
+        <help><![CDATA[The controller class basename]]></help>
+      </option>
+      <option name="--manager" shortcut="-m" pattern="equals">
+        <help><![CDATA[The model manager type]]></help>
+      </option>
+      <option name="--services" shortcut="-y" pattern="equals">
+        <help><![CDATA[The services YAML file]]></help>
+      </option>
+      <option name="--id" shortcut="-i" pattern="equals">
+        <help><![CDATA[The admin service ID]]></help>
+      </option>
+      <option name="--help" shortcut="-h">
+        <help><![CDATA[Display this help message]]></help>
+      </option>
+      <option name="--quiet" shortcut="-q">
+        <help><![CDATA[Do not output any message]]></help>
+      </option>
+      <option name="--verbose" shortcut="-v">
+        <help><![CDATA[Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug]]></help>
+      </option>
+      <option name="--version" shortcut="-V">
+        <help><![CDATA[Display this application version]]></help>
+      </option>
+      <option name="--ansi" shortcut="">
+        <help><![CDATA[Force ANSI output]]></help>
+      </option>
+      <option name="--no-ansi" shortcut="">
+        <help><![CDATA[Disable ANSI output]]></help>
+      </option>
+      <option name="--no-interaction" shortcut="-n">
+        <help><![CDATA[Do not ask any interactive question]]></help>
+      </option>
+      <option name="--shell" shortcut="-s">
+        <help><![CDATA[Launch the shell.]]></help>
+      </option>
+      <option name="--process-isolation" shortcut="">
+        <help><![CDATA[Launch commands from shell as a separate process.]]></help>
+      </option>
+      <option name="--env" shortcut="-e" pattern="equals">
+        <help><![CDATA[The Environment name.]]></help>
+      </option>
+      <option name="--no-debug" shortcut="">
+        <help><![CDATA[Switches off debug mode.]]></help>
+      </option>
+    </optionsBefore>
+  </command>
+  <command>
+    <name>sonata:admin:generate-object-acl</name>
+    <help><![CDATA[Install ACL for the objects of the Admin Classes.<br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--object_owner</td><td></td><td>If set, the task will set the object owner for each admin.</td></tr> <tr><td>--user_entity</td><td></td><td>Shortcut notation like <comment>AcmeDemoBundle:User</comment>. If not set, it will be asked the first time an object owner is set.</td></tr> <tr><td>--step</td><td></td><td>If set, the task will ask for each admin if the ACLs need to be generated and what object owner to set, if any.</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <optionsBefore>
+      <option name="--object_owner" shortcut="" pattern="equals">
+        <help><![CDATA[If set, the task will set the object owner for each admin.]]></help>
+      </option>
+      <option name="--user_entity" shortcut="" pattern="equals">
+        <help><![CDATA[Shortcut notation like <comment>AcmeDemoBundle:User</comment>. If not set, it will be asked the first time an object owner is set.]]></help>
+      </option>
+      <option name="--step" shortcut="">
+        <help><![CDATA[If set, the task will ask for each admin if the ACLs need to be generated and what object owner to set, if any.]]></help>
+      </option>
+      <option name="--help" shortcut="-h">
+        <help><![CDATA[Display this help message]]></help>
+      </option>
+      <option name="--quiet" shortcut="-q">
+        <help><![CDATA[Do not output any message]]></help>
+      </option>
+      <option name="--verbose" shortcut="-v">
+        <help><![CDATA[Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug]]></help>
+      </option>
+      <option name="--version" shortcut="-V">
+        <help><![CDATA[Display this application version]]></help>
+      </option>
+      <option name="--ansi" shortcut="">
+        <help><![CDATA[Force ANSI output]]></help>
+      </option>
+      <option name="--no-ansi" shortcut="">
+        <help><![CDATA[Disable ANSI output]]></help>
+      </option>
+      <option name="--no-interaction" shortcut="-n">
+        <help><![CDATA[Do not ask any interactive question]]></help>
+      </option>
+      <option name="--shell" shortcut="-s">
+        <help><![CDATA[Launch the shell.]]></help>
+      </option>
+      <option name="--process-isolation" shortcut="">
+        <help><![CDATA[Launch commands from shell as a separate process.]]></help>
+      </option>
+      <option name="--env" shortcut="-e" pattern="equals">
+        <help><![CDATA[The Environment name.]]></help>
+      </option>
+      <option name="--no-debug" shortcut="">
+        <help><![CDATA[Switches off debug mode.]]></help>
+      </option>
+    </optionsBefore>
+  </command>
+  <command>
+    <name>sonata:admin:list</name>
+    <help><![CDATA[List all admin services available<br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <optionsBefore>
+      <option name="--help" shortcut="-h">
+        <help><![CDATA[Display this help message]]></help>
+      </option>
+      <option name="--quiet" shortcut="-q">
+        <help><![CDATA[Do not output any message]]></help>
+      </option>
+      <option name="--verbose" shortcut="-v">
+        <help><![CDATA[Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug]]></help>
+      </option>
+      <option name="--version" shortcut="-V">
+        <help><![CDATA[Display this application version]]></help>
+      </option>
+      <option name="--ansi" shortcut="">
+        <help><![CDATA[Force ANSI output]]></help>
+      </option>
+      <option name="--no-ansi" shortcut="">
+        <help><![CDATA[Disable ANSI output]]></help>
+      </option>
+      <option name="--no-interaction" shortcut="-n">
+        <help><![CDATA[Do not ask any interactive question]]></help>
+      </option>
+      <option name="--shell" shortcut="-s">
+        <help><![CDATA[Launch the shell.]]></help>
+      </option>
+      <option name="--process-isolation" shortcut="">
+        <help><![CDATA[Launch commands from shell as a separate process.]]></help>
+      </option>
+      <option name="--env" shortcut="-e" pattern="equals">
+        <help><![CDATA[The Environment name.]]></help>
+      </option>
+      <option name="--no-debug" shortcut="">
+        <help><![CDATA[Switches off debug mode.]]></help>
+      </option>
+    </optionsBefore>
+  </command>
+  <command>
+    <name>sonata:admin:setup-acl</name>
+    <help><![CDATA[Install ACL for Admin Classes<br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <optionsBefore>
+      <option name="--help" shortcut="-h">
+        <help><![CDATA[Display this help message]]></help>
+      </option>
+      <option name="--quiet" shortcut="-q">
+        <help><![CDATA[Do not output any message]]></help>
+      </option>
+      <option name="--verbose" shortcut="-v">
+        <help><![CDATA[Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug]]></help>
+      </option>
+      <option name="--version" shortcut="-V">
+        <help><![CDATA[Display this application version]]></help>
+      </option>
+      <option name="--ansi" shortcut="">
+        <help><![CDATA[Force ANSI output]]></help>
+      </option>
+      <option name="--no-ansi" shortcut="">
+        <help><![CDATA[Disable ANSI output]]></help>
+      </option>
+      <option name="--no-interaction" shortcut="-n">
+        <help><![CDATA[Do not ask any interactive question]]></help>
+      </option>
+      <option name="--shell" shortcut="-s">
+        <help><![CDATA[Launch the shell.]]></help>
+      </option>
+      <option name="--process-isolation" shortcut="">
+        <help><![CDATA[Launch commands from shell as a separate process.]]></help>
+      </option>
+      <option name="--env" shortcut="-e" pattern="equals">
+        <help><![CDATA[The Environment name.]]></help>
+      </option>
+      <option name="--no-debug" shortcut="">
+        <help><![CDATA[Switches off debug mode.]]></help>
+      </option>
+    </optionsBefore>
+  </command>
+  <command>
+    <name>sonata:block:debug</name>
+    <help><![CDATA[Debug all blocks available, show default settings of each block<br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--context</td><td>(-c)</td><td>display service for the specified context</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <optionsBefore>
+      <option name="--context" shortcut="-c" pattern="equals">
+        <help><![CDATA[display service for the specified context]]></help>
+      </option>
+      <option name="--help" shortcut="-h">
+        <help><![CDATA[Display this help message]]></help>
+      </option>
+      <option name="--quiet" shortcut="-q">
+        <help><![CDATA[Do not output any message]]></help>
+      </option>
+      <option name="--verbose" shortcut="-v">
+        <help><![CDATA[Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug]]></help>
+      </option>
+      <option name="--version" shortcut="-V">
+        <help><![CDATA[Display this application version]]></help>
+      </option>
+      <option name="--ansi" shortcut="">
+        <help><![CDATA[Force ANSI output]]></help>
+      </option>
+      <option name="--no-ansi" shortcut="">
+        <help><![CDATA[Disable ANSI output]]></help>
+      </option>
+      <option name="--no-interaction" shortcut="-n">
+        <help><![CDATA[Do not ask any interactive question]]></help>
+      </option>
+      <option name="--shell" shortcut="-s">
+        <help><![CDATA[Launch the shell.]]></help>
+      </option>
+      <option name="--process-isolation" shortcut="">
+        <help><![CDATA[Launch commands from shell as a separate process.]]></help>
+      </option>
+      <option name="--env" shortcut="-e" pattern="equals">
+        <help><![CDATA[The Environment name.]]></help>
+      </option>
+      <option name="--no-debug" shortcut="">
+        <help><![CDATA[Switches off debug mode.]]></help>
+      </option>
+    </optionsBefore>
+  </command>
+  <command>
+    <name>sonata:core:dump-doctrine-metadata</name>
+    <help><![CDATA[Get information on the current Doctrine's schema<br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--entity-name</td><td>(-E)</td><td>If entity-name is set, dump will only contain the specified entity and all its extended classes.</td></tr> <tr><td>--regex</td><td>(-r)</td><td>If regex is set, dump will only contain entities which name match the pattern.</td></tr> <tr><td>--filename</td><td>(-f)</td><td>If filename is specified, result will be dumped into this file under json format.</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <optionsBefore>
+      <option name="--entity-name" shortcut="-E" pattern="equals">
+        <help><![CDATA[If entity-name is set, dump will only contain the specified entity and all its extended classes.]]></help>
+      </option>
+      <option name="--regex" shortcut="-r" pattern="equals">
+        <help><![CDATA[If regex is set, dump will only contain entities which name match the pattern.]]></help>
+      </option>
+      <option name="--filename" shortcut="-f" pattern="equals">
+        <help><![CDATA[If filename is specified, result will be dumped into this file under json format.]]></help>
+      </option>
+      <option name="--help" shortcut="-h">
+        <help><![CDATA[Display this help message]]></help>
+      </option>
+      <option name="--quiet" shortcut="-q">
+        <help><![CDATA[Do not output any message]]></help>
+      </option>
+      <option name="--verbose" shortcut="-v">
+        <help><![CDATA[Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug]]></help>
+      </option>
+      <option name="--version" shortcut="-V">
+        <help><![CDATA[Display this application version]]></help>
+      </option>
+      <option name="--ansi" shortcut="">
+        <help><![CDATA[Force ANSI output]]></help>
+      </option>
+      <option name="--no-ansi" shortcut="">
+        <help><![CDATA[Disable ANSI output]]></help>
+      </option>
+      <option name="--no-interaction" shortcut="-n">
+        <help><![CDATA[Do not ask any interactive question]]></help>
+      </option>
+      <option name="--shell" shortcut="-s">
+        <help><![CDATA[Launch the shell.]]></help>
+      </option>
+      <option name="--process-isolation" shortcut="">
+        <help><![CDATA[Launch commands from shell as a separate process.]]></help>
+      </option>
+      <option name="--env" shortcut="-e" pattern="equals">
+        <help><![CDATA[The Environment name.]]></help>
+      </option>
+      <option name="--no-debug" shortcut="">
+        <help><![CDATA[Switches off debug mode.]]></help>
+      </option>
+    </optionsBefore>
+  </command>
+  <command>
+    <name>sonata:core:form-mapping</name>
+    <help><![CDATA[Get information on the current form mapping<br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--format</td><td>(-f)</td><td>Output the mapping into a dedicated format (available: yaml, php)</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <optionsBefore>
+      <option name="--format" shortcut="-f" pattern="equals">
+        <help><![CDATA[Output the mapping into a dedicated format (available: yaml, php)]]></help>
+      </option>
+      <option name="--help" shortcut="-h">
+        <help><![CDATA[Display this help message]]></help>
+      </option>
+      <option name="--quiet" shortcut="-q">
+        <help><![CDATA[Do not output any message]]></help>
+      </option>
+      <option name="--verbose" shortcut="-v">
+        <help><![CDATA[Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug]]></help>
+      </option>
+      <option name="--version" shortcut="-V">
+        <help><![CDATA[Display this application version]]></help>
+      </option>
+      <option name="--ansi" shortcut="">
+        <help><![CDATA[Force ANSI output]]></help>
+      </option>
+      <option name="--no-ansi" shortcut="">
+        <help><![CDATA[Disable ANSI output]]></help>
+      </option>
+      <option name="--no-interaction" shortcut="-n">
+        <help><![CDATA[Do not ask any interactive question]]></help>
+      </option>
+      <option name="--shell" shortcut="-s">
+        <help><![CDATA[Launch the shell.]]></help>
+      </option>
+      <option name="--process-isolation" shortcut="">
+        <help><![CDATA[Launch commands from shell as a separate process.]]></help>
+      </option>
+      <option name="--env" shortcut="-e" pattern="equals">
+        <help><![CDATA[The Environment name.]]></help>
+      </option>
+      <option name="--no-debug" shortcut="">
+        <help><![CDATA[Switches off debug mode.]]></help>
+      </option>
+    </optionsBefore>
+  </command>
+  <command>
+    <name>sonata:easy-extends:dump-mapping</name>
+    <help><![CDATA[Dump some mapping information (debug only)<br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <params>manager[=null] model[=null]</params>
+    <optionsBefore>
+      <option name="--help" shortcut="-h">
+        <help><![CDATA[Display this help message]]></help>
+      </option>
+      <option name="--quiet" shortcut="-q">
+        <help><![CDATA[Do not output any message]]></help>
+      </option>
+      <option name="--verbose" shortcut="-v">
+        <help><![CDATA[Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug]]></help>
+      </option>
+      <option name="--version" shortcut="-V">
+        <help><![CDATA[Display this application version]]></help>
+      </option>
+      <option name="--ansi" shortcut="">
+        <help><![CDATA[Force ANSI output]]></help>
+      </option>
+      <option name="--no-ansi" shortcut="">
+        <help><![CDATA[Disable ANSI output]]></help>
+      </option>
+      <option name="--no-interaction" shortcut="-n">
+        <help><![CDATA[Do not ask any interactive question]]></help>
+      </option>
+      <option name="--shell" shortcut="-s">
+        <help><![CDATA[Launch the shell.]]></help>
+      </option>
+      <option name="--process-isolation" shortcut="">
+        <help><![CDATA[Launch commands from shell as a separate process.]]></help>
+      </option>
+      <option name="--env" shortcut="-e" pattern="equals">
+        <help><![CDATA[The Environment name.]]></help>
+      </option>
+      <option name="--no-debug" shortcut="">
+        <help><![CDATA[Switches off debug mode.]]></help>
+      </option>
+    </optionsBefore>
+  </command>
+  <command>
+    <name>sonata:easy-extends:generate</name>
+    <help><![CDATA[The <b>easy-extends:generate:entities</b> command generating a valid bundle structure from a Vendor Bundle.<br> <br> <b>ie: ./app/console sonata:easy-extends:generate SonataUserBundle</b><br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--dest</td><td>(-d)</td><td>The base folder where the Application will be created</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <params>bundle[=null]</params>
+    <optionsBefore>
+      <option name="--dest" shortcut="-d" pattern="equals">
+        <help><![CDATA[The base folder where the Application will be created]]></help>
+      </option>
+      <option name="--help" shortcut="-h">
+        <help><![CDATA[Display this help message]]></help>
+      </option>
+      <option name="--quiet" shortcut="-q">
+        <help><![CDATA[Do not output any message]]></help>
+      </option>
+      <option name="--verbose" shortcut="-v">
+        <help><![CDATA[Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug]]></help>
+      </option>
+      <option name="--version" shortcut="-V">
+        <help><![CDATA[Display this application version]]></help>
+      </option>
+      <option name="--ansi" shortcut="">
+        <help><![CDATA[Force ANSI output]]></help>
+      </option>
+      <option name="--no-ansi" shortcut="">
+        <help><![CDATA[Disable ANSI output]]></help>
+      </option>
+      <option name="--no-interaction" shortcut="-n">
+        <help><![CDATA[Do not ask any interactive question]]></help>
+      </option>
+      <option name="--shell" shortcut="-s">
+        <help><![CDATA[Launch the shell.]]></help>
+      </option>
+      <option name="--process-isolation" shortcut="">
+        <help><![CDATA[Launch commands from shell as a separate process.]]></help>
+      </option>
+      <option name="--env" shortcut="-e" pattern="equals">
+        <help><![CDATA[The Environment name.]]></help>
+      </option>
+      <option name="--no-debug" shortcut="">
+        <help><![CDATA[Switches off debug mode.]]></help>
+      </option>
+    </optionsBefore>
+  </command>
+  <command>
+    <name>sonata:user:two-step-verification</name>
+    <help><![CDATA[Generate a two step verification process to secure an access (Ideal for super admin protection)<br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--reset</td><td></td><td>Reset the current two step verification token</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <params>username</params>
+    <optionsBefore>
+      <option name="--reset" shortcut="">
+        <help><![CDATA[Reset the current two step verification token]]></help>
+      </option>
+      <option name="--help" shortcut="-h">
+        <help><![CDATA[Display this help message]]></help>
+      </option>
+      <option name="--quiet" shortcut="-q">
+        <help><![CDATA[Do not output any message]]></help>
+      </option>
+      <option name="--verbose" shortcut="-v">
+        <help><![CDATA[Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug]]></help>
+      </option>
+      <option name="--version" shortcut="-V">
+        <help><![CDATA[Display this application version]]></help>
+      </option>
+      <option name="--ansi" shortcut="">
+        <help><![CDATA[Force ANSI output]]></help>
+      </option>
+      <option name="--no-ansi" shortcut="">
+        <help><![CDATA[Disable ANSI output]]></help>
+      </option>
+      <option name="--no-interaction" shortcut="-n">
+        <help><![CDATA[Do not ask any interactive question]]></help>
+      </option>
+      <option name="--shell" shortcut="-s">
+        <help><![CDATA[Launch the shell.]]></help>
+      </option>
+      <option name="--process-isolation" shortcut="">
+        <help><![CDATA[Launch commands from shell as a separate process.]]></help>
+      </option>
+      <option name="--env" shortcut="-e" pattern="equals">
+        <help><![CDATA[The Environment name.]]></help>
+      </option>
+      <option name="--no-debug" shortcut="">
+        <help><![CDATA[Switches off debug mode.]]></help>
+      </option>
+    </optionsBefore>
+  </command>
+  <command>
     <name>swiftmailer:email:send</name>
-    <help><![CDATA[The <b>swiftmailer:email:send</b> command creates and send simple email message.<br> <br> <b>php C:\wamp\www\FMBYML\app\console swiftmailer:email:send --mailer=custom_mailer --content-type=text/xml</b><br> <br> You can get body of message from file:<br> <b>php C:\wamp\www\FMBYML\app\console swiftmailer:email:send --body-source=file --body=/path/to/file</b><br> <br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--from</td><td></td><td>The from address of the message</td></tr> <tr><td>--to</td><td></td><td>The to address of the message</td></tr> <tr><td>--subject</td><td></td><td>The subject of the message</td></tr> <tr><td>--body</td><td></td><td>The body of the message</td></tr> <tr><td>--mailer</td><td></td><td>The mailer name</td></tr> <tr><td>--content-type</td><td></td><td>The body content type of the message</td></tr> <tr><td>--charset</td><td></td><td>The body charset of the message</td></tr> <tr><td>--body-source</td><td></td><td>The source where body come from [stdin|file]</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <help><![CDATA[The <b>swiftmailer:email:send</b> command creates and send simple email message.<br> <br> <b>php C:\wamp64\www\FMBYML\app\console swiftmailer:email:send --mailer=custom_mailer --content-type=text/xml</b><br> <br> You can get body of message from file:<br> <b>php C:\wamp64\www\FMBYML\app\console swiftmailer:email:send --body-source=file --body=/path/to/file</b><br> <br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--from</td><td></td><td>The from address of the message</td></tr> <tr><td>--to</td><td></td><td>The to address of the message</td></tr> <tr><td>--subject</td><td></td><td>The subject of the message</td></tr> <tr><td>--body</td><td></td><td>The body of the message</td></tr> <tr><td>--mailer</td><td></td><td>The mailer name</td></tr> <tr><td>--content-type</td><td></td><td>The body content type of the message</td></tr> <tr><td>--charset</td><td></td><td>The body charset of the message</td></tr> <tr><td>--body-source</td><td></td><td>The source where body come from [stdin|file]</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
     <optionsBefore>
       <option name="--from" shortcut="" pattern="equals">
         <help><![CDATA[The from address of the message]]></help>
@@ -2489,7 +3154,7 @@
   </command>
   <command>
     <name>swiftmailer:spool:send</name>
-    <help><![CDATA[The <b>swiftmailer:spool:send</b> command sends all emails from the spool.<br> <br> <b>php C:\wamp\www\FMBYML\app\console swiftmailer:spool:send --message-limit=10 --time-limit=10 --recover-timeout=900 --mailer=default</b><br> <br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--message-limit</td><td></td><td>The maximum number of messages to send.</td></tr> <tr><td>--time-limit</td><td></td><td>The time limit for sending messages (in seconds).</td></tr> <tr><td>--recover-timeout</td><td></td><td>The timeout for recovering messages that have taken too long to send (in seconds).</td></tr> <tr><td>--mailer</td><td></td><td>The mailer name.</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <help><![CDATA[The <b>swiftmailer:spool:send</b> command sends all emails from the spool.<br> <br> <b>php C:\wamp64\www\FMBYML\app\console swiftmailer:spool:send --message-limit=10 --time-limit=10 --recover-timeout=900 --mailer=default</b><br> <br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--message-limit</td><td></td><td>The maximum number of messages to send.</td></tr> <tr><td>--time-limit</td><td></td><td>The time limit for sending messages (in seconds).</td></tr> <tr><td>--recover-timeout</td><td></td><td>The timeout for recovering messages that have taken too long to send (in seconds).</td></tr> <tr><td>--mailer</td><td></td><td>The mailer name.</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
     <optionsBefore>
       <option name="--message-limit" shortcut="" pattern="equals">
         <help><![CDATA[The maximum number of messages to send.]]></help>
@@ -2540,7 +3205,7 @@
   </command>
   <command>
     <name>translation:update</name>
-    <help><![CDATA[The <b>translation:update</b> command extracts translation strings from templates<br> of a given bundle or the app folder. It can display them or merge the new ones into the translation files.<br> <br> When new translation strings are found it can automatically add a prefix to the translation<br> message.<br> <br> Example running against a Bundle (AcmeBundle)<br> <b>php C:\wamp\www\FMBYML\app\console translation:update --dump-messages en AcmeBundle</b><br> <b>php C:\wamp\www\FMBYML\app\console translation:update --force --prefix="new_" fr AcmeBundle</b><br> <br> Example running against app messages (app/Resources folder)<br> <b>php C:\wamp\www\FMBYML\app\console translation:update --dump-messages en</b><br> <b>php C:\wamp\www\FMBYML\app\console translation:update --force --prefix="new_" fr</b><br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--prefix</td><td></td><td>Override the default prefix</td></tr> <tr><td>--output-format</td><td></td><td>Override the default output format</td></tr> <tr><td>--dump-messages</td><td></td><td>Should the messages be dumped in the console</td></tr> <tr><td>--force</td><td></td><td>Should the update be done</td></tr> <tr><td>--no-backup</td><td></td><td>Should backup be disabled</td></tr> <tr><td>--clean</td><td></td><td>Should clean not found messages</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
+    <help><![CDATA[The <b>translation:update</b> command extracts translation strings from templates<br> of a given bundle or the app folder. It can display them or merge the new ones into the translation files.<br> <br> When new translation strings are found it can automatically add a prefix to the translation<br> message.<br> <br> Example running against a Bundle (AcmeBundle)<br> <b>php C:\wamp64\www\FMBYML\app\console translation:update --dump-messages en AcmeBundle</b><br> <b>php C:\wamp64\www\FMBYML\app\console translation:update --force --prefix="new_" fr AcmeBundle</b><br> <br> Example running against app messages (app/Resources folder)<br> <b>php C:\wamp64\www\FMBYML\app\console translation:update --dump-messages en</b><br> <b>php C:\wamp64\www\FMBYML\app\console translation:update --force --prefix="new_" fr</b><br/><br/><table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--prefix</td><td></td><td>Override the default prefix</td></tr> <tr><td>--output-format</td><td></td><td>Override the default output format</td></tr> <tr><td>--dump-messages</td><td></td><td>Should the messages be dumped in the console</td></tr> <tr><td>--force</td><td></td><td>Should the update be done</td></tr> <tr><td>--no-backup</td><td></td><td>Should backup be disabled</td></tr> <tr><td>--clean</td><td></td><td>Should clean not found messages</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> </table> <br/>]]></help>
     <params>locale bundle[=null]</params>
     <optionsBefore>
       <option name="--prefix" shortcut="" pattern="equals">
@@ -2596,6 +3261,6 @@
       </option>
     </optionsBefore>
   </command>
-  <help><![CDATA[<p>Usage:<br> [options] command [arguments] </p><br> <table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> </table> <br/> <table> <tr><td><strong>Available commands:</strong></td></tr> <tr><td>help</td><td>Displays help for a command</td></tr> <tr><td>list</td><td>Lists commands</td></tr> <tr><td>assetic:dump</td><td>Dumps all assets to the filesystem</td></tr> <tr><td>assetic:watch</td><td>Dumps assets to the filesystem as their source files are modified</td></tr> <tr><td>assets:install</td><td>Installs bundles web assets under a public web directory</td></tr> <tr><td>cache:clear</td><td>Clears the cache</td></tr> <tr><td>cache:warmup</td><td>Warms up an empty cache</td></tr> <tr><td>config:dump-reference</td><td>Dumps the default configuration for an extension</td></tr> <tr><td>debug:config</td><td>Dumps the current configuration for an extension</td></tr> <tr><td>debug:container</td><td>Displays current services for an application</td></tr> <tr><td>debug:event-dispatcher</td><td>Displays configured listeners for an application</td></tr> <tr><td>debug:router</td><td>Displays current routes for an application</td></tr> <tr><td>debug:swiftmailer</td><td>Displays current mailers for an application</td></tr> <tr><td>debug:translation</td><td>Displays translation messages information</td></tr> <tr><td>debug:twig</td><td>Shows a list of twig functions, filters, globals and tests</td></tr> <tr><td>doctrine:cache:clear-metadata</td><td>Clears all metadata cache for an entity manager</td></tr> <tr><td>doctrine:cache:clear-query</td><td>Clears all query cache for an entity manager</td></tr> <tr><td>doctrine:cache:clear-result</td><td>Clears result cache for an entity manager</td></tr> <tr><td>doctrine:database:create</td><td>Creates the configured database</td></tr> <tr><td>doctrine:database:drop</td><td>Drops the configured database</td></tr> <tr><td>doctrine:ensure-production-settings</td><td>Verify that Doctrine is properly configured for a production environment.</td></tr> <tr><td>doctrine:fixtures:load</td><td>Load data fixtures to your database.</td></tr> <tr><td>doctrine:generate:crud</td><td>Generates a CRUD based on a Doctrine entity</td></tr> <tr><td>doctrine:generate:entities</td><td>Generates entity classes and method stubs from your mapping information</td></tr> <tr><td>doctrine:generate:entity</td><td>Generates a new Doctrine entity inside a bundle</td></tr> <tr><td>doctrine:generate:form</td><td>Generates a form type class based on a Doctrine entity</td></tr> <tr><td>doctrine:mapping:convert</td><td>Convert mapping information between supported formats.</td></tr> <tr><td>doctrine:mapping:import</td><td>Imports mapping information from an existing database</td></tr> <tr><td>doctrine:mapping:info</td><td></td></tr> <tr><td>doctrine:query:dql</td><td>Executes arbitrary DQL directly from the command line.</td></tr> <tr><td>doctrine:query:sql</td><td>Executes arbitrary SQL directly from the command line.</td></tr> <tr><td>doctrine:schema:create</td><td>Executes (or dumps) the SQL needed to generate the database schema</td></tr> <tr><td>doctrine:schema:drop</td><td>Executes (or dumps) the SQL needed to drop the current database schema</td></tr> <tr><td>doctrine:schema:update</td><td>Executes (or dumps) the SQL needed to update the database schema to match the current mapping metadata.</td></tr> <tr><td>doctrine:schema:validate</td><td>Validate the mapping files.</td></tr> <tr><td>fos:user:activate</td><td>Activate a user</td></tr> <tr><td>fos:user:change-password</td><td>Change the password of a user.</td></tr> <tr><td>fos:user:create</td><td>Create a user.</td></tr> <tr><td>fos:user:deactivate</td><td>Deactivate a user</td></tr> <tr><td>fos:user:demote</td><td>Demote a user by removing a role</td></tr> <tr><td>fos:user:promote</td><td>Promotes a user by adding a role</td></tr> <tr><td>generate:bundle</td><td>Generates a bundle</td></tr> <tr><td>generate:controller</td><td>Generates a controller</td></tr> <tr><td>lint:twig</td><td>Lints a template and outputs encountered errors</td></tr> <tr><td>lint:yaml</td><td>Lints a file and outputs encountered errors</td></tr> <tr><td>router:dump-apache</td><td>[DEPRECATED] Dumps all routes as Apache rewrite rules</td></tr> <tr><td>router:match</td><td>Helps debug routes by simulating a path info match</td></tr> <tr><td>security:check</td><td>Checks security issues in your project dependencies</td></tr> <tr><td>security:encode-password</td><td>Encodes a password.</td></tr> <tr><td>server:run</td><td>Runs PHP built-in web server</td></tr> <tr><td>server:start</td><td>Starts PHP built-in web server in the background</td></tr> <tr><td>server:status</td><td>Outputs the status of the built-in web server for the given address</td></tr> <tr><td>server:stop</td><td>Stops PHP's built-in web server that was started with the server:start command</td></tr> <tr><td>swiftmailer:email:send</td><td>Send simple email message</td></tr> <tr><td>swiftmailer:spool:send</td><td>Sends emails from the spool</td></tr> <tr><td>translation:update</td><td>Updates the translation file</td></tr> </table> <br/>]]></help>
+  <help><![CDATA[<p>Usage:<br> [options] command [arguments] </p><br> <table> <tr><td><strong>Options:</strong></td></tr> <tr><td>--quiet</td><td>(-q)</td><td>Do not output any message</td></tr> <tr><td>--no-debug</td><td></td><td>Switches off debug mode.</td></tr> <tr><td>--version</td><td>(-V)</td><td>Display this application version</td></tr> <tr><td>--verbose</td><td>(-v)</td><td>Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug</td></tr> <tr><td>--no-interaction</td><td>(-n)</td><td>Do not ask any interactive question</td></tr> <tr><td>--ansi</td><td></td><td>Force ANSI output</td></tr> <tr><td>--help</td><td>(-h)</td><td>Display this help message</td></tr> <tr><td>--no-ansi</td><td></td><td>Disable ANSI output</td></tr> <tr><td>--shell</td><td>(-s)</td><td>Launch the shell.</td></tr> <tr><td>--env</td><td>(-e)</td><td>The Environment name.</td></tr> <tr><td>--process-isolation</td><td></td><td>Launch commands from shell as a separate process.</td></tr> </table> <br/> <table> <tr><td><strong>Available commands:</strong></td></tr> <tr><td>help</td><td>Displays help for a command</td></tr> <tr><td>list</td><td>Lists commands</td></tr> <tr><td>acl:set</td><td>Sets ACL for objects</td></tr> <tr><td>assetic:dump</td><td>Dumps all assets to the filesystem</td></tr> <tr><td>assetic:watch</td><td>Dumps assets to the filesystem as their source files are modified</td></tr> <tr><td>assets:install</td><td>Installs bundles web assets under a public web directory</td></tr> <tr><td>cache:clear</td><td>Clears the cache</td></tr> <tr><td>cache:create-cache-class</td><td>Generate the classes.php files</td></tr> <tr><td>cache:warmup</td><td>Warms up an empty cache</td></tr> <tr><td>config:dump-reference</td><td>Dumps the default configuration for an extension</td></tr> <tr><td>debug:config</td><td>Dumps the current configuration for an extension</td></tr> <tr><td>debug:container</td><td>Displays current services for an application</td></tr> <tr><td>debug:event-dispatcher</td><td>Displays configured listeners for an application</td></tr> <tr><td>debug:router</td><td>Displays current routes for an application</td></tr> <tr><td>debug:swiftmailer</td><td>Displays current mailers for an application</td></tr> <tr><td>debug:translation</td><td>Displays translation messages information</td></tr> <tr><td>debug:twig</td><td>Shows a list of twig functions, filters, globals and tests</td></tr> <tr><td>doctrine:cache:clear-metadata</td><td>Clears all metadata cache for an entity manager</td></tr> <tr><td>doctrine:cache:clear-query</td><td>Clears all query cache for an entity manager</td></tr> <tr><td>doctrine:cache:clear-result</td><td>Clears result cache for an entity manager</td></tr> <tr><td>doctrine:database:create</td><td>Creates the configured database</td></tr> <tr><td>doctrine:database:drop</td><td>Drops the configured database</td></tr> <tr><td>doctrine:database:import</td><td>Import SQL file(s) directly to Database.</td></tr> <tr><td>doctrine:ensure-production-settings</td><td>Verify that Doctrine is properly configured for a production environment.</td></tr> <tr><td>doctrine:fixtures:load</td><td>Load data fixtures to your database.</td></tr> <tr><td>doctrine:generate:crud</td><td>Generates a CRUD based on a Doctrine entity</td></tr> <tr><td>doctrine:generate:entities</td><td>Generates entity classes and method stubs from your mapping information</td></tr> <tr><td>doctrine:generate:entity</td><td>Generates a new Doctrine entity inside a bundle</td></tr> <tr><td>doctrine:generate:form</td><td>Generates a form type class based on a Doctrine entity</td></tr> <tr><td>doctrine:mapping:convert</td><td>Convert mapping information between supported formats.</td></tr> <tr><td>doctrine:mapping:import</td><td>Imports mapping information from an existing database</td></tr> <tr><td>doctrine:mapping:info</td><td></td></tr> <tr><td>doctrine:query:dql</td><td>Executes arbitrary DQL directly from the command line.</td></tr> <tr><td>doctrine:query:sql</td><td>Executes arbitrary SQL directly from the command line.</td></tr> <tr><td>doctrine:schema:create</td><td>Executes (or dumps) the SQL needed to generate the database schema</td></tr> <tr><td>doctrine:schema:drop</td><td>Executes (or dumps) the SQL needed to drop the current database schema</td></tr> <tr><td>doctrine:schema:update</td><td>Executes (or dumps) the SQL needed to update the database schema to match the current mapping metadata.</td></tr> <tr><td>doctrine:schema:validate</td><td>Validate the mapping files.</td></tr> <tr><td>fos:user:activate</td><td>Activate a user</td></tr> <tr><td>fos:user:change-password</td><td>Change the password of a user.</td></tr> <tr><td>fos:user:create</td><td>Create a user.</td></tr> <tr><td>fos:user:deactivate</td><td>Deactivate a user</td></tr> <tr><td>fos:user:demote</td><td>Demote a user by removing a role</td></tr> <tr><td>fos:user:promote</td><td>Promotes a user by adding a role</td></tr> <tr><td>generate:bundle</td><td>Generates a bundle</td></tr> <tr><td>generate:controller</td><td>Generates a controller</td></tr> <tr><td>init:acl</td><td>Mounts ACL tables in the database</td></tr> <tr><td>lint:twig</td><td>Lints a template and outputs encountered errors</td></tr> <tr><td>lint:yaml</td><td>Lints a file and outputs encountered errors</td></tr> <tr><td>router:dump-apache</td><td>[DEPRECATED] Dumps all routes as Apache rewrite rules</td></tr> <tr><td>router:match</td><td>Helps debug routes by simulating a path info match</td></tr> <tr><td>security:check</td><td>Checks security issues in your project dependencies</td></tr> <tr><td>security:encode-password</td><td>Encodes a password.</td></tr> <tr><td>server:run</td><td>Runs PHP built-in web server</td></tr> <tr><td>server:start</td><td>Starts PHP built-in web server in the background</td></tr> <tr><td>server:status</td><td>Outputs the status of the built-in web server for the given address</td></tr> <tr><td>server:stop</td><td>Stops PHP's built-in web server that was started with the server:start command</td></tr> <tr><td>sonata:admin:explain</td><td>Explain an admin service</td></tr> <tr><td>sonata:admin:generate</td><td>Generates an admin class based on the given model class</td></tr> <tr><td>sonata:admin:generate-object-acl</td><td>Install ACL for the objects of the Admin Classes.</td></tr> <tr><td>sonata:admin:list</td><td>List all admin services available</td></tr> <tr><td>sonata:admin:setup-acl</td><td>Install ACL for Admin Classes</td></tr> <tr><td>sonata:block:debug</td><td>Debug all blocks available, show default settings of each block</td></tr> <tr><td>sonata:core:dump-doctrine-metadata</td><td>Get information on the current Doctrine's schema</td></tr> <tr><td>sonata:core:form-mapping</td><td>Get information on the current form mapping</td></tr> <tr><td>sonata:easy-extends:dump-mapping</td><td>Dump some mapping information (debug only)</td></tr> <tr><td>sonata:easy-extends:generate</td><td>Create entities used by Sonata's bundles</td></tr> <tr><td>sonata:user:two-step-verification</td><td>Generate a two step verification process to secure an access (Ideal for super admin protection)</td></tr> <tr><td>swiftmailer:email:send</td><td>Send simple email message</td></tr> <tr><td>swiftmailer:spool:send</td><td>Sends emails from the spool</td></tr> <tr><td>translation:update</td><td>Updates the translation file</td></tr> </table> <br/>]]></help>
 </framework>
 

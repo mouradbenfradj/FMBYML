@@ -68,7 +68,7 @@ class PreparationLanterneType extends AbstractType
         ));
         $form->add('quantiterEnStock', 'integer', array(
             'mapped' => false,
-            'read_only' =>'true'
+            'read_only' => 'true'
         ));
         $form->add($dt);
         $form->add($do);
@@ -83,7 +83,9 @@ class PreparationLanterneType extends AbstractType
         $parc = $data ? $data->getParc() : null;
         $this->addElements($form, $parc);
     }
-    function onPreSubmit(FormEvent $event) {
+
+    function onPreSubmit(FormEvent $event)
+    {
         $form = $event->getForm();
         $data = $event->getData();
         // Note that the data is not yet hydrated into the entity.

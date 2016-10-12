@@ -29,7 +29,7 @@
                                     <tbody>
                                     {% for filiere in entity.filieres %}
                                         <tr>
-                                            <td>{{ filiere.getNomFiliere }}
+                                            <td id="{{ filiere.nomFiliere }}">{{ filiere.nomFiliere }}
                                                 <br/>
                                                 {% set tailleFiliere =0 %}
                                                 {% for segment in filiere.segments %}
@@ -115,8 +115,18 @@
                                     </tbody>
                                 </table>
                             </td>
-                            <td>
-                                <div id="menuform">
+                            <td width="20%">
+                                <div data-spy="affix" data-offset-top="60" data-offset-bottom="200" id="menuform">
+                                    <p>
+                                    <div><a href="#menuprincipale">menu</a></div>
+                                    <div>Listez des filieres</div>
+                                    {% for filiere in entity.filieres %}
+                                        <span class="lienfiliereint">
+                                            <a href="#{{ filiere.nomFiliere }}">{{ filiere.nomFiliere }}</a>
+                                        </span>
+                                    {% endfor %}
+                                    </p>
+
                                     <p>quantiter disponible</p>
                                     <p><input type="number" id="quantit" readonly="true" value="0"></p>
                                     <p>date de preparation des lanternes</p>

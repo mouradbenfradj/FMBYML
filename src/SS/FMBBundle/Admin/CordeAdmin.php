@@ -18,16 +18,16 @@ class CordeAdmin extends Admin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('id')->add('stockscordes')->add('nbrTotaleEnStock')->add('parc');
+        $formMapper->add('nomCorde')->add('nbrTotaleEnStock')->add('parc');
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('id')->add('stockscordes')->add('nbrTotaleEnStock')->add('parc');
+        $datagridMapper->add('id')->add('nomCorde')->add('stockscordes')->add('nbrTotaleEnStock')->add('parc');
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('id')->add('parc')->add('stockscordes')->add('nbrTotaleEnStock');
+        $listMapper->addIdentifier('id')->add('nomCorde')->add('parc')->add('stockscordes')->add('nbrTotaleEnStock');
     }
 }

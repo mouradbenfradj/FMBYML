@@ -47,7 +47,7 @@ class Segment
 
     public function __toString()
     {
-        return $this->getNomSegment();
+        return $this->filiere.' '.$this->getNomSegment();
     }
 
     /**

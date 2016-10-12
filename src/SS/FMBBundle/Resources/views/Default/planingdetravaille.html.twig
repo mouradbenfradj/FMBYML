@@ -19,19 +19,37 @@
                     <tbody>
                     {% if(entity != null) %}
                         <tr bgcolor="#FEA7C7">
+                            <td>LanternePreparer</td>
+                            <td>nombre de tache a effectuer : {{ lafu|length }}
+                            </td>
+                        </tr>
+                        <tr bgcolor="#FEA7C7">
+                            <td>corde preparer</td>
+                            <td>nombre de tache a effectuer : {{ cafu|length }}
+                            </td>
+                        </tr>
+                        <tr bgcolor="#FEA7C7">
                             <td>Pregrossisement</td>
                             <td>nombre de tache a effectuer : {{ pregrossisementurgent|length }}
                                 <table border="1">
+                                    <thead>
+                                    <tr>
+                                        <td>filiere</td>
+                                        <td>segment</td>
+                                        <td>flotteur</td>
+                                        <td>emplacement</td>
+                                        <td>date de mise a eau</td>
+                                        <td>doit etre retirer le</td>
+                                    </tr>
+                                    </thead>
                                     {% for emplacement in pregrossisementurgent %}
                                         <tr>
-                                            <td>filiere :{{ emplacement.flotteur.segment.filiere.nomfiliere }}</td>
-                                            <td>segment : {{ emplacement.flotteur.segment.nomsegment }}</td>
-                                            <td>flotteur :{{ emplacement.flotteur.nomflotteur }}</td>
-                                            <td> emplacement : {{ emplacement.place }}</td>
-                                            <td> date de mise a eau
-                                                : {{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
-                                            <td> doit etre retirer le
-                                                : {{ emplacement.dateDeRemplissage|date_modify("+3 month")|date('Y-m-d') }}</td>
+                                            <td>{{ emplacement.flotteur.segment.filiere.nomfiliere }}</td>
+                                            <td>{{ emplacement.flotteur.segment.nomsegment }}</td>
+                                            <td>{{ emplacement.flotteur.nomflotteur }}</td>
+                                            <td>{{ emplacement.place }}</td>
+                                            <td>{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
+                                            <td>{{ emplacement.dateDeRemplissage|date_modify("+3 month")|date('Y-m-d') }}</td>
                                         </tr>
                                     {% endfor %}
                                 </table>
@@ -41,17 +59,24 @@
                             <td>grossisement</td>
                             <td>nombre de tache a effectuer : {{ grossisementurgent|length }}
                                 <table border="1">
+                                    <thead>
+                                    <tr>
+                                        <td>filiere</td>
+                                        <td>segment</td>
+                                        <td>flotteur</td>
+                                        <td>emplacement</td>
+                                        <td>date de mise a eau</td>
+                                        <td>doit etre retirer le</td>
+                                    </tr>
+                                    </thead>
                                     {% for emplacement in grossisementurgent %}
                                         <tr>
-                                            <td>filiere
-                                                :{{ emplacement.flotteur.segment.filiere.nomfiliere }}</td>
-                                            <td>segment : {{ emplacement.flotteur.segment.nomsegment }}</td>
-                                            <td>flotteur :{{ emplacement.flotteur.nomflotteur }}</td>
-                                            <td> emplacement : {{ emplacement.place }}</td>
-                                            <td> date de mise a eau
-                                                : {{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
-                                            <td> doit etre retirer le
-                                                : {{ emplacement.dateDeRemplissage|date_modify("+6 month")|date('Y-m-d') }}</td>
+                                            <td>{{ emplacement.flotteur.segment.filiere.nomfiliere }}</td>
+                                            <td>{{ emplacement.flotteur.segment.nomsegment }}</td>
+                                            <td>{{ emplacement.flotteur.nomflotteur }}</td>
+                                            <td>{{ emplacement.place }}</td>
+                                            <td>{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
+                                            <td>{{ emplacement.dateDeRemplissage|date_modify("+6 month")|date('Y-m-d') }}</td>
                                         </tr>
                                     {% endfor %}
                                 </table>
@@ -61,6 +86,14 @@
                             <td>comerciale</td>
                             <td>nombre de tache a effectuer : {{ comercialeurgent|length }}
                                 <table border="1">
+                                    <thead>
+                                    <tr>
+                                        <td>stocks</td>
+                                        <td>article</td>
+                                        <td>lot</td>
+                                        <td>quantiter en stocks</td>
+                                    </tr>
+                                    </thead>
                                     {% for emplacement in comercialeurgent %}
                                         <tr>
                                             <td>{{ emplacement.article.refStockArticle.idStock.libStock }}</td>
@@ -83,20 +116,37 @@
                     <tbody>
                     {% if(entity != null) %}
                         <tr bgcolor="#FEFE5A">
+                            <td>LanternePreparer</td>
+                            <td>nombre de tache a effectuer : {{ laf|length }}
+                            </td>
+                        </tr>
+                        <tr bgcolor="#FEFE5A">
+                            <td>corde preparer</td>
+                            <td>nombre de tache a effectuer : {{ caf|length }}
+                            </td>
+                        </tr>
+                        <tr bgcolor="#FEFE5A">
                             <td>Pregrossisement</td>
                             <td>nombre de tache a effectuer : {{ pregrossisementaeffectuer|length }}
                                 <table border="1">
+                                    <thead>
+                                    <tr>
+                                        <td>filiere</td>
+                                        <td>segment</td>
+                                        <td>flotteur</td>
+                                        <td>emplacement</td>
+                                        <td>date de mise a eau</td>
+                                        <td>doit etre retirer le</td>
+                                    </tr>
+                                    </thead>
                                     {% for emplacement in pregrossisementaeffectuer %}
                                         <tr>
-                                            <td>filiere
-                                                :{{ emplacement.flotteur.segment.filiere.nomfiliere }}</td>
-                                            <td>segment : {{ emplacement.flotteur.segment.nomsegment }}</td>
-                                            <td>flotteur :{{ emplacement.flotteur.nomflotteur }}</td>
-                                            <td> emplacement : {{ emplacement.place }}</td>
-                                            <td> date de mise a eau
-                                                : {{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
-                                            <td> doit etre retirer le
-                                                : {{ emplacement.dateDeRemplissage|date_modify("+3 month")|date('Y-m-d') }}</td>
+                                            <td>{{ emplacement.flotteur.segment.filiere.nomfiliere }}</td>
+                                            <td>{{ emplacement.flotteur.segment.nomsegment }}</td>
+                                            <td>{{ emplacement.flotteur.nomflotteur }}</td>
+                                            <td>{{ emplacement.place }}</td>
+                                            <td>{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
+                                            <td>{{ emplacement.dateDeRemplissage|date_modify("+3 month")|date('Y-m-d') }}</td>
                                         </tr>
                                     {% endfor %}
                                 </table>
@@ -106,17 +156,24 @@
                             <td>grossisement</td>
                             <td>nombre de tache a effectuer : {{ grossisementaeffectuer|length }}
                                 <table border="1">
+                                    <thead>
+                                    <tr>
+                                        <td>filiere</td>
+                                        <td>segment</td>
+                                        <td>flotteur</td>
+                                        <td>emplacement</td>
+                                        <td>date de mise a eau</td>
+                                        <td>doit etre retirer le</td>
+                                    </tr>
+                                    </thead>
                                     {% for emplacement in grossisementaeffectuer %}
                                         <tr>
-                                            <td>filiere
-                                                :{{ emplacement.flotteur.segment.filiere.nomfiliere }}</td>
-                                            <td>segment : {{ emplacement.flotteur.segment.nomsegment }}</td>
-                                            <td>flotteur :{{ emplacement.flotteur.nomflotteur }}</td>
-                                            <td> emplacement : {{ emplacement.place }}</td>
-                                            <td> date de mise a eau
-                                                : {{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
-                                            <td> doit etre retirer le
-                                                : {{ emplacement.dateDeRemplissage|date_modify("+6 month")|date('Y-m-d') }}</td>
+                                            <td>{{ emplacement.flotteur.segment.filiere.nomfiliere }}</td>
+                                            <td>{{ emplacement.flotteur.segment.nomsegment }}</td>
+                                            <td>{{ emplacement.flotteur.nomflotteur }}</td>
+                                            <td>{{ emplacement.place }}</td>
+                                            <td>{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
+                                            <td>{{ emplacement.dateDeRemplissage|date_modify("+6 month")|date('Y-m-d') }}</td>
                                         </tr>
                                     {% endfor %}
                                 </table>
@@ -126,6 +183,14 @@
                             <td>comerciale</td>
                             <td>nombre de tache a effectuer : {{ comercialeaeffectuer|length }}
                                 <table border="1">
+                                    <thead>
+                                    <tr>
+                                        <td>stocks</td>
+                                        <td>article</td>
+                                        <td>lot</td>
+                                        <td>quantiter en stocks</td>
+                                    </tr>
+                                    </thead>
                                     {% for emplacement in comercialeaeffectuer %}
                                         <tr>
                                             <td>{{ emplacement.article.refStockArticle.idStock.libStock }}</td>
@@ -152,17 +217,24 @@
                             <td>Pregrossisement</td>
                             <td>nombre de tache a effectuer : {{ pregrossisement|length }}
                                 <table border="1">
+                                    <thead>
+                                    <tr>
+                                        <td>filiere</td>
+                                        <td>segment</td>
+                                        <td>flotteur</td>
+                                        <td>emplacement</td>
+                                        <td>date de mise a eau</td>
+                                        <td>doit etre retirer le</td>
+                                    </tr>
+                                    </thead>
                                     {% for emplacement in pregrossisement %}
                                         <tr>
-                                            <td>filiere
-                                                :{{ emplacement.flotteur.segment.filiere.nomfiliere }}</td>
-                                            <td>segment : {{ emplacement.flotteur.segment.nomsegment }}</td>
-                                            <td>flotteur :{{ emplacement.flotteur.nomflotteur }}</td>
-                                            <td> emplacement : {{ emplacement.place }}</td>
-                                            <td> date de mise a eau
-                                                : {{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
-                                            <td> doit etre retirer le
-                                                : {{ emplacement.dateDeRemplissage|date_modify("+3 month")|date('Y-m-d') }}</td>
+                                            <td>{{ emplacement.flotteur.segment.filiere.nomfiliere }}</td>
+                                            <td>{{ emplacement.flotteur.segment.nomsegment }}</td>
+                                            <td>{{ emplacement.flotteur.nomflotteur }}</td>
+                                            <td>{{ emplacement.place }}</td>
+                                            <td>{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
+                                            <td>{{ emplacement.dateDeRemplissage|date_modify("+3 month")|date('Y-m-d') }}</td>
                                         </tr>
                                     {% endfor %}
                                 </table>
@@ -172,17 +244,24 @@
                             <td>grossisement</td>
                             <td>nombre de tache a effectuer : {{ grossisement|length }}
                                 <table border="1">
+                                    <thead>
+                                    <tr>
+                                        <td>filiere</td>
+                                        <td>segment</td>
+                                        <td>flotteur</td>
+                                        <td>emplacement</td>
+                                        <td>date de mise a eau</td>
+                                        <td>doit etre retirer le</td>
+                                    </tr>
+                                    </thead>
                                     {% for emplacement in grossisement %}
                                         <tr>
-                                            <td>filiere
-                                                :{{ emplacement.flotteur.segment.filiere.nomfiliere }}</td>
-                                            <td>segment : {{ emplacement.flotteur.segment.nomsegment }}</td>
-                                            <td>flotteur :{{ emplacement.flotteur.nomflotteur }}</td>
-                                            <td> emplacement : {{ emplacement.place }}</td>
-                                            <td> date de mise a eau
-                                                : {{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
-                                            <td> doit etre retirer le
-                                                : {{ emplacement.dateDeRemplissage|date_modify("+6 month")|date('Y-m-d') }}</td>
+                                            <td>{{ emplacement.flotteur.segment.filiere.nomfiliere }}</td>
+                                            <td>{{ emplacement.flotteur.segment.nomsegment }}</td>
+                                            <td>{{ emplacement.flotteur.nomflotteur }}</td>
+                                            <td>{{ emplacement.place }}</td>
+                                            <td>{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
+                                            <td>{{ emplacement.dateDeRemplissage|date_modify("+6 month")|date('Y-m-d') }}</td>
                                         </tr>
                                     {% endfor %}
                                 </table>
@@ -193,7 +272,14 @@
                             <td>nombre de tache a effectuer : {{ comerciale|length }}
                                 <br>
                                 <table border="1">
-
+                                    <thead>
+                                    <tr>
+                                        <td>stocks</td>
+                                        <td>article</td>
+                                        <td>lot</td>
+                                        <td>quantiter en stocks</td>
+                                    </tr>
+                                    </thead>
                                     {% for emplacement in comerciale %}
 
                                         <tr>
@@ -238,6 +324,7 @@
                 var Diff = d2.getTime() - d1.getTime();
                 return Math.ceil((Diff / div))
             }
+
             $('.dateemplacement').each(function (ele, val) {
                 console.log(ele + "     " + val)
                 var datejour = $(this).text().split("-");

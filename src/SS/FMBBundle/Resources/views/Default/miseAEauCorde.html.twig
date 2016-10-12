@@ -28,7 +28,7 @@
                                     <tbody>
                                     {% for filiere in entity.filieres %}
                                         <tr>
-                                            <td>{{ filiere.getNomFiliere }}
+                                            <td id="{{ filiere.nomFiliere }}">{{ filiere.nomFiliere }}
                                                 <br/>
                                                 {% set tailleFiliere =0 %}
                                                 {% for segment in filiere.segments %}
@@ -114,44 +114,55 @@
                                     </tbody>
                                 </table>
                             </td>
-                            <td>
-                                <p>quantiter disponible</p>
-                                <p><input type="number" id="quantit" readonly="true" value="0"></p>
-                                <p>date de preparation des laternes</p>
-                                {% set now =  "now"|date("Y-m-d") %}
-                                <p><input type="date" name="dateMAECorde" value="{{ now }}"></p>
-                                <p>choisir type cordes</p>
-                                <p>
-                                    <select name="cordechoix" id="cordechoix">
-                                        {% for corde in cordes %}
-                                            <option value="{{ corde.id }}">{{ corde.id }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </p>
-
-                                <p> choisir l'article a mettre</p>
-
-                                <p>
-                                    <select name="articlechoix" id="articlechoix">
-                                        {% for article in articles %}
-                                            <option value="{{ article.refStockArticle }}">{{ article.refArticle.libArticle }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </p>
-                                <p> choisir le lot de l'article</p>
-
-                                <p>
-                                    <select name="articlelotchoix" id="articlelotchoix">
-
-                                    </select>
-                                </p>
-
-                                <div id="choixqtearticle">
-                                    <p> choix de la quantiter des cordes</p>
+                            <td width="20%">
+                                <div data-spy="affix" data-offset-top="60" data-offset-bottom="200" id="menuform">
                                     <p>
-                                        <select name="quantierchoix" id="quantierchoix"></select>
+                                    <div><a href="#menuprincipale">menu</a></div>
+                                    <div>Listez des filieres</div>
+                                    {% for filiere in entity.filieres %}
+                                        <span class="lienfiliereint">
+                                            <a href="#{{ filiere.nomFiliere }}">{{ filiere.nomFiliere }}</a>
+                                        </span>
+                                    {% endfor %}
                                     </p>
-                                    <p><input type="submit" value="confirmer la mise a l'eau"/></p>
+
+                                    <p>quantiter disponible</p>
+                                    <p><input type="number" id="quantit" readonly="true" value="0"></p>
+                                    <p>date de preparation des laternes</p>
+                                    {% set now =  "now"|date("Y-m-d") %}
+                                    <p><input type="date" name="dateMAECorde" value="{{ now }}"></p>
+                                    <p>choisir type cordes</p>
+                                    <p>
+                                        <select name="cordechoix" id="cordechoix">
+                                            {% for corde in cordes %}
+                                                <option value="{{ corde.id }}">{{ corde.nomCorde }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </p>
+
+                                    <p> choisir l'article a mettre</p>
+
+                                    <p>
+                                        <select name="articlechoix" id="articlechoix">
+                                            {% for article in articles %}
+                                                <option value="{{ article.refStockArticle }}">{{ article.refArticle.libArticle }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </p>
+                                    <p> choisir le lot de l'article</p>
+
+                                    <p>
+                                        <select name="articlelotchoix" id="articlelotchoix"></select>
+                                    </p>
+
+                                    <div id="choixqtearticle">
+                                        <p> Densité (U/Corde) </p>
+                                        <p>
+                                            <select name="quantierchoix" id="quantierchoix"></select>
+                                        </p>
+                                        <p><input type="submit" value="confirmer la mise a l'eau"/></p>
+
+                                    </div>
 
                                 </div>
                             </td>
@@ -281,77 +292,97 @@
         });
         $('#articlechoix').change(function () {
             $.ajax({
-                type: 'get',
-                url: "{{ path('ssfmb_cordearticle') }}",
-                data: {
-                    'idp': $('#idparc').text(),
-                    'lot': $('#articlelotchoix').val(),
-                    'ida': $('#articlechoix').val(),
-                    'idl': $('#cordechoix').val()
-                },
-                dataType: 'json',
-                beforeSend: function () {
-                    $('#quantit').val('chargement');
+                type: "POST",
+                url: "{{ url('ssfmb_articlestock') }}?stock_id=" + $('#idstockparc').text() + "&sarticle=" + $('#articlechoix').val(),
+                success: function (data) {
+                    if ($.trim(data)) {
+                        var pos = true;
+                        var lan = '';
+                        $('#articlelotchoix').show();
 
-                    $('#quantierchoix').empty();
-                },
-                success: function (json) {
-                    $('#quantit').val(0);
-                    $('#quantierchoix').html('');
-                    if (!$.trim(json)) {
-                        $('#choixqtearticle').ready(function () {
-                            $('#choixqtearticle').hide();
+                        // Remove current options
+                        $('#articlelotchoix').html('');
+                        $.each(data, function (k, v) {
+                            if (pos) {
+                                lan = k;
+                                $('#articlelotchoix').append('<option value="' + v + '">' + k + '</option>');
+                                pos = false;
+                            } else {
+                                pos = true;
+                            }
                         });
-                    }
-                    if ($.trim(json)) {
-                        $('#choixqtearticle').ready(function () {
-                            $("input:checkbox").each(function () {
-                                $(this).prop('checked', false);
-                            });
+                        $('#ss_fmbbundle_preparationcorde_submit').show();
+                        $.ajax({
+                            type: 'get',
+                            url: "{{ path('ssfmb_cordearticle') }}",
+                            data: {
+                                'idp': $('#idparc').text(),
+                                'lot': $('#articlelotchoix').val(),
+                                'ida': $('#articlechoix').val(),
+                                'idl': $('#cordechoix').val()
+                            },
+                            dataType: 'json',
+                            beforeSend: function () {
+                                $('#quantierchoix').empty();
+                            },
+                            success: function (json) {
+                                $('#quantierchoix').html('');
+                                if (!$.trim(json)) {
+                                    $('#choixqtearticle').ready(function () {
+                                        $('#choixqtearticle').hide();
+                                    });
+                                }
+                                ;
+                                if ($.trim(json)) {
+                                    $('#choixqtearticle').ready(function () {
+                                        $('#choixqtearticle').show();
+                                        $.ajax({
+                                            type: 'get',
+                                            url: "{{ path('ssfmb_nombrecordearticle') }}",
+                                            data: {
+                                                'ida': $('#articlechoix').val(),
+                                                'lot': $('#articlelotchoix').val(),
+                                                'idl': $('#cordechoix').val(),
+                                                'qtech': $('#quantierchoix').val()
+                                            },
+                                            dataType: 'json',
+                                            beforeSend: function () {
+                                                $('#quantit').val('chargement');
+                                            },
+                                            success: function (json) {
+                                                $('#quantit').val(0);
+                                                if ($.trim(json)) {
+                                                    $('#choixqtearticle').ready(function () {
+                                                        $("input:checkbox").each(function () {
+                                                            $(this).prop('checked', false);
+                                                        });
 
-                            $('#choixqtearticle').show();
-                            $.ajax({
-                                type: 'get',
-                                url: "{{ path('ssfmb_nombrecordearticle') }}",
-                                data: {
-                                    'ida': $('#articlechoix').val(),
-                                    'lot': $('#articlelotchoix').val(),
-                                    'idl': $('#cordechoix').val(),
-                                    'qtech': $('#quantierchoix').val()
-                                },
-                                dataType: 'json',
-                                beforeSend: function () {
-                                    $('#quantit').val('chargement');
-                                },
-                                success: function (json) {
-                                    $('#quantit').val(0);
-                                    if ($.trim(json)) {
-                                        $('#choixqtearticle').ready(function () {
-                                            $("input:checkbox").each(function () {
-                                                $(this).prop('checked', false);
-                                            });
-
-                                            $('#choixqtearticle').show();
+                                                        $('#choixqtearticle').show();
+                                                    });
+                                                }
+                                                $.each(json, function (index, value) {
+                                                    $('#quantit').val(value.nombre);
+                                                    $("input:checkbox").each(function () {
+                                                        $(this).attr('checked', false);
+                                                    });
+                                                });
+                                            }
                                         });
-                                    }
-                                    $.each(json, function (index, value) {
-                                        $('#quantit').val(value.nombre);
                                         $("input:checkbox").each(function () {
-                                            $(this).attr('checked', false);
+                                            $(this).prop('checked', false);
                                         });
                                     });
                                 }
-                            });
+                                ;
+
+                                $.each(json, function (index, value) {
+                                    $('#quantit').val(value.nombre);
+
+                                    $('#quantierchoix').append('<option value="' + value.qte + '">' + value.qte + '</option>');
+                                });
+                            }
                         });
                     }
-                    $.each(json, function (index, value) {
-                        $('#quantit').val(value.nombre);
-                        $("input:checkbox").each(function () {
-                            $(this).attr('checked', false);
-                        });
-                        // et  boucle sur la réponse contenu dans la variable passé à la function du success "json"
-                        $('#quantierchoix').append('<option value="' + value.qte + '">' + value.qte + '</option>');
-                    });
                 }
             });
         });

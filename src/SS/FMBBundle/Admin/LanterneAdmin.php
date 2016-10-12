@@ -18,7 +18,7 @@ class LanterneAdmin extends Admin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('parc')->add('nomLanterne')->add('nbrpoche')->add('nbrTotaleEnStock')->add('stockslanternes');
+        $formMapper->add('parc')->add('nomLanterne')->add('nbrpoche')->add('nbrTotaleEnStock');
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)

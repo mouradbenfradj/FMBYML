@@ -27,13 +27,6 @@ class Stocks
     private $abrevStock;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="ref_adr_stock", type="string", length=32, nullable=true)
-     */
-    private $refAdrStock;
-
-    /**
      * @var boolean
      *
      * @ORM\Column(name="actif", type="boolean", nullable=false)
@@ -49,6 +42,20 @@ class Stocks
      */
     private $idStock;
 
+    /**
+     * @var \SS\FMBBundle\Entity\Adresses
+     *
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Adresses")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="ref_adr_stock", referencedColumnName="ref_adresse")
+     * })
+     */
+    private $refAdrStock;
+
+    public function __toString()
+    {
+        return $this->libStock;
+    }
 
 
     /**
@@ -67,7 +74,7 @@ class Stocks
     /**
      * Get libStock
      *
-     * @return string 
+     * @return string
      */
     public function getLibStock()
     {
@@ -90,34 +97,11 @@ class Stocks
     /**
      * Get abrevStock
      *
-     * @return string 
+     * @return string
      */
     public function getAbrevStock()
     {
         return $this->abrevStock;
-    }
-
-    /**
-     * Set refAdrStock
-     *
-     * @param string $refAdrStock
-     * @return Stocks
-     */
-    public function setRefAdrStock($refAdrStock)
-    {
-        $this->refAdrStock = $refAdrStock;
-
-        return $this;
-    }
-
-    /**
-     * Get refAdrStock
-     *
-     * @return string 
-     */
-    public function getRefAdrStock()
-    {
-        return $this->refAdrStock;
     }
 
     /**
@@ -136,7 +120,7 @@ class Stocks
     /**
      * Get actif
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getActif()
     {
@@ -146,10 +130,33 @@ class Stocks
     /**
      * Get idStock
      *
-     * @return integer 
+     * @return integer
      */
     public function getIdStock()
     {
         return $this->idStock;
+    }
+
+    /**
+     * Set refAdrStock
+     *
+     * @param \SS\FMBBundle\Entity\Adresses $refAdrStock
+     * @return Stocks
+     */
+    public function setRefAdrStock(\SS\FMBBundle\Entity\Adresses $refAdrStock = null)
+    {
+        $this->refAdrStock = $refAdrStock;
+
+        return $this;
+    }
+
+    /**
+     * Get refAdrStock
+     *
+     * @return \SS\FMBBundle\Entity\Adresses
+     */
+    public function getRefAdrStock()
+    {
+        return $this->refAdrStock;
     }
 }

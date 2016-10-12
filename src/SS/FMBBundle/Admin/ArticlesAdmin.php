@@ -18,16 +18,28 @@ class ArticlesAdmin extends Admin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('refArticle')->add('libArticle')->add('idValo')->add('idModeleSpe')->add('isVendable')->add('isAchetable')->add('numeroCompteVente')->add('numeroCompteAchat')->add('dateModification')->add('dateCreation')->add('dispo')->add('dateFinDispo')->add('dateDebutDispo')->add('gestionSn')->add('variante')->add('composant')->add('lot')->add('valoIndice')->add('promo')->add('idTva')->add('paaLastMaj')->add('paaHt')->add('prixAchatHt')->add('prixPublicHt')->add('refConstructeur')->add('modele')->add('refArtCateg')->add('descLongue')->add('descCourte')->add('libTicket')->add('refInterne')->add('refOem');
+        $formMapper->add('libArticle')->add('libTicket')->add('descCourte')->add('descLongue')->add('refArtCateg')->add('modele')->add('paaLastMaj')->add('promo')->add('idValo')->add('valoIndice')->add('lot')->add('composant')->add('variante')->add('gestionSn')->add('dateDebutDispo')->add('dateFinDispo')->add('dispo')->add('dateCreation')->add('dateModification')->add('isAchetable')->add('isVendable');
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('refArticle')->add('libArticle')->add('idValo')->add('idModeleSpe')->add('isVendable')->add('isAchetable')->add('numeroCompteVente')->add('numeroCompteAchat')->add('dateModification')->add('dateCreation')->add('dispo')->add('dateFinDispo')->add('dateDebutDispo')->add('gestionSn')->add('variante')->add('composant')->add('lot')->add('valoIndice')->add('promo')->add('idTva')->add('paaLastMaj')->add('paaHt')->add('prixAchatHt')->add('prixPublicHt')->add('refConstructeur')->add('modele')->add('refArtCateg')->add('descLongue')->add('descCourte')->add('libTicket')->add('refInterne')->add('refOem');
+        $datagridMapper->add('refArticle')->add('libArticle')->add('libTicket')->add('idValo')
+            ->add('isVendable')->add('isAchetable')
+            ->add('dateModification')->add('dateCreation')->add('dispo')->add('dateFinDispo')->add('dateDebutDispo')
+            ->add('gestionSn')->add('variante')->add('composant')->add('lot')->add('valoIndice')->add('promo')
+            ->add('modele')->add('paaLastMaj')->add('refArtCateg')->add('descLongue')
+            ->add('descCourte')->add('refInterne')->add('refOem');
+
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('refArticle')->add('libArticle')->add('paaLastMaj')->add('lot')->add('dateModification')->add('dateCreation')->add('dispo')->add('dateFinDispo')->add('dateDebutDispo')->add('gestionSn')->add('variante')->add('composant')->add('isVendable')->add('isAchetable');
+        $listMapper->addIdentifier('refArticle')->add('libArticle')->add('libTicket')->add('idValo')
+            ->add('isVendable')->add('isAchetable')
+            ->add('dateModification')->add('dateCreation')->add('dispo')->add('dateFinDispo')->add('dateDebutDispo')
+            ->add('gestionSn')->add('variante')->add('composant')->add('lot')->add('valoIndice')->add('promo')
+            ->add('modele')->add('paaLastMaj')->add('refArtCateg')->add('descLongue')
+            ->add('descCourte')->add('refInterne')->add('refOem');
+
     }
 }

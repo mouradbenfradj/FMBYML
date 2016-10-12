@@ -9,16 +9,10 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="docs_lines", indexes={@ORM\Index(name="ref_doc", columns={"ref_doc"}), @ORM\Index(name="ref_article", columns={"ref_article"}), @ORM\Index(name="ref_doc_line_parent", columns={"ref_doc_line_parent"})})
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks()
  */
 class DocsLines
 {
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="ref_doc", type="string", length=32, nullable=false)
-     */
-    private $refDoc;
-
     /**
      * @var string
      *
@@ -38,7 +32,7 @@ class DocsLines
      *
      * @ORM\Column(name="desc_article", type="text", length=16777215, nullable=false)
      */
-    private $descArticle;
+    private $descArticle = "";
 
     /**
      * @var float
@@ -52,75 +46,89 @@ class DocsLines
      *
      * @ORM\Column(name="pu_ht", type="float", precision=10, scale=0, nullable=false)
      */
-    private $puHt;
+    private $puHt = 0;
 
     /**
      * @var float
      *
      * @ORM\Column(name="remise", type="float", precision=10, scale=0, nullable=false)
      */
-    private $remise;
+    private $remise = 0;
 
     /**
      * @var float
      *
      * @ORM\Column(name="tva", type="float", precision=10, scale=0, nullable=false)
      */
-    private $tva;
+    private $tva = 0;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="ordre", type="smallint", nullable=false)
      */
-    private $ordre;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="ref_doc_line_parent", type="string", length=32, nullable=true)
-     */
-    private $refDocLineParent;
+    private $ordre = 0;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="visible", type="boolean", nullable=false)
      */
-    private $visible;
+    private $visible = false;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="pa_ht", type="float", precision=10, scale=0, nullable=true)
+     */
+    private $paHt;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="pa_forced", type="boolean", nullable=false)
+     */
+    private $paForced = false;
 
     /**
      * @var string
      *
      * @ORM\Column(name="ref_doc_line", type="string", length=32)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $refDocLine;
 
-
-
-    /**
-     * Set refDoc
-     *
-     * @param string $refDoc
-     * @return DocsLines
-     */
-    public function setRefDoc($refDoc)
+    public function __toString()
     {
-        $this->refDoc = $refDoc;
-
-        return $this;
+        return $this->refDocLine;
     }
 
     /**
-     * Get refDoc
+     * @var \SS\FMBBundle\Entity\DocsLines
      *
-     * @return string 
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\DocsLines")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="ref_doc_line_parent", referencedColumnName="ref_doc_line")
+     * })
      */
-    public function getRefDoc()
+    private $refDocLineParent;
+
+    /**
+     * @var \SS\FMBBundle\Entity\Documents
+     *
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Documents", inversedBy="docsLines")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="ref_doc", referencedColumnName="ref_doc")
+     * })
+     */
+    private $refDoc;
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function generateRefDocLine()
     {
-        return $this->refDoc;
+        $this->refDocLine = uniqid();
     }
 
     /**
@@ -139,7 +147,7 @@ class DocsLines
     /**
      * Get refArticle
      *
-     * @return string 
+     * @return string
      */
     public function getRefArticle()
     {
@@ -162,7 +170,7 @@ class DocsLines
     /**
      * Get libArticle
      *
-     * @return string 
+     * @return string
      */
     public function getLibArticle()
     {
@@ -185,7 +193,7 @@ class DocsLines
     /**
      * Get descArticle
      *
-     * @return string 
+     * @return string
      */
     public function getDescArticle()
     {
@@ -208,7 +216,7 @@ class DocsLines
     /**
      * Get qte
      *
-     * @return float 
+     * @return float
      */
     public function getQte()
     {
@@ -231,7 +239,7 @@ class DocsLines
     /**
      * Get puHt
      *
-     * @return float 
+     * @return float
      */
     public function getPuHt()
     {
@@ -254,7 +262,7 @@ class DocsLines
     /**
      * Get remise
      *
-     * @return float 
+     * @return float
      */
     public function getRemise()
     {
@@ -277,7 +285,7 @@ class DocsLines
     /**
      * Get tva
      *
-     * @return float 
+     * @return float
      */
     public function getTva()
     {
@@ -300,34 +308,11 @@ class DocsLines
     /**
      * Get ordre
      *
-     * @return integer 
+     * @return integer
      */
     public function getOrdre()
     {
         return $this->ordre;
-    }
-
-    /**
-     * Set refDocLineParent
-     *
-     * @param string $refDocLineParent
-     * @return DocsLines
-     */
-    public function setRefDocLineParent($refDocLineParent)
-    {
-        $this->refDocLineParent = $refDocLineParent;
-
-        return $this;
-    }
-
-    /**
-     * Get refDocLineParent
-     *
-     * @return string 
-     */
-    public function getRefDocLineParent()
-    {
-        return $this->refDocLineParent;
     }
 
     /**
@@ -346,7 +331,7 @@ class DocsLines
     /**
      * Get visible
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getVisible()
     {
@@ -354,12 +339,104 @@ class DocsLines
     }
 
     /**
+     * Set paHt
+     *
+     * @param float $paHt
+     * @return DocsLines
+     */
+    public function setPaHt($paHt)
+    {
+        $this->paHt = $paHt;
+
+        return $this;
+    }
+
+    /**
+     * Get paHt
+     *
+     * @return float
+     */
+    public function getPaHt()
+    {
+        return $this->paHt;
+    }
+
+    /**
+     * Set paForced
+     *
+     * @param boolean $paForced
+     * @return DocsLines
+     */
+    public function setPaForced($paForced)
+    {
+        $this->paForced = $paForced;
+
+        return $this;
+    }
+
+    /**
+     * Get paForced
+     *
+     * @return boolean
+     */
+    public function getPaForced()
+    {
+        return $this->paForced;
+    }
+
+    /**
      * Get refDocLine
      *
-     * @return string 
+     * @return string
      */
     public function getRefDocLine()
     {
         return $this->refDocLine;
+    }
+
+    /**
+     * Set refDocLineParent
+     *
+     * @param \SS\FMBBundle\Entity\DocsLines $refDocLineParent
+     * @return DocsLines
+     */
+    public function setRefDocLineParent(\SS\FMBBundle\Entity\DocsLines $refDocLineParent = null)
+    {
+        $this->refDocLineParent = $refDocLineParent;
+
+        return $this;
+    }
+
+    /**
+     * Get refDocLineParent
+     *
+     * @return \SS\FMBBundle\Entity\DocsLines
+     */
+    public function getRefDocLineParent()
+    {
+        return $this->refDocLineParent;
+    }
+
+    /**
+     * Set refDoc
+     *
+     * @param \SS\FMBBundle\Entity\Documents $refDoc
+     * @return DocsLines
+     */
+    public function setRefDoc(\SS\FMBBundle\Entity\Documents $refDoc = null)
+    {
+        $this->refDoc = $refDoc;
+
+        return $this;
+    }
+
+    /**
+     * Get refDoc
+     *
+     * @return \SS\FMBBundle\Entity\Documents
+     */
+    public function getRefDoc()
+    {
+        return $this->refDoc;
     }
 }

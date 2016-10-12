@@ -19,6 +19,7 @@
     {# Voici le script en question : #}
     <script type="text/javascript">
         $(document).ready(function () {
+            alert('noublier pas de mettre la date');
             // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
             var $container = $('div#ss_fmbbundle_preparationlanterne_document_docsLines');
 
@@ -87,7 +88,6 @@
             jQuery('#ss_fmbbundle_preparationlanterne_document_docsLines_0_numeroSerie').hide()
             jQuery('#ss_fmbbundle_preparationlanterne_Parc').ready(function () {
                 var val = jQuery("#ss_fmbbundle_preparationlanterne_Parc").val();
-
                 jQuery.ajax({
                     type: "POST",
                     url: "{{ url('ssfmb_parcstock') }}?parc_id=" + val,
