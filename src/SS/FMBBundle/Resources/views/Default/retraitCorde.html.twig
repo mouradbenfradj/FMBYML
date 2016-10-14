@@ -9,7 +9,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                <form action="" method="post">
+                <form action="" method="post" onsubmit="return validation()">
                     <ul class="pagination pagination-lg">
                         {{ knp_menu_render('SSFMBBundle:Builder:parcRCMenu') }}
                     </ul>
@@ -63,26 +63,15 @@
                                                                                     {% elseif emplacement.stockscorde != null %}
                                                                                         <a title="article: {{ emplacement.stockscorde.article.refStockArticle.refArticle.libArticle }}
 -lot : {{ emplacement.stockscorde.article.numeroSerie }}
--processus : {% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}G{{ difference.m }}
+-processus : {% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}{% if difference.m <=5 %}G{{ difference.m }}{% elseif difference.m <=9 %}{% set dif2 = 9- difference.m %}H{{ dif2 }}{% elseif difference.m ==10 %}H00{% else %}H000{% endif %}
+
 -date de MAE :{{ emplacement.dateDeRemplissage|date('Y-m-d') }}"
                                                                                            href="">
                                                                                             <font color="blue"> {{ emplacement.place }}</font></a>
-                                                                                        {% if difference.m >= 6 %}
-                                                                                            <input type="checkbox"
-                                                                                                   name="placecorde[]"
-                                                                                                   value="{{ emplacement.id }}"/>
-                                                                                            {% if verifexsistance != 0 %}
-                                                                                                <br>
-                                                                                                <input
-                                                                                                        type="button"
-                                                                                                        value="Tout cocher"
-                                                                                                        onClick="fillCheckbox('{{ filiere.getNomFiliere }}{{ segment.getNomSegment }}{{ flotteur.getNomFlotteur }}','1');">&nbsp;&nbsp;
-                                                                                                <input type="button"
-                                                                                                       value="Tout décocher"
-                                                                                                       onClick="fillCheckbox('{{ filiere.getNomFiliere }}{{ segment.getNomSegment }}{{ flotteur.getNomFlotteur }}','0');">
-                                                                                            {% endif %}
+                                                                                        <input type="checkbox"
+                                                                                               name="placecorde[]"
+                                                                                               value="{{ emplacement.id }}"/>
 
-                                                                                        {% endif %}
                                                                                         {% set verifexsistance =  verifexsistance + 1 %}
                                                                                     {% elseif emplacement.stockslanterne != null %}
                                                                                         <a title="{{ emplacement.stockslanterne.lanterne.nomlanterne }}
@@ -94,6 +83,17 @@
                                                                                             <font color="#adff2f"> {{ emplacement.place }}</font></a>|
                                                                                     {% endif %}
                                                                                 {% endfor %}
+                                                                                {% if verifexsistance != 0 %}
+                                                                                    <br>
+                                                                                    <input
+                                                                                            type="button"
+                                                                                            value="Tout cocher"
+                                                                                            onClick="fillCheckbox('{{ filiere.getNomFiliere }}{{ segment.getNomSegment }}{{ flotteur.getNomFlotteur }}','1');">&nbsp;&nbsp;
+                                                                                    <input type="button"
+                                                                                           value="Tout décocher"
+                                                                                           onClick="fillCheckbox('{{ filiere.getNomFiliere }}{{ segment.getNomSegment }}{{ flotteur.getNomFlotteur }}','0');">
+                                                                                {% endif %}
+
                                                                                 {% endfor %}
                                                                             </div>
                                                                         </td>
@@ -150,7 +150,13 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
+        function validation() {
+            alert("cette etape est en maintenance pour plus d'information veuillez nous contactez");
+            return false;
+        }
         $(document).ready(function () {
+            alert('cette page est en maintenance la validation du retrait ne sera pas effectuer,' +
+                    'vous ne pouvez que la consulter ');
             $('input:checkbox').change(
                     function () {
                         if ($(this).is(':checked')) {

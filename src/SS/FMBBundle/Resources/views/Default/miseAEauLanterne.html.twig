@@ -11,8 +11,7 @@
                 <ul class="pagination pagination-lg">
                     {{ knp_menu_render('SSFMBBundle:Builder:parcMAELMenu') }}
                 </ul>
-                <form action="" method="post" id="formulaie">
-
+                <form action="" method="post" id="formulaie" onsubmit="return validation()">
                     <table class="table table-condensed table-bordered" border="1">
                         <tbody>
                         <tr>
@@ -69,7 +68,8 @@
                                                                                 {% elseif emplacement.stockscorde != null %}
                                                                                     <a title="article: {{ emplacement.stockscorde.article.refStockArticle.refArticle.libArticle }}
 -lot : {{ emplacement.stockscorde.article.numeroSerie }}
--processus : {% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}G{{ difference.m }}
+-processus : {% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}{% if difference.m <=5 %}G{{ difference.m }}{% elseif difference.m <=9 %}{% set dif2 = 9- difference.m %}H{{ dif2 }}{% elseif difference.m ==10 %}H00{% else %}H000{% endif %}
+
 -date de MAE :{{ emplacement.dateDeRemplissage|date('Y-m-d') }}"
                                                                                        href="">
                                                                                         <font color="blue"> {{ emplacement.place }}</font>
@@ -182,7 +182,15 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
-
+        function validation() {
+            check = confirm('vous confirmer les données (date de retrait, article , lot que vous avez choisie');
+            if (check == true) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
         $(document).ready(function () {
             $('#choixqtearticle').ready(function () {
                 $('input:checkbox').hide();

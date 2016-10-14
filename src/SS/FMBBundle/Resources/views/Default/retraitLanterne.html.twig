@@ -9,7 +9,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                <form action="" method="post">
+                <form action="" method="post" onsubmit="return validation()">
                     <ul class="pagination pagination-lg">
 
                         {{ knp_menu_render('SSFMBBundle:Builder:parcRLMenu') }}
@@ -65,7 +65,8 @@
                                                                                 {% elseif emplacement.stockscorde != null %}
                                                                                     <a title="article: {{ emplacement.stockscorde.article.refStockArticle.refArticle.libArticle }}
 -lot : {{ emplacement.stockscorde.article.numeroSerie }}
--processus : {% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}G{{ difference.m }}
+-processus : {% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}{% if difference.m <=5 %}G{{ difference.m }}{% elseif difference.m <=9 %}{% set dif2 = 9- difference.m %}H{{ dif2 }}{% elseif difference.m ==10 %}H00{% else %}H000{% endif %}
+
 -date de MAE :{{ emplacement.dateDeRemplissage|date('Y-m-d') }}"
                                                                                        href="">
                                                                                         <font color="blue"> {{ emplacement.place }}</font></a>                                                                                        {% elseif emplacement.stockslanterne != null %}
@@ -148,6 +149,15 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
+        function validation() {
+            check = confirm('vous confirmer les données (date de retrait, article , lot que vous avez choisie');
+            if (check == true) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
         $(document).ready(function () {
             $('input:checkbox').change(
                     function () {

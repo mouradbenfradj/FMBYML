@@ -17,6 +17,18 @@
                             <td>
                                 {{ entity.abrevMagasin }}
                             </td>
+                            <td rowspan="2" width="20%">
+                                <div data-spy="affix" data-offset-top="60" data-offset-bottom="200" id="menuform">
+                                    <p>
+                                    <div>Listez des filieres</div>
+                                    {% for filiere in entity.filieres %}
+                                        <span class="lienfiliereint">
+                                        <a href="#{{ filiere.nomFiliere }}">{{ filiere.nomFiliere }}</a>
+                                    </span>
+                                    {% endfor %}
+                                    </p>
+                                </div>
+                            </td>
                         </tr>
                         <tr>
                             <td>
@@ -25,17 +37,7 @@
                                     {% for filiere in entity.filieres %}
                                         <tr>
                                             <td id="{{ filiere.nomFiliere }}" class="filiere">
-                                                <p>
-                                                <div>Listez des filieres</div>
-                                                {% for filiere in entity.filieres %}
-                                                    <span class="lienfiliereint"> <a
-                                                                href="#{{ filiere.nomFiliere }}">{{ filiere.nomFiliere }}</a></span>
-                                                {% endfor %}
-                                                </p>
-
-
                                                 {{ filiere.nomFiliere }}
-
                                                 <br/>
                                                 {% set tailleFiliere =0 %}
                                                 {% set totaleplace =0 %}
@@ -129,7 +131,8 @@
                                                                             {% elseif emplacement.stockscorde != null %}
                                                                                 <a title="article: {{ emplacement.stockscorde.article.refStockArticle.refArticle.libArticle }}
 -lot : {{ emplacement.stockscorde.article.numeroSerie }}
--processus : {% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}G{{ difference.m }}
+-processus : {% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}{% if difference.m <=5 %}G{{ difference.m }}{% elseif difference.m <=9 %}{% set dif2 = 9- difference.m %}H{{ dif2 }}{% elseif difference.m ==10 %}H00{% else %}H000{% endif %}
+
 -date de MAE :{{ emplacement.dateDeRemplissage|date('Y-m-d') }}"
                                                                                    href="">
                                                                                     <font color="blue"
@@ -200,23 +203,25 @@
                 return Math.ceil((Diff / div))
             }
 
-            $('.dateemplacement').each(function (ele, val) {
-                var datejour = $(this).text().split("-");
-                var Date1 = new Date(datejour[0], datejour[1] - 1, datejour[2]);
-                var Date2 = new Date();
-                if ($(this).parent('.flotteur').has('dateemplacement'))
-                    if (0 < diffdate(Date1, Date2, 'd') < 10) {
-                        if ($(this).parent('.flotteur').has('dateemplacement'))
-                            var str = 'il reste ' + diffdate(Date1, Date2, 'd') + ' jours pour l article de la filiere ' + $(this).parent() + ' contenu dans le segment ' + $('.segment').text() + ' a partir du flotteur ' + $('.flotteur').text() + ' a lemplacement ' + $('.emplacement').text() + '<br>'
-                        $('#alertejaune').html('<button type="button" class="close" data-dismiss="alert" aria-hidden="true">× </button> <h4> Alert! </h4> <strong>Warning!</strong> ' + str + '<a href="#" class="alert-link">alert link</a>');
-                        //$('#alertejaune').show();
-                    }
-                if (diffdate(Date1, Date2, 'd') <= 0) {
-                    var str2 = 'il reste ' + (diffdate(Date1, Date2, 'd') * -1) + ' jours pour l article de la filiere ' + $('#filiere').text() + ' contenu dans le segment ' + $('#segment').text() + ' a partir du flotteur ' + $('#flotteur').text() + ' a lemplacement ' + $('#emplacement').text()
-                    $('#alerterouge').html('<button type="button" class="close" data-dismiss="alert" aria-hidden="true">× </button> <h4> Alert! </h4> <strong>Warning!</strong> ' + str2 + '<a href="#" class="alert-link">alert link</a>');
-                    //$('#alerterouge').show();
-                }
-            });
+            /*
+             $('.dateemplacement').each(function (ele, val) {
+             var datejour = $(this).text().split("-");
+             var Date1 = new Date(datejour[0], datejour[1] - 1, datejour[2]);
+             var Date2 = new Date();
+             if ($(this).parent('.flotteur').has('dateemplacement'))
+             if (0 < diffdate(Date1, Date2, 'd') < 10) {
+             if ($(this).parent('.flotteur').has('dateemplacement'))
+             var str = 'il reste ' + diffdate(Date1, Date2, 'd') + ' jours pour l article de la filiere ' + $(this).parent() + ' contenu dans le segment ' + $('.segment').text() + ' a partir du flotteur ' + $('.flotteur').text() + ' a lemplacement ' + $('.emplacement').text() + '<br>'
+             $('#alertejaune').html('<button type="button" class="close" data-dismiss="alert" aria-hidden="true">× </button> <h4> Alert! </h4> <strong>Warning!</strong> ' + str + '<a href="#" class="alert-link">alert link</a>');
+             //$('#alertejaune').show();
+             }
+             if (diffdate(Date1, Date2, 'd') <= 0) {
+             var str2 = 'il reste ' + (diffdate(Date1, Date2, 'd') * -1) + ' jours pour l article de la filiere ' + $('#filiere').text() + ' contenu dans le segment ' + $('#segment').text() + ' a partir du flotteur ' + $('#flotteur').text() + ' a lemplacement ' + $('#emplacement').text()
+             $('#alerterouge').html('<button type="button" class="close" data-dismiss="alert" aria-hidden="true">× </button> <h4> Alert! </h4> <strong>Warning!</strong> ' + str2 + '<a href="#" class="alert-link">alert link</a>');
+             //$('#alerterouge').show();
+             }
+             });
+             */
         });
     </script>
 {% endblock %}

@@ -209,7 +209,7 @@ class DefaultController extends Controller
     public function preparationCordeAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $form = $this->createForm(new PreparationCordeType($em), null, array('action' => $this->generateUrl('ssfmb_preparationcorde'), 'method' => 'POST',));
+        $form = $this->createForm(new PreparationCordeType($em), null, array('action' => $this->generateUrl('ssfmb_preparationcorde'), 'method' => 'POST'));
         $form->add('submit', 'submit', array('label' => 'preparer'));
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
@@ -218,7 +218,7 @@ class DefaultController extends Controller
             $document->setCodeFile("");
             $em->persist($document);
             $cordes = $request->request->get("ss_fmbbundle_preparationcorde")["nomCorde"];
-            $corde = $em->getRepository("SSFMBBundle:Corde")->findOneBy(array('nomCorde'=>$cordes,'parc'=>$form['Parc']->getData()));
+            $corde = $em->getRepository("SSFMBBundle:Corde")->findOneBy(array('nomCorde' => $cordes, 'parc' => $form['Parc']->getData()));
             foreach ($form['document']['docsLines']->getData() as $doclin) {
                 $stockarticles = $em->getRepository('SSFMBBundle:StocksArticles')->findOneBy(array('idStock' => $form->get('libStock')->getData()->getIdStock(), 'refArticle' => $doclin->getRefArticle()));
                 if (!empty($stockarticles)) {
@@ -423,7 +423,7 @@ class DefaultController extends Controller
                     foreach ($crd as $corde) {
                         if ($corde->getDateDeCreation()) {
                             $diff = date_diff($corde->getDateDeCreation(), $date1);
-                            if ($diff->d < 1) {
+                            if (($diff->d ==0) && ($diff->m == 0) && ($diff->y == 0)) {
                                 $cordefabriquer = array_merge($cordefabriquer, array($corde));
                             } else {
                                 $cordefabriquerurgent = array_merge($cordefabriquerurgent, array($corde));
@@ -440,7 +440,7 @@ class DefaultController extends Controller
                     foreach ($lntr as $lanterne) {
                         if ($lanterne->getDateDeCreation()) {
                             $diff = date_diff($lanterne->getDateDeCreation(), $date1);
-                            if (($diff->d < 1) && ($diff->m == 0) && ($diff->y == 0)) {
+                            if (($diff->d <=3) && ($diff->m == 0) && ($diff->y == 0)) {
                                 $lanternefabriquer = array_merge($lanternefabriquer, array($lanterne));
                             } else {
                                 $lanternefabriquerurgent = array_merge($lanternefabriquerurgent, array($lanterne));
@@ -462,7 +462,7 @@ class DefaultController extends Controller
                                     if ($emplacement->getStockslanterne()) {
                                         if (($interval->m >= 3) || ($interval->y >= 1)) {
                                             $pregrossisementurgent = array_merge($pregrossisementurgent, array($emplacement));
-                                        } elseif (($interval->m > 2) && ($interval->d > 23) && ($interval->m < 3)) {
+                                        } elseif (($interval->m == 2) && ($interval->d <= 7) && ($interval->m < 3)) {
                                             $pregrossisementaeffectuer = array_merge($pregrossisementaeffectuer, array($emplacement));
                                         } else {
                                             $pregrossisement = array_merge($pregrossisement, array($emplacement));
@@ -470,7 +470,7 @@ class DefaultController extends Controller
                                     } elseif ($emplacement->getStockscorde()) {
                                         if (($interval->m >= 6) || ($interval->y >= 1)) {
                                             $grossisementurgent = array_merge($grossisementurgent, array($emplacement));
-                                        } elseif (($interval->m > 5) && ($interval->d > 23) && ($interval->m < 6)) {
+                                        } elseif (($interval->m == 5) && ($interval->d >= 23) && ($interval->m < 6)) {
                                             $grossisementaeffectuer = array_merge($grossisementaeffectuer, array($emplacement));
                                         } else {
                                             $grossisement = array_merge($grossisement, array($emplacement));
@@ -525,7 +525,8 @@ class DefaultController extends Controller
         return $this->render('@SSFMB/Default/planingdetravaille.html.twig', array('laf' => $lanternefabriquer, 'lafu' => $lanternefabriquerurgent, 'caf' => $cordefabriquer, 'cafu' => $cordefabriquerurgent, 'entity' => $parcs, 'pregrossisement' => $pregrossisement, 'grossisement' => $grossisement, 'comerciale' => $comerciale, 'pregrossisementaeffectuer' => $pregrossisementaeffectuer, 'grossisementaeffectuer' => $grossisementaeffectuer, 'comercialeaeffectuer' => $comercialeaeffectuer, 'pregrossisementurgent' => $pregrossisementurgent, 'grossisementurgent' => $grossisementurgent, 'comercialeurgent' => $comercialeurgent));
     }
 
-    public function processgrocissmeentAction(Request $request)
+    public
+    function processgrocissmeentAction(Request $request)
     {
         $date1 = new DateTime("now");
         $pg[0] = array();
