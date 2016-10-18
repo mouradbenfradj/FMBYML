@@ -14,6 +14,7 @@ use SS\FMBBundle\Form\PreparationLanterneType;
 use SS\FMBBundle\Implementation\DefaultImpl;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class DefaultController extends Controller
 {
@@ -423,7 +424,7 @@ class DefaultController extends Controller
                     foreach ($crd as $corde) {
                         if ($corde->getDateDeCreation()) {
                             $diff = date_diff($corde->getDateDeCreation(), $date1);
-                            if (($diff->d ==0) && ($diff->m == 0) && ($diff->y == 0)) {
+                            if (($diff->d == 0) && ($diff->m == 0) && ($diff->y == 0)) {
                                 $cordefabriquer = array_merge($cordefabriquer, array($corde));
                             } else {
                                 $cordefabriquerurgent = array_merge($cordefabriquerurgent, array($corde));
@@ -440,7 +441,7 @@ class DefaultController extends Controller
                     foreach ($lntr as $lanterne) {
                         if ($lanterne->getDateDeCreation()) {
                             $diff = date_diff($lanterne->getDateDeCreation(), $date1);
-                            if (($diff->d <=3) && ($diff->m == 0) && ($diff->y == 0)) {
+                            if (($diff->d <= 3) && ($diff->m == 0) && ($diff->y == 0)) {
                                 $lanternefabriquer = array_merge($lanternefabriquer, array($lanterne));
                             } else {
                                 $lanternefabriquerurgent = array_merge($lanternefabriquerurgent, array($lanterne));
@@ -691,4 +692,102 @@ class DefaultController extends Controller
         }
         return $this->render('@SSFMB/Default/processusgrocissement.html.twig', array('cr' => $cr, 'pg' => $pg, 'gr' => $gr, 'entity' => $parcs));
     }
+
+    public function transfertAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        if ($request->get('id') == null) {
+            $parcs = null;
+            $stock = null;
+            $lanternes = null;
+            $articles = null;
+        } else {
+            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('id'));
+            $lanternes = $em->getRepository('SSFMBBundle:Lanterne')->findByParc($parcs);
+            $articles = $em->getRepository('SSFMBBundle:StocksArticles')->findByIdStock($parcs->getIdStock());
+        }
+        if ($request->isMethod('POST')) {
+            $session = new Session();
+            $session->set('emplacement', array());
+            $session->set('lanterne', array());
+            $session->set('corde', array());
+            foreach ($request->request->get('place') as $emplacement) {
+                $place = $em->getRepository('SSFMBBundle:Emplacement')->find($emplacement);
+                $session->set('emplacement', array_merge($session->get('emplacement'), array($place)));
+                if ($place->getStockscorde() != null) {
+                    $session->set('corde', array_merge($session->get('corde'), array($place->getStockscorde())));
+                } elseif ($place->getStockslanterne() != null) {
+                    $session->set('lanterne', array_merge($session->get('lanterne'), array($place->getStockslanterne())));
+                }
+            }
+            return $this->redirectToRoute('ssfmb_misaaeautransfert');
+        }
+        return $this->render(
+            '@SSFMB/Default/transfertRetirement.html.twig',
+            array(
+                'entity' => $parcs,
+                'articles' => $articles,
+                'lanternes' => $lanternes,
+            )
+        );
+    }
+
+    public function transfertMAEAction(Request $request)
+    {
+        $session = new Session();
+        //  var_dump($session->get('lanterne'));
+        // var_dump($session->get('corde'));
+        $em = $this->getDoctrine()->getManager();
+        if ($request->get('id') == null) {
+            $parcs = null;
+            $stock = null;
+            $cordes = null;
+            $articles = null;
+        } else {
+            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('id'));
+            $cordes = $em->getRepository('SSFMBBundle:Corde')->findByParc($parcs);
+            $articles = $em->getRepository('SSFMBBundle:StocksArticles')->findByIdStock($parcs->getIdStock());
+        }
+        if ($request->isMethod('POST')) {
+            $cmpt = 0;
+            foreach ($request->request->get('place') as $emplacement) {
+                $place = $em->getRepository('SSFMBBundle:Emplacement')->find($emplacement);
+                if ($cmpt < count($session->get('emplacement'))) {
+                    if ($session->get('emplacement')[$cmpt]->getStockscorde() != null) {
+                        $anarticle = $em->getRepository('SSFMBBundle:StocksCordes')->find($session->get('emplacement')[$cmpt]->getStockscorde());
+                        $anplace = $em->getRepository('SSFMBBundle:Emplacement')->find($session->get('emplacement')[$cmpt]);
+                        $anarticle->setEmplacement(null);
+                        $anplace->setStockscorde(null);
+                        $em->flush();
+                        $place->setStockscorde($anarticle);
+                        $anarticle->setEmplacement($place);
+                        $cmpt++;
+
+                    } else if (($session->get('emplacement')[$cmpt]->getStockslanterne() != null) && ($cmpt < count($session->get('emplacement')))) {
+                        $anarticle = $em->getRepository('SSFMBBundle:StocksLanternes')->find($session->get('emplacement')[$cmpt]->getStockslanterne());
+                        $anplace = $em->getRepository('SSFMBBundle:Emplacement')->find($session->get('emplacement')[$cmpt]);
+                        $anplace->setStockslanterne(null);
+                        $anarticle->setEmplacement(null);
+                        $em->flush();
+                        $place->setStockslanterne($anarticle);
+                        $anarticle->setEmplacement($place);
+                        $cmpt++;
+
+                    }
+                }
+            }
+            $em->flush();
+            return $this->redirectToRoute('ssfmb_transfert');
+        }
+        return $this->render(
+            '@SSFMB/Default/transfertMAE.html.twig',
+            array(
+                'entity' => $parcs,
+                'articles' => $articles,
+                'cordes' => $cordes,
+            )
+        );
+    }
+
 }

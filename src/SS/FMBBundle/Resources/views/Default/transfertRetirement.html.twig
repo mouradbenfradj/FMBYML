@@ -11,9 +11,7 @@
             <div class="col-md-12">
                 <form action="" method="post" onsubmit="return validation()">
                     <ul class="pagination pagination-lg">
-
-                        {{ knp_menu_render('SSFMBBundle:Builder:parcRLMenu') }}
-
+                        {{ knp_menu_render('SSFMBBundle:Builder:parcTransfertMenu') }}
                     </ul>
                     <table class="table table-condensed table-bordered" border="1">
                         <tbody>
@@ -60,40 +58,48 @@
                                                                                 {% set verifexsistance = 0 %}
 
                                                                                 {% for emplacement in flotteur.emplacements %}
-                                                                                {% if emplacement.stockscorde == null and emplacement.stockslanterne == null %}
-                                                                                    <font color="red"> {{ emplacement.place }}</font>|
-                                                                                {% elseif emplacement.stockscorde != null %}
-                                                                                    <a title="article: {{ emplacement.stockscorde.article.refStockArticle.refArticle.libArticle }}
+                                                                                    {% if emplacement.stockscorde == null and emplacement.stockslanterne == null %}
+                                                                                        <font color="red"> {{ emplacement.place }}</font>|
+                                                                                    {% elseif emplacement.stockscorde != null %}
+                                                                                        <a title="article: {{ emplacement.stockscorde.article.refStockArticle.refArticle.libArticle }}
 -lot : {{ emplacement.stockscorde.article.numeroSerie }}
 -processus : {% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}{% if difference.m <=5 %}G{{ difference.m }}{% elseif difference.m <=9 %}{% set dif2 = 9- difference.m %}H{{ dif2 }}{% elseif difference.m ==10 %}H00{% else %}H000{% endif %}
 
 -date de MAE :{{ emplacement.dateDeRemplissage|date('Y-m-d') }}"
-                                                                                       href="">
-                                                                                        <font color="blue"> {{ emplacement.place }}</font></a>
-                                                                                {% elseif emplacement.stockslanterne != null %}
-                                                                                    <a title="{{ emplacement.stockslanterne.lanterne.nomlanterne }}
+                                                                                           href="">
+                                                                                            <font color="blue"> {{ emplacement.place }}</font></a>
+                                                                                        <input type="checkbox"
+                                                                                               name="place[]"
+                                                                                               value="{{ emplacement.id }}"/>
+
+                                                                                        {% set verifexsistance =  verifexsistance + 1 %}
+                                                                                    {% elseif emplacement.stockslanterne != null %}
+                                                                                        <a title="{{ emplacement.stockslanterne.lanterne.nomlanterne }}
 -article: {{ emplacement.stockslanterne.article.refStockArticle.refArticle.libArticle }}
 -lot : {{ emplacement.stockslanterne.article.numeroSerie }}
 -processus : {% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}PG{{ difference.m }}
 -date de MAE :{{ emplacement.dateDeRemplissage|date('Y-m-d') }}"
-                                                                                       href="#">
-                                                                                        <font color="#adff2f"> {{ emplacement.place }}</font></a>|
-                                                                                    <input type="checkbox"
-                                                                                           name="placelanterne[]"
-                                                                                           value="{{ emplacement.id }}"/>
-                                                                                    {% set verifexsistance =  verifexsistance + 1 %}
+                                                                                           href="#">
+                                                                                            <font color="#adff2f"> {{ emplacement.place }}</font></a>|
+                                                                                        <input type="checkbox"
+                                                                                               name="place[]"
+                                                                                               value="{{ emplacement.id }}"/>
+                                                                                        {% set verifexsistance =  verifexsistance + 1 %}
 
 
-                                                                                {% endif %}
-                                                                                {% endfor %}<br>
+                                                                                    {% endif %}
+                                                                                {% endfor %}
                                                                                 {% if verifexsistance != 0 %}
-                                                                                    <input type="button"
-                                                                                           value="Tout cocher"
-                                                                                           onClick="fillCheckbox('{{ filiere.getNomFiliere }}{{ segment.getNomSegment }}{{ flotteur.getNomFlotteur }}','1');">&nbsp;&nbsp;
+                                                                                    <br>
+                                                                                    <input
+                                                                                            type="button"
+                                                                                            value="Tout cocher"
+                                                                                            onClick="fillCheckbox('{{ filiere.getNomFiliere }}{{ segment.getNomSegment }}{{ flotteur.getNomFlotteur }}','1');">&nbsp;&nbsp;
                                                                                     <input type="button"
                                                                                            value="Tout décocher"
                                                                                            onClick="fillCheckbox('{{ filiere.getNomFiliere }}{{ segment.getNomSegment }}{{ flotteur.getNomFlotteur }}','0');">
                                                                                 {% endif %}
+
                                                                                 {% endfor %}
                                                                             </div>
                                                                         </td>
@@ -121,19 +127,12 @@
                                         </span>
                                     {% endfor %}
                                     </p>
-                                    <p>date retrait des laternes</p>
+                                    <p>date de du tranfert</p>
                                     {% set now =  "now"|date("Y-m-d") %}
-                                    <p><input type="date" name="dateRetraitLanterne" value="{{ now }}"></p>
+                                    <p><input type="date" name="dateRetraitCorde" value="{{ now }}"></p>
                                     <p>quantiter retirer</p>
                                     <p><input type="number" id="quantit" readonly="true" value="0"></p>
-                                    <p>stocks de reception</p>
-                                    <p>
-                                        <input type="text" name="stockchoix" hidden="true" id="stockchoix"
-                                               value="{{ entity.idStock.idStock }}">
-                                        <input type="text" readonly="true" value="{{ entity.idStock.libStock }}">
-
-                                    </p>
-                                    <p><input type="submit" value="confirmer le retrait"/></p>
+                                    <p><input type="submit" value="confirmer demande de transfert"/></p>
                                 </div>
                             </td>
                         </tr>
@@ -151,7 +150,7 @@
     {{ parent() }}
     <script type="text/javascript">
         function validation() {
-            check = confirm('vous confirmer les données (date de retrait, article , lot que vous avez choisie');
+            check = confirm("vous allez etre rediriger vers l'interface de mise en eau de ce que vous avez demander de retirer");
             if (check == true) {
                 return true;
             }
@@ -160,12 +159,14 @@
             }
         }
         $(document).ready(function () {
+            alert("le compteur n'est pas encore fiable, il est en maintenance");
             $('input:checkbox').change(
                     function () {
                         if ($(this).is(':checked')) {
                             $('#quantit').val(parseInt($('#quantit').val()) + 1);
                         } else {
                             $('#quantit').val(parseInt($('#quantit').val()) - 1);
+
                         }
                     });
         });

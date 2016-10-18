@@ -28,3 +28,9 @@ ssfmb_planingdetravaille:
 ssfmb_processusgrocissement:
     path:     /groscissement
     defaults: { _controller: SSFMBBundle:Default:processgrocissmeent}
+ssfmb_transfert:
+    path:     /transfert
+    defaults: { _controller: SSFMBBundle:Default:transfert}
+ssfmb_misaaeautransfert:
+    path:     /misaaeautransfert
+    defaults: { _controller: SSFMBBundle:Default:transfertMAE }
