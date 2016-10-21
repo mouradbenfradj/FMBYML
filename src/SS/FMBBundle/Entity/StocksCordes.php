@@ -63,6 +63,16 @@ class StocksCordes
     private $dateDeCreation;
     /**
      *
+     * @ORM\Column(name="dateDeRetraitTransfert", type="date", nullable=true)
+     */
+    private $dateDeRetraitTransfert;
+    /**
+     *
+     * @ORM\Column(name="dateDeMAETransfert", type="date", nullable=true)
+     */
+    private $dateDeMAETransfert;
+    /**
+     *
      * @ORM\Column(name="dateDeRetirement", type="date", nullable=true)
      */
     private $dateDeRetirement;
@@ -218,7 +228,7 @@ class StocksCordes
     /**
      * Get article
      *
-     * @return \SS\FMBBundle\Entity\StocksArticlesSn 
+     * @return \SS\FMBBundle\Entity\StocksArticlesSn
      */
     public function getArticle()
     {
@@ -241,7 +251,7 @@ class StocksCordes
     /**
      * Get numeroSerie
      *
-     * @return string 
+     * @return string
      */
     public function getNumeroSerie()
     {
@@ -264,7 +274,7 @@ class StocksCordes
     /**
      * Get docLine
      *
-     * @return \SS\FMBBundle\Entity\DocsLines 
+     * @return \SS\FMBBundle\Entity\DocsLines
      */
     public function getDocLine()
     {
@@ -287,10 +297,56 @@ class StocksCordes
     /**
      * Get dateDeRetirement
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDateDeRetirement()
     {
         return $this->dateDeRetirement;
+    }
+
+    /**
+     * Set dateDeRetraitTransfert
+     *
+     * @param \DateTime $dateDeRetraitTransfert
+     * @return StocksCordes
+     */
+    public function setDateDeRetraitTransfert($dateDeRetraitTransfert)
+    {
+        $this->dateDeRetraitTransfert = $dateDeRetraitTransfert;
+
+        return $this;
+    }
+
+    /**
+     * Get dateDeRetraitTransfert
+     *
+     * @return \DateTime 
+     */
+    public function getDateDeRetraitTransfert()
+    {
+        return $this->dateDeRetraitTransfert;
+    }
+
+    /**
+     * Set dateDeMAETransfert
+     *
+     * @param \DateTime $dateDeMAETransfert
+     * @return StocksCordes
+     */
+    public function setDateDeMAETransfert($dateDeMAETransfert)
+    {
+        $this->dateDeMAETransfert = $dateDeMAETransfert;
+
+        return $this;
+    }
+
+    /**
+     * Get dateDeMAETransfert
+     *
+     * @return \DateTime 
+     */
+    public function getDateDeMAETransfert()
+    {
+        return $this->dateDeMAETransfert;
     }
 }

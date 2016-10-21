@@ -17,8 +17,11 @@
                         <tr>
                             <td>
                                 {% if(entity != null) %}
-                                <div id="idstockparc" hidden="true">{{ entity.idStock.idStock }}</div>
-                                <div id="idparc" hidden="true">{{ entity.idMagasin }}</div>
+                                <div id="idstockparc" hidden="true">
+                                    {{ entity.idStock.idStock }}</div>
+                                <div id="idparc" hidden="true">
+                                    {{ entity.idMagasin }}
+                                </div>
                                 {{ entity.abrevMagasin }}
                             </td>
                         </tr>
@@ -28,7 +31,8 @@
                                     <tbody>
                                     {% for filiere in entity.filieres %}
                                         <tr>
-                                            <td id="{{ filiere.nomFiliere }}">{{ filiere.nomFiliere }}
+                                            <td id="{{ filiere.nomFiliere }}">
+                                                {{ filiere.nomFiliere }}
                                                 <br/>
                                                 {% set tailleFiliere =0 %}
                                                 {% for segment in filiere.segments %}
@@ -45,8 +49,12 @@
                                                         {% for segment in filiere.segments %}
                                                             <td valign="top">
                                                                 <ul>
-                                                                    <li> {{ segment.getNomSegment }}</li>
-                                                                    <li>{{ segment.getLongeur }} m</li>
+                                                                    <li>
+                                                                        {{ segment.getNomSegment }}
+                                                                    </li>
+                                                                    <li>
+                                                                        {{ segment.getLongeur }} m
+                                                                    </li>
                                                                 </ul>
                                                                 <table>
                                                                     {% for flotteur in segment.flotteurs %}
@@ -55,39 +63,29 @@
                                                                             <div id="{{ filiere.getNomFiliere }}{{ segment.getNomSegment }}{{ flotteur.getNomFlotteur }}">
                                                                                 {{ flotteur.getNomFlotteur }}|
                                                                                 {% set verifexsistance = 0 %}
-
                                                                                 {% for emplacement in flotteur.emplacements %}
                                                                                 {% if emplacement.stockscorde == null and emplacement.stockslanterne == null %}
                                                                                     {% set verifexsistance =  verifexsistance + 1 %}
-                                                                                    <font color="red"> {{ emplacement.place }}</font>
+                                                                                    <font color="red">
+                                                                                        {{ emplacement.place }}
+                                                                                    </font>
                                                                                     <input type="checkbox"
                                                                                            name="placecorde[]"
                                                                                            value="{{ emplacement.id }}"/>|
                                                                                     <span style="display: none"
-                                                                                          id="dateemplacement">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</span>
+                                                                                          id="dateemplacement">
+                                                                                    {{ emplacement.dateDeRemplissage|date('Y-m-d') }}</span>
+                                                                                    </span>
                                                                                 {% elseif emplacement.stockscorde != null %}
-                                                                                    <a title="article: {{ emplacement.stockscorde.article.refStockArticle.refArticle.libArticle }}
--lot : {{ emplacement.stockscorde.article.numeroSerie }}
--processus : {% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}{% if difference.m <=5 %}G{{ difference.m }}{% elseif difference.m <=9 %}{% set dif2 = 9- difference.m %}H{{ dif2 }}{% elseif difference.m ==10 %}H00{% else %}H000{% endif %}
--date de MAE :{{ emplacement.dateDeRemplissage|date('Y-m-d') }}"
-                                                                                       href="">
-                                                                                        <font color="blue"> {{ emplacement.place }}</font>
-                                                                                    </a>
+                                                                                    {% include "SSFMBBundle:Include:suivitEtatCordeInclude.html.twig" %}
                                                                                     <span style="display: none"
-                                                                                          id="dateemplacement">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</span>
-
+                                                                                          id="dateemplacement">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}
+                                                                                    </span>
                                                                                 {% elseif emplacement.stockslanterne != null %}
-                                                                                    <a title="{{ emplacement.stockslanterne.lanterne.nomlanterne }}
--article: {{ emplacement.stockslanterne.article.refStockArticle.refArticle.libArticle }}
--lot : {{ emplacement.stockslanterne.article.numeroSerie }}
--processus : {% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}PG{{ difference.m }}
-
--date de MAE :{{ emplacement.dateDeRemplissage|date('Y-m-d') }}"
-                                                                                       href="#">
-                                                                                        <font color="#adff2f"> {{ emplacement.place }}</font>
-                                                                                    </a>
+                                                                                    {% include "SSFMBBundle:Include:suivitEtatLanterneInclude.html.twig" %}
                                                                                     <span style="display: none"
-                                                                                          id="dateemplacement">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</span>
+                                                                                          id="dateemplacement">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}
+                                                                                    </span>
 
                                                                                 {% endif %}
                                                                                 {% endfor %}<br>
@@ -117,6 +115,9 @@
                             </td>
                             <td width="20%">
                                 <div data-spy="affix" data-offset-top="60" data-offset-bottom="200" id="menuform">
+                                    <p>
+                                        {% include "SSFMBBundle:Include:couleurCleInclude.html.twig" %}
+                                    </p>
                                     <p>
                                     <div><a href="#menuprincipale">menu</a></div>
                                     <div>Listez des filieres</div>

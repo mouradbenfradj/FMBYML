@@ -63,6 +63,16 @@ class StocksLanternes
     private $dateDeCreation;
     /**
      *
+     * @ORM\Column(name="dateDeRetraitTransfert", type="date", nullable=true)
+     */
+    private $dateDeRetraitTransfert;
+    /**
+     *
+     * @ORM\Column(name="dateDeMAETransfert", type="date", nullable=true)
+     */
+    private $dateDeMAETransfert;
+    /**
+     *
      * @ORM\Column(name="dateDeRetirement", type="date", nullable=true)
      */
     private $dateDeRetirement;
@@ -311,5 +321,52 @@ class StocksLanternes
     public function getDateDeRetirement()
     {
         return $this->dateDeRetirement;
+    }
+
+
+    /**
+     * Set dateDeRetraitTransfert
+     *
+     * @param \DateTime $dateDeRetraitTransfert
+     * @return StocksLanternes
+     */
+    public function setDateDeRetraitTransfert($dateDeRetraitTransfert)
+    {
+        $this->dateDeRetraitTransfert = $dateDeRetraitTransfert;
+
+        return $this;
+    }
+
+    /**
+     * Get dateDeRetraitTransfert
+     *
+     * @return \DateTime 
+     */
+    public function getDateDeRetraitTransfert()
+    {
+        return $this->dateDeRetraitTransfert;
+    }
+
+    /**
+     * Set dateDeMAETransfert
+     *
+     * @param \DateTime $dateDeMAETransfert
+     * @return StocksLanternes
+     */
+    public function setDateDeMAETransfert($dateDeMAETransfert)
+    {
+        $this->dateDeMAETransfert = $dateDeMAETransfert;
+
+        return $this;
+    }
+
+    /**
+     * Get dateDeMAETransfert
+     *
+     * @return \DateTime 
+     */
+    public function getDateDeMAETransfert()
+    {
+        return $this->dateDeMAETransfert;
     }
 }

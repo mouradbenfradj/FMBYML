@@ -10,29 +10,85 @@
                 <ul class="pagination pagination-lg">
                     {{ knp_menu_render('SSFMBBundle:Builder:parcProcessusMenu') }}
                 </ul>
-                <table class="table table-condensed table-bordered" border="1">
+                <table class="table table-bordered table-striped table-condensed" border="1">
                     <tbody>
                     {% if(entity != null) %}
                         <tr>
+                            <td width="100" rowspan="3">
+                                <div data-spy="affix" id="menuform">
+                                    <ul>
+                                        <li><a href="#pg0">pg0</a></li>
+                                        <li><a href="#pg0">pg1</a></li>
+                                        <li><a href="#pg0">pg2</a></li>
+                                        <li><a href="#pg0">pg3</a></li>
+                                        <li><a href="#pg0">pg4</a></li>
+                                        <li><a href="#g0">g0</a></li>
+                                        <li><a href="#g1">g1</a></li>
+                                        <li><a href="#g2">g2</a></li>
+                                        <li><a href="#g3">g3</a></li>
+                                        <li><a href="#g4">g4</a></li>
+                                        <li><a href="#g5">g5</a></li>
+                                        <li><a href="#gh3">h3</a></li>
+                                        <li><a href="#gh2">h2</a></li>
+                                        <li><a href="#gh1">h1</a></li>
+                                        <li><a href="#gh0">h0</a></li>
+                                        <li><a href="#gh00">h00</a></li>
+                                        <li><a href="#gh000">h000</a></li>
+                                        <li><a href="#h4">h4</a></li>
+                                        <li><a href="#h3">h3</a></li>
+                                        <li><a href="#h2">h2</a></li>
+                                        <li><a href="#h1">h1</a></li>
+                                        <li><a href="#h0">h0</a></li>
+                                        <li><a href="#h00">h00</a></li>
+                                    </ul>
+                                </div>
+                            </td>
                             <td>Pregrossisement</td>
                             <td>
-                                <table border="1">
+                                <table class="table table-bordered table-striped table-condensed">
+                                    <tr>
+                                        <td>etape</td>
+                                        <td>filiere</td>
+                                        <td>segment</td>
+                                        <td>flotteur</td>
+                                        <td>emplacement</td>
+                                        <td>date de mise a eau</td>
+                                        <td>doit etre retirer le</td>
+                                        <td>Densiter U/Lanterne</td>
+                                        <td>Densiter totale</td>
+                                    </tr>
                                     {% for emplacementpg in pg %}
                                         <tr>
-                                        <td rowspan="{{ emplacementpg|length +1 }}">pg{{ loop.index0 }}</td>
+                                        <td rowspan="{{ emplacementpg|length +1 }}">
+                                            <div id="pg{{ loop.index0 }}">pg{{ loop.index0 }}</div>
+                                        </td>
                                         {% for emplacement in emplacementpg %}
                                             <tr>
+                                                <td>{{ emplacement.flotteur.segment.filiere.nomfiliere }}</td>
+                                                <td>{{ emplacement.flotteur.segment.nomsegment }}</td>
+                                                <td>{{ emplacement.flotteur.nomflotteur }}</td>
+                                                <td>{{ emplacement.place }}</td>
+                                                <td>{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
+                                                <td>{{ emplacement.dateDeRemplissage|date_modify("+6 month")|date('Y-m-d') }}</td>
                                                 <td>
-                                                    filiere
-                                                    :{{ emplacement.flotteur.segment.filiere.nomfiliere }}
-                                                    segment : {{ emplacement.flotteur.segment.nomsegment }}
-                                                    flotteur :{{ emplacement.flotteur.nomflotteur }}
-                                                    emplacement : {{ emplacement.place }}
-                                                    date de mise a eau
-                                                    : {{ emplacement.dateDeRemplissage|date('Y-m-d') }}
-                                                    doit etre retirer le
-                                                    : {{ emplacement.dateDeRemplissage|date_modify("+6 month")|date('Y-m-d') }}
+                                                    {% set quantiterTotale = 0 %}
+                                                    {% for poche in emplacement.stockslanterne.poches %}
+                                                        {% set quantiterTotale = quantiterTotale + poche.quantite %}
+                                                    {% endfor %}
+                                                    {{ quantiterTotale }}
                                                 </td>
+                                                {% if loop.index == 1 %}
+                                                    <td rowspan="{{ emplacementpg|length }}" valign="top">
+                                                        {% set quantiterTotale = 0 %}
+                                                        {% for emplacement2 in emplacementpg %}
+                                                            {% for poche in emplacement2.stockslanterne.poches %}
+                                                                {% set quantiterTotale = quantiterTotale + poche.quantite %}
+                                                            {% endfor %}
+                                                        {% endfor %}
+                                                        {{ quantiterTotale }}
+                                                    </td>
+                                                {% endif %}
+
                                             </tr>
                                         {% endfor %}
                                     {% endfor %}
@@ -42,36 +98,54 @@
                         <tr>
                             <td>grossisement</td>
                             <td>
-                                <table border="1">
+                                <table class="table table-bordered table-striped table-condensed">
+                                    <tr>
+                                        <td>etape</td>
+                                        <td>filiere</td>
+                                        <td>segment</td>
+                                        <td>flotteur</td>
+                                        <td>emplacement</td>
+                                        <td>date de mise a eau</td>
+                                        <td>doit etre retirer le</td>
+                                        <td>Densiter U/Corde/</td>
+                                        <td>Densiter totale</td>
+                                    </tr>
                                     {% for emplacementgr in gr %}
                                         <tr>
                                         <td rowspan="{{ emplacementgr|length }}">
                                             {% if loop.index0 == 6 %}
-                                                h3
+                                                <div id="gh3">h3</div>
                                             {% elseif loop.index0 == 7 %}
-                                                h2
+                                                <div id="gh2">h2</div>
                                             {% elseif loop.index0 == 8 %}
-                                                h1
+                                                <div id="gh1">h1</div>
                                             {% elseif loop.index0 == 9 %}
-                                                h0
+                                                <div id="gh0">h0</div>
                                             {% elseif loop.index0 == 10 %}
-                                                h00
+                                                <div id="gh00">h00</div>
                                             {% elseif loop.index0 >= 11 %}
-                                                h000
+                                                <div id="gh000">h000</div>
                                             {% else %}
-                                                g{{ loop.index0 }}
+                                                <div id="g{{ loop.index0 }}">g{{ loop.index0 }}</div>
                                             {% endif %}
                                         </td>
                                         {% for emplacement in emplacementgr %}
-                                            <td>
-                                                filiere :{{ emplacement.flotteur.segment.filiere.nomfiliere }}
-                                                segment : {{ emplacement.flotteur.segment.nomsegment }}
-                                                flotteur :{{ emplacement.flotteur.nomflotteur }}
-                                                emplacement : {{ emplacement.place }}
-                                                date de mise a eau: {{ emplacement.dateDeRemplissage|date('Y-m-d') }}
-                                                doit etre retirer
-                                                le: {{ emplacement.dateDeRemplissage|date_modify("+6 month")|date('Y-m-d') }}
-                                            </td>
+                                            <td>{{ emplacement.flotteur.segment.filiere.nomfiliere }}</td>
+                                            <td>{{ emplacement.flotteur.segment.nomsegment }}</td>
+                                            <td>{{ emplacement.flotteur.nomflotteur }}</td>
+                                            <td>{{ emplacement.place }}</td>
+                                            <td>{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
+                                            <td>{{ emplacement.dateDeRemplissage|date_modify("+6 month")|date('Y-m-d') }}</td>
+                                            <td>{{ emplacement.stockscorde.quantiter }}</td>
+                                            {% if loop.index == 1 %}
+                                                <td rowspan="{{ emplacementgr|length }}" valign="top">
+                                                    {% set quantiterTotale = 0 %}
+                                                    {% for emplacement2 in emplacementgr %}
+                                                        {% set quantiterTotale = quantiterTotale + emplacement2.stockscorde.quantiter %}
+                                                    {% endfor %}
+                                                    {{ quantiterTotale }}
+                                                </td>
+                                            {% endif %}
                                             </tr>
                                         {% endfor %}
                                     {% endfor %}
@@ -81,15 +155,12 @@
                         <tr>
                             <td>comerciale</td>
                             <td>
-                                <table border="1">
+                                <table class="table table-bordered table-striped table-condensed">
                                     {% for emplacementcr in cr %}
                                         <tr>
-                                        <td rowspan="{{ emplacementcr|length }}">h
-                                            {% if ((((cr|length - loop.index0)-2)<0)and(((cr|length - loop.index0)-2)>= -1)) %}
-                                                0{{ (cr|length - loop.index0)-1 }}
-                                            {% else %}
-                                                {{ (cr|length - loop.index0)-2 }}
-                                            {% endif %}
+                                        <td rowspan="{{ emplacementcr|length }}">
+                                            <div id="h{% if ((((cr|length - loop.index0)-2)<0)and(((cr|length - loop.index0)-2)>= -1)) %}0{{ (cr|length - loop.index0)-1 }}{% else %}{{ (cr|length - loop.index0)-2 }}{% endif %}">
+                                                h{% if ((((cr|length - loop.index0)-2)<0)and(((cr|length - loop.index0)-2)>= -1)) %}0{{ (cr|length - loop.index0)-1 }}{% else %}{{ (cr|length - loop.index0)-2 }}{% endif %}</div>
                                         </td>
                                         {% for emplacement in emplacementcr %}
                                             <td>
@@ -103,7 +174,6 @@
                                     {% endfor %}
                                 </table>
                             </td>
-                        </tr>
                         </tr>
                     {% endif %}
                     </tbody>

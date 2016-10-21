@@ -1,0 +1,15 @@
+<a title="article: {{ emplacement.stockscorde.article.refStockArticle.refArticle.libArticle }}
+-lot : {{ emplacement.stockscorde.article.numeroSerie }}
+-processus : {% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}{% if difference.m <=5 %}G{{ difference.m }}{% elseif difference.m <=9 %}{% set dif2 = 9- difference.m %}H{{ dif2 }}{% elseif difference.m ==10 %}H00{% else %}H000{% endif %}
+
+-date de MAE :{{ emplacement.dateDeRemplissage|date('Y-m-d') }}"
+   href="">
+    {% set difference2 = date("now").diff(date(emplacement.dateDeRemplissage)) %}
+    {% if difference2.m <=5 %}
+        <font color="blue" class="emplacement">{{ emplacement.place }}</font>
+    {% elseif difference2.m <=8 %}
+        <font color="aqua" class="emplacement">{{ emplacement.place }}</font>
+    {% elseif difference2.m >8 %}
+        <font color="#8a2be2" class="emplacement">{{ emplacement.place }}</font>
+    {% endif %}
+</a>

@@ -24,14 +24,14 @@ class Builder implements ContainerAwareInterface
 
         $menu->addChild('suivit', array('route' => 'ssfmb_homepage'));
         $menu->addChild('preparer lanterne', array('route' => 'ssfmb_preparationlanterne'));
-        $menu->addChild('preparer corde', array('route' => 'ssfmb_preparationcorde'));
         $menu->addChild('MAE lanterne', array('route' => 'ssfmb_misaaeaulanterne'));
-        $menu->addChild('MAE corde', array('route' => 'ssfmb_misaaeaucorde'));
         $menu->addChild('Retrait lanterne', array('route' => 'ssfmb_retraitLanterne'));
-        $menu->addChild('Retrait corde', array('route' => 'ssfmb_retraitcorde'));
+        $menu->addChild('preparer corde', array('route' => 'ssfmb_preparationcorde'));
+        $menu->addChild('MAE corde', array('route' => 'ssfmb_misaaeaucorde'));
+        $menu->addChild('Retrait Transfert', array('route' => 'ssfmb_transfert'));
+        $menu->addChild('Retrait AW', array('route' => 'ssfmb_retraitcorde'));
         $menu->addChild('planing de travaille', array('route' => 'ssfmb_planingdetravaille'));
         $menu->addChild('Processus', array('route' => 'ssfmb_processusgrocissement'));
-        $menu->addChild('Transfert', array('route' => 'ssfmb_transfert'));
         $menu->addChild('Logout', array('route' => 'fos_user_security_logout'));
         $menu->addChild('Zone Administrateur', array('route' => 'sonata_admin_dashboard'));
         return $menu;

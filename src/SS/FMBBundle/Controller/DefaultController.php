@@ -441,7 +441,7 @@ class DefaultController extends Controller
                     foreach ($lntr as $lanterne) {
                         if ($lanterne->getDateDeCreation()) {
                             $diff = date_diff($lanterne->getDateDeCreation(), $date1);
-                            if (($diff->d <= 3) && ($diff->m == 0) && ($diff->y == 0)) {
+                            if (($diff->d == 0) && ($diff->m == 0) && ($diff->y == 0)) {
                                 $lanternefabriquer = array_merge($lanternefabriquer, array($lanterne));
                             } else {
                                 $lanternefabriquerurgent = array_merge($lanternefabriquerurgent, array($lanterne));
@@ -526,8 +526,7 @@ class DefaultController extends Controller
         return $this->render('@SSFMB/Default/planingdetravaille.html.twig', array('laf' => $lanternefabriquer, 'lafu' => $lanternefabriquerurgent, 'caf' => $cordefabriquer, 'cafu' => $cordefabriquerurgent, 'entity' => $parcs, 'pregrossisement' => $pregrossisement, 'grossisement' => $grossisement, 'comerciale' => $comerciale, 'pregrossisementaeffectuer' => $pregrossisementaeffectuer, 'grossisementaeffectuer' => $grossisementaeffectuer, 'comercialeaeffectuer' => $comercialeaeffectuer, 'pregrossisementurgent' => $pregrossisementurgent, 'grossisementurgent' => $grossisementurgent, 'comercialeurgent' => $comercialeurgent));
     }
 
-    public
-    function processgrocissmeentAction(Request $request)
+    public function processgrocissmeentAction(Request $request)
     {
         $date1 = new DateTime("now");
         $pg[0] = array();
@@ -759,6 +758,8 @@ class DefaultController extends Controller
                         $anplace = $em->getRepository('SSFMBBundle:Emplacement')->find($session->get('emplacement')[$cmpt]);
                         $anarticle->setEmplacement(null);
                         $anplace->setStockscorde(null);
+                        $place->setDateDeRemplissage($anplace->getDateDeRemplissage());
+                        $anplace->setDateDeRemplissage(null);
                         $em->flush();
                         $place->setStockscorde($anarticle);
                         $anarticle->setEmplacement($place);
@@ -769,6 +770,8 @@ class DefaultController extends Controller
                         $anplace = $em->getRepository('SSFMBBundle:Emplacement')->find($session->get('emplacement')[$cmpt]);
                         $anplace->setStockslanterne(null);
                         $anarticle->setEmplacement(null);
+                        $place->setDateDeRemplissage($anplace->getDateDeRemplissage());
+                        $anplace->setDateDeRemplissage(null);
                         $em->flush();
                         $place->setStockslanterne($anarticle);
                         $anarticle->setEmplacement($place);
