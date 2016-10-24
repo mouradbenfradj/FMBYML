@@ -20,6 +20,7 @@ class FiliereAdmin extends Admin
     {
         $formMapper->add('parc')
             ->add('nomFiliere', 'text')
+            ->add('aireDeTravaille')
             ->add(
                 'segments',
                 'sonata_type_collection',
@@ -39,12 +40,12 @@ class FiliereAdmin extends Admin
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('id')->add('parc')->add('nomFiliere')->add('segments');
+        $datagridMapper->add('id')->add('parc')->add('nomFiliere')->add('aireDeTravaille')->add('segments');
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('id')->add('parc')->add('nomFiliere')->add('segments');
+        $listMapper->addIdentifier('id')->add('parc')->add('nomFiliere')->add('aireDeTravaille')->add('segments');
 
     }
 }

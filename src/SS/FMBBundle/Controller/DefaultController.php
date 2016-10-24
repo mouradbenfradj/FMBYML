@@ -403,12 +403,15 @@ class DefaultController extends Controller
         $cordefabriquerurgent = array();
         $pregrossisementurgent = array();
         $grossisementurgent = array();
+        $grossisementurgentAW = array();
         $comercialeurgent = array();
         $pregrossisementaeffectuer = array();
         $grossisementaeffectuer = array();
+        $grossisementaeffectuerAW = array();
         $comercialeaeffectuer = array();
         $pregrossisement = array();
         $grossisement = array();
+        $grossisementAW = array();
         $comerciale = array();
 
         $em = $this->getDoctrine()->getManager();
@@ -417,7 +420,7 @@ class DefaultController extends Controller
         } else {
             $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('id'));
             if ($parcs) {
-                $crd = $em->getRepository('SSFMBBundle:StocksCordes')->findBy(array("pret" => false, "emplacement" => null, "corde" => $em->getRepository('SSFMBBundle:Corde')->findOneByParc($parcs)));
+                $crd = $em->getRepository('SSFMBBundle:StocksCordes')->findBy(array("pret" => false, "emplacement" => null, "corde" => $em->getRepository('SSFMBBundle:Corde')->findByParc($parcs)));
                 if ($crd) {
                     $cordefabriquer = array();
                     $cordefabriquerurgent = array();
@@ -432,10 +435,8 @@ class DefaultController extends Controller
                         }
                     }
                 }
-
                 $lntr = $em->getRepository('SSFMBBundle:StocksLanternes')->findBy(array("pret" => false, "emplacement" => null, "lanterne" => $em->getRepository('SSFMBBundle:Lanterne')->findByParc($parcs)));
                 if ($lntr) {
-
                     $lanternefabriquer = array();
                     $lanternefabriquerurgent = array();
                     foreach ($lntr as $lanterne) {
@@ -468,7 +469,7 @@ class DefaultController extends Controller
                                         } else {
                                             $pregrossisement = array_merge($pregrossisement, array($emplacement));
                                         }
-                                    } elseif ($emplacement->getStockscorde()) {
+                                    } elseif ($emplacement->getStockscorde() && !$filiere->getAireDeTravaille()) {
                                         if (($interval->m >= 6) || ($interval->y >= 1)) {
                                             $grossisementurgent = array_merge($grossisementurgent, array($emplacement));
                                         } elseif (($interval->m == 5) && ($interval->d >= 23) && ($interval->m < 6)) {
@@ -476,15 +477,22 @@ class DefaultController extends Controller
                                         } else {
                                             $grossisement = array_merge($grossisement, array($emplacement));
                                         }
+                                    } elseif ($emplacement->getStockscorde() && $filiere->getAireDeTravaille()) {
+                                        if ($interval->m < 7) {
+                                            $grossisementAW = array_merge($grossisementAW, array($emplacement));
+                                        } elseif (($interval->m >= 8) && ($interval->m < 9)) {
+                                            $grossisementaeffectuerAW = array_merge($grossisementaeffectuerAW, array($emplacement));
+                                        } else {
+                                            $grossisementurgentAW = array_merge($grossisementurgentAW, array($emplacement));
+                                        }
                                     }
                                 }
+
                             }
                         }
                     }
                 }
             }
-
-
             $pretacomercialisation = $em->getRepository('SSFMBBundle:StocksCordes')->findBy(array("pret" => true, "corde" => $em->getRepository('SSFMBBundle:Corde')->findOneByParc($parcs)));
             if ($pretacomercialisation) {
                 $p1 = array();
@@ -523,10 +531,11 @@ class DefaultController extends Controller
                 }
             }
         }
-        return $this->render('@SSFMB/Default/planingdetravaille.html.twig', array('laf' => $lanternefabriquer, 'lafu' => $lanternefabriquerurgent, 'caf' => $cordefabriquer, 'cafu' => $cordefabriquerurgent, 'entity' => $parcs, 'pregrossisement' => $pregrossisement, 'grossisement' => $grossisement, 'comerciale' => $comerciale, 'pregrossisementaeffectuer' => $pregrossisementaeffectuer, 'grossisementaeffectuer' => $grossisementaeffectuer, 'comercialeaeffectuer' => $comercialeaeffectuer, 'pregrossisementurgent' => $pregrossisementurgent, 'grossisementurgent' => $grossisementurgent, 'comercialeurgent' => $comercialeurgent));
+        return $this->render('@SSFMB/Default/planingdetravaille.html.twig', array('laf' => $lanternefabriquer, 'lafu' => $lanternefabriquerurgent, 'caf' => $cordefabriquer, 'cafu' => $cordefabriquerurgent, 'entity' => $parcs, 'pregrossisement' => $pregrossisement, 'grossisement' => $grossisement,'grossisementAW' => $grossisementAW, 'comerciale' => $comerciale, 'pregrossisementaeffectuer' => $pregrossisementaeffectuer, 'grossisementaeffectuer' => $grossisementaeffectuer,'grossisementaeffectuerAW' => $grossisementaeffectuerAW, 'comercialeaeffectuer' => $comercialeaeffectuer, 'pregrossisementurgent' => $pregrossisementurgent, 'grossisementurgent' => $grossisementurgent,'grossisementurgentAW' => $grossisementurgentAW, 'comercialeurgent' => $comercialeurgent));
     }
 
-    public function processgrocissmeentAction(Request $request)
+    public
+    function processgrocissmeentAction(Request $request)
     {
         $date1 = new DateTime("now");
         $pg[0] = array();
@@ -624,7 +633,6 @@ class DefaultController extends Controller
                                             default :
                                                 $gr[11] = array_merge($gr[11], array($emplacement));
                                                 break;
-
                                         }
                                     }
                                 }
@@ -633,8 +641,6 @@ class DefaultController extends Controller
                     }
                 }
             }
-
-
             $pretacomercialisation = $em->getRepository('SSFMBBundle:StocksCordes')->findBy(array("pret" => true, "corde" => $em->getRepository('SSFMBBundle:Corde')->findOneByParc($parcs)));
             if ($pretacomercialisation) {
                 $p1 = array();
@@ -692,7 +698,8 @@ class DefaultController extends Controller
         return $this->render('@SSFMB/Default/processusgrocissement.html.twig', array('cr' => $cr, 'pg' => $pg, 'gr' => $gr, 'entity' => $parcs));
     }
 
-    public function transfertAction(Request $request)
+    public
+    function transfertAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -732,7 +739,8 @@ class DefaultController extends Controller
         );
     }
 
-    public function transfertMAEAction(Request $request)
+    public
+    function transfertMAEAction(Request $request)
     {
         $session = new Session();
         //  var_dump($session->get('lanterne'));

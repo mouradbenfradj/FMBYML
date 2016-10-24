@@ -40,6 +40,7 @@ class Corde
      * @ORM\JoinColumn(name="magasin", referencedColumnName="id_magasin",nullable=false)
      */
     private $parc;
+
     /**
      * Constructor
      */
@@ -51,7 +52,7 @@ class Corde
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -74,7 +75,7 @@ class Corde
     /**
      * Get nbrTotaleEnStock
      *
-     * @return integer 
+     * @return integer
      */
     public function getNbrTotaleEnStock()
     {
@@ -107,7 +108,7 @@ class Corde
     /**
      * Get stockscordes
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getStockscordes()
     {
@@ -130,7 +131,7 @@ class Corde
     /**
      * Get parc
      *
-     * @return \SS\FMBBundle\Entity\Magasins 
+     * @return \SS\FMBBundle\Entity\Magasins
      */
     public function getParc()
     {
@@ -153,9 +154,14 @@ class Corde
     /**
      * Get nomCorde
      *
-     * @return string 
+     * @return string
      */
     public function getNomCorde()
+    {
+        return $this->nomCorde;
+    }
+
+    public function __toString()
     {
         return $this->nomCorde;
     }

@@ -21,11 +21,85 @@
                         <tr class="danger">
                             <td>LanternePreparer</td>
                             <td>nombre de tache a effectuer : {{ lafu|length }}
+                                <table border="1">
+                                    <thead>
+                                    <tr>
+                                        <td>lanterne</td>
+                                        <td>article</td>
+                                        <td>lot</td>
+                                        <td>date De Creation</td>
+                                        <td>quantiter par lanterne</td>
+                                        <td>Densiter totale</td>
+                                    </tr>
+                                    </thead>
+                                    {% for emplacement in lafu %}
+                                        <tr>
+                                            <td>{{ emplacement.lanterne.nomLanterne }}</td>
+                                            <td>{{ emplacement.article.refStockArticle.refArticle }}</td>
+                                            <td>{{ emplacement.article.numeroSerie }}</td>
+                                            <td>{{ emplacement.dateDeCreation|date('Y-m-d') }}</td>
+                                            <td> {% set quantiterTotale = 0 %}
+                                                {% for poche in emplacement.poches %}
+                                                    {% set quantiterTotale = quantiterTotale + poche.quantite %}
+                                                {% endfor %}
+                                                {{ quantiterTotale }} u
+                                            </td>
+                                            {% if loop.index == 1 %}
+                                                <td rowspan="{{ lafu|length }}" valign="top">
+                                                    {% set quantiterTotale = 0 %}
+                                                    {% for emplacement2 in lafu %}
+                                                        {% for poche in emplacement2.poches %}
+                                                            {% set quantiterTotale = quantiterTotale + poche.quantite %}
+                                                        {% endfor %}
+                                                    {% endfor %}
+                                                    {{ quantiterTotale }} u
+                                                    <br>
+                                                    {% set quantiterTotale = quantiterTotale/12 %}
+                                                    {{ quantiterTotale }} dz
+                                                </td>
+                                            {% endif %}
+                                        </tr>
+                                    {% endfor %}
+                                </table>
                             </td>
                         </tr>
                         <tr class="danger">
                             <td>corde preparer</td>
                             <td>nombre de tache a effectuer : {{ cafu|length }}
+                                <table border="1">
+                                    <thead>
+                                    <tr>
+                                        <td>corde</td>
+                                        <td>article</td>
+                                        <td>lot</td>
+                                        <td>date De Creation</td>
+                                        <td>quantiter par corde</td>
+                                        <td>Densiter totale</td>
+                                    </tr>
+                                    </thead>
+                                    {% for emplacement in cafu %}
+                                        <tr>
+                                            <td>{{ emplacement.corde.nomCorde }}</td>
+                                            <td>{{ emplacement.article.refStockArticle.refArticle }}</td>
+                                            <td>{{ emplacement.article.numeroSerie }}</td>
+                                            <td>{{ emplacement.dateDeCreation|date('Y-m-d') }}</td>
+                                            <td> {{ emplacement.quantiter }}                                            </td>
+                                            {% if loop.index == 1 %}
+                                                <td rowspan="{{ cafu|length }}" valign="top">
+                                                    {% set quantiterTotale = 0 %}
+                                                    {% for emplacement2 in cafu %}
+                                                        {% set quantiterTotale = quantiterTotale + emplacement2.quantiter %}
+                                                    {% endfor %}
+                                                    {{ quantiterTotale }} u
+                                                    <br>
+                                                    {% set quantiterTotale = quantiterTotale/12 %}
+                                                    {{ quantiterTotale }} dz
+
+                                                </td>
+                                            {% endif %}
+                                        </tr>
+                                    {% endfor %}
+                                </table>
                             </td>
                         </tr>
                         <tr class="danger">
@@ -38,6 +112,9 @@
                                         <td>segment</td>
                                         <td>flotteur</td>
                                         <td>emplacement</td>
+                                        <td>lanterne</td>
+                                        <td>article</td>
+                                        <td>lot</td>
                                         <td>date de mise a eau</td>
                                         <td>doit etre retirer le</td>
                                         <td>Densiter U/Lanterne/</td>
@@ -50,6 +127,9 @@
                                             <td>{{ emplacement.flotteur.segment.nomsegment }}</td>
                                             <td>{{ emplacement.flotteur.nomflotteur }}</td>
                                             <td>{{ emplacement.place }}</td>
+                                            <td>{{ emplacement.stockslanterne.lanterne.nomLanterne }}</td>
+                                            <td>{{ emplacement.stockslanterne.article.refStockArticle.refArticle }}</td>
+                                            <td>{{ emplacement.stockslanterne.article.numeroSerie }}</td>
                                             <td>{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
                                             <td>{{ emplacement.dateDeRemplissage|date_modify("+3 month")|date('Y-m-d') }}</td>
                                             <td>
@@ -57,7 +137,7 @@
                                                 {% for poche in emplacement.stockslanterne.poches %}
                                                     {% set quantiterTotale = quantiterTotale + poche.quantite %}
                                                 {% endfor %}
-                                                {{ quantiterTotale }}
+                                                {{ quantiterTotale }} u
                                             </td>
                                             {% if loop.index == 1 %}
                                                 <td rowspan="{{ pregrossisementurgent|length }}" valign="top">
@@ -67,7 +147,10 @@
                                                             {% set quantiterTotale = quantiterTotale + poche.quantite %}
                                                         {% endfor %}
                                                     {% endfor %}
-                                                    {{ quantiterTotale }}
+                                                    {{ quantiterTotale }} u
+                                                    <br>
+                                                    {% set quantiterTotale = quantiterTotale/12 %}
+                                                    {{ quantiterTotale }} dz
                                                 </td>
                                             {% endif %}
                                         </tr>
@@ -85,6 +168,9 @@
                                         <td>segment</td>
                                         <td>flotteur</td>
                                         <td>emplacement</td>
+                                        <td>corde</td>
+                                        <td>article</td>
+                                        <td>lot</td>
                                         <td>date de mise a eau</td>
                                         <td>doit etre retirer le</td>
                                         <td>Densiter U/Corde/</td>
@@ -97,6 +183,9 @@
                                             <td>{{ emplacement.flotteur.segment.nomsegment }}</td>
                                             <td>{{ emplacement.flotteur.nomflotteur }}</td>
                                             <td>{{ emplacement.place }}</td>
+                                            <td>{{ emplacement.stockscorde.corde.nomCorde }}</td>
+                                            <td>{{ emplacement.stockscorde.article.refStockArticle.refArticle }}</td>
+                                            <td>{{ emplacement.stockscorde.article.numeroSerie }}</td>
                                             <td>{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
                                             <td>{{ emplacement.dateDeRemplissage|date_modify("+6 month")|date('Y-m-d') }}</td>
                                             <td>{{ emplacement.stockscorde.quantiter }}</td>
@@ -106,7 +195,60 @@
                                                     {% for emplacement2 in grossisementurgent %}
                                                         {% set quantiterTotale = quantiterTotale + emplacement2.stockscorde.quantiter %}
                                                     {% endfor %}
-                                                    {{ quantiterTotale }}
+                                                    {{ quantiterTotale }} u
+                                                    <br>
+                                                    {% set quantiterTotale = quantiterTotale/12 %}
+                                                    {{ quantiterTotale }} dz
+
+                                                </td>
+                                            {% endif %}
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            </td>
+                        </tr>
+                        <tr class="danger">
+                            <td>Aire de travaille grossisement </td>
+                            <td>nombre de tache a effectuer : {{ grossisementurgentAW|length }}
+                                <table border="1">
+                                    <thead>
+                                    <tr>
+                                        <td>filiere</td>
+                                        <td>segment</td>
+                                        <td>flotteur</td>
+                                        <td>emplacement</td>
+                                        <td>corde</td>
+                                        <td>article</td>
+                                        <td>lot</td>
+                                        <td>date de mise a eau</td>
+                                        <td>doit etre retirer le</td>
+                                        <td>Densiter U/Corde/</td>
+                                        <td>Densiter totale</td>
+                                    </tr>
+                                    </thead>
+                                    {% for emplacement in grossisementurgentAW %}
+                                        <tr>
+                                            <td>{{ emplacement.flotteur.segment.filiere.nomfiliere }}</td>
+                                            <td>{{ emplacement.flotteur.segment.nomsegment }}</td>
+                                            <td>{{ emplacement.flotteur.nomflotteur }}</td>
+                                            <td>{{ emplacement.place }}</td>
+                                            <td>{{ emplacement.stockscorde.corde.nomCorde }}</td>
+                                            <td>{{ emplacement.stockscorde.article.refStockArticle.refArticle }}</td>
+                                            <td>{{ emplacement.stockscorde.article.numeroSerie }}</td>
+                                            <td>{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
+                                            <td>{{ emplacement.dateDeRemplissage|date_modify("+6 month")|date('Y-m-d') }}</td>
+                                            <td>{{ emplacement.stockscorde.quantiter }}</td>
+                                            {% if loop.index == 1 %}
+                                                <td rowspan="{{ grossisementurgentAW|length }}" valign="top">
+                                                    {% set quantiterTotale = 0 %}
+                                                    {% for emplacement2 in grossisementurgentAW %}
+                                                        {% set quantiterTotale = quantiterTotale + emplacement2.stockscorde.quantiter %}
+                                                    {% endfor %}
+                                                    {{ quantiterTotale }} u
+                                                    <br>
+                                                    {% set quantiterTotale = quantiterTotale/12 %}
+                                                    {{ quantiterTotale }} dz
+
                                                 </td>
                                             {% endif %}
                                         </tr>
@@ -150,11 +292,85 @@
                         <tr class="warning">
                             <td>LanternePreparer</td>
                             <td>nombre de tache a effectuer : {{ laf|length }}
+                                <table border="1">
+                                    <thead>
+                                    <tr>
+                                        <td>lanterne</td>
+                                        <td>article</td>
+                                        <td>lot</td>
+                                        <td>date De Creation</td>
+                                        <td>quantiter par lanterne</td>
+                                        <td>Densiter totale</td>
+                                    </tr>
+                                    </thead>
+                                    {% for emplacement in laf %}
+                                        <tr>
+                                            <td>{{ emplacement.lanterne.nomLanterne }}</td>
+                                            <td>{{ emplacement.article.refStockArticle.refArticle }}</td>
+                                            <td>{{ emplacement.article.numeroSerie }}</td>
+                                            <td>{{ emplacement.dateDeCreation|date('Y-m-d') }}</td>
+                                            <td> {% set quantiterTotale = 0 %}
+                                                {% for poche in emplacement.poches %}
+                                                    {% set quantiterTotale = quantiterTotale + poche.quantite %}
+                                                {% endfor %}
+                                                {{ quantiterTotale }} u
+                                            </td>
+                                            {% if loop.index == 1 %}
+                                                <td rowspan="{{ laf|length }}" valign="top">
+                                                    {% set quantiterTotale = 0 %}
+                                                    {% for emplacement2 in laf %}
+                                                        {% for poche in emplacement2.poches %}
+                                                            {% set quantiterTotale = quantiterTotale + poche.quantite %}
+                                                        {% endfor %}
+                                                    {% endfor %}
+                                                    {{ quantiterTotale }} u
+                                                    <br>
+                                                    {% set quantiterTotale = quantiterTotale/12 %}
+                                                    {{ quantiterTotale }} dz
+                                                </td>
+                                            {% endif %}
+                                        </tr>
+                                    {% endfor %}
+                                </table>
                             </td>
                         </tr>
                         <tr class="warning">
                             <td>corde preparer</td>
                             <td>nombre de tache a effectuer : {{ caf|length }}
+                                <table border="1">
+                                    <thead>
+                                    <tr>
+                                        <td>corde</td>
+                                        <td>article</td>
+                                        <td>lot</td>
+                                        <td>date De Creation</td>
+                                        <td>quantiter par corde</td>
+                                        <td>Densiter totale</td>
+                                    </tr>
+                                    </thead>
+                                    {% for emplacement in caf %}
+                                        <tr>
+                                            <td>{{ emplacement.corde.nomCorde }}</td>
+                                            <td>{{ emplacement.article.refStockArticle.refArticle }}</td>
+                                            <td>{{ emplacement.article.numeroSerie }}</td>
+                                            <td>{{ emplacement.dateDeCreation|date('Y-m-d') }}</td>
+                                            <td> {{ emplacement.quantiter }}                                            </td>
+                                            {% if loop.index == 1 %}
+                                                <td rowspan="{{ caf|length }}" valign="top">
+                                                    {% set quantiterTotale = 0 %}
+                                                    {% for emplacement2 in caf %}
+                                                        {% set quantiterTotale = quantiterTotale + emplacement2.quantiter %}
+                                                    {% endfor %}
+                                                    {{ quantiterTotale }} u
+                                                    <br>
+                                                    {% set quantiterTotale = quantiterTotale/12 %}
+                                                    {{ quantiterTotale }} dz
+
+                                                </td>
+                                            {% endif %}
+                                        </tr>
+                                    {% endfor %}
+                                </table>
                             </td>
                         </tr>
                         <tr class="warning">
@@ -167,6 +383,9 @@
                                         <td>segment</td>
                                         <td>flotteur</td>
                                         <td>emplacement</td>
+                                        <td>lanterne</td>
+                                        <td>article</td>
+                                        <td>lot</td>
                                         <td>date de mise a eau</td>
                                         <td>doit etre retirer le</td>
                                         <td>Densiter U/Lanterne/</td>
@@ -179,6 +398,9 @@
                                             <td>{{ emplacement.flotteur.segment.nomsegment }}</td>
                                             <td>{{ emplacement.flotteur.nomflotteur }}</td>
                                             <td>{{ emplacement.place }}</td>
+                                            <td>{{ emplacement.stockslanterne.lanterne.nomLanterne }}</td>
+                                            <td>{{ emplacement.stockslanterne.article.refStockArticle.refArticle }}</td>
+                                            <td>{{ emplacement.stockslanterne.article.numeroSerie }}</td>
                                             <td>{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
                                             <td>{{ emplacement.dateDeRemplissage|date_modify("+3 month")|date('Y-m-d') }}</td>
                                             <td>
@@ -186,7 +408,7 @@
                                                 {% for poche in emplacement.stockslanterne.poches %}
                                                     {% set quantiterTotale = quantiterTotale + poche.quantite %}
                                                 {% endfor %}
-                                                {{ quantiterTotale }}
+                                                {{ quantiterTotale }} u
                                             </td>
                                             {% if loop.index == 1 %}
                                                 <td rowspan="{{ pregrossisementaeffectuer|length }}" valign="top">
@@ -196,7 +418,10 @@
                                                             {% set quantiterTotale = quantiterTotale + poche.quantite %}
                                                         {% endfor %}
                                                     {% endfor %}
-                                                    {{ quantiterTotale }}
+                                                    {{ quantiterTotale }} u
+                                                    <br>
+                                                    {% set quantiterTotale = quantiterTotale/12 %}
+                                                    {{ quantiterTotale }} dz
                                                 </td>
                                             {% endif %}
                                         </tr>
@@ -214,6 +439,9 @@
                                         <td>segment</td>
                                         <td>flotteur</td>
                                         <td>emplacement</td>
+                                        <td>corde</td>
+                                        <td>article</td>
+                                        <td>lot</td>
                                         <td>date de mise a eau</td>
                                         <td>doit etre retirer le</td>
                                         <td>Densiter U/Corde/</td>
@@ -226,6 +454,9 @@
                                             <td>{{ emplacement.flotteur.segment.nomsegment }}</td>
                                             <td>{{ emplacement.flotteur.nomflotteur }}</td>
                                             <td>{{ emplacement.place }}</td>
+                                            <td>{{ emplacement.stockscorde.corde.nomCorde }}</td>
+                                            <td>{{ emplacement.stockscorde.article.refStockArticle.refArticle }}</td>
+                                            <td>{{ emplacement.stockscorde.article.numeroSerie }}</td>
                                             <td>{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
                                             <td>{{ emplacement.dateDeRemplissage|date_modify("+6 month")|date('Y-m-d') }}</td>
                                             <td>{{ emplacement.stockscorde.quantiter }}</td>
@@ -235,7 +466,58 @@
                                                     {% for emplacement2 in grossisementaeffectuer %}
                                                         {% set quantiterTotale = quantiterTotale + emplacement2.stockscorde.quantiter %}
                                                     {% endfor %}
-                                                    {{ quantiterTotale }}
+                                                    {{ quantiterTotale }} u
+                                                    <br>
+                                                    {% set quantiterTotale = quantiterTotale/12 %}
+                                                    {{ quantiterTotale }} dz
+                                                </td>
+                                            {% endif %}
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            </td>
+                        </tr>
+                        <tr class="warning">
+                            <td>Aire de travaille grossisement</td>
+                            <td>nombre de tache a effectuer : {{ grossisementaeffectuerAW|length }}
+                                <table border="1">
+                                    <thead>
+                                    <tr>
+                                        <td>filiere</td>
+                                        <td>segment</td>
+                                        <td>flotteur</td>
+                                        <td>emplacement</td>
+                                        <td>corde</td>
+                                        <td>article</td>
+                                        <td>lot</td>
+                                        <td>date de mise a eau</td>
+                                        <td>doit etre retirer le</td>
+                                        <td>Densiter U/Corde/</td>
+                                        <td>Densiter totale</td>
+                                    </tr>
+                                    </thead>
+                                    {% for emplacement in grossisementaeffectuerAW %}
+                                        <tr>
+                                            <td>{{ emplacement.flotteur.segment.filiere.nomfiliere }}</td>
+                                            <td>{{ emplacement.flotteur.segment.nomsegment }}</td>
+                                            <td>{{ emplacement.flotteur.nomflotteur }}</td>
+                                            <td>{{ emplacement.place }}</td>
+                                            <td>{{ emplacement.stockscorde.corde.nomCorde }}</td>
+                                            <td>{{ emplacement.stockscorde.article.refStockArticle.refArticle }}</td>
+                                            <td>{{ emplacement.stockscorde.article.numeroSerie }}</td>
+                                            <td>{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
+                                            <td>{{ emplacement.dateDeRemplissage|date_modify("+6 month")|date('Y-m-d') }}</td>
+                                            <td>{{ emplacement.stockscorde.quantiter }}</td>
+                                            {% if loop.index == 1 %}
+                                                <td rowspan="{{ grossisementaeffectuerAW|length }}" valign="top">
+                                                    {% set quantiterTotale = 0 %}
+                                                    {% for emplacement2 in grossisementaeffectuerAW %}
+                                                        {% set quantiterTotale = quantiterTotale + emplacement2.stockscorde.quantiter %}
+                                                    {% endfor %}
+                                                    {{ quantiterTotale }} u
+                                                    <br>
+                                                    {% set quantiterTotale = quantiterTotale/12 %}
+                                                    {{ quantiterTotale }} dz
                                                 </td>
                                             {% endif %}
                                         </tr>
@@ -287,6 +569,9 @@
                                         <td>segment</td>
                                         <td>flotteur</td>
                                         <td>emplacement</td>
+                                        <td>lanterne</td>
+                                        <td>article</td>
+                                        <td>lot</td>
                                         <td>date de mise a eau</td>
                                         <td>doit etre retirer le</td>
                                         <td>Densiter U/Lanterne/</td>
@@ -299,6 +584,9 @@
                                             <td>{{ emplacement.flotteur.segment.nomsegment }}</td>
                                             <td>{{ emplacement.flotteur.nomflotteur }}</td>
                                             <td>{{ emplacement.place }}</td>
+                                            <td>{{ emplacement.stockslanterne.lanterne.nomLanterne }}</td>
+                                            <td>{{ emplacement.stockslanterne.article.refStockArticle.refArticle }}</td>
+                                            <td>{{ emplacement.stockslanterne.article.numeroSerie }}</td>
                                             <td>{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
                                             <td>{{ emplacement.dateDeRemplissage|date_modify("+3 month")|date('Y-m-d') }}</td>
                                             <td>
@@ -306,7 +594,7 @@
                                                 {% for poche in emplacement.stockslanterne.poches %}
                                                     {% set quantiterTotale = quantiterTotale + poche.quantite %}
                                                 {% endfor %}
-                                                {{ quantiterTotale }}
+                                                {{ quantiterTotale }} u
                                             </td>
                                             {% if loop.index == 1 %}
                                                 <td rowspan="{{ pregrossisement|length }}" valign="top">
@@ -316,7 +604,10 @@
                                                             {% set quantiterTotale = quantiterTotale + poche.quantite %}
                                                         {% endfor %}
                                                     {% endfor %}
-                                                    {{ quantiterTotale }}
+                                                    {{ quantiterTotale }} u
+                                                    <br>
+                                                    {% set quantiterTotale = quantiterTotale/12 %}
+                                                    {{ quantiterTotale }} dz
                                                 </td>
                                             {% endif %}
                                         </tr>
@@ -334,6 +625,9 @@
                                         <td>segment</td>
                                         <td>flotteur</td>
                                         <td>emplacement</td>
+                                        <td>corde</td>
+                                        <td>article</td>
+                                        <td>lot</td>
                                         <td>date de mise a eau</td>
                                         <td>doit etre retirer le</td>
                                         <td>Densiter U/Corde/</td>
@@ -346,6 +640,9 @@
                                             <td>{{ emplacement.flotteur.segment.nomsegment }}</td>
                                             <td>{{ emplacement.flotteur.nomflotteur }}</td>
                                             <td>{{ emplacement.place }}</td>
+                                            <td>{{ emplacement.stockscorde.corde.nomCorde }}</td>
+                                            <td>{{ emplacement.stockscorde.article.refStockArticle.refArticle }}</td>
+                                            <td>{{ emplacement.stockscorde.article.numeroSerie }}</td>
                                             <td>{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
                                             <td>{{ emplacement.dateDeRemplissage|date_modify("+6 month")|date('Y-m-d') }}</td>
                                             <td>{{ emplacement.stockscorde.quantiter }}</td>
@@ -355,7 +652,58 @@
                                                     {% for emplacement2 in grossisement %}
                                                         {% set quantiterTotale = quantiterTotale + emplacement2.stockscorde.quantiter %}
                                                     {% endfor %}
-                                                    {{ quantiterTotale }}
+                                                    {{ quantiterTotale }} u
+                                                    <br>
+                                                    {% set quantiterTotale = quantiterTotale/12 %}
+                                                    {{ quantiterTotale }} dz
+                                                </td>
+                                            {% endif %}
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            </td>
+                        </tr>
+                        <tr class="success">
+                            <td>Aire de travaille grossisement</td>
+                            <td>nombre de tache a effectuer : {{ grossisementAW|length }}
+                                <table border="1">
+                                    <thead>
+                                    <tr>
+                                        <td>filiere</td>
+                                        <td>segment</td>
+                                        <td>flotteur</td>
+                                        <td>emplacement</td>
+                                        <td>corde</td>
+                                        <td>article</td>
+                                        <td>lot</td>
+                                        <td>date de mise a eau</td>
+                                        <td>doit etre retirer le</td>
+                                        <td>Densiter U/Corde/</td>
+                                        <td>Densiter totale</td>
+                                    </tr>
+                                    </thead>
+                                    {% for emplacement in grossisementAW %}
+                                        <tr>
+                                            <td>{{ emplacement.flotteur.segment.filiere.nomfiliere }}</td>
+                                            <td>{{ emplacement.flotteur.segment.nomsegment }}</td>
+                                            <td>{{ emplacement.flotteur.nomflotteur }}</td>
+                                            <td>{{ emplacement.place }}</td>
+                                            <td>{{ emplacement.stockscorde.corde.nomCorde }}</td>
+                                            <td>{{ emplacement.stockscorde.article.refStockArticle.refArticle }}</td>
+                                            <td>{{ emplacement.stockscorde.article.numeroSerie }}</td>
+                                            <td>{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
+                                            <td>{{ emplacement.dateDeRemplissage|date_modify("+6 month")|date('Y-m-d') }}</td>
+                                            <td>{{ emplacement.stockscorde.quantiter }}</td>
+                                            {% if loop.index == 1 %}
+                                                <td rowspan="{{ grossisementAW|length }}" valign="top">
+                                                    {% set quantiterTotale = 0 %}
+                                                    {% for emplacement2 in grossisementAW %}
+                                                        {% set quantiterTotale = quantiterTotale + emplacement2.stockscorde.quantiter %}
+                                                    {% endfor %}
+                                                    {{ quantiterTotale }} u
+                                                    <br>
+                                                    {% set quantiterTotale = quantiterTotale/12 %}
+                                                    {{ quantiterTotale }} dz
                                                 </td>
                                             {% endif %}
                                         </tr>

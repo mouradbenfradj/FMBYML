@@ -23,11 +23,11 @@ class StocksCordeAdmin extends Admin
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('id')->add('quantiter')->add('pret')->add('emplacement')->add('numeroSerie')->add('dateDeCreation')->add('dateDeRetirement');
+        $datagridMapper->add('id')->add('corde')->add('quantiter')->add('pret')->add('emplacement')->add('numeroSerie')->add('dateDeCreation')->add('dateDeRetirement');
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('id')->add('quantiter')->add('pret')->add('emplacement')->add('numeroSerie')->add('dateDeCreation')->add('dateDeRetirement');
+        $listMapper->addIdentifier('id')->add('corde')->add('quantiter')->add('pret')->add('emplacement')->add('numeroSerie')->add('dateDeCreation')->add('dateDeRetirement');
     }
 }

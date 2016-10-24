@@ -37,7 +37,12 @@ class Filiere
      * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Segment", mappedBy="filiere" ,cascade={"persist","remove"})
      */
     private $segments;
-
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="aireDeTravaille", type="boolean")
+     */
+    private $aireDeTravaille;
     /**
      * Constructor
      */
@@ -141,4 +146,27 @@ class Filiere
         return $this;
     }
 
+
+    /**
+     * Set aireDeTravaille
+     *
+     * @param boolean $aireDeTravaille
+     * @return Filiere
+     */
+    public function setAireDeTravaille($aireDeTravaille)
+    {
+        $this->aireDeTravaille = $aireDeTravaille;
+
+        return $this;
+    }
+
+    /**
+     * Get aireDeTravaille
+     *
+     * @return boolean 
+     */
+    public function getAireDeTravaille()
+    {
+        return $this->aireDeTravaille;
+    }
 }
