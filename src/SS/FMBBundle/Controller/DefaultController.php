@@ -7,6 +7,7 @@ use SS\FMBBundle\Entity\Articles;
 use SS\FMBBundle\Entity\Corde;
 use SS\FMBBundle\Entity\StocksArticles;
 use SS\FMBBundle\Entity\StocksArticlesSn;
+use SS\FMBBundle\Entity\StocksArticlesSnVirtuel;
 use SS\FMBBundle\Entity\StocksCordes;
 use SS\FMBBundle\Entity\StocksLanternes;
 use SS\FMBBundle\Form\PreparationCordeType;
@@ -351,28 +352,33 @@ class DefaultController extends Controller
                     $sarticle->setQte($scorde->getQuantiter());
                     $sarticle->setIdStock($stock);
                     $em->persist($sarticle);
-                    $sarticlesn = $em->getRepository('SSFMBBundle:StocksArticlesSN')->getSAS($sarticle->getRefStockArticle(), $scorde->getArticle()->getNumeroSerie());
-                    if (!$sarticlesn) {
-                        $sarticlesn = new StocksArticlesSn($scorde->getArticle()->getNumeroSerie(), $scorde->getQuantiter(), $sarticle);
+                    $sarticlesn1 = $em->getRepository('SSFMBBundle:StocksArticlesSn')->getSAS($sarticle->getRefStockArticle(), $scorde->getArticle()->getNumeroSerie());
+                    $sarticlesn = $em->getRepository('SSFMBBundle:StocksArticlesSnVirtuel')->getSAS($sarticle->getRefStockArticle(), $scorde->getArticle()->getNumeroSerie());
+                    if (!$sarticlesn && !$sarticlesn1) {
+                        $sarticlesn1 = new StocksArticlesSn($scorde->getArticle()->getNumeroSerie(), $scorde->getQuantiter(), $sarticle);
+                        $sarticlesn = new StocksArticlesSnVirtuel($scorde->getArticle()->getNumeroSerie(), $scorde->getQuantiter(), $sarticle);
+                        $em->persist($sarticlesn1);
                         $em->persist($sarticlesn);
-                        $scorde->setArticle($sarticlesn);
+                        $scorde->setArticle($sarticlesn1);
                         $em->flush();
                     }
                 } else {
                     $sarticle->setQte($sarticle->getQte() + $scorde->getQuantiter());
-                    $sarticlesn = $em->getRepository('SSFMBBundle:StocksArticlesSN')->getSAS($sarticle->getRefStockArticle(), $scorde->getArticle()->getNumeroSerie());
-                    if (!$sarticlesn) {
-                        $sarticlesn = new StocksArticlesSn($scorde->getArticle()->getNumeroSerie(), $scorde->getQuantiter(), $sarticle);
-                        $scorde->setArticle($sarticlesn);
+                    $sarticlesn1 = $em->getRepository('SSFMBBundle:StocksArticlesSn')->getSAS($sarticle->getRefStockArticle(), $scorde->getArticle()->getNumeroSerie());
+                    $sarticlesn = $em->getRepository('SSFMBBundle:StocksArticlesSnVirtuel')->getSAS($sarticle->getRefStockArticle(), $scorde->getArticle()->getNumeroSerie());
+                    if (!$sarticlesn && !$sarticlesn1) {
+                        $sarticlesn1 = new StocksArticlesSn($scorde->getArticle()->getNumeroSerie(), $scorde->getQuantiter(), $sarticle);
+                        $sarticlesn = new StocksArticlesSnVirtuel($scorde->getArticle()->getNumeroSerie(), $scorde->getQuantiter(), $sarticle);
+                        $scorde->setArticle($sarticlesn1);
+                        $em->persist($sarticlesn1);
                         $em->persist($sarticlesn);
                         $em->flush();
                     } else {
+                        $sarticlesn1->setSnQte($sarticlesn->getSnQte() + $scorde->getQuantiter());
                         $sarticlesn->setSnQte($sarticlesn->getSnQte() + $scorde->getQuantiter());
-                        $scorde->setArticle($sarticlesn);
+                        $scorde->setArticle($sarticlesn1);
                     }
-
                 }
-
                 $scorde->setPret(true);
                 $scorde->setDateDeRetirement(new \DateTime($request->request->get('dateRetraitCorde')));
                 $scorde->getCorde()->setNbrTotaleEnStock($scorde->getCorde()->getNbrTotaleEnStock() + 1);
@@ -380,12 +386,9 @@ class DefaultController extends Controller
                 $place->setStockscorde(null);
                 $place->setDateDeRemplissage(null);
             }
-
             $em->flush();
             return $this->redirectToRoute('ssfmb_retraitcorde');
-
         }
-
         return $this->render('@SSFMB/Default/retraitCorde.html.twig',
             array(
                 'entity' => $parcs,
@@ -480,7 +483,7 @@ class DefaultController extends Controller
                                     } elseif ($emplacement->getStockscorde() && $filiere->getAireDeTravaille()) {
                                         if ($interval->m < 7) {
                                             $grossisementAW = array_merge($grossisementAW, array($emplacement));
-                                        } elseif (($interval->m >= 8) && ($interval->m < 9)) {
+                                        } elseif (($interval->m >= 7) && ($interval->m < 8)) {
                                             $grossisementaeffectuerAW = array_merge($grossisementaeffectuerAW, array($emplacement));
                                         } else {
                                             $grossisementurgentAW = array_merge($grossisementurgentAW, array($emplacement));
@@ -531,11 +534,10 @@ class DefaultController extends Controller
                 }
             }
         }
-        return $this->render('@SSFMB/Default/planingdetravaille.html.twig', array('laf' => $lanternefabriquer, 'lafu' => $lanternefabriquerurgent, 'caf' => $cordefabriquer, 'cafu' => $cordefabriquerurgent, 'entity' => $parcs, 'pregrossisement' => $pregrossisement, 'grossisement' => $grossisement,'grossisementAW' => $grossisementAW, 'comerciale' => $comerciale, 'pregrossisementaeffectuer' => $pregrossisementaeffectuer, 'grossisementaeffectuer' => $grossisementaeffectuer,'grossisementaeffectuerAW' => $grossisementaeffectuerAW, 'comercialeaeffectuer' => $comercialeaeffectuer, 'pregrossisementurgent' => $pregrossisementurgent, 'grossisementurgent' => $grossisementurgent,'grossisementurgentAW' => $grossisementurgentAW, 'comercialeurgent' => $comercialeurgent));
+        return $this->render('@SSFMB/Default/planingdetravaille.html.twig', array('laf' => $lanternefabriquer, 'lafu' => $lanternefabriquerurgent, 'caf' => $cordefabriquer, 'cafu' => $cordefabriquerurgent, 'entity' => $parcs, 'pregrossisement' => $pregrossisement, 'grossisement' => $grossisement, 'grossisementAW' => $grossisementAW, 'comerciale' => $comerciale, 'pregrossisementaeffectuer' => $pregrossisementaeffectuer, 'grossisementaeffectuer' => $grossisementaeffectuer, 'grossisementaeffectuerAW' => $grossisementaeffectuerAW, 'comercialeaeffectuer' => $comercialeaeffectuer, 'pregrossisementurgent' => $pregrossisementurgent, 'grossisementurgent' => $grossisementurgent, 'grossisementurgentAW' => $grossisementurgentAW, 'comercialeurgent' => $comercialeurgent));
     }
 
-    public
-    function processgrocissmeentAction(Request $request)
+    public function processgrocissmeentAction(Request $request)
     {
         $date1 = new DateTime("now");
         $pg[0] = array();
@@ -698,8 +700,7 @@ class DefaultController extends Controller
         return $this->render('@SSFMB/Default/processusgrocissement.html.twig', array('cr' => $cr, 'pg' => $pg, 'gr' => $gr, 'entity' => $parcs));
     }
 
-    public
-    function transfertAction(Request $request)
+    public function transfertAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -720,6 +721,8 @@ class DefaultController extends Controller
             $session->set('corde', array());
             foreach ($request->request->get('place') as $emplacement) {
                 $place = $em->getRepository('SSFMBBundle:Emplacement')->find($emplacement);
+
+                $session->set('dateTransfertRetrait', new \DateTime($request->request->get('dateRetrait')));
                 $session->set('emplacement', array_merge($session->get('emplacement'), array($place)));
                 if ($place->getStockscorde() != null) {
                     $session->set('corde', array_merge($session->get('corde'), array($place->getStockscorde())));
@@ -739,8 +742,7 @@ class DefaultController extends Controller
         );
     }
 
-    public
-    function transfertMAEAction(Request $request)
+    public function transfertMAEAction(Request $request)
     {
         $session = new Session();
         //  var_dump($session->get('lanterne'));
@@ -771,6 +773,8 @@ class DefaultController extends Controller
                         $em->flush();
                         $place->setStockscorde($anarticle);
                         $anarticle->setEmplacement($place);
+                        $anarticle->setDateDeRetraitTransfert($session->get('dateTransfertRetrait'));
+                        $anarticle->setDateDeMAETransfert(new \DateTime($request->request->get('dateRemise')));
                         $cmpt++;
 
                     } else if (($session->get('emplacement')[$cmpt]->getStockslanterne() != null) && ($cmpt < count($session->get('emplacement')))) {

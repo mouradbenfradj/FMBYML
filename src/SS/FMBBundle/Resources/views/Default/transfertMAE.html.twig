@@ -106,6 +106,9 @@
                                     <p>
                                         {% include "SSFMBBundle:Include:couleurCleInclude.html.twig" %}
                                     </p>
+                                    <p>date de remise en eau</p>
+                                    {% set now =  "now"|date("Y-m-d") %}
+                                    <p><input type="date" name="dateRemise" value="{{ now }}"></p>
                                     <p>
                                     <div><a href="#menuprincipale">menu</a></div>
                                     <div>Listez des filieres</div>

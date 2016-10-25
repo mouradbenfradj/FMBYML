@@ -2,6 +2,7 @@
 
 namespace SS\FMBBundle\Tests\Controller;
 
+use SS\FMBBundle\Controller\DefaultController;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class DefaultControllerTest extends WebTestCase
@@ -12,7 +13,8 @@ class DefaultControllerTest extends WebTestCase
 
         $crawler = $client->request('GET', '/');
 
-        $this->assertTrue($crawler->filter('html:contains("entities")')->count() > 0);
+        $crawler = $client->followRedirects();
+
     }
     /*
         public function testCompleteScenario()

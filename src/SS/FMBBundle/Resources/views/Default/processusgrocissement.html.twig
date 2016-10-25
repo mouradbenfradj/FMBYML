@@ -85,10 +85,10 @@
                                                                 {% set quantiterTotale = quantiterTotale + poche.quantite %}
                                                             {% endfor %}
                                                         {% endfor %}
-                                                        {{ quantiterTotale }}U
+                                                        {{ quantiterTotale }} u
                                                         <br>
                                                         {% set quantiterTotale = quantiterTotale/12 %}
-                                                        {{ quantiterTotale }}DZ
+                                                        {{ quantiterTotale }} dz
                                                     </td>
                                                 {% endif %}
 
@@ -146,10 +146,10 @@
                                                     {% for emplacement2 in emplacementgr %}
                                                         {% set quantiterTotale = quantiterTotale + emplacement2.stockscorde.quantiter %}
                                                     {% endfor %}
-                                                    {{ quantiterTotale }}U
+                                                    {{ quantiterTotale }} u
                                                     <br>
                                                     {% set quantiterTotale = quantiterTotale/12 %}
-                                                    {{ quantiterTotale }}DZ
+                                                    {{ quantiterTotale }} dz
                                                 </td>
                                             {% endif %}
                                             </tr>
