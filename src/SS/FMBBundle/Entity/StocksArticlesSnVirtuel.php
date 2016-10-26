@@ -21,6 +21,24 @@ class StocksArticlesSnVirtuel
     /**
      * @var float
      *
+     * @ORM\Column(name="sn_qte_traiter", type="float", precision=10, scale=0, nullable=true)
+     */
+    private $snQteTraiterValide = 0;
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="sn_qte_mise_en_vente", type="float", precision=10, scale=0, nullable=true)
+     */
+    private $snQteMiseEnVente = 0;
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="sn_qte_a_remettre_en_poche", type="float", precision=10, scale=0, nullable=true)
+     */
+    private $snQteARemettreEnPoche = 0;
+    /**
+     * @var float
+     *
      * @ORM\Column(name="sn_qte_morte", type="float", precision=10, scale=0, nullable=true)
      */
     private $snQteMorte = 0;
@@ -66,7 +84,15 @@ class StocksArticlesSnVirtuel
         return $this->numeroSerie;
     }
 
-
+    /**
+     * Get snQte
+     *
+     * @return float
+     */
+    public function getSnQte()
+    {
+        return $this->snQte;
+    }
 
     /**
      * Set snQte
@@ -82,13 +108,13 @@ class StocksArticlesSnVirtuel
     }
 
     /**
-     * Get snQte
+     * Get snQteMorte
      *
-     * @return float 
+     * @return float
      */
-    public function getSnQte()
+    public function getSnQteMorte()
     {
-        return $this->snQte;
+        return $this->snQteMorte;
     }
 
     /**
@@ -105,13 +131,13 @@ class StocksArticlesSnVirtuel
     }
 
     /**
-     * Get snQteMorte
+     * Get snQtePerdu
      *
-     * @return float 
+     * @return float
      */
-    public function getSnQteMorte()
+    public function getSnQtePerdu()
     {
-        return $this->snQteMorte;
+        return $this->snQtePerdu;
     }
 
     /**
@@ -128,13 +154,13 @@ class StocksArticlesSnVirtuel
     }
 
     /**
-     * Get snQtePerdu
+     * Get numeroSerie
      *
-     * @return float 
+     * @return string
      */
-    public function getSnQtePerdu()
+    public function getNumeroSerie()
     {
-        return $this->snQtePerdu;
+        return $this->numeroSerie;
     }
 
     /**
@@ -151,13 +177,13 @@ class StocksArticlesSnVirtuel
     }
 
     /**
-     * Get numeroSerie
+     * Get refStockArticle
      *
-     * @return string 
+     * @return \SS\FMBBundle\Entity\StocksArticles
      */
-    public function getNumeroSerie()
+    public function getRefStockArticle()
     {
-        return $this->numeroSerie;
+        return $this->refStockArticle;
     }
 
     /**
@@ -174,12 +200,71 @@ class StocksArticlesSnVirtuel
     }
 
     /**
-     * Get refStockArticle
+     * Get snQteTraiterValide
      *
-     * @return \SS\FMBBundle\Entity\StocksArticles 
+     * @return float
      */
-    public function getRefStockArticle()
+    public function getSnQteTraiterValide()
     {
-        return $this->refStockArticle;
+        return $this->snQteTraiterValide;
+    }
+
+    /**
+     * Set snQteTraiterValide
+     *
+     * @param float $snQteTraiterValide
+     * @return StocksArticlesSnVirtuel
+     */
+    public function setSnQteTraiterValide($snQteTraiterValide)
+    {
+        $this->snQteTraiterValide = $snQteTraiterValide;
+
+        return $this;
+    }
+
+    /**
+     * Get snQteMiseEnVente
+     *
+     * @return float
+     */
+    public function getSnQteMiseEnVente()
+    {
+        return $this->snQteMiseEnVente;
+    }
+
+    /**
+     * Set snQteMiseEnVente
+     *
+     * @param float $snQteMiseEnVente
+     * @return StocksArticlesSnVirtuel
+     */
+    public function setSnQteMiseEnVente($snQteMiseEnVente)
+    {
+        $this->snQteMiseEnVente = $snQteMiseEnVente;
+
+        return $this;
+    }
+
+    /**
+     * Get snQteARemettreEnPoche
+     *
+     * @return float
+     */
+    public function getSnQteARemettreEnPoche()
+    {
+        return $this->snQteARemettreEnPoche;
+    }
+
+    /**
+     * Set snQteARemettreEnPoche
+     *
+     * @param float $snQteARemettreEnPoche
+     * @return StocksArticlesSnVirtuel
+     */
+    public function setSnQteARemettreEnPoche($snQteARemettreEnPoche)
+    {
+        $this->snQteARemettreEnPoche = $snQteARemettreEnPoche;
+
+        return $this;
     }
 }

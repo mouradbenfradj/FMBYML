@@ -262,8 +262,6 @@ class DefaultController extends Controller
     public function miseAEauCordeAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $defaultmetier = new DefaultImpl($em);
-
         if ($request->get('id') == null) {
             $parcs = null;
             $stock = null;
@@ -355,7 +353,7 @@ class DefaultController extends Controller
                     $sarticlesn1 = $em->getRepository('SSFMBBundle:StocksArticlesSn')->getSAS($sarticle->getRefStockArticle(), $scorde->getArticle()->getNumeroSerie());
                     $sarticlesn = $em->getRepository('SSFMBBundle:StocksArticlesSnVirtuel')->getSAS($sarticle->getRefStockArticle(), $scorde->getArticle()->getNumeroSerie());
                     if (!$sarticlesn && !$sarticlesn1) {
-                        $sarticlesn1 = new StocksArticlesSn($scorde->getArticle()->getNumeroSerie(), $scorde->getQuantiter(), $sarticle);
+                        $sarticlesn1 = new StocksArticlesSn($scorde->getArticle()->getNumeroSerie(), 0, $sarticle);
                         $sarticlesn = new StocksArticlesSnVirtuel($scorde->getArticle()->getNumeroSerie(), $scorde->getQuantiter(), $sarticle);
                         $em->persist($sarticlesn1);
                         $em->persist($sarticlesn);
@@ -367,14 +365,14 @@ class DefaultController extends Controller
                     $sarticlesn1 = $em->getRepository('SSFMBBundle:StocksArticlesSn')->getSAS($sarticle->getRefStockArticle(), $scorde->getArticle()->getNumeroSerie());
                     $sarticlesn = $em->getRepository('SSFMBBundle:StocksArticlesSnVirtuel')->getSAS($sarticle->getRefStockArticle(), $scorde->getArticle()->getNumeroSerie());
                     if (!$sarticlesn && !$sarticlesn1) {
-                        $sarticlesn1 = new StocksArticlesSn($scorde->getArticle()->getNumeroSerie(), $scorde->getQuantiter(), $sarticle);
+                        $sarticlesn1 = new StocksArticlesSn($scorde->getArticle()->getNumeroSerie(), 0, $sarticle);
                         $sarticlesn = new StocksArticlesSnVirtuel($scorde->getArticle()->getNumeroSerie(), $scorde->getQuantiter(), $sarticle);
                         $scorde->setArticle($sarticlesn1);
                         $em->persist($sarticlesn1);
                         $em->persist($sarticlesn);
                         $em->flush();
                     } else {
-                        $sarticlesn1->setSnQte($sarticlesn->getSnQte() + $scorde->getQuantiter());
+                        $sarticlesn1->setSnQte($sarticlesn1->getSnQte() + 0);
                         $sarticlesn->setSnQte($sarticlesn->getSnQte() + $scorde->getQuantiter());
                         $scorde->setArticle($sarticlesn1);
                     }
@@ -393,6 +391,79 @@ class DefaultController extends Controller
             array(
                 'entity' => $parcs,
                 'articles' => $articles,
+            )
+        );
+    }
+
+    public function quantiterEnStocksSnActuelAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $stocksArticlesSn = $em->getRepository('SSFMBBundle:StocksArticlesSn')->getSAS($request->get('stocks'), $request->get('lot'));
+        return $this->render('SSFMBBundle:Render:quantiterEnStocksArticlesSnRender.html.twig', array(
+            'stocksArticlesSn' => $stocksArticlesSn->getSnQte()));
+    }
+
+    public function traitementAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        if ($request->get('id') == null) {
+            $parcs = null;
+            $stocksnvirtuel = null;
+            $articles = null;
+        } else {
+            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('id'));
+            $stocksnvirtuel = $em->getRepository('SSFMBBundle:StocksArticlesSnVirtuel')->findByRefStockArticle($em->getRepository('SSFMBBundle:StocksArticles')->findByIdStock($parcs->getIdStock()));
+            $articles = $em->getRepository('SSFMBBundle:StocksArticles')->findByIdStock($parcs->getIdStock());
+        }
+        if ($request->isMethod('POST')) {
+            $i = 0;
+            $stocksnvirtuelt = "";
+            $stocksArticlesSnt = "";
+            foreach ($request->get('tab') as $item) {
+                switch ($i) {
+                    case 0:
+                        $stocks = $item;
+                        $i++;
+                        break;
+                    case 1:
+                        $stocksnvirtuelt = $em->getRepository('SSFMBBundle:StocksArticlesSnVirtuel')->getSAS($stocks, $item);
+                        $stocksArticlesSnt = $em->getRepository('SSFMBBundle:StocksArticlesSn')->getSAS($stocks, $item);
+                        $i++;
+                        break;
+                    case 2:
+                        $stocksnvirtuelt->setSnQteTraiterValide($stocksnvirtuelt->getSnQteTraiterValide() + $item);
+                        $i++;
+                        break;
+                    case 3:
+                        $stocksnvirtuelt->setSnQteMiseEnVente($stocksnvirtuelt->getSnQteMiseEnVente() + $item);
+                        $stocksArticlesSnt->setSnQte($stocksArticlesSnt->getSnQte() + $item);
+                        $i++;
+                        break;
+                    case 4:
+                        $stocksnvirtuelt->setSnQteARemettreEnPoche($stocksnvirtuelt->getSnQteARemettreEnPoche() + $item);
+                        $i++;
+                        break;
+                    case 5:
+                        $stocksnvirtuelt->setSnQteMorte($stocksnvirtuelt->getSnQteMorte() + $item);
+                        $i++;
+                        break;
+                    case 6:
+                        $stocksnvirtuelt->setSnQtePerdu($stocksnvirtuelt->getSnQtePerdu() + $item);
+                        $i = 0;
+                        $em->flush();
+                        break;
+                }
+                //  $stocksnvirtuel->setsnQteMorte($item);
+            }
+            return $this->redirectToRoute('traitementcomerciale');
+
+
+        }
+        return $this->render('@SSFMB/Default/traitementcomerciale.html.twig',
+            array(
+                'entity' => $parcs,
+                'articles' => $articles,
+                'stocksnvirtuel' => $stocksnvirtuel
             )
         );
     }

@@ -34,3 +34,6 @@ ssfmb_transfert:
 ssfmb_misaaeautransfert:
     path:     /misaaeautransfert
     defaults: { _controller: SSFMBBundle:Default:transfertMAE }
+traitementcomerciale:
+    path:     /traitementComerciale
+    defaults: { _controller: SSFMBBundle:Default:traitement}
