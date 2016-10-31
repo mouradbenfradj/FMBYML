@@ -1,3 +1,19 @@
+ssfmb_emplacement:
+    resource: "@SSFMBBundle/Resources/config/routing/emplacement.yml"
+    prefix:   /emplacement
+
+ssfmb_flotteur:
+    resource: "@SSFMBBundle/Resources/config/routing/flotteur.yml"
+    prefix:   /flotteur
+
+ssfmb_segment:
+    resource: "@SSFMBBundle/Resources/config/routing/segment.yml"
+    prefix:   /segment
+
+ssfmb_filiere:
+    resource: "@SSFMBBundle/Resources/config/routing/filiere.yml"
+    prefix:   /filiere
+
 ssfmb_magasins:
     resource: "@SSFMBBundle/Resources/config/routing/magasins.yml"
     prefix:   /magasins

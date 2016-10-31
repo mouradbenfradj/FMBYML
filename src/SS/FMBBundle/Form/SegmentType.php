@@ -16,7 +16,8 @@ class SegmentType extends AbstractType
     {
         $builder
             ->add('nomSegment')
-            ->add('longeur');
+            ->add('longeur')
+            ->add('filiere');
     }
 
     /**
@@ -24,11 +25,9 @@ class SegmentType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(
-            array(
-                'data_class' => 'SS\FMBBundle\Entity\Segment',
-            )
-        );
+        $resolver->setDefaults(array(
+            'data_class' => 'SS\FMBBundle\Entity\Segment'
+        ));
     }
 
     /**

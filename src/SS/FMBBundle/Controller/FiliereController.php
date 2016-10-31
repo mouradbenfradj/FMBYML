@@ -2,10 +2,10 @@
 
 namespace SS\FMBBundle\Controller;
 
-use SS\FMBBundle\Entity\Parc;
+use SS\FMBBundle\Entity\Magasins;
 use Symfony\Component\HttpFoundation\Request;
-//use Sonata\AdminBundle\Controller\CRUDController as Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
 use SS\FMBBundle\Entity\Filiere;
 use SS\FMBBundle\Form\FiliereType;
 
@@ -26,14 +26,10 @@ class FiliereController extends Controller
 
         $entities = $em->getRepository('SSFMBBundle:Filiere')->findAll();
 
-        return $this->render(
-            'SSFMBBundle:Filiere:index.html.twig',
-            array(
-                'entities' => $entities,
-            )
-        );
+        return $this->render('SSFMBBundle:Filiere:index.html.twig', array(
+            'entities' => $entities,
+        ));
     }
-
     /**
      * Creates a new Filiere entity.
      *
@@ -47,22 +43,15 @@ class FiliereController extends Controller
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
-            foreach ($entity->getSegments() as $segment) {
-                $segment->setFiliere($entity);
-                $em->persist($entity);
-            }
             $em->flush();
 
             return $this->redirect($this->generateUrl('filiere_show', array('id' => $entity->getId())));
         }
 
-        return $this->render(
-            'SSFMBBundle:Filiere:new.html.twig',
-            array(
-                'entity' => $entity,
-                'form' => $form->createView(),
-            )
-        );
+        return $this->render('SSFMBBundle:Filiere:new.html.twig', array(
+            'entity' => $entity,
+            'form' => $form->createView(),
+        ));
     }
 
     /**
@@ -74,14 +63,10 @@ class FiliereController extends Controller
      */
     private function createCreateForm(Filiere $entity)
     {
-        $form = $this->createForm(
-            new FiliereType(),
-            $entity,
-            array(
-                'action' => $this->generateUrl('filiere_create'),
-                'method' => 'POST',
-            )
-        );
+        $form = $this->createForm(new FiliereType(), $entity, array(
+            'action' => $this->generateUrl('filiere_create'),
+            'method' => 'POST',
+        ));
 
         $form->add('submit', 'submit', array('label' => 'Create'));
 
@@ -97,28 +82,10 @@ class FiliereController extends Controller
         $entity = new Filiere();
         $form = $this->createCreateForm($entity);
 
-        return $this->render(
-            'SSFMBBundle:Filiere:new.html.twig',
-            array(
-                'entity' => $entity,
-                'form' => $form->createView(),
-            )
-        );
-    }
-
-    public function newdpAction(Parc $parc)
-    {
-        $entity = new Filiere();
-        $entity->setParc($parc);
-        $form = $this->createCreateForm($entity);
-
-        return $this->render(
-            'SSFMBBundle:Filiere:newdp.html.twig',
-            array(
-                'entity' => $entity,
-                'form' => $form->createView(),
-            )
-        );
+        return $this->render('SSFMBBundle:Filiere:new.html.twig', array(
+            'entity' => $entity,
+            'form' => $form->createView(),
+        ));
     }
 
     /**
@@ -137,13 +104,10 @@ class FiliereController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render(
-            'SSFMBBundle:Filiere:show.html.twig',
-            array(
-                'entity' => $entity,
-                'delete_form' => $deleteForm->createView(),
-            )
-        );
+        return $this->render('SSFMBBundle:Filiere:show.html.twig', array(
+            'entity' => $entity,
+            'delete_form' => $deleteForm->createView(),
+        ));
     }
 
     /**
@@ -179,14 +143,11 @@ class FiliereController extends Controller
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render(
-            'SSFMBBundle:Filiere:edit.html.twig',
-            array(
-                'entity' => $entity,
-                'edit_form' => $editForm->createView(),
-                'delete_form' => $deleteForm->createView(),
-            )
-        );
+        return $this->render('SSFMBBundle:Filiere:edit.html.twig', array(
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        ));
     }
 
     /**
@@ -198,14 +159,10 @@ class FiliereController extends Controller
      */
     private function createEditForm(Filiere $entity)
     {
-        $form = $this->createForm(
-            new FiliereType(),
-            $entity,
-            array(
-                'action' => $this->generateUrl('filiere_update', array('id' => $entity->getId())),
-                'method' => 'PUT',
-            )
-        );
+        $form = $this->createForm(new FiliereType(), $entity, array(
+            'action' => $this->generateUrl('filiere_update', array('id' => $entity->getId())),
+            'method' => 'PUT',
+        ));
 
         $form->add('submit', 'submit', array('label' => 'Update'));
 
@@ -236,14 +193,11 @@ class FiliereController extends Controller
             return $this->redirect($this->generateUrl('filiere_edit', array('id' => $id)));
         }
 
-        return $this->render(
-            'SSFMBBundle:Filiere:edit.html.twig',
-            array(
-                'entity' => $entity,
-                'edit_form' => $editForm->createView(),
-                'delete_form' => $deleteForm->createView(),
-            )
-        );
+        return $this->render('SSFMBBundle:Filiere:edit.html.twig', array(
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        ));
     }
 
     /**
@@ -268,5 +222,14 @@ class FiliereController extends Controller
         }
 
         return $this->redirect($this->generateUrl('filiere'));
+    }
+
+    public function findByParcAction(Magasins $parc)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $filieres = $em->getRepository('SSFMBBundle:Filiere')->findByParc($parc);
+        return $this->render('@SSFMB/Filiere/Render/listFiliereIndexRender.html.twig', array(
+            'filieres' => $filieres));
+
     }
 }

@@ -1,12 +1,13 @@
 {% extends "SSFMBBundle::layout.html.twig" %}
 {% block title %}
-    Suivit - {{ parent() }}
+    Processus - {{ parent() }}
 {% endblock %}
 {% block body %}
     {{ parent() }}
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
+                <p>Processus de grocissement</p>
                 <ul class="pagination pagination-lg">
                     {{ knp_menu_render('SSFMBBundle:Builder:parcProcessusMenu') }}
                 </ul>
@@ -18,10 +19,10 @@
                                 <div data-spy="affix" id="menuform">
                                     <ul>
                                         <li><a href="#pg0">pg0</a></li>
-                                        <li><a href="#pg0">pg1</a></li>
-                                        <li><a href="#pg0">pg2</a></li>
-                                        <li><a href="#pg0">pg3</a></li>
-                                        <li><a href="#pg0">pg4</a></li>
+                                        <li><a href="#pg1">pg1</a></li>
+                                        <li><a href="#pg2">pg2</a></li>
+                                        <li><a href="#pg3">pg3</a></li>
+                                        <li><a href="#pg4">pg4</a></li>
                                         <li><a href="#g0">g0</a></li>
                                         <li><a href="#g1">g1</a></li>
                                         <li><a href="#g2">g2</a></li>
@@ -69,7 +70,7 @@
                                                 <td>{{ emplacement.flotteur.nomflotteur }}</td>
                                                 <td>{{ emplacement.place }}</td>
                                                 <td>{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
-                                                <td>{{ emplacement.dateDeRemplissage|date_modify("+6 month")|date('Y-m-d') }}</td>
+                                                <td>{{ emplacement.dateDeRemplissage|date_modify("+3 month")|date('Y-m-d') }}</td>
                                                 <td>
                                                     {% set quantiterTotale = 0 %}
                                                     {% for poche in emplacement.stockslanterne.poches %}

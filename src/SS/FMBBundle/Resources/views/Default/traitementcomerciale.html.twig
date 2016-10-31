@@ -1,7 +1,7 @@
 {% extends "SSFMBBundle::layout.html.twig" %}
 
 {% block title %}
-    Suivit - {{ parent() }}
+    Traitement Comerciale - {{ parent() }}
 {% endblock %}
 {% block body %}
     <div class="container-fluid" xmlns="http://www.w3.org/1999/html">
@@ -9,6 +9,7 @@
 
         <div class="row">
             <div class="col-md-12">
+                <p>Traitement Comerciale</p>
                 <form action="" method="post">
                     <ul class="pagination pagination-lg">
                         {{ knp_menu_render('SSFMBBundle:Builder:parcTComMenu') }}
@@ -43,18 +44,25 @@
                                         <tr>
                                             <td>{{ stock.refStockArticle.refArticle.libArticle }}</td>
                                             <td>{{ stock.numeroSerie }}</td>
-                                            <td>{{ stock.snQte }}</td>
-                                            <td>{{ stock.snQteTraiterValide }}</td>
-                                            <td>{{ stock.snQteMiseEnVente }}</td>
-                                            <td>{{ stock.snQteARemettreEnPoche }}</td>
+                                            <td>{{ stock.snQte }} u<br>{{ stock.snQte/12 }} dz</td>
+                                            <td>{{ stock.snQteTraiterValide }} u<br>{{ stock.snQteTraiterValide/12 }} dz
+                                            </td>
+                                            <td>{{ stock.snQteMiseEnVente }} u<br>{{ stock.snQteMiseEnVente/12 }} dz
+                                            </td>
+                                            <td>{{ stock.snQteARemettreEnPoche }}
+                                                u<br>{{ stock.snQteARemettreEnPoche/12 }} dz
+                                            </td>
                                             <td>
                                                 {{ render(controller('SSFMBBundle:Default:quantiterEnStocksSnActuel', {
                                                     'stocks':stock.refStockArticle , 'lot': stock.numeroSerie
                                                 } ) ) }}
                                             </td>
-                                            <td>{{ stock.snQteMorte }}</td>
-                                            <td>{{ stock.snQtePerdu }}</td>
-                                            <td>{{ stock.snQte -stock.snQteTraiterValide-stock.snQteARemettreEnPoche-stock.snQteMorte- stock.snQtePerdu }}</td>
+                                            <td>{{ stock.snQteMorte }} u<br>{{ stock.snQteMorte/12 }} dz</td>
+                                            <td>{{ stock.snQtePerdu }} u<br>{{ stock.snQtePerdu/12 }} dz</td>
+                                            <td>{{ stock.snQte -stock.snQteTraiterValide-stock.snQteARemettreEnPoche-stock.snQteMorte- stock.snQtePerdu }}
+                                                u<br>{{ (stock.snQte -stock.snQteTraiterValide-stock.snQteARemettreEnPoche-stock.snQteMorte- stock.snQtePerdu) /12 }}
+                                                dz
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td colspan="3">
@@ -64,12 +72,12 @@
                                                 mettre juste les nouvelle valeur/ s'il n'y as pas de changement laisser
                                                 le contenu des champs a 0
                                             </td>
-                                            <td><input type="number" name="tab[]" value="0"></td>
-                                            <td><input type="number" name="tab[]" value="0"></td>
-                                            <td><input type="number" name="tab[]" value="0"></td>
+                                            <td><input type="number" name="tab[]" value="0">u</td>
+                                            <td><input type="number" name="tab[]" value="0">u</td>
+                                            <td><input type="number" name="tab[]" value="0">u</td>
                                             <td></td>
-                                            <td><input type="number" name="tab[]" value="0"></td>
-                                            <td><input type="number" name="tab[]" value="0"></td>
+                                            <td><input type="number" name="tab[]" value="0">u</td>
+                                            <td><input type="number" name="tab[]" value="0">u</td>
                                             <td></td>
                                         </tr>
                                     {% endfor %}
@@ -78,10 +86,8 @@
                             </td>
                         </tr>
                         <tr>
-                            <td width="20%">
-                                <div data-spy="affix" data-offset-top="60" data-offset-bottom="200" id="menuform">
+                            <td>
                                     <p><input type="submit" value="valider le stock comerciale "/></p>
-                                </div>
                             </td>
                         </tr>
                         {% endif %}

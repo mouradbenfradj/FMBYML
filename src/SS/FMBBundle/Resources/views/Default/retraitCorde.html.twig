@@ -1,14 +1,14 @@
 {% extends "SSFMBBundle::layout.html.twig" %}
 
 {% block title %}
-    Suivit - {{ parent() }}
+    retire corde - {{ parent() }}
 {% endblock %}
 {% block body %}
     <div class="container-fluid" xmlns="http://www.w3.org/1999/html">
         {{ parent() }}
-
         <div class="row">
             <div class="col-md-12">
+                <p>Retrait aire de travaille</p>
                 <form action="" method="post" onsubmit="return validation()">
                     <ul class="pagination pagination-lg">
                         {{ knp_menu_render('SSFMBBundle:Builder:parcRCMenu') }}

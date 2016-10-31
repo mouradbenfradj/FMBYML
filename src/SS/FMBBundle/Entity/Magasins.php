@@ -79,15 +79,33 @@ class Magasins
      */
     private $idStock;
     /**
-     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Filiere", mappedBy="parc" ,cascade={"persist","remove"})
+     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Filiere", mappedBy="parc" ,cascade={"persist","remove"},fetch="EAGER")
+     * @ORM\OrderBy({"nomFiliere" = "asc"})
      */
     private $filieres;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->filieres = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     public function __toString()
     {
         return $this->libMagasin;
     }
 
+    /**
+     * Get libMagasin
+     *
+     * @return string
+     */
+    public function getLibMagasin()
+    {
+        return $this->libMagasin;
+    }
 
     /**
      * Set libMagasin
@@ -103,13 +121,13 @@ class Magasins
     }
 
     /**
-     * Get libMagasin
+     * Get abrevMagasin
      *
      * @return string
      */
-    public function getLibMagasin()
+    public function getAbrevMagasin()
     {
-        return $this->libMagasin;
+        return $this->abrevMagasin;
     }
 
     /**
@@ -126,13 +144,13 @@ class Magasins
     }
 
     /**
-     * Get abrevMagasin
+     * Get modeVente
      *
      * @return string
      */
-    public function getAbrevMagasin()
+    public function getModeVente()
     {
-        return $this->abrevMagasin;
+        return $this->modeVente;
     }
 
     /**
@@ -149,13 +167,13 @@ class Magasins
     }
 
     /**
-     * Get modeVente
+     * Get actif
      *
-     * @return string
+     * @return boolean
      */
-    public function getModeVente()
+    public function getActif()
     {
-        return $this->modeVente;
+        return $this->actif;
     }
 
     /**
@@ -172,16 +190,6 @@ class Magasins
     }
 
     /**
-     * Get actif
-     *
-     * @return boolean
-     */
-    public function getActif()
-    {
-        return $this->actif;
-    }
-
-    /**
      * Get idMagasin
      *
      * @return integer
@@ -189,6 +197,16 @@ class Magasins
     public function getIdMagasin()
     {
         return $this->idMagasin;
+    }
+
+    /**
+     * Get idMagEnseigne
+     *
+     * @return \SS\FMBBundle\Entity\MagasinsEnseignes
+     */
+    public function getIdMagEnseigne()
+    {
+        return $this->idMagEnseigne;
     }
 
     /**
@@ -205,13 +223,13 @@ class Magasins
     }
 
     /**
-     * Get idMagEnseigne
+     * Get idTarif
      *
-     * @return \SS\FMBBundle\Entity\MagasinsEnseignes
+     * @return \SS\FMBBundle\Entity\TarifsListes
      */
-    public function getIdMagEnseigne()
+    public function getIdTarif()
     {
-        return $this->idMagEnseigne;
+        return $this->idTarif;
     }
 
     /**
@@ -228,13 +246,13 @@ class Magasins
     }
 
     /**
-     * Get idTarif
+     * Get idStock
      *
-     * @return \SS\FMBBundle\Entity\TarifsListes
+     * @return \SS\FMBBundle\Entity\Stocks
      */
-    public function getIdTarif()
+    public function getIdStock()
     {
-        return $this->idTarif;
+        return $this->idStock;
     }
 
     /**
@@ -248,23 +266,6 @@ class Magasins
         $this->idStock = $idStock;
 
         return $this;
-    }
-
-    /**
-     * Get idStock
-     *
-     * @return \SS\FMBBundle\Entity\Stocks
-     */
-    public function getIdStock()
-    {
-        return $this->idStock;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->filieres = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**

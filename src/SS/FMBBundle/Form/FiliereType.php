@@ -15,27 +15,9 @@ class FiliereType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add(
-                'parc',
-                'entity',
-                array(
-                    'class' => 'SSFMBBundle:Parc',
-                    'property' => 'nomParc',
-                    'read_only' => 'true',
-                    'attr' => array('class' => 'hidden'),
-                    'label' => false,
-                )
-            )
             ->add('nomFiliere')
-            ->add(
-                'segments',
-                'collection',
-                array(
-                    'type' => new SegmentType(),
-                    'allow_add' => true,
-                    'allow_delete' => true,
-                )
-            );
+            ->add('aireDeTravaille')
+            ->add('parc');
     }
 
     /**
@@ -43,11 +25,9 @@ class FiliereType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(
-            array(
-                'data_class' => 'SS\FMBBundle\Entity\Filiere',
-            )
-        );
+        $resolver->setDefaults(array(
+            'data_class' => 'SS\FMBBundle\Entity\Filiere'
+        ));
     }
 
     /**

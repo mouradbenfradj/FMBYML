@@ -34,7 +34,7 @@ class Filiere
      */
     private $parc;
     /**
-     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Segment", mappedBy="filiere" ,cascade={"persist","remove"})
+     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Segment", mappedBy="filiere" ,cascade={"persist","merge","remove"},fetch="EAGER")
      */
     private $segments;
     /**
@@ -146,6 +146,15 @@ class Filiere
         return $this;
     }
 
+    /**
+     * Get aireDeTravaille
+     *
+     * @return boolean
+     */
+    public function getAireDeTravaille()
+    {
+        return $this->aireDeTravaille;
+    }
 
     /**
      * Set aireDeTravaille
@@ -158,15 +167,5 @@ class Filiere
         $this->aireDeTravaille = $aireDeTravaille;
 
         return $this;
-    }
-
-    /**
-     * Get aireDeTravaille
-     *
-     * @return boolean 
-     */
-    public function getAireDeTravaille()
-    {
-        return $this->aireDeTravaille;
     }
 }

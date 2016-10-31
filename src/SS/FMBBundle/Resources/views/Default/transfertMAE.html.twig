@@ -1,13 +1,14 @@
 {% extends "SSFMBBundle::layout.html.twig" %}
 
 {% block title %}
-    Suivit - {{ parent() }}
+    Transfert MAE - {{ parent() }}
 {% endblock %}
 {% block body %}
     <div class="container-fluid">
         {{ parent() }}
         <div class="row">
             <div class="col-md-12">
+                <p>Transfert Mise a l'eau</p>
                 <form action="" method="post" onsubmit="return validation()">
                     <ul class="pagination pagination-lg">
                         {{ knp_menu_render('SSFMBBundle:Builder:parcMAETransfertMenu') }}

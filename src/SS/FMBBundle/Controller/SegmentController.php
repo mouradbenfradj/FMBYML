@@ -2,8 +2,8 @@
 
 namespace SS\FMBBundle\Controller;
 
+use SS\FMBBundle\Entity\Filiere;
 use Symfony\Component\HttpFoundation\Request;
-//use Sonata\AdminBundle\Controller\CRUDController as Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use SS\FMBBundle\Entity\Segment;
@@ -26,12 +26,9 @@ class SegmentController extends Controller
 
         $entities = $em->getRepository('SSFMBBundle:Segment')->findAll();
 
-        return $this->render(
-            'SSFMBBundle:Segment:index.html.twig',
-            array(
-                'entities' => $entities,
-            )
-        );
+        return $this->render('SSFMBBundle:Segment:index.html.twig', array(
+            'entities' => $entities,
+        ));
     }
 
     /**
@@ -52,13 +49,10 @@ class SegmentController extends Controller
             return $this->redirect($this->generateUrl('segment_show', array('id' => $entity->getId())));
         }
 
-        return $this->render(
-            'SSFMBBundle:Segment:new.html.twig',
-            array(
-                'entity' => $entity,
-                'form' => $form->createView(),
-            )
-        );
+        return $this->render('SSFMBBundle:Segment:new.html.twig', array(
+            'entity' => $entity,
+            'form' => $form->createView(),
+        ));
     }
 
     /**
@@ -70,14 +64,10 @@ class SegmentController extends Controller
      */
     private function createCreateForm(Segment $entity)
     {
-        $form = $this->createForm(
-            new SegmentType(),
-            $entity,
-            array(
-                'action' => $this->generateUrl('segment_create'),
-                'method' => 'POST',
-            )
-        );
+        $form = $this->createForm(new SegmentType(), $entity, array(
+            'action' => $this->generateUrl('segment_create'),
+            'method' => 'POST',
+        ));
 
         $form->add('submit', 'submit', array('label' => 'Create'));
 
@@ -93,13 +83,10 @@ class SegmentController extends Controller
         $entity = new Segment();
         $form = $this->createCreateForm($entity);
 
-        return $this->render(
-            'SSFMBBundle:Segment:new.html.twig',
-            array(
-                'entity' => $entity,
-                'form' => $form->createView(),
-            )
-        );
+        return $this->render('SSFMBBundle:Segment:new.html.twig', array(
+            'entity' => $entity,
+            'form' => $form->createView(),
+        ));
     }
 
     /**
@@ -118,13 +105,10 @@ class SegmentController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render(
-            'SSFMBBundle:Segment:show.html.twig',
-            array(
-                'entity' => $entity,
-                'delete_form' => $deleteForm->createView(),
-            )
-        );
+        return $this->render('SSFMBBundle:Segment:show.html.twig', array(
+            'entity' => $entity,
+            'delete_form' => $deleteForm->createView(),
+        ));
     }
 
     /**
@@ -160,14 +144,11 @@ class SegmentController extends Controller
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render(
-            'SSFMBBundle:Segment:edit.html.twig',
-            array(
-                'entity' => $entity,
-                'edit_form' => $editForm->createView(),
-                'delete_form' => $deleteForm->createView(),
-            )
-        );
+        return $this->render('SSFMBBundle:Segment:edit.html.twig', array(
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        ));
     }
 
     /**
@@ -179,14 +160,10 @@ class SegmentController extends Controller
      */
     private function createEditForm(Segment $entity)
     {
-        $form = $this->createForm(
-            new SegmentType(),
-            $entity,
-            array(
-                'action' => $this->generateUrl('segment_update', array('id' => $entity->getId())),
-                'method' => 'PUT',
-            )
-        );
+        $form = $this->createForm(new SegmentType(), $entity, array(
+            'action' => $this->generateUrl('segment_update', array('id' => $entity->getId())),
+            'method' => 'PUT',
+        ));
 
         $form->add('submit', 'submit', array('label' => 'Update'));
 
@@ -217,14 +194,11 @@ class SegmentController extends Controller
             return $this->redirect($this->generateUrl('segment_edit', array('id' => $id)));
         }
 
-        return $this->render(
-            'SSFMBBundle:Segment:edit.html.twig',
-            array(
-                'entity' => $entity,
-                'edit_form' => $editForm->createView(),
-                'delete_form' => $deleteForm->createView(),
-            )
-        );
+        return $this->render('SSFMBBundle:Segment:edit.html.twig', array(
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        ));
     }
 
     /**
@@ -249,5 +223,13 @@ class SegmentController extends Controller
         }
 
         return $this->redirect($this->generateUrl('segment'));
+    }
+
+    public function findByFiliereAction(Filiere $filiere)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $segments = $em->getRepository('SSFMBBundle:Segment')->findByFiliere($filiere);
+        return $this->render('@SSFMB/Segment/Render/listSegmentIndexRender.html.twig', array(
+            'segments' => $segments));
     }
 }

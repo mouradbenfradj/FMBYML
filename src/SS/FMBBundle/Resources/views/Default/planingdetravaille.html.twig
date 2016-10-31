@@ -1,12 +1,13 @@
 {% extends "SSFMBBundle::layout.html.twig" %}
 {% block title %}
-    Suivit - {{ parent() }}
+    Planing - {{ parent() }}
 {% endblock %}
 {% block body %}
     {{ parent() }}
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
+                <p>Planing de travaille</p>
                 <ul class="pagination pagination-lg">
                     {{ knp_menu_render('SSFMBBundle:Builder:parcPlaningMenu') }}
                 </ul>
@@ -116,6 +117,7 @@
                                         <td>article</td>
                                         <td>lot</td>
                                         <td>date de mise a eau</td>
+                                        <td>Cycle actuel</td>
                                         <td>doit etre retirer le</td>
                                         <td>Densiter U/Lanterne/</td>
                                         <td>Densiter totale</td>
@@ -131,6 +133,8 @@
                                             <td>{{ emplacement.stockslanterne.article.refStockArticle.refArticle }}</td>
                                             <td>{{ emplacement.stockslanterne.article.numeroSerie }}</td>
                                             <td>{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
+                                            <td>{% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}
+                                                PG{{ difference.m }}</td>
                                             <td>{{ emplacement.dateDeRemplissage|date_modify("+3 month")|date('Y-m-d') }}</td>
                                             <td>
                                                 {% set quantiterTotale = 0 %}
@@ -172,6 +176,7 @@
                                         <td>article</td>
                                         <td>lot</td>
                                         <td>date de mise a eau</td>
+                                        <td>Cycleactuel</td>
                                         <td>doit etre retirer le</td>
                                         <td>Densiter U/Corde/</td>
                                         <td>Densiter totale</td>
@@ -187,6 +192,7 @@
                                             <td>{{ emplacement.stockscorde.article.refStockArticle.refArticle }}</td>
                                             <td>{{ emplacement.stockscorde.article.numeroSerie }}</td>
                                             <td>{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
+                                            <td> {% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}{% if difference.m <=5 and difference.y ==0 %}G{{ difference.m }}{% elseif difference.m <=9 and difference.y == 0 %}{% set dif2 = 9- difference.m %}H{{ dif2 }}{% elseif difference.m ==10 and difference.y == 0 %}H00{% elseif difference.m >10 or difference.y >0 %}H000{% endif %}</td>
                                             <td>{{ emplacement.dateDeRemplissage|date_modify("+6 month")|date('Y-m-d') }}</td>
                                             <td>{{ emplacement.stockscorde.quantiter }}</td>
                                             {% if loop.index == 1 %}
@@ -208,7 +214,7 @@
                             </td>
                         </tr>
                         <tr class="danger">
-                            <td>Aire de travaille grossisement </td>
+                            <td>Aire de travaille grossisement</td>
                             <td>nombre de tache a effectuer : {{ grossisementurgentAW|length }}
                                 <table border="1">
                                     <thead>
@@ -221,6 +227,7 @@
                                         <td>article</td>
                                         <td>lot</td>
                                         <td>date de mise a eau</td>
+                                        <td>Cycle actuel</td>
                                         <td>doit etre retirer le</td>
                                         <td>Densiter U/Corde/</td>
                                         <td>Densiter totale</td>
@@ -236,7 +243,8 @@
                                             <td>{{ emplacement.stockscorde.article.refStockArticle.refArticle }}</td>
                                             <td>{{ emplacement.stockscorde.article.numeroSerie }}</td>
                                             <td>{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
-                                            <td>{{ emplacement.dateDeRemplissage|date_modify("+6 month")|date('Y-m-d') }}</td>
+                                            <td> {% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}{% if difference.m <=5 %}G{{ difference.m }}{% elseif difference.m <=9 %}{% set dif2 = 9- difference.m %}H{{ dif2 }}{% elseif difference.m ==10 %}H00{% else %}H000{% endif %}</td>
+                                            <td>{{ emplacement.dateDeRemplissage|date_modify("+9 month")|date('Y-m-d') }}</td>
                                             <td>{{ emplacement.stockscorde.quantiter }}</td>
                                             {% if loop.index == 1 %}
                                                 <td rowspan="{{ grossisementurgentAW|length }}" valign="top">
@@ -387,6 +395,7 @@
                                         <td>article</td>
                                         <td>lot</td>
                                         <td>date de mise a eau</td>
+                                        <td>Cycle actuel</td>
                                         <td>doit etre retirer le</td>
                                         <td>Densiter U/Lanterne/</td>
                                         <td>Densiter totale</td>
@@ -402,6 +411,10 @@
                                             <td>{{ emplacement.stockslanterne.article.refStockArticle.refArticle }}</td>
                                             <td>{{ emplacement.stockslanterne.article.numeroSerie }}</td>
                                             <td>{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
+                                            <td>{% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}
+                                                PG{{ difference.m }}</td>
+                                            <td>{% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}
+                                                PG{{ difference.m }}</td>
                                             <td>{{ emplacement.dateDeRemplissage|date_modify("+3 month")|date('Y-m-d') }}</td>
                                             <td>
                                                 {% set quantiterTotale = 0 %}
@@ -443,6 +456,7 @@
                                         <td>article</td>
                                         <td>lot</td>
                                         <td>date de mise a eau</td>
+                                        <td>Cycle actuel</td>
                                         <td>doit etre retirer le</td>
                                         <td>Densiter U/Corde/</td>
                                         <td>Densiter totale</td>
@@ -458,6 +472,7 @@
                                             <td>{{ emplacement.stockscorde.article.refStockArticle.refArticle }}</td>
                                             <td>{{ emplacement.stockscorde.article.numeroSerie }}</td>
                                             <td>{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
+                                            <td> {% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}{% if difference.m <=5 %}G{{ difference.m }}{% elseif difference.m <=9 %}{% set dif2 = 9- difference.m %}H{{ dif2 }}{% elseif difference.m ==10 %}H00{% else %}H000{% endif %}</td>
                                             <td>{{ emplacement.dateDeRemplissage|date_modify("+6 month")|date('Y-m-d') }}</td>
                                             <td>{{ emplacement.stockscorde.quantiter }}</td>
                                             {% if loop.index == 1 %}
@@ -491,6 +506,7 @@
                                         <td>article</td>
                                         <td>lot</td>
                                         <td>date de mise a eau</td>
+                                        <td>Cycle actuel</td>
                                         <td>doit etre retirer le</td>
                                         <td>Densiter U/Corde/</td>
                                         <td>Densiter totale</td>
@@ -506,7 +522,21 @@
                                             <td>{{ emplacement.stockscorde.article.refStockArticle.refArticle }}</td>
                                             <td>{{ emplacement.stockscorde.article.numeroSerie }}</td>
                                             <td>{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
-                                            <td>{{ emplacement.dateDeRemplissage|date_modify("+6 month")|date('Y-m-d') }}</td>
+                                            <td>{% if emplacement.stockscorde != null %}
+                                                    {% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}
+                                                    {% if difference.m <=5 %}
+                                                        G{{ difference.m }}
+                                                    {% elseif difference.m <=9 %}
+                                                        {% set dif2 = 9- difference.m %}
+                                                        H{{ dif2 }}
+                                                    {% elseif difference.m ==10 %}
+                                                        H00
+                                                    {% else %}
+                                                        H000
+                                                    {% endif %}
+                                                {% endif %}
+                                            </td>
+                                            <td>{{ emplacement.dateDeRemplissage|date_modify("+8 month")|date('Y-m-d') }}</td>
                                             <td>{{ emplacement.stockscorde.quantiter }}</td>
                                             {% if loop.index == 1 %}
                                                 <td rowspan="{{ grossisementaeffectuerAW|length }}" valign="top">
@@ -573,6 +603,7 @@
                                         <td>article</td>
                                         <td>lot</td>
                                         <td>date de mise a eau</td>
+                                        <td>Cycle actuel</td>
                                         <td>doit etre retirer le</td>
                                         <td>Densiter U/Lanterne/</td>
                                         <td>Densiter totale</td>
@@ -588,6 +619,8 @@
                                             <td>{{ emplacement.stockslanterne.article.refStockArticle.refArticle }}</td>
                                             <td>{{ emplacement.stockslanterne.article.numeroSerie }}</td>
                                             <td>{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
+                                            <td>{% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}
+                                                PG{{ difference.m }}</td>
                                             <td>{{ emplacement.dateDeRemplissage|date_modify("+3 month")|date('Y-m-d') }}</td>
                                             <td>
                                                 {% set quantiterTotale = 0 %}
@@ -629,6 +662,7 @@
                                         <td>article</td>
                                         <td>lot</td>
                                         <td>date de mise a eau</td>
+                                        <td>Cycle actuel</td>
                                         <td>doit etre retirer le</td>
                                         <td>Densiter U/Corde/</td>
                                         <td>Densiter totale</td>
@@ -644,6 +678,7 @@
                                             <td>{{ emplacement.stockscorde.article.refStockArticle.refArticle }}</td>
                                             <td>{{ emplacement.stockscorde.article.numeroSerie }}</td>
                                             <td>{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
+                                            <td> {% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}{% if difference.m <=5 %}G{{ difference.m }}{% elseif difference.m <=9 %}{% set dif2 = 9- difference.m %}H{{ dif2 }}{% elseif difference.m ==10 %}H00{% else %}H000{% endif %}</td>
                                             <td>{{ emplacement.dateDeRemplissage|date_modify("+6 month")|date('Y-m-d') }}</td>
                                             <td>{{ emplacement.stockscorde.quantiter }}</td>
                                             {% if loop.index == 1 %}
@@ -677,6 +712,7 @@
                                         <td>article</td>
                                         <td>lot</td>
                                         <td>date de mise a eau</td>
+                                        <td>cycle actuel</td>
                                         <td>doit etre retirer le</td>
                                         <td>Densiter U/Corde/</td>
                                         <td>Densiter totale</td>
@@ -692,7 +728,8 @@
                                             <td>{{ emplacement.stockscorde.article.refStockArticle.refArticle }}</td>
                                             <td>{{ emplacement.stockscorde.article.numeroSerie }}</td>
                                             <td>{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
-                                            <td>{{ emplacement.dateDeRemplissage|date_modify("+6 month")|date('Y-m-d') }}</td>
+                                            <td> {% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}{% if difference.m <=5 %}G{{ difference.m }}{% elseif difference.m <=9 %}{% set dif2 = 9- difference.m %}H{{ dif2 }}{% elseif difference.m ==10 %}H00{% else %}H000{% endif %}</td>
+                                            <td>{{ emplacement.dateDeRemplissage|date_modify("+7 month")|date('Y-m-d') }}</td>
                                             <td>{{ emplacement.stockscorde.quantiter }}</td>
                                             {% if loop.index == 1 %}
                                                 <td rowspan="{{ grossisementAW|length }}" valign="top">
@@ -705,7 +742,7 @@
                                                     {% set quantiterTotale = quantiterTotale/12 %}
                                                     {{ quantiterTotale }} dz
                                                 </td>
-                                             {% endif %}
+                                            {% endif %}
                                         </tr>
                                     {% endfor %}
                                 </table>

@@ -313,14 +313,46 @@ class DefaultController extends Controller
         }
 
         if ($request->isMethod('POST')) {
+            $date1 = new DateTime("now");
             $stock = $em->getRepository('SSFMBBundle:Stocks')->find($request->request->get('stockchoix'));
             foreach ($request->request->get('placecorde') as $emplacementcorde) {
                 $place = $em->getRepository('SSFMBBundle:Emplacement')->find($emplacementcorde);
+                $interval = date_diff($place->getDateDeRemplissage(), $date1);
                 $scorde = $place->getStockscorde();
-                $article = $em->getRepository('SSFMBBundle:Articles')->findOneByLibArticle("HUITRES COM");
+                if ($interval->m <= 5)
+                    $article = $em->getRepository('SSFMBBundle:Articles')->findOneByLibArticle("HUITRES G" . $interval->m . " COM");
+                elseif ($interval->m == 6)
+                    $article = $em->getRepository('SSFMBBundle:Articles')->findOneByLibArticle("HUITRES H3 COM");
+                elseif ($interval->m == 7)
+                    $article = $em->getRepository('SSFMBBundle:Articles')->findOneByLibArticle("HUITRES H2 COM");
+                elseif ($interval->m == 8)
+                    $article = $em->getRepository('SSFMBBundle:Articles')->findOneByLibArticle("HUITRES H1 COM");
+                elseif ($interval->m == 9)
+                    $article = $em->getRepository('SSFMBBundle:Articles')->findOneByLibArticle("HUITRES H0 COM");
+                elseif ($interval->m == 10)
+                    $article = $em->getRepository('SSFMBBundle:Articles')->findOneByLibArticle("HUITRES H00 COM");
+                elseif ($interval->m == 11)
+                    $article = $em->getRepository('SSFMBBundle:Articles')->findOneByLibArticle("HUITRES H000 COM");
+                elseif ($interval->m >= 12)
+                    $article = $em->getRepository('SSFMBBundle:Articles')->findOneByLibArticle("HUITRES H0000 COM");
                 if (!$article) {
                     $article = new Articles();
-                    $article->setLibArticle("HUITRES COM");
+                    if ($interval->m <= 5)
+                        $article->setLibArticle("HUITRES G" . $interval->m . " COM");
+                    elseif ($interval->m == 6)
+                        $article->setLibArticle("HUITRES H3 COM");
+                    elseif ($interval->m == 7)
+                        $article->setLibArticle("HUITRES H2 COM");
+                    elseif ($interval->m == 8)
+                        $article->setLibArticle("HUITRES H1 COM");
+                    elseif ($interval->m == 9)
+                        $article->setLibArticle("HUITRES H0 COM");
+                    elseif ($interval->m == 10)
+                        $article->setLibArticle("HUITRES H00 COM");
+                    elseif ($interval->m == 11)
+                        $article->setLibArticle("HUITRES H000 COM");
+                    elseif ($interval->m >= 12)
+                        $article->setLibArticle("HUITRES H0000 COM");
                     $article->setLibTicket('l');
                     $article->setDescCourte('e');
                     $article->setDescLongue('e');
@@ -403,7 +435,8 @@ class DefaultController extends Controller
             'stocksArticlesSn' => $stocksArticlesSn->getSnQte()));
     }
 
-    public function traitementAction(Request $request)
+    public
+    function traitementAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         if ($request->get('id') == null) {
@@ -650,62 +683,71 @@ class DefaultController extends Controller
                             foreach ($emplacements as $emplacement) {
                                 if ($emplacement->getDateDeRemplissage()) {
                                     $interval = date_diff($emplacement->getDateDeRemplissage(), $date1);
+
                                     if ($emplacement->getStockslanterne()) {
-                                        switch ($interval->m) {
-                                            case 0 :
-                                                $pg[0] = array_merge($pg[0], array($emplacement));
-                                                break;
-                                            case 1 :
-                                                $pg[1] = array_merge($pg[1], array($emplacement));
-                                                break;
-                                            case 2 :
-                                                $pg[2] = array_merge($pg[2], array($emplacement));
-                                                break;
-                                            case 3 :
-                                                $pg[3] = array_merge($pg[3], array($emplacement));
-                                                break;
-                                            default :
-                                                $pg[4] = array_merge($pg[4], array($emplacement));
-                                                break;
+                                        if ($interval->y == 0) {
+                                            switch ($interval->m) {
+                                                case 0 :
+                                                    $pg[0] = array_merge($pg[0], array($emplacement));
+                                                    break;
+                                                case 1 :
+                                                    $pg[1] = array_merge($pg[1], array($emplacement));
+                                                    break;
+                                                case 2 :
+                                                    $pg[2] = array_merge($pg[2], array($emplacement));
+                                                    break;
+                                                case 3 :
+                                                    $pg[3] = array_merge($pg[3], array($emplacement));
+                                                    break;
+                                                default :
+                                                    $pg[4] = array_merge($pg[4], array($emplacement));
+                                                    break;
+                                            }
+                                        } else {
+                                            $pg[4] = array_merge($pg[4], array($emplacement));
                                         }
                                     } elseif ($emplacement->getStockscorde()) {
-                                        switch ($interval->m) {
-                                            case 0 :
-                                                $gr[0] = array_merge($gr[0], array($emplacement));
-                                                break;
-                                            case 1 :
-                                                $gr[1] = array_merge($gr[1], array($emplacement));
-                                                break;
-                                            case 2 :
-                                                $gr[2] = array_merge($gr[2], array($emplacement));
-                                                break;
-                                            case 3 :
-                                                $gr[3] = array_merge($gr[3], array($emplacement));
-                                                break;
-                                            case 4 :
-                                                $gr[4] = array_merge($gr[4], array($emplacement));
-                                                break;
-                                            case 5 :
-                                                $gr[5] = array_merge($gr[5], array($emplacement));
-                                                break;
-                                            case 6 :
-                                                $gr[6] = array_merge($gr[6], array($emplacement));
-                                                break;
-                                            case 7 :
-                                                $gr[7] = array_merge($gr[7], array($emplacement));
-                                                break;
-                                            case 8 :
-                                                $gr[8] = array_merge($gr[8], array($emplacement));
-                                                break;
-                                            case 9 :
-                                                $gr[9] = array_merge($gr[9], array($emplacement));
-                                                break;
-                                            case 10 :
-                                                $gr[10] = array_merge($gr[10], array($emplacement));
-                                                break;
-                                            default :
-                                                $gr[11] = array_merge($gr[11], array($emplacement));
-                                                break;
+                                        if ($interval->y == 0) {
+                                            switch ($interval->m) {
+                                                case 0 :
+                                                    $gr[0] = array_merge($gr[0], array($emplacement));
+                                                    break;
+                                                case 1 :
+                                                    $gr[1] = array_merge($gr[1], array($emplacement));
+                                                    break;
+                                                case 2 :
+                                                    $gr[2] = array_merge($gr[2], array($emplacement));
+                                                    break;
+                                                case 3 :
+                                                    $gr[3] = array_merge($gr[3], array($emplacement));
+                                                    break;
+                                                case 4 :
+                                                    $gr[4] = array_merge($gr[4], array($emplacement));
+                                                    break;
+                                                case 5 :
+                                                    $gr[5] = array_merge($gr[5], array($emplacement));
+                                                    break;
+                                                case 6 :
+                                                    $gr[6] = array_merge($gr[6], array($emplacement));
+                                                    break;
+                                                case 7 :
+                                                    $gr[7] = array_merge($gr[7], array($emplacement));
+                                                    break;
+                                                case 8 :
+                                                    $gr[8] = array_merge($gr[8], array($emplacement));
+                                                    break;
+                                                case 9 :
+                                                    $gr[9] = array_merge($gr[9], array($emplacement));
+                                                    break;
+                                                case 10 :
+                                                    $gr[10] = array_merge($gr[10], array($emplacement));
+                                                    break;
+                                                default :
+                                                    $gr[11] = array_merge($gr[11], array($emplacement));
+                                                    break;
+                                            }
+                                        } else {
+                                            $gr[11] = array_merge($gr[11], array($emplacement));
                                         }
                                     }
                                 }
@@ -813,7 +855,8 @@ class DefaultController extends Controller
         );
     }
 
-    public function transfertMAEAction(Request $request)
+    public
+    function transfertMAEAction(Request $request)
     {
         $session = new Session();
         //  var_dump($session->get('lanterne'));

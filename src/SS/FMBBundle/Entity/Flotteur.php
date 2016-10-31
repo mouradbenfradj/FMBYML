@@ -30,13 +30,13 @@ class Flotteur
     private $nomFlotteur;
 
     /**
-     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Segment", inversedBy="flotteurs")
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Segment", inversedBy="flotteurs",fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $segment;
 
     /**
-     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Emplacement", mappedBy="flotteur",cascade={"persist","remove"}, fetch="LAZY")
+     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Emplacement", mappedBy="flotteur",cascade={"persist","remove"},fetch="EAGER")
      */
     private $emplacements;
 

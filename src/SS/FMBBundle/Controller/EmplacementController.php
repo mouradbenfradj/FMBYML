@@ -2,6 +2,7 @@
 
 namespace SS\FMBBundle\Controller;
 
+use SS\FMBBundle\Entity\Flotteur;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -25,14 +26,10 @@ class EmplacementController extends Controller
 
         $entities = $em->getRepository('SSFMBBundle:Emplacement')->findAll();
 
-        return $this->render(
-            'SSFMBBundle:Emplacement:index.html.twig',
-            array(
-                'entities' => $entities,
-            )
-        );
+        return $this->render('SSFMBBundle:Emplacement:index.html.twig', array(
+            'entities' => $entities,
+        ));
     }
-
     /**
      * Creates a new Emplacement entity.
      *
@@ -51,13 +48,10 @@ class EmplacementController extends Controller
             return $this->redirect($this->generateUrl('emplacement_show', array('id' => $entity->getId())));
         }
 
-        return $this->render(
-            'SSFMBBundle:Emplacement:new.html.twig',
-            array(
-                'entity' => $entity,
-                'form' => $form->createView(),
-            )
-        );
+        return $this->render('SSFMBBundle:Emplacement:new.html.twig', array(
+            'entity' => $entity,
+            'form' => $form->createView(),
+        ));
     }
 
     /**
@@ -69,14 +63,10 @@ class EmplacementController extends Controller
      */
     private function createCreateForm(Emplacement $entity)
     {
-        $form = $this->createForm(
-            new EmplacementType(),
-            $entity,
-            array(
-                'action' => $this->generateUrl('emplacement_create'),
-                'method' => 'POST',
-            )
-        );
+        $form = $this->createForm(new EmplacementType(), $entity, array(
+            'action' => $this->generateUrl('emplacement_create'),
+            'method' => 'POST',
+        ));
 
         $form->add('submit', 'submit', array('label' => 'Create'));
 
@@ -92,13 +82,10 @@ class EmplacementController extends Controller
         $entity = new Emplacement();
         $form = $this->createCreateForm($entity);
 
-        return $this->render(
-            'SSFMBBundle:Emplacement:new.html.twig',
-            array(
-                'entity' => $entity,
-                'form' => $form->createView(),
-            )
-        );
+        return $this->render('SSFMBBundle:Emplacement:new.html.twig', array(
+            'entity' => $entity,
+            'form' => $form->createView(),
+        ));
     }
 
     /**
@@ -117,13 +104,10 @@ class EmplacementController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render(
-            'SSFMBBundle:Emplacement:show.html.twig',
-            array(
-                'entity' => $entity,
-                'delete_form' => $deleteForm->createView(),
-            )
-        );
+        return $this->render('SSFMBBundle:Emplacement:show.html.twig', array(
+            'entity' => $entity,
+            'delete_form' => $deleteForm->createView(),
+        ));
     }
 
     /**
@@ -159,14 +143,11 @@ class EmplacementController extends Controller
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render(
-            'SSFMBBundle:Emplacement:edit.html.twig',
-            array(
-                'entity' => $entity,
-                'edit_form' => $editForm->createView(),
-                'delete_form' => $deleteForm->createView(),
-            )
-        );
+        return $this->render('SSFMBBundle:Emplacement:edit.html.twig', array(
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        ));
     }
 
     /**
@@ -178,14 +159,10 @@ class EmplacementController extends Controller
      */
     private function createEditForm(Emplacement $entity)
     {
-        $form = $this->createForm(
-            new EmplacementType(),
-            $entity,
-            array(
-                'action' => $this->generateUrl('emplacement_update', array('id' => $entity->getId())),
-                'method' => 'PUT',
-            )
-        );
+        $form = $this->createForm(new EmplacementType(), $entity, array(
+            'action' => $this->generateUrl('emplacement_update', array('id' => $entity->getId())),
+            'method' => 'PUT',
+        ));
 
         $form->add('submit', 'submit', array('label' => 'Update'));
 
@@ -216,14 +193,11 @@ class EmplacementController extends Controller
             return $this->redirect($this->generateUrl('emplacement_edit', array('id' => $id)));
         }
 
-        return $this->render(
-            'SSFMBBundle:Emplacement:edit.html.twig',
-            array(
-                'entity' => $entity,
-                'edit_form' => $editForm->createView(),
-                'delete_form' => $deleteForm->createView(),
-            )
-        );
+        return $this->render('SSFMBBundle:Emplacement:edit.html.twig', array(
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        ));
     }
 
     /**
@@ -248,5 +222,14 @@ class EmplacementController extends Controller
         }
 
         return $this->redirect($this->generateUrl('emplacement'));
+    }
+
+    public function findByFlotteurAction(Flotteur $flotteur)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $emplacements = $em->getRepository('SSFMBBundle:Emplacement')->findByFlotteur($flotteur);
+        return $this->render('SSFMBBundle:Emplacement/Render:listEmplacementIndexRender.html.twig', array(
+            'emplacements' => $emplacements));
+
     }
 }

@@ -1,13 +1,14 @@
 {% extends "SSFMBBundle::layout.html.twig" %}
 
 {% block title %}
-    Suivit - {{ parent() }}
+    MAELanterne - {{ parent() }}
 {% endblock %}
 {% block body %}
     <div class="container-fluid">
         {{ parent() }}
         <div class="row">
             <div class="col-md-12">
+                <p>Mise a eau lanterne</p>
                 <ul class="pagination pagination-lg">
                     {{ knp_menu_render('SSFMBBundle:Builder:parcMAELMenu') }}
                 </ul>
@@ -79,12 +80,14 @@
                                                                                 {% endif %}
                                                                                 {% endfor %}<br>
                                                                                 {% if verifexsistance != 0 %}
-                                                                                    <input type="button"
-                                                                                           value="Tout cocher"
-                                                                                           onClick="fillCheckbox('{{ filiere.getNomFiliere }}{{ segment.getNomSegment }}{{ flotteur.getNomFlotteur }}','1');">&nbsp;&nbsp;
-                                                                                    <input type="button"
-                                                                                           value="Tout décocher"
-                                                                                           onClick="fillCheckbox('{{ filiere.getNomFiliere }}{{ segment.getNomSegment }}{{ flotteur.getNomFlotteur }}','0');">
+                                                                                    <div class="cochage">
+                                                                                        <input type="button"
+                                                                                               value="Tout cocher"
+                                                                                               onClick="fillCheckbox('{{ filiere.getNomFiliere }}{{ segment.getNomSegment }}{{ flotteur.getNomFlotteur }}','1');">&nbsp;&nbsp;
+                                                                                        <input type="button"
+                                                                                               value="Tout décocher"
+                                                                                               onClick="fillCheckbox('{{ filiere.getNomFiliere }}{{ segment.getNomSegment }}{{ flotteur.getNomFlotteur }}','0');">
+                                                                                    </div>
                                                                                 {% endif %}
                                                                                 {% endfor %}
                                                                             </div>
@@ -173,18 +176,24 @@
     {{ parent() }}
     <script type="text/javascript">
         function validation() {
-            check = confirm('vous confirmer les données (date de retrait, article , lot que vous avez choisie');
-            if (check == true) {
-                return true;
-            }
-            else {
+            if (parseInt($('#quantit').val()) < 0) {
+                alert("vous avez demander de mettre un nombre superieur de lanterne que celle preparé");
                 return false;
+            } else {
+                check = confirm('vous confirmer les données (date de retrait, article , lot que vous avez choisie');
+                if (check == true) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
             }
         }
         $(document).ready(function () {
             $('#choixqtearticle').ready(function () {
                 $('input:checkbox').hide();
                 $('#choixqtearticle').hide();
+                $('.cochage').hide();
             });
             $('input:checkbox').change(function () {
                 if ($(this).is(':checked')) {
@@ -194,6 +203,7 @@
                 }
             });
         });
+        $('.cochage').hide();
         $('#articlelotchoix').hide();
         $('#articlechoix').ready(function () {
             $.ajax({
@@ -238,6 +248,8 @@
                                     $('#choixqtearticle').ready(function () {
                                         $('#choixqtearticle').hide();
                                         $('input:checkbox').hide();
+                                        $('.cochage').hide();
+
                                     });
                                 }
                                 ;
@@ -245,6 +257,8 @@
                                     $('#choixqtearticle').ready(function () {
                                         $('input:checkbox').show();
                                         $('#choixqtearticle').show();
+                                        $('.cochage').show();
+
                                         $.ajax({
                                             type: 'get',
                                             url: "{{ path('ssfmb_nombrelanternearticle') }}",
@@ -266,6 +280,8 @@
                                                         });
                                                         $('input:checkbox').show();
                                                         $('#choixqtearticle').show();
+                                                        $('.cochage').show();
+
                                                     });
                                                 }
                                                 $.each(json, function (index, value) {
@@ -316,6 +332,7 @@
                         $('#choixqtearticle').ready(function () {
                             $('input:checkbox').hide();
                             $('#choixqtearticle').hide();
+                            $('.cochage').hide();
                         });
                     }
                     if ($.trim(json)) {
@@ -347,6 +364,8 @@
                                             });
                                             $('input:checkbox').show();
                                             $('#choixqtearticle').show();
+                                            $('.cochage').show();
+
                                         });
                                     }
                                     $.each(json, function (index, value) {
@@ -370,6 +389,7 @@
                 }
             });
         });
+
         $('#lanternechoix').change(function () {
             $.ajax({
                 type: 'get',
@@ -391,6 +411,7 @@
                     if (!$.trim(json)) {
                         $('#choixqtearticle').ready(function () {
                             $('input:checkbox').hide();
+                            $('.cochage').hide();
                             $('#choixqtearticle').hide();
                         });
                     }
@@ -402,6 +423,8 @@
                             $('input:checkbox').show();
 
                             $('#choixqtearticle').show();
+                            $('.cochage').show();
+
                             $.ajax({
                                 type: 'get',
                                 url: "{{ path('ssfmb_nombrelanternearticle') }}",
@@ -425,6 +448,8 @@
                                             $('input:checkbox').show();
 
                                             $('#choixqtearticle').show();
+                                            $('.cochage').show();
+
                                         });
                                     }
                                     $.each(json, function (index, value) {
@@ -470,6 +495,8 @@
                         $('#choixqtearticle').ready(function () {
                             $('input:checkbox').hide();
                             $('#choixqtearticle').hide();
+                            $('.cochage').hide();
+
                         });
                     }
                     if ($.trim(json)) {
@@ -480,6 +507,8 @@
                             $('input:checkbox').show();
 
                             $('#choixqtearticle').show();
+                            $('.cochage').show();
+
                             $.ajax({
                                 type: 'get',
                                 url: "{{ path('ssfmb_nombrelanternearticle') }}",
@@ -502,6 +531,8 @@
                                             $('input:checkbox').show();
 
                                             $('#choixqtearticle').show();
+                                            $('.cochage').show();
+
                                         });
                                     }
                                     $.each(json, function (index, value) {
@@ -548,6 +579,8 @@
                             $('input:checkbox').show();
 
                             $('#choixqtearticle').show();
+                            $('.cochage').show();
+
                         });
                     }
                     $.each(json, function (index, value) {

@@ -1,7 +1,7 @@
 {% extends "SSFMBBundle::layout.html.twig" %}
 
 {% block title %}
-    Suivit - {{ parent() }}
+    Transfert Retirement - {{ parent() }}
 {% endblock %}
 {% block body %}
     <div class="container-fluid" xmlns="http://www.w3.org/1999/html">
@@ -9,6 +9,7 @@
 
         <div class="row">
             <div class="col-md-12">
+                <p>Transfert Retirement</p>
                 <form action="" method="post" onsubmit="return validation()">
                     <ul class="pagination pagination-lg">
                         {{ knp_menu_render('SSFMBBundle:Builder:parcTransfertMenu') }}

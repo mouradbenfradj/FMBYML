@@ -1,0 +1,8 @@
+{% for flotteur in flotteurs %}
+    <p class="flotteur">
+        {{ flotteur.getNomFlotteur }}
+        {{ render(controller('SSFMBBundle:Emplacement:findByFlotteur', {
+            'flotteur':flotteur
+        } ) ) }}
+    </p>
+{% endfor %}

@@ -1,13 +1,14 @@
 {% extends "SSFMBBundle::layout.html.twig" %}
 
 {% block title %}
-    Suivit - {{ parent() }}
+    MAECorde - {{ parent() }}
 {% endblock %}
 {% block body %}
     <div class="container-fluid">
         {{ parent() }}
         <div class="row">
             <div class="col-md-12">
+                <p>Mise a eau Corde</p>
                 <form action="" method="post" onsubmit="return validation()">
                     <ul class="pagination pagination-lg">
                         {{ knp_menu_render('SSFMBBundle:Builder:parcMAECMenu') }}
@@ -90,12 +91,14 @@
                                                                                 {% endif %}
                                                                                 {% endfor %}<br>
                                                                                 {% if verifexsistance != 0 %}
-                                                                                    <input type="button"
-                                                                                           value="Tout cocher"
-                                                                                           onClick="fillCheckbox('{{ filiere.getNomFiliere }}{{ segment.getNomSegment }}{{ flotteur.getNomFlotteur }}','1');">&nbsp;&nbsp;
-                                                                                    <input type="button"
-                                                                                           value="Tout décocher"
-                                                                                           onClick="fillCheckbox('{{ filiere.getNomFiliere }}{{ segment.getNomSegment }}{{ flotteur.getNomFlotteur }}','0');">
+                                                                                    <div class="cochage">
+                                                                                        <input type="button"
+                                                                                               value="Tout cocher"
+                                                                                               onClick="fillCheckbox('{{ filiere.getNomFiliere }}{{ segment.getNomSegment }}{{ flotteur.getNomFlotteur }}','1');">&nbsp;&nbsp;
+                                                                                        <input type="button"
+                                                                                               value="Tout décocher"
+                                                                                               onClick="fillCheckbox('{{ filiere.getNomFiliere }}{{ segment.getNomSegment }}{{ flotteur.getNomFlotteur }}','0');">
+                                                                                    </div>
                                                                                 {% endif %}
                                                                                 {% endfor %}
                                                                             </div>
@@ -183,17 +186,25 @@
     {{ parent() }}
     <script type="text/javascript">
         function validation() {
-            check = confirm('vous confirmer les données (date de retrait, article , lot que vous avez choisie');
-            if (check == true) {
-                return true;
-            }
-            else {
+            if (parseInt($('#quantit').val()) < 0) {
+                alert("vous avez demander de mettre un nombre superieur de corde que celle preparé");
                 return false;
+            } else {
+                check = confirm('vous confirmer les données (date de retrait, article , lot que vous avez choisie');
+                if (check == true) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
             }
         }
         $(document).ready(function () {
             $('#choixqtearticle').ready(function () {
                 $('#choixqtearticle').hide();
+                $('input:checkbox').hide();
+                $('.cochage').hide();
+
             });
             $('input:checkbox').change(function () {
                 if ($(this).is(':checked')) {
@@ -204,6 +215,7 @@
             });
         });
         $('#articlelotchoix').hide();
+        $('.cochage').hide();
         $('#articlechoix').ready(function () {
             $.ajax({
                 type: "POST",
@@ -244,12 +256,16 @@
                                 if (!$.trim(json)) {
                                     $('#choixqtearticle').ready(function () {
                                         $('#choixqtearticle').hide();
+                                        $('.cochage').hide();
+                                        $('input:checkbox').hide();
                                     });
                                 }
                                 ;
                                 if ($.trim(json)) {
                                     $('#choixqtearticle').ready(function () {
                                         $('#choixqtearticle').show();
+                                        $('.cochage').show();
+
                                         $.ajax({
                                             type: 'get',
                                             url: "{{ path('ssfmb_nombrecordearticle') }}",
@@ -272,6 +288,10 @@
                                                         });
 
                                                         $('#choixqtearticle').show();
+                                                        $('.cochage').show();
+                                                        $('input:checkbox').show();
+
+
                                                     });
                                                 }
                                                 $.each(json, function (index, value) {
@@ -340,12 +360,18 @@
                                 if (!$.trim(json)) {
                                     $('#choixqtearticle').ready(function () {
                                         $('#choixqtearticle').hide();
+                                        $('.cochage').hide();
+                                        $('input:checkbox').hide();
+
                                     });
                                 }
                                 ;
                                 if ($.trim(json)) {
                                     $('#choixqtearticle').ready(function () {
                                         $('#choixqtearticle').show();
+                                        $('.cochage').show();
+                                        $('input:checkbox').show();
+
                                         $.ajax({
                                             type: 'get',
                                             url: "{{ path('ssfmb_nombrecordearticle') }}",
@@ -368,6 +394,9 @@
                                                         });
 
                                                         $('#choixqtearticle').show();
+                                                        $('.cochage').show();
+                                                        $('input:checkbox').show();
+
                                                     });
                                                 }
                                                 $.each(json, function (index, value) {
@@ -418,6 +447,9 @@
                     if (!$.trim(json)) {
                         $('#choixqtearticle').ready(function () {
                             $('#choixqtearticle').hide();
+                            $('.cochage').hide();
+                            $('input:checkbox').hide();
+
                         });
                     }
                     if ($.trim(json)) {
@@ -427,6 +459,9 @@
                             });
 
                             $('#choixqtearticle').show();
+                            $('input:checkbox').show();
+                            $('.cochage').show();
+
                             $.ajax({
                                 type: 'get',
                                 url: "{{ path('ssfmb_nombrecordearticle') }}",
@@ -449,7 +484,10 @@
                                                 $(this).prop('checked', false);
                                             });
 
+                                            $('input:checkbox').show();
                                             $('#choixqtearticle').show();
+                                            $('.cochage').show();
+
                                         });
                                     }
                                     $.each(json, function (index, value) {
@@ -495,6 +533,9 @@
                     if (!$.trim(json)) {
                         $('#choixqtearticle').ready(function () {
                             $('#choixqtearticle').hide();
+                            $('.cochage').hide();
+                            $('input:checkbox').hide();
+
                         });
                     }
                     if ($.trim(json)) {
@@ -504,6 +545,9 @@
                             });
 
                             $('#choixqtearticle').show();
+                            $('.cochage').show();
+                            $('input:checkbox').show();
+
                             $.ajax({
                                 type: 'get',
                                 url: "{{ path('ssfmb_nombrecordearticle') }}",
@@ -526,6 +570,9 @@
                                             });
 
                                             $('#choixqtearticle').show();
+                                            $('.cochage').show();
+                                            $('input:checkbox').show();
+
                                         });
                                     }
                                     $.each(json, function (index, value) {
@@ -572,6 +619,9 @@
                             });
 
                             $('#choixqtearticle').show();
+                            $('.cochage').show();
+                            $('input:checkbox').show();
+
                         });
                     }
                     $.each(json, function (index, value) {
