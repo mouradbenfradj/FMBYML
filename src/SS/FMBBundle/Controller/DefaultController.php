@@ -22,10 +22,10 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        if ($request->get('id') == null)
+        if ($request->get('idparc') == null)
             $parcs = null;
         else
-            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('id'));
+            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('idparc'));
         return $this->render('SSFMBBundle:Default:index.html.twig', array('entity' => $parcs));
     }
 
@@ -79,13 +79,13 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
         $defaultmetier = new DefaultImpl($em);
 
-        if ($request->get('id') == null) {
+        if ($request->get('idparc') == null) {
             $parcs = null;
             $stock = null;
             $lanternes = null;
             $articles = null;
         } else {
-            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('id'));
+            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('idparc'));
             $lanternes = $em->getRepository('SSFMBBundle:Lanterne')->findByParc($parcs);
             $articles = $em->getRepository('SSFMBBundle:StocksArticles')->findByIdStock($parcs->getIdStock());
         }
@@ -120,12 +120,12 @@ class DefaultController extends Controller
     public function retraitLanterneAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        if ($request->get('id') == null) {
+        if ($request->get('idparc') == null) {
             $parcs = null;
             $stock = null;
             $articles = null;
         } else {
-            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('id'));
+            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('idparc'));
             $articles = $em->getRepository('SSFMBBundle:StocksArticles')->findByIdStock($parcs->getIdStock());
         }
 
@@ -161,7 +161,7 @@ class DefaultController extends Controller
                     $em->persist($article);
                     $em->flush();
                 }
-                $sarticle = $em->getRepository('SSFMBBundle:StocksArticles')->findOneByRefArticle($article);
+                $sarticle = $em->getRepository('SSFMBBundle:StocksArticles')->findOneBy(array('refArticle' => $article, 'idStock' => $stock));
                 if (!$sarticle) {
                     $sarticle = new StocksArticles();
                     $sarticle->setRefArticle($article);
@@ -174,7 +174,6 @@ class DefaultController extends Controller
                         $em->persist($sarticlesn);
                         $em->flush();
                     }
-
                 } else {
                     $sarticle->setQte($sarticle->getQte() + $implementation->calculerQuantiterLanterne($slanterne));
                     $sarticlesn = $em->getRepository('SSFMBBundle:StocksArticlesSN')->getSAS($sarticle->getRefStockArticle(), $slanterne->getArticle()->getNumeroSerie());
@@ -262,13 +261,13 @@ class DefaultController extends Controller
     public function miseAEauCordeAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        if ($request->get('id') == null) {
+        if ($request->get('idparc') == null) {
             $parcs = null;
             $stock = null;
             $cordes = null;
             $articles = null;
         } else {
-            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('id'));
+            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('idparc'));
             $cordes = $em->getRepository('SSFMBBundle:Corde')->findByParc($parcs);
             $articles = $em->getRepository('SSFMBBundle:StocksArticles')->findByIdStock($parcs->getIdStock());
         }
@@ -303,12 +302,12 @@ class DefaultController extends Controller
     public function retraitCordeAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        if ($request->get('id') == null) {
+        if ($request->get('idparc') == null) {
             $parcs = null;
             $stock = null;
             $articles = null;
         } else {
-            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('id'));
+            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('idparc'));
             $articles = $em->getRepository('SSFMBBundle:StocksArticles')->findByIdStock($parcs->getIdStock());
         }
 
@@ -319,39 +318,39 @@ class DefaultController extends Controller
                 $place = $em->getRepository('SSFMBBundle:Emplacement')->find($emplacementcorde);
                 $interval = date_diff($place->getDateDeRemplissage(), $date1);
                 $scorde = $place->getStockscorde();
-                if ($interval->m <= 5)
+                if (($interval->m <= 5) && ($interval->y == 0))
                     $article = $em->getRepository('SSFMBBundle:Articles')->findOneByLibArticle("HUITRES G" . $interval->m . " COM");
-                elseif ($interval->m == 6)
+                elseif (($interval->m == 6) && ($interval->y == 0))
                     $article = $em->getRepository('SSFMBBundle:Articles')->findOneByLibArticle("HUITRES H3 COM");
-                elseif ($interval->m == 7)
+                elseif (($interval->m == 7) && ($interval->y == 0))
                     $article = $em->getRepository('SSFMBBundle:Articles')->findOneByLibArticle("HUITRES H2 COM");
-                elseif ($interval->m == 8)
+                elseif (($interval->m == 8) && ($interval->y == 0))
                     $article = $em->getRepository('SSFMBBundle:Articles')->findOneByLibArticle("HUITRES H1 COM");
-                elseif ($interval->m == 9)
+                elseif (($interval->m == 9) && ($interval->y == 0))
                     $article = $em->getRepository('SSFMBBundle:Articles')->findOneByLibArticle("HUITRES H0 COM");
-                elseif ($interval->m == 10)
+                elseif (($interval->m == 10) && ($interval->y == 0))
                     $article = $em->getRepository('SSFMBBundle:Articles')->findOneByLibArticle("HUITRES H00 COM");
-                elseif ($interval->m == 11)
+                elseif (($interval->m == 11) && ($interval->y == 0))
                     $article = $em->getRepository('SSFMBBundle:Articles')->findOneByLibArticle("HUITRES H000 COM");
-                elseif ($interval->m >= 12)
+                elseif (($interval->m >= 12) || ($interval->y > 0))
                     $article = $em->getRepository('SSFMBBundle:Articles')->findOneByLibArticle("HUITRES H0000 COM");
                 if (!$article) {
                     $article = new Articles();
-                    if ($interval->m <= 5)
+                    if (($interval->m <= 5) && ($interval->y == 0))
                         $article->setLibArticle("HUITRES G" . $interval->m . " COM");
-                    elseif ($interval->m == 6)
+                    elseif (($interval->m == 6) && ($interval->y == 0))
                         $article->setLibArticle("HUITRES H3 COM");
-                    elseif ($interval->m == 7)
+                    elseif (($interval->m == 7) && ($interval->y == 0))
                         $article->setLibArticle("HUITRES H2 COM");
-                    elseif ($interval->m == 8)
+                    elseif (($interval->m == 8) && ($interval->y == 0))
                         $article->setLibArticle("HUITRES H1 COM");
-                    elseif ($interval->m == 9)
+                    elseif (($interval->m == 9) && ($interval->y == 0))
                         $article->setLibArticle("HUITRES H0 COM");
-                    elseif ($interval->m == 10)
+                    elseif (($interval->m == 10) && ($interval->y == 0))
                         $article->setLibArticle("HUITRES H00 COM");
-                    elseif ($interval->m == 11)
+                    elseif (($interval->m == 11) && ($interval->y == 0))
                         $article->setLibArticle("HUITRES H000 COM");
-                    elseif ($interval->m >= 12)
+                    elseif (($interval->m >= 12) || ($interval->y > 0))
                         $article->setLibArticle("HUITRES H0000 COM");
                     $article->setLibTicket('l');
                     $article->setDescCourte('e');
@@ -375,7 +374,7 @@ class DefaultController extends Controller
                     $em->persist($article);
                     $em->flush();
                 }
-                $sarticle = $em->getRepository('SSFMBBundle:StocksArticles')->findOneByRefArticle($article);
+                $sarticle = $em->getRepository('SSFMBBundle:StocksArticles')->findOneBy(array('refArticle' => $article, 'idStock' => $stock));
                 if (!$sarticle) {
                     $sarticle = new StocksArticles();
                     $sarticle->setRefArticle($article);
@@ -435,16 +434,15 @@ class DefaultController extends Controller
             'stocksArticlesSn' => $stocksArticlesSn->getSnQte()));
     }
 
-    public
-    function traitementAction(Request $request)
+    public function traitementAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        if ($request->get('id') == null) {
+        if ($request->get('idparc') == null) {
             $parcs = null;
             $stocksnvirtuel = null;
             $articles = null;
         } else {
-            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('id'));
+            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('idparc'));
             $stocksnvirtuel = $em->getRepository('SSFMBBundle:StocksArticlesSnVirtuel')->findByRefStockArticle($em->getRepository('SSFMBBundle:StocksArticles')->findByIdStock($parcs->getIdStock()));
             $articles = $em->getRepository('SSFMBBundle:StocksArticles')->findByIdStock($parcs->getIdStock());
         }
@@ -522,10 +520,10 @@ class DefaultController extends Controller
         $comerciale = array();
 
         $em = $this->getDoctrine()->getManager();
-        if ($request->get('id') == null) {
+        if ($request->get('idparc') == null) {
             $parcs = null;
         } else {
-            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('id'));
+            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('idparc'));
             if ($parcs) {
                 $crd = $em->getRepository('SSFMBBundle:StocksCordes')->findBy(array("pret" => false, "emplacement" => null, "corde" => $em->getRepository('SSFMBBundle:Corde')->findByParc($parcs)));
                 if ($crd) {
@@ -668,10 +666,10 @@ class DefaultController extends Controller
         $cr[4] = array();
         $cr[5] = array();
         $em = $this->getDoctrine()->getManager();
-        if ($request->get('id') == null) {
+        if ($request->get('idparc') == null) {
             $parcs = null;
         } else {
-            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('id'));
+            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('idparc'));
             if ($parcs) {
                 $filiers = $em->getRepository('SSFMBBundle:Filiere')->findByParc($parcs);
                 foreach ($filiers as $filiere) {
@@ -817,13 +815,13 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        if ($request->get('id') == null) {
+        if ($request->get('idparc') == null) {
             $parcs = null;
             $stock = null;
             $lanternes = null;
             $articles = null;
         } else {
-            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('id'));
+            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('idparc'));
             $lanternes = $em->getRepository('SSFMBBundle:Lanterne')->findByParc($parcs);
             $articles = $em->getRepository('SSFMBBundle:StocksArticles')->findByIdStock($parcs->getIdStock());
         }
@@ -862,13 +860,13 @@ class DefaultController extends Controller
         //  var_dump($session->get('lanterne'));
         // var_dump($session->get('corde'));
         $em = $this->getDoctrine()->getManager();
-        if ($request->get('id') == null) {
+        if ($request->get('idparc') == null) {
             $parcs = null;
             $stock = null;
             $cordes = null;
             $articles = null;
         } else {
-            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('id'));
+            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('idparc'));
             $cordes = $em->getRepository('SSFMBBundle:Corde')->findByParc($parcs);
             $articles = $em->getRepository('SSFMBBundle:StocksArticles')->findByIdStock($parcs->getIdStock());
         }

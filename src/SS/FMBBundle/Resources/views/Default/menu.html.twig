@@ -1,15 +1,7 @@
-
-<div class="row">
-    <div class="col-md-12">
-        <nav id="menuprincipale" role="navigation">
-
+<div class="navbar-custom">
+    <div class="container">
+        <div id="navigation">
             {{ knp_menu_render('SSFMBBundle:Builder:mainMenu') }}
-            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}
-            {% else %}
-                <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
-            {% endif %}
-
-        </nav>
-    </div>
-</div>
+        </div>
+    </div> <!-- end container -->
+</div> <!-- end navbar-custom -->

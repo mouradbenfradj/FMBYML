@@ -1,124 +1,65 @@
-{% extends "SSFMBBundle::layout.html.twig" %}
-
-{% block title %}
-    Transfert Retirement - {{ parent() }}
-{% endblock %}
-{% block body %}
-    <div class="container-fluid" xmlns="http://www.w3.org/1999/html">
+{% extends "::base.html.twig" %}
+{% block title %}Transfert Retirement - {{ parent() }}{% endblock %}
+{% block stylesheet %}
+    {% if(entity != null) %}
+        <link href="{{ asset('bundles/ssfmb/plugins/nestable/jquery.nestable.css') }}" rel="stylesheet"/>
         {{ parent() }}
+    {% endif %}
+{% endblock %}
+{% block header %} {{ parent() }}{% endblock %}
+{% block body %}
+    {{ parent() }}
+    {% set page = 'RTR' %}
+    {% if(entity != null) %}
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="text-left" id="nestable_list_menu">
+                    <button type="button" class="btn btn-pink waves-effect waves-light" data-action="expand-all">
+                        Expand All
+                    </button>
+                    <button type="button" class="btn btn-purple waves-effect waves-light"
+                            data-action="collapse-all">Collapse All
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- End row -->
+
+
+
+        <br>
 
         <div class="row">
-            <div class="col-md-12">
-                <p>Transfert Retirement</p>
-                <form action="" method="post" onsubmit="return validation()">
-                    <ul class="pagination pagination-lg">
-                        {{ knp_menu_render('SSFMBBundle:Builder:parcTransfertMenu') }}
-                    </ul>
-                    <table class="table table-condensed table-bordered" border="1">
-                        <tbody>
-                        <tr>
-                            <td>
-                                {% if(entity != null) %}
+            <div class="col-sm-12">
+                <div class="card-box">
+                    <div class="row">
+                        <form action="" method="post" onsubmit="return validation()">
+
+                            <div class="col-md-11">
+                                <h4 class="m-t-0 header-title"><b>Transfert Retirement {{ entity.abrevMagasin }}</b>
+                                </h4>
+                                <p class="text-muted m-b-30 font-13">
+                                </p>
                                 <div id="idstockparc" hidden="true">{{ entity.idStock.idStock }}</div>
                                 <div id="idparc" hidden="true">{{ entity.idMagasin }}</div>
-                                {{ entity.abrevMagasin }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <table class="table table-condensed table-bordered" border="1">
-                                    <tbody>
-                                    {% for filiere in entity.filieres %}
-                                        <tr>
-                                            <td id="{{ filiere.nomFiliere }}">{{ filiere.nomFiliere }}
-                                                <br/>
-                                                {% set tailleFiliere =0 %}
-                                                {% for segment in filiere.segments %}
-                                                    {% set tailleFiliere = tailleFiliere+segment.getLongeur %}
-                                                {% endfor %}
-                                                taille {{ tailleFiliere }} m
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <table class="table table-condensed table-bordered" border="1">
-                                                    <tbody>
-                                                    <tr>
-                                                        {% for segment in filiere.segments %}
-                                                            <td valign="top">
-                                                                <ul>
-                                                                    <li> {{ segment.getNomSegment }}</li>
-                                                                    <li>{{ segment.getLongeur }} m</li>
-                                                                </ul>
-                                                                <table border="1">
-                                                                    {% for flotteur in segment.flotteurs %}
-                                                                    <tr>
-                                                                        <td>
-                                                                            <div id="{{ filiere.getNomFiliere }}{{ segment.getNomSegment }}{{ flotteur.getNomFlotteur }}">
-                                                                                {{ flotteur.getNomFlotteur }}|
-                                                                                {% set verifexsistance = 0 %}
 
-                                                                                {% for emplacement in flotteur.emplacements %}
-                                                                                    {% if emplacement.stockscorde == null and emplacement.stockslanterne == null %}
-                                                                                        <font color="red"> {{ emplacement.place }}</font>|
-                                                                                    {% elseif emplacement.stockscorde != null %}
-                                                                                        {% include "SSFMBBundle:Include:suivitEtatCordeInclude.html.twig" %}
-                                                                                        <input type="checkbox"
-                                                                                               name="place[]"
-                                                                                               value="{{ emplacement.id }}"/>
+                                <div class="custom-dd dd" id="nestable_list_2">
+                                    <ol class="dd-list">
+                                        {#
+                                         {{ render(controller(
+                                         'SSFMBBundle:Filiere:findByParc',
+                                         { 'parc': entity }
+                                         )) }}
+                                         #}
+                                        {% include '@SSFMB/Filiere/Include/listIndexInclude.html.twig' %}
 
-                                                                                        {% set verifexsistance =  verifexsistance + 1 %}
-                                                                                    {% elseif emplacement.stockslanterne != null %}
-                                                                                        {% include "SSFMBBundle:Include:suivitEtatLanterneInclude.html.twig" %}
-                                                                                        <input type="checkbox"
-                                                                                               name="place[]"
-                                                                                               value="{{ emplacement.id }}"/>
-                                                                                        {% set verifexsistance =  verifexsistance + 1 %}
-
-
-                                                                                    {% endif %}
-                                                                                {% endfor %}
-                                                                                {% if verifexsistance != 0 %}
-                                                                                    <br>
-                                                                                    <input
-                                                                                            type="button"
-                                                                                            value="Tout cocher"
-                                                                                            onClick="fillCheckbox('{{ filiere.getNomFiliere }}{{ segment.getNomSegment }}{{ flotteur.getNomFlotteur }}','1');">&nbsp;&nbsp;
-                                                                                    <input type="button"
-                                                                                           value="Tout décocher"
-                                                                                           onClick="fillCheckbox('{{ filiere.getNomFiliere }}{{ segment.getNomSegment }}{{ flotteur.getNomFlotteur }}','0');">
-                                                                                {% endif %}
-
-                                                                                {% endfor %}
-                                                                            </div>
-                                                                        </td>
-                                                                    </tr>
-                                                                </table>
-                                                            </td>
-                                                        {% endfor %}
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
-                                    </tbody>
-                                </table>
-                            </td>
-                            <td width="20%">
-                                <div data-spy="affix" data-offset-top="60" data-offset-bottom="200" id="menuform">
-                                    <p>
-                                        {% include "SSFMBBundle:Include:couleurCleInclude.html.twig" %}
-                                    </p>
-                                    <p>
-                                    <div><a href="#menuprincipale">menu</a></div>
-                                    <div>Listez des filieres</div>
-                                    {% for filiere in entity.filieres %}
-                                        <span class="lienfiliereint">
-                                            <a href="#{{ filiere.nomFiliere }}">{{ filiere.nomFiliere }}</a>
-                                        </span>
-                                    {% endfor %}
-                                    </p>
+                                    </ol>
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div data-spy="affix">
+                                    {% include '@SSFMB/Include/couleurCleInclude.html.twig' %}
+                                    {% include "@SSFMB/Filiere/Include/listMenuIndexInclude.html.twig" %}
                                     <p>date de du tranfert</p>
                                     {% set now =  "now"|date("Y-m-d") %}
                                     <p><input type="date" name="dateRetrait" value="{{ now }}"></p>
@@ -126,20 +67,28 @@
                                     <p><input type="number" id="quantit" readonly="true" value="0"></p>
                                     <p><input type="submit" value="confirmer demande de transfert"/></p>
                                 </div>
-                            </td>
-                        </tr>
-                        {% endif %}
-
-                        </tbody>
-                    </table>
-                </form>
-            </div>
+                                <div class="custom-dd dd" id="nestable_list_1">
+                                </div>
+                            </div><!-- end col -->
+                        </form> <!-- end col -->
+                    </div> <!-- end row -->
+                </div> <!-- end card-box -->
+            </div> <!-- end col -->
         </div>
-    </div>
-{% endblock %}
+        <!-- end Row -->
 
+        {% block footer %}
+            {{ parent() }}
+        {% endblock %}
+    {% endif %}
+{% endblock %}
 {% block javascripts %}
     {{ parent() }}
+    {% if(entity != null) %}
+        <!--script for this page only-->
+        <script src="{{ asset('bundles/ssfmb/plugins/nestable/jquery.nestable.js') }}"></script>
+        <script src="{{ asset('bundles/ssfmb/pages/nestable.js') }}"></script>
+    {% endif %}
     <script type="text/javascript">
         function validation() {
             check = confirm("vous allez etre rediriger vers l'interface de mise en eau de ce que vous avez demander de retirer");
@@ -185,3 +134,5 @@
         }
     </script>
 {% endblock %}
+
+

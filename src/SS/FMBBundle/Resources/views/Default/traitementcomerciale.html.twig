@@ -1,105 +1,140 @@
-{% extends "SSFMBBundle::layout.html.twig" %}
-
-{% block title %}
-    Traitement Comerciale - {{ parent() }}
+{% extends "::base.html.twig" %}
+{% block title %}Traitement Comerciale - {{ parent() }}{% endblock %}
+{% block stylesheet %}
+    {{ parent() }}
 {% endblock %}
+{% block header %} {{ parent() }}{% endblock %}
 {% block body %}
-    <div class="container-fluid" xmlns="http://www.w3.org/1999/html">
-        {{ parent() }}
+    {{ parent() }}
+    {% set page = 'suivit' %}
+    {% if(entity != null) %}
 
         <div class="row">
-            <div class="col-md-12">
-                <p>Traitement Comerciale</p>
-                <form action="" method="post">
-                    <ul class="pagination pagination-lg">
-                        {{ knp_menu_render('SSFMBBundle:Builder:parcTComMenu') }}
-                    </ul>
-                    <table class="table table-condensed table-bordered" border="1">
-                        <tbody>
-                        <tr>
-                            <td>
-                                {% if(entity != null) %}
-                                <div id="idstockparc" hidden="true">{{ entity.idStock.idStock }}</div>
-                                <div id="idparc" hidden="true">{{ entity.idMagasin }}</div>
-                                {{ entity.abrevMagasin }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
+            <div class="col-sm-12">
+                <div class="card-box">
+                    <div class="row">
+
+                        <div class="col-md-12">
+                            <h4 class="m-t-0 header-title"><b>Traitement Comerciale {{ entity.abrevMagasin }}</b></h4>
+                            <p class="text-muted m-b-30 font-13">
+                            </p>
+                            <form action="" method="post">
                                 <table class="table table-condensed table-bordered" border="1">
-                                    <thead>
-                                    <th>article</th>
-                                    <th>lot</th>
-                                    <th>totale retirer</th>
-                                    <th>comerciale Traiter valide</th>
-                                    <th>comerciale Totale mise en vente</th>
-                                    <th>remis en poche</th>
-                                    <th>restante du stocks de vente</th>
-                                    <th>Mortaliter</th>
-                                    <th>perdu</th>
-                                    <th>non traiter</th>
-                                    </thead>
                                     <tbody>
-                                    {% for stock in stocksnvirtuel %}
-                                        <tr>
-                                            <td>{{ stock.refStockArticle.refArticle.libArticle }}</td>
-                                            <td>{{ stock.numeroSerie }}</td>
-                                            <td>{{ stock.snQte }} u<br>{{ stock.snQte/12 }} dz</td>
-                                            <td>{{ stock.snQteTraiterValide }} u<br>{{ stock.snQteTraiterValide/12 }} dz
-                                            </td>
-                                            <td>{{ stock.snQteMiseEnVente }} u<br>{{ stock.snQteMiseEnVente/12 }} dz
-                                            </td>
-                                            <td>{{ stock.snQteARemettreEnPoche }}
-                                                u<br>{{ stock.snQteARemettreEnPoche/12 }} dz
-                                            </td>
-                                            <td>
-                                                {{ render(controller('SSFMBBundle:Default:quantiterEnStocksSnActuel', {
-                                                    'stocks':stock.refStockArticle , 'lot': stock.numeroSerie
-                                                } ) ) }}
-                                            </td>
-                                            <td>{{ stock.snQteMorte }} u<br>{{ stock.snQteMorte/12 }} dz</td>
-                                            <td>{{ stock.snQtePerdu }} u<br>{{ stock.snQtePerdu/12 }} dz</td>
-                                            <td>{{ stock.snQte -stock.snQteTraiterValide-stock.snQteARemettreEnPoche-stock.snQteMorte- stock.snQtePerdu }}
-                                                u<br>{{ (stock.snQte -stock.snQteTraiterValide-stock.snQteARemettreEnPoche-stock.snQteMorte- stock.snQtePerdu) /12 }}
-                                                dz
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="3">
-                                                <input type="hidden" name="tab[]" value="{{ stock.refStockArticle }}">
-                                                <input type="hidden" name="tab[]" value="{{ stock.numeroSerie }}">
-                                                veillez
-                                                mettre juste les nouvelle valeur/ s'il n'y as pas de changement laisser
-                                                le contenu des champs a 0
-                                            </td>
-                                            <td><input type="number" name="tab[]" value="0">u</td>
-                                            <td><input type="number" name="tab[]" value="0">u</td>
-                                            <td><input type="number" name="tab[]" value="0">u</td>
-                                            <td></td>
-                                            <td><input type="number" name="tab[]" value="0">u</td>
-                                            <td><input type="number" name="tab[]" value="0">u</td>
-                                            <td></td>
-                                        </tr>
-                                    {% endfor %}
+                                    <tr>
+                                        <td>
+                                            {% if(entity != null) %}
+                                            <div id="idstockparc" hidden="true">{{ entity.idStock.idStock }}</div>
+                                            <div id="idparc" hidden="true">{{ entity.idMagasin }}</div>
+                                            {{ entity.abrevMagasin }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <table class="table table-condensed table-bordered" border="1">
+                                                <thead>
+                                                <th>article</th>
+                                                <th>lot</th>
+                                                <th>H Com Retiré</th>
+                                                <th>H Com Traité</th>
+                                                <th>H Com / VTE</th>
+                                                <th>H Com / Poche</th>
+                                                <th>Stock Huitre Restant</th>
+                                                <th>H Mortes</th>
+                                                <th>H Perte</th>
+                                                <th>non traiter</th>
+                                                </thead>
+                                                <tbody>
+                                                {% for stock in stocksnvirtuel %}
+                                                    <tr>
+                                                        <td>{{ stock.refStockArticle.refArticle.libArticle }}</td>
+                                                        <td>{{ stock.numeroSerie }}</td>
+                                                        <td>{{ stock.snQte }} u<br>{{ stock.snQte/12 }} dz</td>
+                                                        <td>{{ stock.snQteTraiterValide }}
+                                                            u<br>{{ stock.snQteTraiterValide/12 }} dz
+                                                        </td>
+                                                        <td>{{ stock.snQteMiseEnVente }}
+                                                            u<br>{{ stock.snQteMiseEnVente/12 }} dz
+                                                        </td>
+                                                        <td>{{ stock.snQteARemettreEnPoche }}
+                                                            u<br>{{ stock.snQteARemettreEnPoche/12 }} dz
+                                                        </td>
+                                                        <td>
+                                                            {{ render(controller('SSFMBBundle:Default:quantiterEnStocksSnActuel', {
+                                                                'stocks':stock.refStockArticle , 'lot': stock.numeroSerie
+                                                            } ) ) }}
+                                                        </td>
+                                                        <td>{{ stock.snQteMorte }} u<br>{{ stock.snQteMorte/12 }} dz
+                                                        </td>
+                                                        <td>{{ stock.snQtePerdu }} u<br>{{ stock.snQtePerdu/12 }} dz
+                                                        </td>
+                                                        <td>{{ stock.snQte -stock.snQteTraiterValide-stock.snQteARemettreEnPoche-stock.snQteMorte- stock.snQtePerdu }}
+                                                            u<br>{{ (stock.snQte -stock.snQteTraiterValide-stock.snQteARemettreEnPoche-stock.snQteMorte- stock.snQtePerdu) /12 }}
+                                                            dz
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="3">
+                                                            <input type="hidden" name="tab[]"
+                                                                   value="{{ stock.refStockArticle }}">
+                                                            <input type="hidden" name="tab[]"
+                                                                   value="{{ stock.numeroSerie }}">
+                                                            veillez
+                                                            mettre juste les nouvelle valeur/ s'il n'y as pas de
+                                                            changement laisser
+                                                            le contenu des champs a 0
+                                                        </td>
+                                                        <td><input type="number" name="tab[]" value="0">u</td>
+                                                        <td><input type="number" name="tab[]" value="0">u</td>
+                                                        <td><input type="number" name="tab[]" value="0">u</td>
+                                                        <td></td>
+                                                        <td><input type="number" name="tab[]" value="0">u</td>
+                                                        <td><input type="number" name="tab[]" value="0">u</td>
+                                                        <td></td>
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p><input type="submit" value="valider le stock comerciale "/></p>
+                                        </td>
+                                    </tr>
+                                    {% endif %}
+
                                     </tbody>
                                 </table>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                    <p><input type="submit" value="valider le stock comerciale "/></p>
-                            </td>
-                        </tr>
-                        {% endif %}
+                            </form>
+                            {#
+                                                     <div class="custom-dd dd" id="nestable_list_2">
+                                                         <ol ="dd-list">
+                                                             {#
+                                                              {{ render(controller(
+                                                              'SSFMBBundle:Filiere:findByParc',
+                                                              { 'parc': entity }
+                                                              )) }}
 
-                        </tbody>
-                    </table>
-                </form>
-            </div>
+                                    {% include '@SSFMB/Filiere/Include/listIndexInclude.html.twig' %}
+                                </ol>
+                            </div>
+                            #}
+                        </div>
+
+                        <!-- end col -->
+                    </div> <!-- end row -->
+                </div> <!-- end card-box -->
+            </div> <!-- end col -->
         </div>
-    </div>
-{% endblock %}
+        <!-- end Row -->
 
+        {% block footer %}
+            {{ parent() }}
+        {% endblock %}
+    {% endif %}
+{% endblock %}
 {% block javascripts %}
     {{ parent() }}
+
 {% endblock %}

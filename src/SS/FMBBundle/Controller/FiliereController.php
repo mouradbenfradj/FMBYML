@@ -227,7 +227,7 @@ class FiliereController extends Controller
     public function findByParcAction(Magasins $parc)
     {
         $em = $this->getDoctrine()->getManager();
-        $filieres = $em->getRepository('SSFMBBundle:Filiere')->findByParc($parc);
+        $filieres = $em->getRepository('SSFMBBundle:Filiere')->findByParc($parc, array('nomFiliere' => 'asc'));
         return $this->render('@SSFMB/Filiere/Render/listFiliereIndexRender.html.twig', array(
             'filieres' => $filieres));
 

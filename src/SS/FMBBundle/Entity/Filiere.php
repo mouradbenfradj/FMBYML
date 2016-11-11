@@ -29,12 +29,12 @@ class Filiere
     private $nomFiliere;
 
     /**
-     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Magasins", inversedBy="filieres",)
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Magasins", inversedBy="filieres")
      * @ORM\JoinColumn(name="magasin", referencedColumnName="id_magasin",nullable=false)
      */
     private $parc;
     /**
-     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Segment", mappedBy="filiere" ,cascade={"persist","merge","remove"},fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Segment", mappedBy="filiere" ,cascade={"persist","merge","remove"},fetch="LAZY")
      */
     private $segments;
     /**
