@@ -57,5 +57,4 @@
         "use strict";
         $.Nestable.init();
         $('.dd').nestable('collapseAll');
-
     }(window.jQuery);

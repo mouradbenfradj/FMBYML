@@ -41,13 +41,11 @@
 
                             <div class="custom-dd dd" id="nestable_list_2">
                                 <ol class="dd-list">
+                                    {{ render(controller('SSFMBBundle:Filiere:findByParc',{ 'parc': entity,'page':page })) }}
                                     {#
-                                     {{ render(controller(
-                                     'SSFMBBundle:Filiere:findByParc',
-                                     { 'parc': entity }
-                                     )) }}
-                                     #}
-                                    {% include '@SSFMB/Filiere/Include/listIndexInclude.html.twig' %}
+{{ render(controller('SSFMBBundle:Filiere:findByParc',{ 'parc': entity })) }}
+{% include '@SSFMB/Filiere/Include/listIndexInclude.html.twig' %}
+#}
                                 </ol>
                             </div>
                         </div>

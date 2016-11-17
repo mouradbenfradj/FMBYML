@@ -2,22 +2,31 @@
 {% set totaleplace =0 %}
 {% set totalelanterne =0 %}
 {% set totalecorde =0 %}
-{% for segment in filiere.segments %}
-    {% set tailleFiliere = tailleFiliere+segment.getLongeur %}
-    {% for flotteur in segment.flotteurs %}
-        {% for emplacement in flotteur.emplacements %}
-            {% if emplacement.stockscorde == null and emplacement.stockslanterne == null %}
-                {% set totaleplace = totaleplace + 1 %}
-            {% elseif emplacement.stockscorde != null %}
-                {% set totaleplace = totaleplace + 1 %}
-                {% set totalecorde = totalecorde + 1 %}
-            {% elseif emplacement.stockslanterne != null %}
-                {% set totaleplace = totaleplace + 1 %}
-                {% set totalelanterne =totalelanterne + 1 %}
+{% for segment in filiere %}
+    {% if not loop.first %}
+        {% set tailleFiliere = tailleFiliere+segment.longeur %}
+        {% for flotteur in segment %}
+            {% if not loop.first %}
+                {% for emplacement in flotteur %}
+                    {% if not loop.first %}
+                        {% if emplacement.stockscorde == null and emplacement.stockslanterne == null %}
+                            {% set totaleplace = totaleplace + 1 %}
+                        {% elseif emplacement.stockscorde != null %}
+                            {% set totaleplace = totaleplace + 1 %}
+                            {% set totalecorde = totalecorde + 1 %}
+                        {% elseif emplacement.stockslanterne != null %}
+                            {% set totaleplace = totaleplace + 1 %}
+                            {% set totalelanterne =totalelanterne + 1 %}
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
             {% endif %}
         {% endfor %}
-    {% endfor %}
+
+    {% endif %}
+
 {% endfor %}
+
 <table valign="top" class="table table-striped m-0" border="1">
     <thead>
     <tr>
@@ -39,6 +48,7 @@
         <th>
             nombre des lanterne
         </th>
+
     </tr>
     </thead>
     <tbody>
@@ -53,6 +63,7 @@
         </td>
         <td>{{ totalecorde }}</td>
         <td>{{ totalelanterne }}</td>
+
     </tr>
     </tbody>
 </table>

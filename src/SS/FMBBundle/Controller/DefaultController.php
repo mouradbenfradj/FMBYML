@@ -32,8 +32,8 @@ class DefaultController extends Controller
     public function preparationLanterneAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $form = $this->createForm(new PreparationLanterneType($em), null, array('action' => $this->generateUrl('ssfmb_preparationlanterne'), 'method' => 'POST',));
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form = $this->createForm(new PreparationLanterneType($em), null, array('action' => $this->generateUrl('ssfmb_preparationlanterne'), 'method' => 'POST', 'attr' => array('class' => "form-horizontal")));
+        $form->add('submit', 'submit', array('label' => 'Valider', 'attr' => array('class' => 'col-md-6 btn btn-purple waves-effect waves-light')));
         if ($request->isMethod('POST')) {
             $defaultmetier = new DefaultImpl($em);
             $form->handleRequest($request);

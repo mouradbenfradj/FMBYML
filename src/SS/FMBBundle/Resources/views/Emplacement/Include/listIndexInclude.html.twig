@@ -1,5 +1,6 @@
 {% if page == "suivit" %}
-    {% for emplacement in flotteur.emplacements %}
+    {% for emplacement in flotteur %}
+        {% if not loop.first %}
         <div class="col-xs-1 col-sm-1 col-md-1">
             {% if emplacement.stockscorde == null and emplacement.stockslanterne == null %}
                 <font color="red"> {{ emplacement.place }}</font>
@@ -9,6 +10,7 @@
                 {% include "SSFMBBundle:Include:suivitEtatLanterneInclude.html.twig" %}
             {% endif %}
         </div>
+        {% endif %}
     {% endfor %}
 {% elseif page == "MAEL" %}
     {% for emplacement in flotteur.emplacements %}

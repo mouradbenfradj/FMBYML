@@ -3,6 +3,7 @@
 namespace SS\FMBBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use SS\FMBBundle\Entity\Magasins;
 
 /**
  * FiliereRepository
@@ -12,5 +13,23 @@ use Doctrine\ORM\EntityRepository;
  */
 class FiliereRepository extends EntityRepository
 {
-
+    public function getTotaleContenuFiliere(Magasins $parc)
+    {
+        $qb = $this->createQueryBuilder('fi')
+            ->select('fl.id as flId,fl.nomFlotteur ,c.id as sc,lan.id as sl')
+            ->addSelect('fi.nomFiliere')->addSelect('fi.id as fiId')
+            ->addSelect('s.id as sId')->addSelect('s.nomSegment')->addSelect('s.longeur')
+            ->addSelect('carticle.numeroSerie as numeroSerie ')
+            ->addSelect('refa.libArticle as libArticle')
+            ->addSelect('lanter.nomLanterne')->addSelect('lart.numeroSerie as numeroSerieLanrt')
+            ->addSelect('reflart.libArticle as llibArticle')
+            ->addSelect('e.dateDeRemplissage as dateDeRemplissage')->addSelect('e.id as empId')->addSelect('e.place')
+            ->join('fi.segments', 's')->join('s.flotteurs', 'fl')->join('fl.emplacements', 'e')
+            ->leftJoin('e.stockslanterne', 'lan')->leftJoin('lan.article', 'lart')->leftJoin('lart.refStockArticle', 'reflsart')->leftJoin('reflsart.refArticle', 'reflart')->leftJoin('lan.lanterne', 'lanter')
+            ->leftJoin('e.stockscorde', 'c')->leftJoin('c.article', 'carticle')->leftJoin('carticle.refStockArticle', 'refsa')->leftJoin('refsa.refArticle', 'refa')
+            ->where('fi.parc = :parc')
+            ->orderBy('fi.nomFiliere', 'ASC')
+            ->setParameter('parc', $parc);
+        return $qb->getQuery()->getResult();
+    }
 }

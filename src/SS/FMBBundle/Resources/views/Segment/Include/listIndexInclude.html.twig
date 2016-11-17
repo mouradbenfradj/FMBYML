@@ -1,4 +1,6 @@
-{% for segment in filiere.segments %}
+{% for segment in filiere %}
+    {% if not loop.first %}
+
     <ol class="dd-list" style="display: inline-block">
         <li class="dd-item" data-id="16">
             <div class="dd-handle">
@@ -9,11 +11,13 @@
                 {% endif %}
             </div>
             <ol class="dd-list" style="display: inline-block"
-                id="{{ filiere.getNomFiliere }}{{ segment.getNomSegment }}">
+                id="{{  filiere.nomFiliere }}{{ segment.nomSegment  }}">
                 {% include '@SSFMB/Flotteur/Include/listIndexInclude.html.twig' %}
             </ol>
         </li>
+
     </ol>
+    {% endif %}
 {% endfor %}
 
 {#  <td valign="top">

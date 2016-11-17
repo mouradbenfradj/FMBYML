@@ -1,17 +1,18 @@
 {% if page in ["MAEL","MAEC","RL","RC","RTR","RTMAE"] %}
     {% set verifexsistance = 0 %}
 {% endif %}
-{% for flotteur in segment.flotteurs %}
-    <div class="col-xs-12 col-sm-12 col-md-12"
-         id="{{ filiere.getNomFiliere }}{{ segment.getNomSegment }}{{ flotteur.getNomFlotteur }}">
-        <li class="dd-item" data-id="16">
-            <div class="col-xs-1 col-sm-1 col-md-1">
-                {{ flotteur.nomFlotteur }}
-            </div>
-            {% include '@SSFMB/Emplacement/Include/listIndexInclude.html.twig' %}
-        </li>
-    </div>
-
+{% for key, flotteur in segment %}
+    {% if not loop.first and key != "nomSegment" %}
+        <div class="col-xs-12 col-sm-12 col-md-12"
+             id="{{  filiere.nomFiliere }}{{ segment.nomSegment  }}{{ flotteur.nomFlotteur }}">
+            <li class="dd-item" data-id="16">
+                <div class="col-xs-1 col-sm-1 col-md-1">
+                    {{ flotteur.nomFlotteur }}
+                </div>
+                  {% include '@SSFMB/Emplacement/Include/listIndexInclude.html.twig' %}
+            </li>
+        </div>
+    {% endif %}
 {% endfor %}
 {#
 {% for flotteur in segment.flotteurs %}

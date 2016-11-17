@@ -21,6 +21,5 @@ class StocksArticlesSnRepository extends EntityRepository
             ->setParameter(2, $numeroSerie);
 
         return $qb->getQuery()->getOneOrNullResult();
-
     }
 }

@@ -3,6 +3,7 @@
 namespace SS\FMBBundle\Controller;
 
 use SS\FMBBundle\Entity\Flotteur;
+use SS\FMBBundle\Entity\Magasins;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -231,5 +232,12 @@ class EmplacementController extends Controller
         return $this->render('SSFMBBundle:Emplacement/Render:listEmplacementIndexRender.html.twig', array(
             'emplacements' => $emplacements));
 
+    }
+    public function getTotaleEmplacementDuParcAction(Magasins $parc)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $totale = $em->getRepository('SSFMBBundle:Emplacement')->getTotaleEmplacementDuParc($parc);
+        return $this->render('SSFMBBundle:Emplacement/Render:listEmplacementTotaleByParcRender.html.twig', array(
+            'totales' => $totale));
     }
 }

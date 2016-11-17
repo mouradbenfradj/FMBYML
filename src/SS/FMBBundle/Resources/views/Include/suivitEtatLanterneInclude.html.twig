@@ -1,6 +1,6 @@
-<a title="{{ emplacement.stockslanterne.lanterne.nomlanterne }}
--article: {{ emplacement.stockslanterne.article.refStockArticle.refArticle.libArticle }}
--lot : {{ emplacement.stockslanterne.article.numeroSerie }}
+<a title="{{ emplacement.nomLanterne }}
+-article: {{ emplacement.llibArticle }}
+-lot : {{ emplacement.numeroSerieLanrt }}
 -processus : {% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}PG{{ difference.m }}
 -date de MAE :{{ emplacement.dateDeRemplissage|date('Y-m-d') }}"
    href="#">

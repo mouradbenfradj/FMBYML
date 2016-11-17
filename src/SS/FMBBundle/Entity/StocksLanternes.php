@@ -28,7 +28,7 @@ class StocksLanternes
     private $lanterne;
 
     /**
-     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Poche", mappedBy="stocklanterne",cascade={"persist","remove"},fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Poche", mappedBy="stocklanterne",cascade={"persist","remove"},fetch="LAZY")
      */
     private $poches;
 
