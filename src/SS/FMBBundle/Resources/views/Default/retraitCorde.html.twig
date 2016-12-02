@@ -24,20 +24,16 @@
             </div>
         </div>
         <!-- End row -->
-
-
-
         <br>
-
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="card-box">
-                    <div class="row">
-                        <form action="" method="post" onsubmit="return validation()">
+        <form action="" method="post" onsubmit="return validation()">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card-box">
+                        <div class="row">
                             <div id="idstockparc" hidden="true">{{ entity.idStock.idStock }}</div>
                             <div id="idparc" hidden="true">{{ entity.idMagasin }}</div>
 
-                            <div class="col-md-11">
+                            <div class="col-md-12">
                                 <h4 class="m-t-0 header-title"><b>Retrait aire de
                                         travaille {{ entity.abrevMagasin }}</b></h4>
                                 <p class="text-muted m-b-30 font-13">
@@ -45,41 +41,56 @@
 
                                 <div class="custom-dd dd" id="nestable_list_2">
                                     <ol class="dd-list">
+                                        {{ render(controller('SSFMBBundle:Filiere:findByParc',{ 'parc': entity,'page':page })) }}
                                         {#
-                                         {{ render(controller(
-                                         'SSFMBBundle:Filiere:findByParc',
-                                         { 'parc': entity }
-                                         )) }}
-                                         #}
+                                                           {{ render(controller(
+                                                           'SSFMBBundle:Filiere:findByParc',
+                                                           { 'parc': entity }
+                                                           )) }}
+
                                         {% include '@SSFMB/Filiere/Include/listIndexInclude.html.twig' %}
+                                        #}
                                     </ol>
                                 </div>
                             </div>
                             <div class="col-md-1">
-                                <div data-spy="affix">
-                                    {% include '@SSFMB/Include/couleurCleInclude.html.twig' %}
-                                    {% include "@SSFMB/Filiere/Include/listMenuIndexInclude.html.twig" %}
-                                    <p>date de retrait des cordes</p>
-                                    {% set now =  "now"|date("Y-m-d") %}
-                                    <p><input type="date" name="dateRetraitCorde" value="{{ now }}"></p>
-                                    <p>quantiter retirer</p>
-                                    <p><input type="number" id="quantit" readonly="true" value="0"></p>
-                                    <p>stocks de reception</p>
-                                    <p>
-                                        <input type="text" name="stockchoix" hidden="true" id="stockchoix"
-                                               value="{{ entity.idStock.idStock }}">
-                                        <input type="text" readonly="true" value="{{ entity.idStock.libStock }}">
-                                    </p>
-                                    <p><input type="submit" value="confirmer le retrait"/></p>
-                                </div>
                                 <div class="custom-dd dd" id="nestable_list_1">
                                 </div>
                             </div><!-- end col -->
-                        </form>  <!-- end col -->
-                    </div> <!-- end row -->
-                </div> <!-- end card-box -->
-            </div> <!-- end col -->
-        </div>
+                            <!-- end col -->
+                        </div> <!-- end row -->
+                    </div> <!-- end card-box -->
+                </div> <!-- end col -->
+            </div>
+            <div id="sideNavi">
+                <!-- sidenavi menu //-->
+                <div class="side-navi-item-default"></div>
+                <div class="side-navi-item item1">
+                    <div>^</div>
+                </div>
+                <!-- sidenavi data //-->
+                <div class="side-navi-data">
+                    <div class="side-navi-tab">
+                        <div>
+                            {% include '@SSFMB/Include/couleurCleInclude.html.twig' %}
+                            {% include "@SSFMB/Filiere/Include/listMenuIndexInclude.html.twig" %}
+                            <p>date de retrait des cordes</p>
+                            {% set now =  "now"|date("Y-m-d") %}
+                            <p><input type="date" name="dateRetraitCorde" value="{{ now }}"></p>
+                            <p>quantiter retirer</p>
+                            <p><input type="number" id="quantit" readonly="true" value="0"></p>
+                            <p>stocks de reception</p>
+                            <p>
+                                <input type="text" name="stockchoix" hidden="true" id="stockchoix"
+                                       value="{{ entity.idStock.idStock }}">
+                                <input type="text" readonly="true" value="{{ entity.idStock.libStock }}">
+                            </p>
+                            <p><input type="submit" value="confirmer le retrait"/></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
         <!-- end Row -->
 
         {% block footer %}
@@ -105,14 +116,14 @@
              }
              $(document).ready(function () {
                  $('input:checkbox').change(
-                         function () {
-                             if ($(this).is(':checked')) {
-                                 $('#quantit').val(parseInt($('#quantit').val()) + 1);
-                             } else {
-                                 $('#quantit').val(parseInt($('#quantit').val()) - 1);
+                     function () {
+                         if ($(this).is(':checked')) {
+                             $('#quantit').val(parseInt($('#quantit').val()) + 1);
+                         } else {
+                             $('#quantit').val(parseInt($('#quantit').val()) - 1);
 
-                             }
-                         });
+                         }
+                     });
              });
              function fillCheckbox(containerID, fill) {
                  var checkbox = $('#' + containerID);

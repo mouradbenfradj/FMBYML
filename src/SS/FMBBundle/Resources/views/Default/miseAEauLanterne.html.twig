@@ -25,12 +25,12 @@
         </div>
         <!-- End row -->
         <br>
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="card-box">
-                    <div class="row">
-                        <form action="" method="post" id="formulaie" onsubmit="return validation()">
-                            <div class="col-md-11">
+        <form action="" method="post" id="formulaie" onsubmit="return validation()">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card-box">
+                        <div class="row">
+                            <div class="col-md-12">
                                 <div id="idstockparc" hidden="true">{{ entity.idStock.idStock }}</div>
                                 <div id="idparc" hidden="true">{{ entity.idMagasin }}</div>
                                 <h4 class="m-t-0 header-title"><b>Mise a eau lanterne {{ entity.abrevMagasin }}</b></h4>
@@ -38,70 +38,86 @@
                                 </p>
                                 <div class="custom-dd dd" id="nestable_list_2">
                                     <ol class="dd-list">
-                                        {#
-                                         {{ render(controller(
-                                         'SSFMBBundle:Filiere:findByParc',
-                                         { 'parc': entity }
-                                         )) }}
-                                         #}
+                                        {{ render(controller('SSFMBBundle:Filiere:findByParc',{ 'parc': entity,'page':page })) }}
+                                        {#                                      {{ render(controller(
+                                             'SSFMBBundle:Filiere:findByParc',
+                                             { 'parc': entity }
+                                             )) }}
+
                                         {% include '@SSFMB/Filiere/Include/listIndexInclude.html.twig' %}
+                                    #}
                                     </ol>
                                 </div>
                             </div>
                             <div class="col-md-1">
-                                <div data-spy="affix">
-                                    {% include '@SSFMB/Include/couleurCleInclude.html.twig' %}
-                                    {% include "@SSFMB/Filiere/Include/listMenuIndexInclude.html.twig" %}
-                                    <p>quantiter disponible</p>
-                                    <p>
-                                        <input type="number" id="quantit" readonly="true" value="0">
-                                    </p>
-                                    <p>date de preparation des lanternes</p>
-                                    {% set now =  "now"|date("Y-m-d") %}
-                                    <p>
-                                        <input type="date" name="dateMAELanterne" value="{{ now }}">
-                                    </p>
-                                    <p>choisir type lanternes</p>
-                                    <p>
-                                        <select name="lanternechoix" id="lanternechoix">
-                                            {% for lanterne in lanternes %}
-                                                <option value="{{ lanterne.nomLanterne }}">
-                                                    {{ lanterne.nomLanterne }}
-                                                </option>
-                                            {% endfor %}
-                                        </select>
-                                    </p>
-                                    <p> choisir l'article a mettre</p>
-                                    <p>
-                                        <select name="articlechoix" id="articlechoix">
-                                            {% for article in articles %}
-                                                <option value="{{ article.refStockArticle }}">
-                                                    {{ article.refArticle.libArticle }}
-                                                </option>
-                                            {% endfor %}
-                                        </select>
-                                    </p>
-                                    <p> choisir le lot de l'article</p>
-                                    <p>
-                                        <select name="articlelotchoix" id="articlelotchoix"></select>
-                                    </p>
-                                    <div id="choixqtearticle">
-                                        <p> choix de la quantiter des lanternes</p>
-                                        <p>
-                                            <select name="quantierchoix" id="quantierchoix"></select>
-                                        </p>
-                                        <p>
-                                            <input type="submit" value="confirmer la mise a l'eau"/>
-                                        </p>
-                                    </div>
-                                </div>
                                 <div class="custom-dd dd" id="nestable_list_1"></div>
                             </div><!-- end col -->
-                        </form>        <!-- end col -->
-                    </div> <!-- end row -->
-                </div> <!-- end card-box -->
-            </div> <!-- end col -->
-        </div>
+                            <!-- end col -->
+                        </div> <!-- end row -->
+                    </div> <!-- end card-box -->
+                </div> <!-- end col -->
+            </div>
+            <div id="sideNavi">
+                <!-- sidenavi menu //-->
+                <div class="side-navi-item-default"></div>
+                <div class="side-navi-item item1">
+                    <div>^</div>
+                </div>
+                <!-- sidenavi data //-->
+                <div class="side-navi-data">
+                    <div class="side-navi-tab">
+                        <div>
+                            {% include '@SSFMB/Include/couleurCleInclude.html.twig' %}
+                            {% include "@SSFMB/Filiere/Include/listMenuIndexInclude.html.twig" %}
+                            <p>quantiter disponible</p>
+                            <p>
+                                <input type="number" id="quantit" readonly="true" value="0">
+                            </p>
+                            <p>date de preparation des lanternes</p>
+                            {% set now =  "now"|date("Y-m-d") %}
+                            <p>
+                                <input type="date" name="dateMAELanterne" value="{{ now }}">
+                            </p>
+                            <p>choisir type lanternes</p>
+                            <p>
+                                <select name="lanternechoix" id="lanternechoix">
+                                    {% for lanterne in lanternes %}
+                                        <option value="{{ lanterne.nomLanterne }}">
+                                            {{ lanterne.nomLanterne }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </p>
+                            <p> choisir l'article a mettre</p>
+                            <p>
+                                <select name="articlechoix" id="articlechoix">
+                                    {% for article in articles %}
+                                        {% if article.refArticle.libArticle starts with 'NAISSAIN' %}
+                                            <option value="{{ article.refStockArticle }}">
+                                                {{ article.refArticle.libArticle }}
+                                            </option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </p>
+                            <p> choisir le lot de l'article</p>
+                            <p>
+                                <select name="articlelotchoix" id="articlelotchoix"></select>
+                            </p>
+                            <div id="choixqtearticle">
+                                <p> choix de la quantiter des lanternes</p>
+                                <p>
+                                    <select name="quantierchoix" id="quantierchoix"></select>
+                                </p>
+                                <p>
+                                    <input type="submit" value="confirmer la mise a l'eau"/>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
         {% block footer %}
             {{ parent() }}
         {% endblock %}
@@ -149,6 +165,7 @@
                     type: "POST",
                     url: "{{ url('ssfmb_articlestock') }}?stock_id=" + $('#idstockparc').text() + "&sarticle=" + $('#articlechoix').val(),
                     beforeSend: function () {
+                        $('#quantit').val(0);
                     },
                     success: function (data) {
                         if ($.trim(data)) {
@@ -179,6 +196,7 @@
                                 },
                                 dataType: 'json',
                                 beforeSend: function () {
+                                    $('#quantit').val(0);
                                     $('#quantierchoix').empty();
                                 },
                                 success: function (json) {
@@ -209,9 +227,9 @@
                                                 },
                                                 dataType: 'json',
                                                 beforeSend: function () {
+                                                    $('#quantit').val(0);
                                                 },
                                                 success: function (json) {
-                                                    $('#quantit').val(0);
                                                     if ($.trim(json)) {
                                                         $('#choixqtearticle').ready(function () {
                                                             $("input:checkbox").each(function () {
@@ -261,11 +279,10 @@
                     },
                     dataType: 'json',
                     beforeSend: function () {
-
+                        $('#quantit').val(0);
                         $('#quantierchoix').empty();
                     },
                     success: function (json) {
-                        $('#quantit').val(0);
                         $('#quantierchoix').html('');
                         if (!$.trim(json)) {
                             $('#choixqtearticle').ready(function () {
@@ -293,9 +310,9 @@
                                     },
                                     dataType: 'json',
                                     beforeSend: function () {
+                                        $('#quantit').val(0);
                                     },
                                     success: function (json) {
-                                        $('#quantit').val(0);
                                         if ($.trim(json)) {
                                             $('#choixqtearticle').ready(function () {
                                                 $("input:checkbox").each(function () {
@@ -341,11 +358,10 @@
                     },
                     dataType: 'json',
                     beforeSend: function () {
-
+                        $('#quantit').val(0);
                         $('#quantierchoix').empty();
                     },
                     success: function (json) {
-                        $('#quantit').val(0);
                         $('#quantierchoix').html('');
                         if (!$.trim(json)) {
                             $('#choixqtearticle').ready(function () {
@@ -375,9 +391,9 @@
                                     },
                                     dataType: 'json',
                                     beforeSend: function () {
+                                        $('#quantit').val(0);
                                     },
                                     success: function (json) {
-                                        $('#quantit').val(0);
 
                                         if ($.trim(json)) {
                                             $('#choixqtearticle').ready(function () {
@@ -424,11 +440,10 @@
                     },
                     dataType: 'json',
                     beforeSend: function () {
-
+                        $('#quantit').val(0);
                         $('#quantierchoix').empty();
                     },
                     success: function (json) {
-                        $('#quantit').val(0);
                         $('#quantierchoix').html('');
                         if (!$.trim(json)) {
                             $('#choixqtearticle').ready(function () {
@@ -459,9 +474,9 @@
                                     },
                                     dataType: 'json',
                                     beforeSend: function () {
+                                        $('#quantit').val(0);
                                     },
                                     success: function (json) {
-                                        $('#quantit').val(0);
                                         if ($.trim(json)) {
                                             $('#choixqtearticle').ready(function () {
                                                 $("input:checkbox").each(function () {
@@ -507,9 +522,9 @@
                     },
                     dataType: 'json',
                     beforeSend: function () {
+                        $('#quantit').val(0);
                     },
                     success: function (json) {
-                        $('#quantit').val(0);
                         if ($.trim(json)) {
                             $('#choixqtearticle').ready(function () {
                                 $("input:checkbox").each(function () {

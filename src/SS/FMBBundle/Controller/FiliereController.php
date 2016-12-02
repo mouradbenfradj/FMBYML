@@ -231,14 +231,13 @@ class FiliereController extends Controller
         $filieress = $em->getRepository('SSFMBBundle:Filiere')->getTotaleContenuFiliere($parc);
         $filieres = array();
         foreach ($filieress as $item) {
-
             $filieres[$item['fiId']]['nomFiliere'] = $item['nomFiliere'];
+            $filieres[$item['fiId']]['aireDeTravaille'] = $item['aireDeTravaille'];
             $filieres[$item['fiId']][$item['sId']]['longeur'] = $item['longeur'];
             $filieres[$item['fiId']][$item['sId']]['nomSegment'] = $item['nomSegment'];
             $filieres[$item['fiId']][$item['sId']][$item['flId']]['nomFlotteur'] = $item['nomFlotteur'];
-            $filieres[$item['fiId']][$item['sId']][$item['flId']][$item['empId']] = array('place' => $item['place'], 'numeroSerieLanrt' => $item['numeroSerieLanrt'], 'llibArticle' => $item['llibArticle'], 'libArticle' => $item['libArticle'], 'nomLanterne' => $item['nomLanterne'], 'numeroSerie' => $item['numeroSerie'], 'dateDeRemplissage' => $item['dateDeRemplissage'], 'stockscorde' => $item['sc'], 'stockslanterne' => $item['sl']);
+            $filieres[$item['fiId']][$item['sId']][$item['flId']][$item['empId']] = array('place' => $item['place'], 'numeroSerieLanrt' => $item['numeroSerieLanrt'], 'llibArticle' => $item['llibArticle'], 'libArticle' => $item['libArticle'], 'nomLanterne' => $item['nomLanterne'], 'numeroSerie' => $item['numeroSerie'],'dateDTL' => $item['maelt'],'dateDTC' => $item['maect'], 'dateDeRemplissage' => $item['dateDeRemplissage'], 'stockscorde' => $item['sc'], 'stockslanterne' => $item['sl']);
         }
-return $this->render('@SSFMB/Filiere/Render/listFiliereIndexRender.html.twig', array(
-'filieres' => $filieres, 'page' => $page));
-}
+        return $this->render('@SSFMB/Filiere/Render/listFiliereIndexRender.html.twig', array('filieres' => $filieres, 'page' => $page));
+    }
 }

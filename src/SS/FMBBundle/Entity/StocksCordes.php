@@ -63,6 +63,11 @@ class StocksCordes
     private $dateDeCreation;
     /**
      *
+     * @ORM\Column(name="date_de_mise_a_eau", type="date",nullable=true)
+     */
+    private $dateDeMiseAEau;
+    /**
+     *
      * @ORM\Column(name="dateDeRetraitTransfert", type="date", nullable=true)
      */
     private $dateDeRetraitTransfert;
@@ -348,5 +353,28 @@ class StocksCordes
         $this->dateDeMAETransfert = $dateDeMAETransfert;
 
         return $this;
+    }
+
+    /**
+     * Set dateDeMiseAEau
+     *
+     * @param \DateTime $dateDeMiseAEau
+     * @return StocksCordes
+     */
+    public function setDateDeMiseAEau($dateDeMiseAEau)
+    {
+        $this->dateDeMiseAEau = $dateDeMiseAEau;
+
+        return $this;
+    }
+
+    /**
+     * Get dateDeMiseAEau
+     *
+     * @return \DateTime 
+     */
+    public function getDateDeMiseAEau()
+    {
+        return $this->dateDeMiseAEau;
     }
 }

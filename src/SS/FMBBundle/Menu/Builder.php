@@ -24,9 +24,8 @@ class Builder implements ContainerAwareInterface
         $menu->addChild('suivi filières');
         $menu->addChild('Préparation');
         $menu->addChild("Mise à l'eau");
-        $menu->addChild('Retrait AW');
-
         $menu->addChild('Retrait Transfert');
+        $menu->addChild('Retrait AW');
         $menu->addChild('Traitement Comercial');
         $menu->addChild('planing de travaille');
         $menu->addChild('Processus');

@@ -2,8 +2,8 @@
 {% set totaleplace =0 %}
 {% set totalelanterne =0 %}
 {% set totalecorde =0 %}
-{% for segment in filiere %}
-    {% if not loop.first %}
+{% for key,segment in filiere %}
+    {% if not loop.first and key != "aireDeTravaille" %}
         {% set tailleFiliere = tailleFiliere+segment.longeur %}
         {% for flotteur in segment %}
             {% if not loop.first %}

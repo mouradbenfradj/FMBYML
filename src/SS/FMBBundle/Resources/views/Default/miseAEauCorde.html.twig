@@ -28,13 +28,12 @@
 
 
         <br>
-
+        <form action="" method="post" onsubmit="return validation()">
         <div class="row">
             <div class="col-sm-12">
                 <div class="card-box">
                     <div class="row">
-                        <form action="" method="post" onsubmit="return validation()">
-                            <div class="col-md-11">
+                            <div class="col-md-12">
                                 <div id="idstockparc" hidden="true">{{ entity.idStock.idStock }}</div>
                                 <div id="idparc" hidden="true">{{ entity.idMagasin }}</div>
                                 <h4 class="m-t-0 header-title"><b>Mise à l'eau -> parc {{ entity.abrevMagasin }}</b>
@@ -44,67 +43,82 @@
 
                                 <div class="custom-dd dd" id="nestable_list_2">
                                     <ol class="dd-list">
+                                        {{ render(controller('SSFMBBundle:Filiere:findByParc',{ 'parc': entity,'page':page })) }}
                                         {#
-                                         {{ render(controller(
-                                         'SSFMBBundle:Filiere:findByParc',
-                                         { 'parc': entity }
-                                         )) }}
-                                         #}
-                                        {% include '@SSFMB/Filiere/Include/listIndexInclude.html.twig' %}
+                                  {{ render(controller(
+                                  'SSFMBBundle:Filiere:findByParc',
+                                  { 'parc': entity }
+                                  )) }}
+                                {% include '@SSFMB/Filiere/Include/listIndexInclude.html.twig' %}
+                                #}
                                     </ol>
                                 </div>
                             </div>
                             <div class="col-md-1">
-                                <div data-spy="affix">
-                                    {% include '@SSFMB/Include/couleurCleInclude.html.twig' %}
-                                    {% include "@SSFMB/Filiere/Include/listMenuIndexInclude.html.twig" %}
-                                    <p>quantiter disponible</p>
-                                    <p><input type="number" id="quantit" readonly="true" value="0"></p>
-                                    <p>date de preparation des laternes</p>
-                                    {% set now =  "now"|date("Y-m-d") %}
-                                    <p><input type="date" name="dateMAECorde" value="{{ now }}"></p>
-                                    <p>choisir type cordes</p>
-                                    <p>
-                                        <select name="cordechoix" id="cordechoix">
-                                            {% for corde in cordes %}
-                                                <option value="{{ corde.id }}">{{ corde.nomCorde }}</option>
-                                            {% endfor %}
-                                        </select>
-                                    </p>
-
-                                    <p> choisir l'article a mettre</p>
-
-                                    <p>
-                                        <select name="articlechoix" id="articlechoix">
-                                            {% for article in articles %}
-                                                <option value="{{ article.refStockArticle }}">{{ article.refArticle.libArticle }}</option>
-                                            {% endfor %}
-                                        </select>
-                                    </p>
-                                    <p> choisir le lot de l'article</p>
-
-                                    <p>
-                                        <select name="articlelotchoix" id="articlelotchoix"></select>
-                                    </p>
-
-                                    <div id="choixqtearticle">
-                                        <p> Densité (U/Corde) </p>
-                                        <p>
-                                            <select name="quantierchoix" id="quantierchoix"></select>
-                                        </p>
-                                        <p><input type="submit" value="confirmer la mise a l'eau"/></p>
-
-                                    </div>
-                                </div>
                                 <div class="custom-dd dd" id="nestable_list_1">
                                 </div>
                             </div><!-- end col -->
-                        </form><!-- end col -->
                     </div> <!-- end row -->
                 </div> <!-- end card-box -->
             </div> <!-- end col -->
         </div>
         <!-- end Row -->
+        <div id="sideNavi">
+            <!-- sidenavi menu //-->
+            <div class="side-navi-item-default"></div>
+            <div class="side-navi-item item1">
+                <div>^</div>
+            </div>
+            <!-- sidenavi data //-->
+            <div class="side-navi-data">
+                <div class="side-navi-tab">
+                    <div>
+                        {% include '@SSFMB/Include/couleurCleInclude.html.twig' %}
+                        {% include "@SSFMB/Filiere/Include/listMenuIndexInclude.html.twig" %}
+                        <p>quantiter disponible</p>
+                        <p><input type="number" id="quantit" readonly="true" value="0"></p>
+                        <p>date de preparation des laternes</p>
+                        {% set now =  "now"|date("Y-m-d") %}
+                        <p><input type="date" name="dateMAECorde" value="{{ now }}"></p>
+                        <p>choisir type cordes</p>
+                        <p>
+                            <select name="cordechoix" id="cordechoix">
+                                {% for corde in cordes %}
+                                    <option value="{{ corde.id }}">{{ corde.nomCorde }}</option>
+                                {% endfor %}
+                            </select>
+                        </p>
+
+                        <p> choisir l'article a mettre</p>
+
+                        <p>
+                            <select name="articlechoix" id="articlechoix">
+                                {% for article in articles %}
+                                    {% if article.refArticle.libArticle starts with 'CORDE' %}
+                                        <option value="{{ article.refStockArticle }}">{{ article.refArticle.libArticle }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </p>
+                        <p> choisir le lot de l'article</p>
+
+                        <p>
+                            <select name="articlelotchoix" id="articlelotchoix"></select>
+                        </p>
+
+                        <div id="choixqtearticle">
+                            <p> Densité (U/Corde) </p>
+                            <p>
+                                <select name="quantierchoix" id="quantierchoix"></select>
+                            </p>
+                            <p><input type="submit" value="confirmer la mise a l'eau"/></p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </form><!-- end col -->
 
         {% block footer %}
             {{ parent() }}
@@ -214,7 +228,6 @@
                                                  $('#quantit').val('chargement');
                                              },
                                              success: function (json) {
-                                                 $('#quantit').val(0);
                                                  if ($.trim(json)) {
                                                      $('#choixqtearticle').ready(function () {
                                                          $("input:checkbox").each(function () {
@@ -318,9 +331,9 @@
                                              dataType: 'json',
                                              beforeSend: function () {
                                                  $('#quantit').val('chargement');
+                                                 $('#quantit').val(0);
                                              },
                                              success: function (json) {
-                                                 $('#quantit').val(0);
                                                  if ($.trim(json)) {
                                                      $('#choixqtearticle').ready(function () {
                                                          $("input:checkbox").each(function () {
@@ -371,12 +384,11 @@
                  },
                  dataType: 'json',
                  beforeSend: function () {
-                     $('#quantit').val('chargement');
+                     $('#quantit').val(0);
 
                      $('#quantierchoix').empty();
                  },
                  success: function (json) {
-                     $('#quantit').val(0);
                      $('#quantierchoix').html('');
                      if (!$.trim(json)) {
                          $('#choixqtearticle').ready(function () {
@@ -407,10 +419,10 @@
                                  },
                                  dataType: 'json',
                                  beforeSend: function () {
+                                     $('#quantit').val(0);
                                      $('#quantit').val('chargement');
                                  },
                                  success: function (json) {
-                                     $('#quantit').val(0);
 
                                      if ($.trim(json)) {
                                          $('#choixqtearticle').ready(function () {
@@ -458,11 +470,11 @@
                  dataType: 'json',
                  beforeSend: function () {
                      $('#quantit').val('chargement');
+                     $('#quantit').val(0);
 
                      $('#quantierchoix').empty();
                  },
                  success: function (json) {
-                     $('#quantit').val(0);
                      $('#quantierchoix').html('');
                      if (!$.trim(json)) {
                          $('#choixqtearticle').ready(function () {
@@ -494,9 +506,9 @@
                                  dataType: 'json',
                                  beforeSend: function () {
                                      $('#quantit').val('chargement');
+                                     $('#quantit').val(0);
                                  },
                                  success: function (json) {
-                                     $('#quantit').val(0);
                                      if ($.trim(json)) {
                                          $('#choixqtearticle').ready(function () {
                                              $("input:checkbox").each(function () {
@@ -543,9 +555,9 @@
                  dataType: 'json',
                  beforeSend: function () {
                      $('#quantit').val('chargement');
+                     $('#quantit').val(0);
                  },
                  success: function (json) {
-                     $('#quantit').val(0);
                      if ($.trim(json)) {
                          $('#choixqtearticle').ready(function () {
                              $("input:checkbox").each(function () {

@@ -25,42 +25,42 @@ class Documents
      *
      * @ORM\Column(name="nom_contact", type="string", length=128, nullable=false)
      */
-    private $nomContact= "";
+    private $nomContact = "";
 
     /**
      * @var string
      *
      * @ORM\Column(name="adresse_contact", type="text", length=16777215, nullable=false)
      */
-    private $adresseContact= "";
+    private $adresseContact = "";
 
     /**
      * @var string
      *
      * @ORM\Column(name="code_postal_contact", type="string", length=9, nullable=false)
      */
-    private $codePostalContact= "";
+    private $codePostalContact = "";
 
     /**
      * @var string
      *
      * @ORM\Column(name="ville_contact", type="string", length=28, nullable=false)
      */
-    private $villeContact= "";
+    private $villeContact = "";
 
     /**
      * @var string
      *
      * @ORM\Column(name="app_tarifs", type="string", nullable=false)
      */
-    private $appTarifs= "";
+    private $appTarifs = "";
 
     /**
      * @var string
      *
      * @ORM\Column(name="description", type="text", length=16777215, nullable=false)
      */
-    private $description= "";
+    private $description = "";
 
     /**
      * @var \DateTime
@@ -74,7 +74,7 @@ class Documents
      *
      * @ORM\Column(name="code_file", type="string", length=32, nullable=false)
      */
-    private $codeFile= "";
+    private $codeFile = "";
 
     /**
      * @var string
@@ -141,6 +141,11 @@ class Documents
     private $docsLines;
 
 
+    public function __toString()
+    {
+        return $this->refDoc;
+    }
+
     /**
      * Set codeAffaire
      *
@@ -157,7 +162,7 @@ class Documents
     /**
      * Get codeAffaire
      *
-     * @return string 
+     * @return string
      */
     public function getCodeAffaire()
     {
@@ -180,7 +185,7 @@ class Documents
     /**
      * Get nomContact
      *
-     * @return string 
+     * @return string
      */
     public function getNomContact()
     {
@@ -203,7 +208,7 @@ class Documents
     /**
      * Get adresseContact
      *
-     * @return string 
+     * @return string
      */
     public function getAdresseContact()
     {
@@ -226,7 +231,7 @@ class Documents
     /**
      * Get codePostalContact
      *
-     * @return string 
+     * @return string
      */
     public function getCodePostalContact()
     {
@@ -249,7 +254,7 @@ class Documents
     /**
      * Get villeContact
      *
-     * @return string 
+     * @return string
      */
     public function getVilleContact()
     {
@@ -272,7 +277,7 @@ class Documents
     /**
      * Get appTarifs
      *
-     * @return string 
+     * @return string
      */
     public function getAppTarifs()
     {
@@ -295,7 +300,7 @@ class Documents
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -318,7 +323,7 @@ class Documents
     /**
      * Get dateCreationDoc
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDateCreationDoc()
     {
@@ -341,7 +346,7 @@ class Documents
     /**
      * Get codeFile
      *
-     * @return string 
+     * @return string
      */
     public function getCodeFile()
     {
@@ -351,12 +356,13 @@ class Documents
     /**
      * Get refDoc
      *
-     * @return string 
+     * @return string
      */
     public function getRefDoc()
     {
         return $this->refDoc;
     }
+
     /**
      * @ORM\PrePersist
      */
@@ -364,6 +370,7 @@ class Documents
     {
         $this->refDoc = uniqid();
     }
+
     /**
      * Set idPaysContact
      *
@@ -478,6 +485,7 @@ class Documents
     {
         return $this->idTypeDoc;
     }
+
     /**
      * Constructor
      */
@@ -512,7 +520,7 @@ class Documents
     /**
      * Get docsLines
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getDocsLines()
     {

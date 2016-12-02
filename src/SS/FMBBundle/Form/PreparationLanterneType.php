@@ -1,5 +1,4 @@
 <?php
-
 namespace SS\FMBBundle\Form;
 
 use Doctrine\ORM\EntityRepository;
@@ -9,13 +8,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
-
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityManager;
 
 class PreparationLanterneType extends AbstractType
 {
-
     protected $em;
 
     function __construct(EntityManager $em)
@@ -30,27 +26,21 @@ class PreparationLanterneType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('date', 'text', array('label' => 'Date de la Préparation des lanternes', 'attr' => array('class' => 'form-control inputmask', 'placeholder' => "dd/mm/yyyy", 'id' => "datepicker")));
-        $builder
-            ->add('refArticle', 'entity', array('class' => 'SSFMBBundle:Articles',
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('a')->where('a.libArticle LIKE :articles')->setParameter('articles', 'NAISSAIN%');
-                }, 'label' => 'article', 'attr' => array('class' => "form-control")))
+        $builder->add('refArticle', 'entity', array('class' => 'SSFMBBundle:Articles',
+            'query_builder' => function (EntityRepository $er) {
+                return $er->createQueryBuilder('a')->where('a.libArticle LIKE :articles')->setParameter('articles', 'NAISSAIN%');
+            }, 'label' => 'article', 'attr' => array('class' => "form-control")))
             ->add('numeroSerie', 'entity', array('class' => 'SSFMBBundle:StocksArticlesSn', 'label' => 'lot', 'mapped' => false, 'attr' => array('class' => "form-control")))
             ->add('qte', 'number', array('label' => 'Densiter', 'attr' => array('class' => "form-control")))
             ->add('nombre', 'number', array('label' => 'nombre de lanterne a fabriquer', 'mapped' => false));
-
         $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'));
         $builder->addEventListener(FormEvents::PRE_SUBMIT, array($this, 'onPreSubmit'));
-
-
     }
 
     protected function addElements(FormInterface $form, Magasins $parc = null)
     {
         $dt = $form->get('date');
-
         $form->remove('date');
-
         $form->add('Parc', 'entity', array(
                 'label' => 'choix du parc ',
                 'data' => $parc,
@@ -85,7 +75,7 @@ class PreparationLanterneType extends AbstractType
         $form->add('quantiterEnStock', 'number', array(
             'label' => 'nombre de lanterne non utilisé en stock',
             'mapped' => false,
-            'attr' => array('class' => "form-control inputmask", 'readonly' => "", 'value' => "Readonly value")
+            'attr' => array('class' => "form-control", 'readonly' => "", 'value' => "Readonly value")
         ));
         $form->add($dt);
 

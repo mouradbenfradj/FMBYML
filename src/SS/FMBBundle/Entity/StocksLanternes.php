@@ -33,7 +33,7 @@ class StocksLanternes
     private $poches;
 
     /**
-     * @ORM\OneToOne(targetEntity="SS\FMBBundle\Entity\Emplacement", mappedBy="stockslanterne")
+     * @ORM\OneToOne(targetEntity="SS\FMBBundle\Entity\Emplacement", mappedBy="stockslanterne",fetch="LAZY")
      * @ORM\JoinColumn(nullable=true)
      */
     private $emplacement;
@@ -61,6 +61,11 @@ class StocksLanternes
      * @ORM\Column(name="dateDeCreation", type="date")
      */
     private $dateDeCreation;
+    /**
+     *
+     * @ORM\Column(name="date_de_mise_a_eau", type="date",nullable=true)
+     */
+    private $dateDeMiseAEau;
     /**
      *
      * @ORM\Column(name="dateDeRetraitTransfert", type="date", nullable=true)
@@ -366,5 +371,28 @@ class StocksLanternes
         $this->dateDeMAETransfert = $dateDeMAETransfert;
 
         return $this;
+    }
+
+    /**
+     * Set dateDeMiseAEau
+     *
+     * @param \DateTime $dateDeMiseAEau
+     * @return StocksLanternes
+     */
+    public function setDateDeMiseAEau($dateDeMiseAEau)
+    {
+        $this->dateDeMiseAEau = $dateDeMiseAEau;
+
+        return $this;
+    }
+
+    /**
+     * Get dateDeMiseAEau
+     *
+     * @return \DateTime 
+     */
+    public function getDateDeMiseAEau()
+    {
+        return $this->dateDeMiseAEau;
     }
 }

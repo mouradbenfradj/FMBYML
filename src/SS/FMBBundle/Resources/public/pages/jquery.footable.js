@@ -18,6 +18,12 @@ $(window).on('load', function () {
         });
     });
 
+    $('#demo-foo-accordion-2').footable().on('footable_row_expanded', function (e) {
+        $('#demo-foo-accordion tbody tr.footable-detail-show').not(e.row).each(function () {
+            $('#demo-foo-accordion').data('footable').toggleDetail(this);
+        });
+    });
+
     // Pagination
     // -----------------------------------------------------------------
     $('#demo-foo-pagination').footable();
