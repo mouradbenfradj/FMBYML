@@ -18,16 +18,16 @@ class DocumentsTypesAdmin extends Admin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('idTypeDoc')->add('libTypeDoc')->add('libTypePrinted')->add('codeDoc')->add('idTypeGroupe')->add('actif')->add('idPdfModele');
+        $formMapper->add('libTypeDoc')->add('libTypePrinted');
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('idTypeDoc')->add('libTypeDoc')->add('libTypePrinted')->add('codeDoc')->add('idTypeGroupe')->add('actif')->add('idPdfModele');
+        $datagridMapper->add('idTypeDoc')->add('libTypeDoc')->add('libTypePrinted');
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('idTypeDoc')->add('libTypeDoc')->add('libTypePrinted')->add('codeDoc')->add('idTypeGroupe')->add('actif')->add('idPdfModele');
+        $listMapper->addIdentifier('idTypeDoc')->add('libTypeDoc')->add('libTypePrinted');
     }
 }

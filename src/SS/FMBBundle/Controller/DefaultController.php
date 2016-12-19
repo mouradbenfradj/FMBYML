@@ -5,6 +5,8 @@ namespace SS\FMBBundle\Controller;
 use DateTime;
 use SS\FMBBundle\Entity\Articles;
 use SS\FMBBundle\Entity\Corde;
+use SS\FMBBundle\Entity\DocsLines;
+use SS\FMBBundle\Entity\Documents;
 use SS\FMBBundle\Entity\StocksArticles;
 use SS\FMBBundle\Entity\StocksArticlesSn;
 use SS\FMBBundle\Entity\StocksArticlesSnVirtuel;
@@ -22,52 +24,58 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        if ($request->get('id') == null)
-            $parcs = null;
+        if ($request->get('idparc') == null)
+            $parc = null;
         else
-            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('id'));
-        return $this->render('SSFMBBundle:Default:index.html.twig', array('entity' => $parcs));
+            $parc = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('idparc'));
+        return $this->render('SSFMBBundle:Default:index.html.twig', array('entity' => $parc));
     }
 
     public function preparationLanterneAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $form = $this->createForm(new PreparationLanterneType($em), null, array('action' => $this->generateUrl('ssfmb_preparationlanterne'), 'method' => 'POST',));
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form = $this->createForm(new PreparationLanterneType($em), null, array('action' => $this->generateUrl('ssfmb_preparationlanterne'), 'method' => 'POST', 'attr' => array('class' => "form-horizontal")));
         if ($request->isMethod('POST')) {
             $defaultmetier = new DefaultImpl($em);
             $form->handleRequest($request);
-            $document = $form['document']->getData();
-            $document->setDateCreationDoc(new \DateTime());
-            $em->persist($document);
-            $lant = $form['nomLanterne']->getData();
-            foreach ($form['document']['docsLines']->getData() as $doclin) {
-                $stockarticles = $em->getRepository('SSFMBBundle:StocksArticles')->findOneBy(array('idStock' => $form->get('libStock')->getData()->getIdStock(), 'refArticle' => $doclin->getRefArticle()));
-                if (!empty($stockarticles)) {
-                    for ($j = 0; $j < $request->request->get("ss_fmbbundle_preparationlanterne")['document']['docsLines'][0]['nombre']; $j++) {
-                        $stocksarticlessn = $em->getRepository('SSFMBBundle:StocksArticlesSn')->findOneBy(array('refStockArticle' => $stockarticles, 'numeroSerie' => $request->request->get("ss_fmbbundle_preparationlanterne")['document']['docsLines'][0]['numeroSerie']));
-                        $doclin->setRefDoc($document);
-                        $doclin->setLibArticle($doclin->getRefArticle()->getLibArticle());
-
-                        $stockslanternes = new StocksLanternes();
-                        $stockslanternes->setDateDeCreation($form->getData('date')['date']);
-                        $stockslanternes->setArticle($stocksarticlessn);
-                        $stockslanternes->setLanterne($lant);
-                        $stockslanternes->setDocLine($doclin);
-                        $stockarticles->setQte($stockarticles->getQte() - $doclin->getQte());
-                        $stocksarticlessn->setSnQte($stocksarticlessn->getSnQte() - $doclin->getQte());
-
-                        for ($i = 1; $i < ($stockslanternes->getLanterne()->getNbrpoche() + 1); $i++) {
-                            $stockslanternes->addPoch($defaultmetier->remplirPoche($i, $doclin->getQte(), $stockslanternes->getLanterne()->getNbrpoche()));
-                        }
-                        $em->persist($stockslanternes);
+            $stockarticles = $em->getRepository('SSFMBBundle:StocksArticles')->findOneBy(array('idStock' => $form['libStock']->getData()->getIdStock(), 'refArticle' => $form['refArticle']->getData()->getRefArticle()));
+            if (!empty($stockarticles)) {
+                $document = new Documents();
+                $time = explode("/", $form['date']->getData());
+                $document->setDateCreationDoc(new \DateTime($time[2] . '-' . $time[1] . '-' . $time[0]));
+                $doclin = new DocsLines();
+                $doclin->setRefDoc($document);
+                $doclin->setQte($form['qte']->getData());
+                $doclin->setLibArticle($form['refArticle']->getData()->getLibArticle());
+                $doclin->setRefArticle($form['refArticle']->getData()->getRefArticle());
+                $lant = $form['nomLanterne']->getData();
+                $doclin2 = new DocsLines();
+                $doclin2->setRefDoc($document);
+                $doclin2->setLibArticle($lant);
+                $doclin2->setQte($form['nombre']->getData());
+                $doclin2->setRefDocLineParent($doclin);
+                $doclin2->setRefArticle($lant);
+                $em->persist($document);
+                $em->persist($doclin);
+                $em->persist($doclin2);
+                for ($j = 0; $j < $form['nombre']->getData(); $j++) {
+                    $stocksarticlessn = $em->getRepository('SSFMBBundle:StocksArticlesSn')->findOneBy(array('refStockArticle' => $stockarticles, 'numeroSerie' => $request->request->get("ss_fmbbundle_preparationlanterne")['numeroSerie']));
+                    $stockslanternes = new StocksLanternes();
+                    $stockslanternes->setDateDeCreation(new \DateTime($time[2] . '-' . $time[1] . '-' . $time[0]));
+                    $stockslanternes->setArticle($stocksarticlessn);
+                    $stockslanternes->setLanterne($lant);
+                    $stockslanternes->setDocLine($doclin);
+                    $stockarticles->setQte($stockarticles->getQte() - $form['qte']->getData());
+                    $stocksarticlessn->setSnQte($stocksarticlessn->getSnQte() - $form['qte']->getData());
+                    for ($i = 1; $i < ($stockslanternes->getLanterne()->getNbrpoche() + 1); $i++) {
+                        $stockslanternes->addPoch($defaultmetier->remplirPoche($i, $form['qte']->getData(), $stockslanternes->getLanterne()->getNbrpoche()));
                     }
-                } else {
-                    return $this->render('@SSFMB/Default/preparationLanterne.html.twig', array('form' => $form->createView(),));
+                    $em->persist($stockslanternes);
                 }
+            } else {
+                return $this->render('@SSFMB/Default/preparationLanterne.html.twig', array('form' => $form->createView()));
             }
-            $lant->setNbrTotaleEnStock($lant->getNbrTotaleEnStock() - $request->request->get("ss_fmbbundle_preparationlanterne")['document']['docsLines'][0]['nombre']);
-
+            $lant->setNbrTotaleEnStock($lant->getNbrTotaleEnStock() - $form['nombre']->getData());
             $em->flush();
             return $this->redirectToRoute('ssfmb_homepage');
         }
@@ -79,53 +87,42 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
         $defaultmetier = new DefaultImpl($em);
 
-        if ($request->get('id') == null) {
+        if ($request->get('idparc') == null) {
             $parcs = null;
             $stock = null;
             $lanternes = null;
             $articles = null;
         } else {
-            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('id'));
+            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('idparc'));
             $lanternes = $em->getRepository('SSFMBBundle:Lanterne')->findByParc($parcs);
             $articles = $em->getRepository('SSFMBBundle:StocksArticles')->findByIdStock($parcs->getIdStock());
         }
         if ($request->isMethod('POST')) {
+            $lanterne = $em->getRepository('SSFMBBundle:Lanterne')->find($request->request->get('lanternechoix'));
+            $dateMiseAEau = new \DateTime($request->request->get('dateMAELanterne'));
             foreach ($request->request->get('placelanterne') as $emplacementlanterne) {
                 $place = $em->getRepository('SSFMBBundle:Emplacement')->find($emplacementlanterne);
-                $lanterne = $em->getRepository('SSFMBBundle:Lanterne')->find($request->request->get('lanternechoix'));
                 $lanternearticle = $em->getRepository('SSFMBBundle:StocksLanternes')->getLanternePreparer($em->getRepository('SSFMBBundle:StocksArticlesSn')->getSAS($request->request->get('articlechoix'), $request->request->get('articlelotchoix')), $lanterne);
-                $position = 0;
-                while (($defaultmetier->calculerQuantiterLanterne($lanternearticle[$position]) != $request->request->get('quantierchoix')) && (count($lanternearticle) > $position)) {
-                    $position++;
-                }
-                if ($defaultmetier->calculerQuantiterLanterne($lanternearticle[$position]) == $request->request->get('quantierchoix')) {
-                    $lanternearticle[$position]->setEmplacement($place);
-                    $place->setStocksLanterne($lanternearticle[$position]);
-                    $place->setDateDeRemplissage(new \DateTime($request->request->get('dateMAELanterne')));
-                }
+                $lanternearticle[0]->setEmplacement($place);
+                $lanternearticle[0]->setDateDeMiseAEau($dateMiseAEau);
+                $place->setStocksLanterne($lanternearticle[0]);
+                $place->setDateDeRemplissage($dateMiseAEau);
                 $em->flush();
             }
             return $this->redirectToRoute('ssfmb_misaaeaulanterne');
         }
-        return $this->render(
-            '@SSFMB/Default/miseAEauLanterne.html.twig',
-            array(
-                'entity' => $parcs,
-                'articles' => $articles,
-                'lanternes' => $lanternes,
-            )
-        );
+        return $this->render('@SSFMB/Default/miseAEauLanterne.html.twig', array('entity' => $parcs, 'articles' => $articles, 'lanternes' => $lanternes,));
     }
 
     public function retraitLanterneAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        if ($request->get('id') == null) {
+        if ($request->get('idparc') == null) {
             $parcs = null;
             $stock = null;
             $articles = null;
         } else {
-            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('id'));
+            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('idparc'));
             $articles = $em->getRepository('SSFMBBundle:StocksArticles')->findByIdStock($parcs->getIdStock());
         }
 
@@ -161,7 +158,7 @@ class DefaultController extends Controller
                     $em->persist($article);
                     $em->flush();
                 }
-                $sarticle = $em->getRepository('SSFMBBundle:StocksArticles')->findOneByRefArticle($article);
+                $sarticle = $em->getRepository('SSFMBBundle:StocksArticles')->findOneBy(array('refArticle' => $article, 'idStock' => $stock));
                 if (!$sarticle) {
                     $sarticle = new StocksArticles();
                     $sarticle->setRefArticle($article);
@@ -174,7 +171,6 @@ class DefaultController extends Controller
                         $em->persist($sarticlesn);
                         $em->flush();
                     }
-
                 } else {
                     $sarticle->setQte($sarticle->getQte() + $implementation->calculerQuantiterLanterne($slanterne));
                     $sarticlesn = $em->getRepository('SSFMBBundle:StocksArticlesSN')->getSAS($sarticle->getRefStockArticle(), $slanterne->getArticle()->getNumeroSerie());
@@ -211,81 +207,76 @@ class DefaultController extends Controller
     public function preparationCordeAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $form = $this->createForm(new PreparationCordeType($em), null, array('action' => $this->generateUrl('ssfmb_preparationcorde'), 'method' => 'POST'));
-        $form->add('submit', 'submit', array('label' => 'preparer'));
+        $form = $this->createForm(new PreparationCordeType($em), null, array('action' => $this->generateUrl('ssfmb_preparationcorde'), 'method' => 'POST', 'attr' => array('class' => "form-horizontal")));
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
-            $document = $form['document']->getData();
-            $document->setDateCreationDoc(new \DateTime());
-            $document->setCodeFile("");
-            $em->persist($document);
-            $cordes = $request->request->get("ss_fmbbundle_preparationcorde")["nomCorde"];
-            $corde = $em->getRepository("SSFMBBundle:Corde")->findOneBy(array('nomCorde' => $cordes, 'parc' => $form['Parc']->getData()));
-            foreach ($form['document']['docsLines']->getData() as $doclin) {
-                $stockarticles = $em->getRepository('SSFMBBundle:StocksArticles')->findOneBy(array('idStock' => $form->get('libStock')->getData()->getIdStock(), 'refArticle' => $doclin->getRefArticle()));
-                if (!empty($stockarticles)) {
-                    for ($j = 0; $j < $request->request->get("ss_fmbbundle_preparationcorde")['document']['docsLines'][0]['nombre']; $j++) {
-                        $stocksarticlessn = $em->getRepository('SSFMBBundle:StocksArticlesSn')->findOneBy(array('refStockArticle' => $stockarticles, 'numeroSerie' => $request->request->get("ss_fmbbundle_preparationcorde")['document']['docsLines'][0]['numeroSerie']));
-                        $doclin->setRefDoc($document);
-                        $doclin->setLibArticle($doclin->getRefArticle()->getLibArticle());
-
-                        $stockscordes = new StocksCordes();
-                        $stockscordes->setDateDeCreation($form->getData('date')['date']);
-                        $stockscordes->setPret(false);
-                        $stockscordes->setArticle($stocksarticlessn);
-                        $stockscordes->setCorde($corde);
-                        $stockscordes->setQuantiter($doclin->getQte());
-                        $stockscordes->setDocLine($doclin);
-                        $stockarticles->setQte($stockarticles->getQte() - $doclin->getQte());
-                        $stocksarticlessn->setSnQte($stocksarticlessn->getSnQte() - $doclin->getQte());
-                        $em->persist($stockscordes);
-                    }
-                } else {
-                    return $this->render('@SSFMB/Default/preparationCorde.html.twig', array('form' => $form->createView(),));
+            $stockarticles = $em->getRepository('SSFMBBundle:StocksArticles')->findOneBy(array('idStock' => $form['libStock']->getData()->getIdStock(), 'refArticle' => $form['refArticle']->getData()->getRefArticle()));
+            if (!empty($stockarticles)) {
+                $document = new Documents();
+                $time = explode("/", $form['date']->getData());
+                $document->setDateCreationDoc(new \DateTime($time[2] . '-' . $time[1] . '-' . $time[0]));
+                $doclin = new DocsLines();
+                $doclin->setRefDoc($document);
+                $doclin->setQte($form['qte']->getData());
+                $doclin->setLibArticle($form['refArticle']->getData()->getLibArticle());
+                $doclin->setRefArticle($form['refArticle']->getData()->getRefArticle());
+                $cordes = $request->request->get("ss_fmbbundle_preparationcorde")["nomCorde"];
+                $corde = $em->getRepository("SSFMBBundle:Corde")->findOneBy(array('nomCorde' => $cordes, 'parc' => $form['Parc']->getData()));
+                $doclin2 = new DocsLines();
+                $doclin2->setRefDoc($document);
+                $doclin2->setLibArticle($corde->getNomCorde());
+                $doclin2->setQte($form['nombre']->getData());
+                $doclin2->setRefDocLineParent($doclin);
+                $doclin2->setRefArticle($corde->getId());
+                $em->persist($document);
+                $em->persist($doclin);
+                $em->persist($doclin2);
+                for ($j = 0; $j < $form['nombre']->getData(); $j++) {
+                    $stocksarticlessn = $em->getRepository('SSFMBBundle:StocksArticlesSn')->findOneBy(array('refStockArticle' => $stockarticles, 'numeroSerie' => $request->request->get("ss_fmbbundle_preparationcorde")['numeroSerie']));
+                    $stockscordes = new StocksCordes();
+                    $stockscordes->setDateDeCreation(new \DateTime($time[2] . '-' . $time[1] . '-' . $time[0]));
+                    $stockscordes->setArticle($stocksarticlessn);
+                    $stockscordes->setCorde($corde);
+                    $stockscordes->setDocLine($doclin);
+                    $stockscordes->setQuantiter($doclin->getQte());
+                    $stockscordes->setPret(false);
+                    $stockarticles->setQte($stockarticles->getQte() - $form['qte']->getData());
+                    $stocksarticlessn->setSnQte($stocksarticlessn->getSnQte() - $form['qte']->getData());
+                    $em->persist($stockscordes);
                 }
+            } else {
+                return $this->render('@SSFMB/Default/preparationCorde.html.twig', array('form' => $form->createView(),));
             }
-            $corde->setNbrTotaleEnStock($corde->getNbrTotaleEnStock() - $request->request->get("ss_fmbbundle_preparationcorde")['document']['docsLines'][0]['nombre']);
-
+            $corde->setNbrTotaleEnStock($corde->getNbrTotaleEnStock() - $form['nombre']->getData());
             $em->flush();
             return $this->redirectToRoute('ssfmb_homepage');
         }
-
-
-        return $this->render(
-            '@SSFMB/Default/preparationCorde.html.twig',
-            array(
-                'form' => $form->createView(),
-            )
-        );
+        return $this->render('@SSFMB/Default/preparationCorde.html.twig', array('form' => $form->createView(),));
     }
 
     public function miseAEauCordeAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        if ($request->get('id') == null) {
+        if ($request->get('idparc') == null) {
             $parcs = null;
             $stock = null;
             $cordes = null;
             $articles = null;
         } else {
-            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('id'));
+            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('idparc'));
             $cordes = $em->getRepository('SSFMBBundle:Corde')->findByParc($parcs);
             $articles = $em->getRepository('SSFMBBundle:StocksArticles')->findByIdStock($parcs->getIdStock());
         }
         if ($request->isMethod('POST')) {
+            $dateMiseAEau = new \DateTime($request->request->get('dateMAECorde'));
+            $corde = $em->getRepository('SSFMBBundle:Corde')->find($request->request->get('cordechoix'));
             foreach ($request->request->get('placecorde') as $emplacementcorde) {
                 $place = $em->getRepository('SSFMBBundle:Emplacement')->find($emplacementcorde);
-                $corde = $em->getRepository('SSFMBBundle:Corde')->find($request->request->get('cordechoix'));
                 $cordearticle = $em->getRepository('SSFMBBundle:StocksCordes')->getCordePreparer($em->getRepository('SSFMBBundle:StocksArticlesSn')->getSAS($request->request->get('articlechoix'), $request->request->get('articlelotchoix')), $corde);
-                $position = 0;
-                while (($cordearticle[$position]->getQuantiter() != $request->request->get('quantierchoix')) && (count($cordearticle) > $position)) {
-                    $position++;
-                }
-                if ($cordearticle[$position]->getQuantiter() == $request->request->get('quantierchoix')) {
-                    $cordearticle[$position]->setEmplacement($place);
-                    $place->setStocksCorde($cordearticle[$position]);
-                    $place->setDateDeRemplissage(new \DateTime($request->request->get('dateMAECorde')));
-                }
+                $cordearticle[0]->setEmplacement($place);
+                $cordearticle[0]->setDateDeMiseAEau($dateMiseAEau);
+                $place->setStocksCorde($cordearticle[0]);
+                $place->setDateDeRemplissage($dateMiseAEau);
                 $em->flush();
             }
             return $this->redirectToRoute('ssfmb_misaaeaucorde');
@@ -303,12 +294,12 @@ class DefaultController extends Controller
     public function retraitCordeAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        if ($request->get('id') == null) {
+        if ($request->get('idparc') == null) {
             $parcs = null;
             $stock = null;
             $articles = null;
         } else {
-            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('id'));
+            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('idparc'));
             $articles = $em->getRepository('SSFMBBundle:StocksArticles')->findByIdStock($parcs->getIdStock());
         }
 
@@ -319,39 +310,39 @@ class DefaultController extends Controller
                 $place = $em->getRepository('SSFMBBundle:Emplacement')->find($emplacementcorde);
                 $interval = date_diff($place->getDateDeRemplissage(), $date1);
                 $scorde = $place->getStockscorde();
-                if ($interval->m <= 5)
+                if (($interval->m <= 5) && ($interval->y == 0))
                     $article = $em->getRepository('SSFMBBundle:Articles')->findOneByLibArticle("HUITRES G" . $interval->m . " COM");
-                elseif ($interval->m == 6)
+                elseif (($interval->m == 6) && ($interval->y == 0))
                     $article = $em->getRepository('SSFMBBundle:Articles')->findOneByLibArticle("HUITRES H3 COM");
-                elseif ($interval->m == 7)
+                elseif (($interval->m == 7) && ($interval->y == 0))
                     $article = $em->getRepository('SSFMBBundle:Articles')->findOneByLibArticle("HUITRES H2 COM");
-                elseif ($interval->m == 8)
+                elseif (($interval->m == 8) && ($interval->y == 0))
                     $article = $em->getRepository('SSFMBBundle:Articles')->findOneByLibArticle("HUITRES H1 COM");
-                elseif ($interval->m == 9)
+                elseif (($interval->m == 9) && ($interval->y == 0))
                     $article = $em->getRepository('SSFMBBundle:Articles')->findOneByLibArticle("HUITRES H0 COM");
-                elseif ($interval->m == 10)
+                elseif (($interval->m == 10) && ($interval->y == 0))
                     $article = $em->getRepository('SSFMBBundle:Articles')->findOneByLibArticle("HUITRES H00 COM");
-                elseif ($interval->m == 11)
+                elseif (($interval->m == 11) && ($interval->y == 0))
                     $article = $em->getRepository('SSFMBBundle:Articles')->findOneByLibArticle("HUITRES H000 COM");
-                elseif ($interval->m >= 12)
+                elseif (($interval->m >= 12) || ($interval->y > 0))
                     $article = $em->getRepository('SSFMBBundle:Articles')->findOneByLibArticle("HUITRES H0000 COM");
                 if (!$article) {
                     $article = new Articles();
-                    if ($interval->m <= 5)
+                    if (($interval->m <= 5) && ($interval->y == 0))
                         $article->setLibArticle("HUITRES G" . $interval->m . " COM");
-                    elseif ($interval->m == 6)
+                    elseif (($interval->m == 6) && ($interval->y == 0))
                         $article->setLibArticle("HUITRES H3 COM");
-                    elseif ($interval->m == 7)
+                    elseif (($interval->m == 7) && ($interval->y == 0))
                         $article->setLibArticle("HUITRES H2 COM");
-                    elseif ($interval->m == 8)
+                    elseif (($interval->m == 8) && ($interval->y == 0))
                         $article->setLibArticle("HUITRES H1 COM");
-                    elseif ($interval->m == 9)
+                    elseif (($interval->m == 9) && ($interval->y == 0))
                         $article->setLibArticle("HUITRES H0 COM");
-                    elseif ($interval->m == 10)
+                    elseif (($interval->m == 10) && ($interval->y == 0))
                         $article->setLibArticle("HUITRES H00 COM");
-                    elseif ($interval->m == 11)
+                    elseif (($interval->m == 11) && ($interval->y == 0))
                         $article->setLibArticle("HUITRES H000 COM");
-                    elseif ($interval->m >= 12)
+                    elseif (($interval->m >= 12) || ($interval->y > 0))
                         $article->setLibArticle("HUITRES H0000 COM");
                     $article->setLibTicket('l');
                     $article->setDescCourte('e');
@@ -375,7 +366,7 @@ class DefaultController extends Controller
                     $em->persist($article);
                     $em->flush();
                 }
-                $sarticle = $em->getRepository('SSFMBBundle:StocksArticles')->findOneByRefArticle($article);
+                $sarticle = $em->getRepository('SSFMBBundle:StocksArticles')->findOneBy(array('refArticle' => $article, 'idStock' => $stock));
                 if (!$sarticle) {
                     $sarticle = new StocksArticles();
                     $sarticle->setRefArticle($article);
@@ -427,6 +418,112 @@ class DefaultController extends Controller
         );
     }
 
+    public function transfertAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        if ($request->get('idparc') == null) {
+            $parcs = null;
+            $stock = null;
+            $lanternes = null;
+            $articles = null;
+        } else {
+            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('idparc'));
+            $lanternes = $em->getRepository('SSFMBBundle:Lanterne')->findByParc($parcs);
+            $articles = $em->getRepository('SSFMBBundle:StocksArticles')->findByIdStock($parcs->getIdStock());
+        }
+        if ($request->isMethod('POST')) {
+            $session = new Session();
+            $session->set('emplacement', array());
+            $session->set('lanterne', array());
+            $session->set('corde', array());
+            foreach ($request->request->get('place') as $emplacement) {
+                $place = $em->getRepository('SSFMBBundle:Emplacement')->find($emplacement);
+                $session->set('dateTransfertRetrait', new \DateTime($request->request->get('dateRetrait')));
+                $session->set('emplacement', array_merge($session->get('emplacement'), array($place)));
+                if ($place->getStockscorde() != null) {
+                    $session->set('corde', array_merge($session->get('corde'), array($place->getStockscorde())));
+                } elseif ($place->getStockslanterne() != null) {
+                    $session->set('lanterne', array_merge($session->get('lanterne'), array($place->getStockslanterne())));
+                }
+            }
+            return $this->redirectToRoute('ssfmb_misaaeautransfert');
+        }
+        return $this->render(
+            '@SSFMB/Default/transfertRetirement.html.twig',
+            array(
+                'entity' => $parcs,
+                'articles' => $articles,
+                'lanternes' => $lanternes,
+            )
+        );
+    }
+
+    public function transfertMAEAction(Request $request)
+    {
+        $session = new Session();
+        //  var_dump($session->get('lanterne'));
+        // var_dump($session->get('corde'));
+        $em = $this->getDoctrine()->getManager();
+        if ($request->get('idparc') == null) {
+            $parcs = null;
+            $stock = null;
+            $cordes = null;
+            $articles = null;
+        } else {
+            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('idparc'));
+            $cordes = $em->getRepository('SSFMBBundle:Corde')->findByParc($parcs);
+            $articles = $em->getRepository('SSFMBBundle:StocksArticles')->findByIdStock($parcs->getIdStock());
+        }
+        if ($request->isMethod('POST')) {
+            $cmpt = 0;
+            foreach ($request->request->get('place') as $emplacement) {
+                $place = $em->getRepository('SSFMBBundle:Emplacement')->find($emplacement);
+                if ($cmpt < count($session->get('emplacement'))) {
+                    if ($session->get('emplacement')[$cmpt]->getStockscorde() != null) {
+                        $anarticle = $em->getRepository('SSFMBBundle:StocksCordes')->find($session->get('emplacement')[$cmpt]->getStockscorde());
+                        $anplace = $em->getRepository('SSFMBBundle:Emplacement')->find($session->get('emplacement')[$cmpt]);
+                        $anarticle->setEmplacement(null);
+                        $anplace->setStockscorde(null);
+                        $place->setDateDeRemplissage($anplace->getDateDeRemplissage());
+                        $anplace->setDateDeRemplissage(null);
+                        $em->flush();
+                        $place->setStockscorde($anarticle);
+                        $anarticle->setEmplacement($place);
+                        $anarticle->setDateDeRetraitTransfert($session->get('dateTransfertRetrait'));
+                        $anarticle->setDateDeMAETransfert(new \DateTime($request->request->get('dateRemise')));
+                        $cmpt++;
+
+                    } else if (($session->get('emplacement')[$cmpt]->getStockslanterne() != null) && ($cmpt < count($session->get('emplacement')))) {
+                        $anarticle = $em->getRepository('SSFMBBundle:StocksLanternes')->find($session->get('emplacement')[$cmpt]->getStockslanterne());
+                        $anplace = $em->getRepository('SSFMBBundle:Emplacement')->find($session->get('emplacement')[$cmpt]);
+                        $anplace->setStockslanterne(null);
+                        $anarticle->setEmplacement(null);
+                        $place->setDateDeRemplissage($anplace->getDateDeRemplissage());
+                        $anplace->setDateDeRemplissage(null);
+                        $em->flush();
+                        $place->setStockslanterne($anarticle);
+                        $anarticle->setEmplacement($place);
+                        $anarticle->setDateDeRetraitTransfert($session->get('dateTransfertRetrait'));
+                        $anarticle->setDateDeMAETransfert(new \DateTime($request->request->get('dateRemise')));
+                        $cmpt++;
+
+                    }
+                }
+            }
+            $em->flush();
+            return $this->redirectToRoute('ssfmb_transfert');
+        }
+        return $this->render(
+            '@SSFMB/Default/transfertMAE.html.twig',
+            array(
+                'entity' => $parcs,
+                'articles' => $articles,
+                'cordes' => $cordes,
+            )
+        );
+    }
+
     public function quantiterEnStocksSnActuelAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
@@ -435,16 +532,15 @@ class DefaultController extends Controller
             'stocksArticlesSn' => $stocksArticlesSn->getSnQte()));
     }
 
-    public
-    function traitementAction(Request $request)
+    public function traitementAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        if ($request->get('id') == null) {
+        if ($request->get('idparc') == null) {
             $parcs = null;
             $stocksnvirtuel = null;
             $articles = null;
         } else {
-            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('id'));
+            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('idparc'));
             $stocksnvirtuel = $em->getRepository('SSFMBBundle:StocksArticlesSnVirtuel')->findByRefStockArticle($em->getRepository('SSFMBBundle:StocksArticles')->findByIdStock($parcs->getIdStock()));
             $articles = $em->getRepository('SSFMBBundle:StocksArticles')->findByIdStock($parcs->getIdStock());
         }
@@ -508,7 +604,6 @@ class DefaultController extends Controller
         $lanternefabriquerurgent = array();
         $cordefabriquer = array();
         $cordefabriquerurgent = array();
-        $pregrossisementurgent = array();
         $grossisementurgent = array();
         $grossisementurgentAW = array();
         $comercialeurgent = array();
@@ -522,10 +617,10 @@ class DefaultController extends Controller
         $comerciale = array();
 
         $em = $this->getDoctrine()->getManager();
-        if ($request->get('id') == null) {
+        if ($request->get('idparc') == null) {
             $parcs = null;
         } else {
-            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('id'));
+            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('idparc'));
             if ($parcs) {
                 $crd = $em->getRepository('SSFMBBundle:StocksCordes')->findBy(array("pret" => false, "emplacement" => null, "corde" => $em->getRepository('SSFMBBundle:Corde')->findByParc($parcs)));
                 if ($crd) {
@@ -557,44 +652,68 @@ class DefaultController extends Controller
                         }
                     }
                 }
-
-                $filiers = $em->getRepository('SSFMBBundle:Filiere')->findByParc($parcs);
-                foreach ($filiers as $filiere) {
-                    $segments = $em->getRepository('SSFMBBundle:Segment')->findByFiliere($filiere);
-                    foreach ($segments as $segment) {
-                        $flotteurs = $em->getRepository('SSFMBBundle:Flotteur')->findBySegment($segment);
-                        foreach ($flotteurs as $flotteur) {
-                            $emplacements = $em->getRepository('SSFMBBundle:Emplacement')->findByFlotteur($flotteur);
-                            foreach ($emplacements as $emplacement) {
-                                if ($emplacement->getDateDeRemplissage()) {
-                                    $interval = date_diff($emplacement->getDateDeRemplissage(), $date1);
-                                    if ($emplacement->getStockslanterne()) {
-                                        if (($interval->m >= 3) || ($interval->y >= 1)) {
-                                            $pregrossisementurgent = array_merge($pregrossisementurgent, array($emplacement));
-                                        } elseif (($interval->m == 2) && ($interval->d <= 7) && ($interval->m < 3)) {
-                                            $pregrossisementaeffectuer = array_merge($pregrossisementaeffectuer, array($emplacement));
-                                        } else {
-                                            $pregrossisement = array_merge($pregrossisement, array($emplacement));
-                                        }
-                                    } elseif ($emplacement->getStockscorde() && !$filiere->getAireDeTravaille()) {
-                                        if (($interval->m >= 6) || ($interval->y >= 1)) {
-                                            $grossisementurgent = array_merge($grossisementurgent, array($emplacement));
-                                        } elseif (($interval->m == 5) && ($interval->d >= 23) && ($interval->m < 6)) {
-                                            $grossisementaeffectuer = array_merge($grossisementaeffectuer, array($emplacement));
-                                        } else {
-                                            $grossisement = array_merge($grossisement, array($emplacement));
-                                        }
-                                    } elseif ($emplacement->getStockscorde() && $filiere->getAireDeTravaille()) {
-                                        if ($interval->m < 7) {
-                                            $grossisementAW = array_merge($grossisementAW, array($emplacement));
-                                        } elseif (($interval->m >= 7) && ($interval->m < 8)) {
-                                            $grossisementaeffectuerAW = array_merge($grossisementaeffectuerAW, array($emplacement));
-                                        } else {
-                                            $grossisementurgentAW = array_merge($grossisementurgentAW, array($emplacement));
+                $filieress = $em->getRepository('SSFMBBundle:Filiere')->getTotaleContenuFiliere($parcs);
+                $filieres = array();
+                foreach ($filieress as $item) {
+                    $filieres[$item['fiId']]['nomFiliere'] = $item['nomFiliere'];
+                    $filieres[$item['fiId']]['aireDeTravaille'] = $item['aireDeTravaille'];
+                    $filieres[$item['fiId']][$item['sId']]['longeur'] = $item['longeur'];
+                    $filieres[$item['fiId']][$item['sId']]['nomSegment'] = $item['nomSegment'];
+                    $filieres[$item['fiId']][$item['sId']][$item['flId']]['nomFlotteur'] = $item['nomFlotteur'];
+                    $filieres[$item['fiId']][$item['sId']][$item['flId']][$item['empId']] =
+                        array('place' => $item['place'],
+                            'numeroSerieLanrt' => $item['numeroSerieLanrt'],
+                            'llibArticle' => $item['llibArticle'],
+                            'libArticle' => $item['libArticle'],
+                            'nomLanterne' => $item['nomLanterne'],
+                            'nomCorde' => $item['nomCorde'],
+                            'numeroSerie' => $item['numeroSerie'],
+                            'dateDeRemplissage' => $item['dateDeRemplissage'],
+                            'stockscorde' => $item['sc'],
+                            'qte' => $item['qte'] * $item['nbrpoche'],
+                            'qtec' => $item['qtec'],
+                            'stockslanterne' => $item['sl']);
+                }
+                foreach ($filieres as $filiere) {
+                    if (is_array($filiere)) {
+                        foreach ($filiere as $segment) {
+                            if (is_array($segment)) {
+                                foreach ($segment as $flotteur) {
+                                    if (is_array($flotteur)) {
+                                        foreach ($flotteur as $cle => $emplacement) {
+                                            if (is_array($emplacement)) {
+                                                if ($emplacement['dateDeRemplissage']) {
+                                                    $interval = date_diff($emplacement['dateDeRemplissage'], $date1);
+                                                    if ($emplacement['stockslanterne']) {
+                                                        if (($interval->m >= 3) || ($interval->y >= 1)) {
+                                                            $pregrossisementurgent[$filiere['nomFiliere']][$segment['nomSegment']][$flotteur['nomFlotteur']][$cle] = $emplacement;
+                                                        } elseif (($interval->m == 2) && ($interval->d <= 7) && ($interval->m < 3)) {
+                                                            $pregrossisementaeffectuer[$filiere['nomFiliere']][$segment['nomSegment']][$flotteur['nomFlotteur']][$cle] = $emplacement;
+                                                        } else {
+                                                            $pregrossisement[$filiere['nomFiliere']][$segment['nomSegment']][$flotteur['nomFlotteur']][$cle] = $emplacement;
+                                                        }
+                                                    } elseif ($emplacement['stockscorde'] && !$filiere['aireDeTravaille']) {
+                                                        if (($interval->m >= 6) || ($interval->y >= 1)) {
+                                                            $grossisementurgent[$filiere['nomFiliere']][$segment['nomSegment']][$flotteur['nomFlotteur']][$cle] = $emplacement;
+                                                        } elseif (($interval->m == 5) && ($interval->d >= 23) && ($interval->m < 6)) {
+                                                            $grossisementaeffectuer[$filiere['nomFiliere']][$segment['nomSegment']][$flotteur['nomFlotteur']][$cle] = $emplacement;
+                                                        } else {
+                                                            $grossisement[$filiere['nomFiliere']][$segment['nomSegment']][$flotteur['nomFlotteur']][$cle] = $emplacement;
+                                                        }
+                                                    } elseif ($emplacement['stockscorde'] && $filiere['aireDeTravaille']) {
+                                                        if ($interval->m < 7) {
+                                                            $grossisementAW[$filiere['nomFiliere']][$segment['nomSegment']][$flotteur['nomFlotteur']][$cle] = $emplacement;
+                                                        } elseif (($interval->m >= 7) && ($interval->m < 8)) {
+                                                            $grossisementaeffectuerAW[$filiere['nomFiliere']][$segment['nomSegment']][$flotteur['nomFlotteur']][$cle] = $emplacement;
+                                                        } else {
+                                                            $grossisementurgentAW[$filiere['nomFiliere']][$segment['nomSegment']][$flotteur['nomFlotteur']][$cle] = $emplacement;
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         }
                                     }
                                 }
-
                             }
                         }
                     }
@@ -638,7 +757,24 @@ class DefaultController extends Controller
                 }
             }
         }
-        return $this->render('@SSFMB/Default/planingdetravaille.html.twig', array('laf' => $lanternefabriquer, 'lafu' => $lanternefabriquerurgent, 'caf' => $cordefabriquer, 'cafu' => $cordefabriquerurgent, 'entity' => $parcs, 'pregrossisement' => $pregrossisement, 'grossisement' => $grossisement, 'grossisementAW' => $grossisementAW, 'comerciale' => $comerciale, 'pregrossisementaeffectuer' => $pregrossisementaeffectuer, 'grossisementaeffectuer' => $grossisementaeffectuer, 'grossisementaeffectuerAW' => $grossisementaeffectuerAW, 'comercialeaeffectuer' => $comercialeaeffectuer, 'pregrossisementurgent' => $pregrossisementurgent, 'grossisementurgent' => $grossisementurgent, 'grossisementurgentAW' => $grossisementurgentAW, 'comercialeurgent' => $comercialeurgent));
+        return $this->render('@SSFMB/Default/planingdetravaille.html.twig',
+            array('laf' => $lanternefabriquer,
+                'lafu' => $lanternefabriquerurgent,
+                'caf' => $cordefabriquer,
+                'cafu' => $cordefabriquerurgent,
+                'entity' => $parcs,
+                'pregrossisement' => $pregrossisement,
+                'grossisement' => $grossisement,
+                'grossisementAW' => $grossisementAW,
+                'comerciale' => $comerciale,
+                'pregrossisementaeffectuer' => $pregrossisementaeffectuer,
+                'grossisementaeffectuer' => $grossisementaeffectuer,
+                'grossisementaeffectuerAW' => $grossisementaeffectuerAW,
+                'comercialeaeffectuer' => $comercialeaeffectuer,
+                'pregrossisementurgent' => $pregrossisementurgent,
+                'grossisementurgent' => $grossisementurgent,
+                'grossisementurgentAW' => $grossisementurgentAW,
+                'comercialeurgent' => $comercialeurgent));
     }
 
     public function processgrocissmeentAction(Request $request)
@@ -668,86 +804,116 @@ class DefaultController extends Controller
         $cr[4] = array();
         $cr[5] = array();
         $em = $this->getDoctrine()->getManager();
-        if ($request->get('id') == null) {
-            $parcs = null;
+        if ($request->get('idparc') == null) {
+            $parc = null;
         } else {
-            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('id'));
-            if ($parcs) {
-                $filiers = $em->getRepository('SSFMBBundle:Filiere')->findByParc($parcs);
-                foreach ($filiers as $filiere) {
-                    $segments = $em->getRepository('SSFMBBundle:Segment')->findByFiliere($filiere);
-                    foreach ($segments as $segment) {
-                        $flotteurs = $em->getRepository('SSFMBBundle:Flotteur')->findBySegment($segment);
-                        foreach ($flotteurs as $flotteur) {
-                            $emplacements = $em->getRepository('SSFMBBundle:Emplacement')->findByFlotteur($flotteur);
-                            foreach ($emplacements as $emplacement) {
-                                if ($emplacement->getDateDeRemplissage()) {
-                                    $interval = date_diff($emplacement->getDateDeRemplissage(), $date1);
-
-                                    if ($emplacement->getStockslanterne()) {
-                                        if ($interval->y == 0) {
-                                            switch ($interval->m) {
-                                                case 0 :
-                                                    $pg[0] = array_merge($pg[0], array($emplacement));
-                                                    break;
-                                                case 1 :
-                                                    $pg[1] = array_merge($pg[1], array($emplacement));
-                                                    break;
-                                                case 2 :
-                                                    $pg[2] = array_merge($pg[2], array($emplacement));
-                                                    break;
-                                                case 3 :
-                                                    $pg[3] = array_merge($pg[3], array($emplacement));
-                                                    break;
-                                                default :
-                                                    $pg[4] = array_merge($pg[4], array($emplacement));
-                                                    break;
+            $parc = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('idparc'));
+            if ($parc) {
+                $filieress = $em->getRepository('SSFMBBundle:Filiere')->getTotaleContenuFiliere($parc);
+                $filieres = array();
+                foreach ($filieress as $item) {
+                    $filieres[$item['fiId']]['nomFiliere'] = $item['nomFiliere'];
+                    $filieres[$item['fiId']]['aireDeTravaille'] = $item['aireDeTravaille'];
+                    $filieres[$item['fiId']][$item['sId']]['longeur'] = $item['longeur'];
+                    $filieres[$item['fiId']][$item['sId']]['nomSegment'] = $item['nomSegment'];
+                    $filieres[$item['fiId']][$item['sId']][$item['flId']]['nomFlotteur'] = $item['nomFlotteur'];
+                    $filieres[$item['fiId']][$item['sId']][$item['flId']][$item['empId']] =
+                        array('place' => $item['place'],
+                            'filiere' => $item['nomFiliere'],
+                            'segment' => $item['nomSegment'],
+                            'flotteur' => $item['nomFlotteur'],
+                            'numeroSerieLanrt' => $item['numeroSerieLanrt'],
+                            'llibArticle' => $item['llibArticle'],
+                            'libArticle' => $item['libArticle'],
+                            'nomLanterne' => $item['nomLanterne'],
+                            'nomCorde' => $item['nomCorde'],
+                            'numeroSerie' => $item['numeroSerie'],
+                            'dateDeRemplissage' => $item['dateDeRemplissage'],
+                            'stockscorde' => $item['sc'],
+                            'qte' => $item['qte'] * $item['nbrpoche'],
+                            'qtec' => $item['qtec'],
+                            'stockslanterne' => $item['sl']);
+                }
+                foreach ($filieres as $filiere) {
+                    if (is_array($filiere)) {
+                        foreach ($filiere as $segment) {
+                            if (is_array($segment)) {
+                                foreach ($segment as $flotteur) {
+                                    if (is_array($flotteur)) {
+                                        foreach ($flotteur as $cle => $emplacement) {
+                                            if (is_array($emplacement)) {
+                                                if ($emplacement['dateDeRemplissage']) {
+                                                    if ($emplacement['dateDeRemplissage']) {
+                                                        $interval = date_diff($emplacement['dateDeRemplissage'], $date1);
+                                                        if ($emplacement['stockslanterne']) {
+                                                            if ($interval->y == 0) {
+                                                                switch ($interval->m) {
+                                                                    case 0 :
+                                                                        $pg[0] = array_merge($pg[0], array($emplacement));
+                                                                        break;
+                                                                    case 1 :
+                                                                        $pg[1] = array_merge($pg[1], array($emplacement));
+                                                                        break;
+                                                                    case 2 :
+                                                                        $pg[2] = array_merge($pg[2], array($emplacement));
+                                                                        break;
+                                                                    case 3 :
+                                                                        $pg[3] = array_merge($pg[3], array($emplacement));
+                                                                        break;
+                                                                    default :
+                                                                        $pg[4] = array_merge($pg[4], array($emplacement));
+                                                                        break;
+                                                                }
+                                                            } else {
+                                                                $pg[4] = array_merge($pg[4], array($emplacement));
+                                                            }
+                                                        } elseif ($emplacement['stockscorde']) {
+                                                            if ($interval->y == 0) {
+                                                                switch ($interval->m) {
+                                                                    case 0 :
+                                                                        $gr[0] = array_merge($gr[0], array($emplacement));
+                                                                        break;
+                                                                    case 1 :
+                                                                        $gr[1] = array_merge($gr[1], array($emplacement));
+                                                                        break;
+                                                                    case 2 :
+                                                                        $gr[2] = array_merge($gr[2], array($emplacement));
+                                                                        break;
+                                                                    case 3 :
+                                                                        $gr[3] = array_merge($gr[3], array($emplacement));
+                                                                        break;
+                                                                    case 4 :
+                                                                        $gr[4] = array_merge($gr[4], array($emplacement));
+                                                                        break;
+                                                                    case 5 :
+                                                                        $gr[5] = array_merge($gr[5], array($emplacement));
+                                                                        break;
+                                                                    case 6 :
+                                                                        $gr[6] = array_merge($gr[6], array($emplacement));
+                                                                        break;
+                                                                    case 7 :
+                                                                        $gr[7] = array_merge($gr[7], array($emplacement));
+                                                                        break;
+                                                                    case 8 :
+                                                                        $gr[8] = array_merge($gr[8], array($emplacement));
+                                                                        break;
+                                                                    case 9 :
+                                                                        $gr[9] = array_merge($gr[9], array($emplacement));
+                                                                        break;
+                                                                    case 10 :
+                                                                        $gr[10] = array_merge($gr[10], array($emplacement));
+                                                                        break;
+                                                                    default :
+                                                                        $gr[11] = array_merge($gr[11], array($emplacement));
+                                                                        break;
+                                                                }
+                                                            } else {
+                                                                $gr[11] = array_merge($gr[11], array($emplacement));
+                                                            }
+                                                        }
+                                                    }
+                                                }
                                             }
-                                        } else {
-                                            $pg[4] = array_merge($pg[4], array($emplacement));
-                                        }
-                                    } elseif ($emplacement->getStockscorde()) {
-                                        if ($interval->y == 0) {
-                                            switch ($interval->m) {
-                                                case 0 :
-                                                    $gr[0] = array_merge($gr[0], array($emplacement));
-                                                    break;
-                                                case 1 :
-                                                    $gr[1] = array_merge($gr[1], array($emplacement));
-                                                    break;
-                                                case 2 :
-                                                    $gr[2] = array_merge($gr[2], array($emplacement));
-                                                    break;
-                                                case 3 :
-                                                    $gr[3] = array_merge($gr[3], array($emplacement));
-                                                    break;
-                                                case 4 :
-                                                    $gr[4] = array_merge($gr[4], array($emplacement));
-                                                    break;
-                                                case 5 :
-                                                    $gr[5] = array_merge($gr[5], array($emplacement));
-                                                    break;
-                                                case 6 :
-                                                    $gr[6] = array_merge($gr[6], array($emplacement));
-                                                    break;
-                                                case 7 :
-                                                    $gr[7] = array_merge($gr[7], array($emplacement));
-                                                    break;
-                                                case 8 :
-                                                    $gr[8] = array_merge($gr[8], array($emplacement));
-                                                    break;
-                                                case 9 :
-                                                    $gr[9] = array_merge($gr[9], array($emplacement));
-                                                    break;
-                                                case 10 :
-                                                    $gr[10] = array_merge($gr[10], array($emplacement));
-                                                    break;
-                                                default :
-                                                    $gr[11] = array_merge($gr[11], array($emplacement));
-                                                    break;
-                                            }
-                                        } else {
-                                            $gr[11] = array_merge($gr[11], array($emplacement));
                                         }
                                     }
                                 }
@@ -755,168 +921,62 @@ class DefaultController extends Controller
                         }
                     }
                 }
-            }
-            $pretacomercialisation = $em->getRepository('SSFMBBundle:StocksCordes')->findBy(array("pret" => true, "corde" => $em->getRepository('SSFMBBundle:Corde')->findOneByParc($parcs)));
-            if ($pretacomercialisation) {
-                $p1 = array();
-                $p2 = array();
-                $p3 = array();
-                $p4 = array();
-                foreach ($pretacomercialisation as $stocksCordes) {
-                    if ($stocksCordes->getDateDeRetirement()) {
-                        $interval = date_diff($stocksCordes->getDateDeRetirement(), $date1);
-                        switch ($interval->m) {
-                            case 0 :
-                                if (in_array($stocksCordes->getArticle(), $p1)) {
-                                    $key = array_search($stocksCordes->getArticle(), $p1);
-                                    $cr[4][$key]->setQuantiter($stocksCordes->getQuantiter() + $cr[4][$key]->getQuantiter());
-                                } else {
-                                    $p1 = array_merge($p1, array($stocksCordes->getArticle()));
-                                    $cr[4] = array_merge($cr[4], array($stocksCordes));
-                                }
-                                break;
-                            case 1 :
-                                if (in_array($stocksCordes->getArticle(), $p2)) {
-                                    $key = array_search($stocksCordes->getArticle(), $p2);
-                                    $cr[3][$key]->setQuantiter($stocksCordes->getQuantiter() + $cr[3][$key]->getQuantiter());
-                                } else {
-                                    $p2 = array_merge($p2, array($stocksCordes->getArticle()));
-                                    $cr[3] = array_merge($cr[3], array($stocksCordes));
-                                }
-                                break;
-                            case 2 :
-                                if (in_array($stocksCordes->getArticle(), $p3)) {
-                                    $key = array_search($stocksCordes->getArticle(), $p3);
-                                    $cr[2][$key]->setQuantiter($stocksCordes->getQuantiter() + $cr[2][$key]->getQuantiter());
-                                } else {
-                                    $p3 = array_merge($p3, array($stocksCordes->getArticle()));
-                                    $cr[2] = array_merge($cr[2], array($stocksCordes));
-                                }
-                                break;
-                            case 3 :
-                                if (in_array($stocksCordes->getArticle(), $p4)) {
-                                    $key = array_search($stocksCordes->getArticle(), $p4);
-                                    $cr[1][$key]->setQuantiter($stocksCordes->getQuantiter() + $cr[1][$key]->getQuantiter());
-                                } else {
-                                    $p4 = array_merge($p4, array($stocksCordes->getArticle()));
-                                    $cr[1] = array_merge($cr[1], array($stocksCordes));
-                                }
-                                break;
-                            default :
-                                $cr[0] = array_merge($cr[0], array($stocksCordes));
-                                break;
+                $pretacomercialisation = $em->getRepository('SSFMBBundle:StocksCordes')->findBy(array("pret" => true, "corde" => $em->getRepository('SSFMBBundle:Corde')->findOneByParc($parc)));
+                if ($pretacomercialisation) {
+                    $p1 = array();
+                    $p2 = array();
+                    $p3 = array();
+                    $p4 = array();
+                    foreach ($pretacomercialisation as $stocksCordes) {
+                        if ($stocksCordes->getDateDeRetirement()) {
+                            $interval = date_diff($stocksCordes->getDateDeRetirement(), $date1);
+                            switch ($interval->m) {
+                                case 0 :
+                                    if (in_array($stocksCordes->getArticle(), $p1)) {
+                                        $key = array_search($stocksCordes->getArticle(), $p1);
+                                        $cr[4][$key]->setQuantiter($stocksCordes->getQuantiter() + $cr[4][$key]->getQuantiter());
+                                    } else {
+                                        $p1 = array_merge($p1, array($stocksCordes->getArticle()));
+                                        $cr[4] = array_merge($cr[4], array($stocksCordes));
+                                    }
+                                    break;
+                                case 1 :
+                                    if (in_array($stocksCordes->getArticle(), $p2)) {
+                                        $key = array_search($stocksCordes->getArticle(), $p2);
+                                        $cr[3][$key]->setQuantiter($stocksCordes->getQuantiter() + $cr[3][$key]->getQuantiter());
+                                    } else {
+                                        $p2 = array_merge($p2, array($stocksCordes->getArticle()));
+                                        $cr[3] = array_merge($cr[3], array($stocksCordes));
+                                    }
+                                    break;
+                                case 2 :
+                                    if (in_array($stocksCordes->getArticle(), $p3)) {
+                                        $key = array_search($stocksCordes->getArticle(), $p3);
+                                        $cr[2][$key]->setQuantiter($stocksCordes->getQuantiter() + $cr[2][$key]->getQuantiter());
+                                    } else {
+                                        $p3 = array_merge($p3, array($stocksCordes->getArticle()));
+                                        $cr[2] = array_merge($cr[2], array($stocksCordes));
+                                    }
+                                    break;
+                                case 3 :
+                                    if (in_array($stocksCordes->getArticle(), $p4)) {
+                                        $key = array_search($stocksCordes->getArticle(), $p4);
+                                        $cr[1][$key]->setQuantiter($stocksCordes->getQuantiter() + $cr[1][$key]->getQuantiter());
+                                    } else {
+                                        $p4 = array_merge($p4, array($stocksCordes->getArticle()));
+                                        $cr[1] = array_merge($cr[1], array($stocksCordes));
+                                    }
+                                    break;
+                                default :
+                                    $cr[0] = array_merge($cr[0], array($stocksCordes));
+                                    break;
+                            }
                         }
                     }
                 }
             }
         }
-        return $this->render('@SSFMB/Default/processusgrocissement.html.twig', array('cr' => $cr, 'pg' => $pg, 'gr' => $gr, 'entity' => $parcs));
+        return $this->render('@SSFMB/Default/processusgrocissement.html.twig', array('cr' => $cr, 'pg' => $pg, 'gr' => $gr, 'entity' => $parc));
     }
-
-    public function transfertAction(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        if ($request->get('id') == null) {
-            $parcs = null;
-            $stock = null;
-            $lanternes = null;
-            $articles = null;
-        } else {
-            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('id'));
-            $lanternes = $em->getRepository('SSFMBBundle:Lanterne')->findByParc($parcs);
-            $articles = $em->getRepository('SSFMBBundle:StocksArticles')->findByIdStock($parcs->getIdStock());
-        }
-        if ($request->isMethod('POST')) {
-            $session = new Session();
-            $session->set('emplacement', array());
-            $session->set('lanterne', array());
-            $session->set('corde', array());
-            foreach ($request->request->get('place') as $emplacement) {
-                $place = $em->getRepository('SSFMBBundle:Emplacement')->find($emplacement);
-
-                $session->set('dateTransfertRetrait', new \DateTime($request->request->get('dateRetrait')));
-                $session->set('emplacement', array_merge($session->get('emplacement'), array($place)));
-                if ($place->getStockscorde() != null) {
-                    $session->set('corde', array_merge($session->get('corde'), array($place->getStockscorde())));
-                } elseif ($place->getStockslanterne() != null) {
-                    $session->set('lanterne', array_merge($session->get('lanterne'), array($place->getStockslanterne())));
-                }
-            }
-            return $this->redirectToRoute('ssfmb_misaaeautransfert');
-        }
-        return $this->render(
-            '@SSFMB/Default/transfertRetirement.html.twig',
-            array(
-                'entity' => $parcs,
-                'articles' => $articles,
-                'lanternes' => $lanternes,
-            )
-        );
-    }
-
-    public
-    function transfertMAEAction(Request $request)
-    {
-        $session = new Session();
-        //  var_dump($session->get('lanterne'));
-        // var_dump($session->get('corde'));
-        $em = $this->getDoctrine()->getManager();
-        if ($request->get('id') == null) {
-            $parcs = null;
-            $stock = null;
-            $cordes = null;
-            $articles = null;
-        } else {
-            $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('id'));
-            $cordes = $em->getRepository('SSFMBBundle:Corde')->findByParc($parcs);
-            $articles = $em->getRepository('SSFMBBundle:StocksArticles')->findByIdStock($parcs->getIdStock());
-        }
-        if ($request->isMethod('POST')) {
-            $cmpt = 0;
-            foreach ($request->request->get('place') as $emplacement) {
-                $place = $em->getRepository('SSFMBBundle:Emplacement')->find($emplacement);
-                if ($cmpt < count($session->get('emplacement'))) {
-                    if ($session->get('emplacement')[$cmpt]->getStockscorde() != null) {
-                        $anarticle = $em->getRepository('SSFMBBundle:StocksCordes')->find($session->get('emplacement')[$cmpt]->getStockscorde());
-                        $anplace = $em->getRepository('SSFMBBundle:Emplacement')->find($session->get('emplacement')[$cmpt]);
-                        $anarticle->setEmplacement(null);
-                        $anplace->setStockscorde(null);
-                        $place->setDateDeRemplissage($anplace->getDateDeRemplissage());
-                        $anplace->setDateDeRemplissage(null);
-                        $em->flush();
-                        $place->setStockscorde($anarticle);
-                        $anarticle->setEmplacement($place);
-                        $anarticle->setDateDeRetraitTransfert($session->get('dateTransfertRetrait'));
-                        $anarticle->setDateDeMAETransfert(new \DateTime($request->request->get('dateRemise')));
-                        $cmpt++;
-
-                    } else if (($session->get('emplacement')[$cmpt]->getStockslanterne() != null) && ($cmpt < count($session->get('emplacement')))) {
-                        $anarticle = $em->getRepository('SSFMBBundle:StocksLanternes')->find($session->get('emplacement')[$cmpt]->getStockslanterne());
-                        $anplace = $em->getRepository('SSFMBBundle:Emplacement')->find($session->get('emplacement')[$cmpt]);
-                        $anplace->setStockslanterne(null);
-                        $anarticle->setEmplacement(null);
-                        $place->setDateDeRemplissage($anplace->getDateDeRemplissage());
-                        $anplace->setDateDeRemplissage(null);
-                        $em->flush();
-                        $place->setStockslanterne($anarticle);
-                        $anarticle->setEmplacement($place);
-                        $cmpt++;
-
-                    }
-                }
-            }
-            $em->flush();
-            return $this->redirectToRoute('ssfmb_transfert');
-        }
-        return $this->render(
-            '@SSFMB/Default/transfertMAE.html.twig',
-            array(
-                'entity' => $parcs,
-                'articles' => $articles,
-                'cordes' => $cordes,
-            )
-        );
-    }
-
 }
+

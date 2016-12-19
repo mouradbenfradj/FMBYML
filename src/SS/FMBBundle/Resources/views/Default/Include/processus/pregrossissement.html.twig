@@ -1,0 +1,102 @@
+{% set ouvert = false %}
+{% for tab in pg %}
+    {% if tab|length != 0 %}
+        {% set ouvert = true %}
+    {% endif %}
+{% endfor %}
+{% if ouvert %}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="portlet">
+                <div class="portlet-heading bg-info">
+                    <h3 class="portlet-title">
+                        Pregrossisement
+                    </h3>
+                    <div class="portlet-widgets">
+                        <a href="javascript:;" data-toggle="reload"><i
+                                    class="ion-refresh"></i></a>
+                        <span class="divider"></span>
+                        <a data-toggle="collapse" data-parent="#accordion1"
+                           href="#bg-info1"><i
+                                    class="ion-minus-round"></i></a>
+                        <span class="divider"></span>
+                        <a href="#" data-toggle="remove"><i class="ion-close-round"></i></a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div id="bg-info1" class="panel-collapse collapse in">
+                    <div class="portlet-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="card-box">
+                                    <table id="demo-foo-accordion"
+                                           class="table m-b-0 toggle-arrow-tiny">
+                                        <thead>
+                                        <tr>
+                                            <th data-toggle="true"> etape</th>
+                                            <th data-hide="all"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for emplacementpg in pg %}
+                                            <tr>
+                                                <td>
+                                                    {% set etp = loop.index0 %}
+                                                    pg{{ loop.index0 }}</td>
+                                                <td>
+                                                    <table class="table table-bordered table-striped table-condensed">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>filiere</th>
+                                                            <th>segment</th>
+                                                            <th>flotteur</th>
+                                                            <th>emplacement</th>
+                                                            <th>date de mise a eau</th>
+                                                            <th>doit etre retirer le
+                                                            </th>
+                                                            <th>Densiter U/Lanterne</th>
+                                                            <th>Densiter totale</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        {% for emplacement in emplacementpg %}
+                                                            <tr>
+                                                                <td>{{ emplacement.filiere }}</td>
+                                                                <td>{{ emplacement.segment }}</td>
+                                                                <td>{{ emplacement.flotteur }}</td>
+                                                                <td>{{ emplacement.place }}</td>
+                                                                <td>{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
+                                                                <td>{{ emplacement.dateDeRemplissage|date_modify("+3 month")|date('Y-m-d') }}</td>
+                                                                <td>
+                                                                    <div class="qte{{  etp }}">
+                                                                        {{ emplacement.qte }}
+                                                                    </div>
+                                                                </td>
+                                                                {% if loop.first %}
+                                                                    <td rowspan="{{ emplacementpg|length }}">
+                                                                        <div>
+                                                                            <span id="qteu{{ etp }}"></span>
+                                                                        </div>
+                                                                        <div>
+                                                                            <span id="qtedz{{ etp }}"></span>
+                                                                        </div>
+                                                                    </td>
+                                                                {% endif %}
+                                                            </tr>
+                                                        {% endfor %}
+                                                        <tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}

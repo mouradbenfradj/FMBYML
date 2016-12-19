@@ -15,10 +15,10 @@ class DocsLinesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('refArticle', 'entity', array('class' => 'SSFMBBundle:Articles', 'label' => 'article'))
-            ->add('numeroSerie', 'entity', array('class' => 'SSFMBBundle:StocksArticlesSn', 'label' => 'lot','mapped' => false))
-            ->add('qte')
-            ->add('nombre', 'number', array('label' => 'nombre', 'mapped' => false));
+            ->add('refArticle', 'entity', array('class' => 'SSFMBBundle:Articles', 'label' => 'article', 'attr' => array('class' => "form-control")))
+            ->add('numeroSerie', 'entity', array('class' => 'SSFMBBundle:StocksArticlesSn', 'label' => 'lot', 'mapped' => false, 'attr' => array('class' => "form-control")))
+            ->add('qte', 'number', array('label' => 'Densiter','attr' => array( 'class' => "form-control")))
+            ->add('nombre', 'number', array('label' => 'nombre de lanterne a fabriquer', 'mapped' => false,'attr' => array( 'class' => "form-control")));
 
     }
 

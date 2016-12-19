@@ -41,7 +41,7 @@ class Segment
      */
     private $filiere;
     /**
-     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Flotteur", mappedBy="segment",cascade={"persist","merge","remove"},fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Flotteur", mappedBy="segment",cascade={"persist","merge","remove"},fetch="LAZY")
      */
     private $flotteurs;
 

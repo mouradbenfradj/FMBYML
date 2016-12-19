@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Magasins
  *
  * @ORM\Table(name="magasins", indexes={@ORM\Index(name="id_stock", columns={"id_stock"}), @ORM\Index(name="id_tarif", columns={"id_tarif"}), @ORM\Index(name="actif", columns={"actif"}), @ORM\Index(name="id_mag_enseigne", columns={"id_mag_enseigne"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="SS\FMBBundle\Repository\ParcRepository")
  */
 class Magasins
 {
@@ -79,10 +79,18 @@ class Magasins
      */
     private $idStock;
     /**
-     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Filiere", mappedBy="parc" ,cascade={"persist","remove"},fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Filiere", mappedBy="parc" ,cascade={"persist","remove"},fetch="LAZY")
      * @ORM\OrderBy({"nomFiliere" = "asc"})
      */
     private $filieres;
+    /**
+     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Corde", mappedBy="parc" ,cascade={"persist","remove"},fetch="EXTRA_LAZY")
+     */
+    private $cordes;
+    /**
+     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Lanterne", mappedBy="parc" ,cascade={"persist","remove"},fetch="EXTRA_LAZY")
+     */
+    private $lanternes;
 
     /**
      * Constructor
@@ -299,5 +307,71 @@ class Magasins
     public function getFilieres()
     {
         return $this->filieres;
+    }
+
+    /**
+     * Add cordes
+     *
+     * @param \SS\FMBBundle\Entity\Corde $cordes
+     * @return Magasins
+     */
+    public function addCorde(\SS\FMBBundle\Entity\Corde $cordes)
+    {
+        $this->cordes[] = $cordes;
+
+        return $this;
+    }
+
+    /**
+     * Remove cordes
+     *
+     * @param \SS\FMBBundle\Entity\Corde $cordes
+     */
+    public function removeCorde(\SS\FMBBundle\Entity\Corde $cordes)
+    {
+        $this->cordes->removeElement($cordes);
+    }
+
+    /**
+     * Get cordes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCordes()
+    {
+        return $this->cordes;
+    }
+
+    /**
+     * Add lanternes
+     *
+     * @param \SS\FMBBundle\Entity\Lanterne $lanternes
+     * @return Magasins
+     */
+    public function addLanterne(\SS\FMBBundle\Entity\Lanterne $lanternes)
+    {
+        $this->lanternes[] = $lanternes;
+
+        return $this;
+    }
+
+    /**
+     * Remove lanternes
+     *
+     * @param \SS\FMBBundle\Entity\Lanterne $lanternes
+     */
+    public function removeLanterne(\SS\FMBBundle\Entity\Lanterne $lanternes)
+    {
+        $this->lanternes->removeElement($lanternes);
+    }
+
+    /**
+     * Get lanternes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getLanternes()
+    {
+        return $this->lanternes;
     }
 }

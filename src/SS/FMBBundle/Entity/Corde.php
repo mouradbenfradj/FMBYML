@@ -36,7 +36,7 @@ class Corde
      */
     private $stockscordes;
     /**
-     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Magasins", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Magasins",inversedBy="cordes")
      * @ORM\JoinColumn(name="magasin", referencedColumnName="id_magasin",nullable=false)
      */
     private $parc;
@@ -60,6 +60,16 @@ class Corde
     }
 
     /**
+     * Get nbrTotaleEnStock
+     *
+     * @return integer
+     */
+    public function getNbrTotaleEnStock()
+    {
+        return $this->nbrTotaleEnStock;
+    }
+
+    /**
      * Set nbrTotaleEnStock
      *
      * @param integer $nbrTotaleEnStock
@@ -70,16 +80,6 @@ class Corde
         $this->nbrTotaleEnStock = $nbrTotaleEnStock;
 
         return $this;
-    }
-
-    /**
-     * Get nbrTotaleEnStock
-     *
-     * @return integer
-     */
-    public function getNbrTotaleEnStock()
-    {
-        return $this->nbrTotaleEnStock;
     }
 
     /**
@@ -116,6 +116,16 @@ class Corde
     }
 
     /**
+     * Get parc
+     *
+     * @return \SS\FMBBundle\Entity\Magasins
+     */
+    public function getParc()
+    {
+        return $this->parc;
+    }
+
+    /**
      * Set parc
      *
      * @param \SS\FMBBundle\Entity\Magasins $parc
@@ -129,13 +139,13 @@ class Corde
     }
 
     /**
-     * Get parc
+     * Get nomCorde
      *
-     * @return \SS\FMBBundle\Entity\Magasins
+     * @return string
      */
-    public function getParc()
+    public function getNomCorde()
     {
-        return $this->parc;
+        return $this->nomCorde;
     }
 
     /**
@@ -149,16 +159,6 @@ class Corde
         $this->nomCorde = $nomCorde;
 
         return $this;
-    }
-
-    /**
-     * Get nomCorde
-     *
-     * @return string
-     */
-    public function getNomCorde()
-    {
-        return $this->nomCorde;
     }
 
     public function __toString()

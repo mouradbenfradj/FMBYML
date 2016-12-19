@@ -28,6 +28,6 @@ class DocsLinesAdmin extends Admin
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('refDocLine')->add('refDoc')->add('refArticle')->add('libArticle')->add('descArticle')->add('qte')->add('puHt')->add('remise')->add('tva')->add('ordre')->add('visible')->add('paHt')->add('paForced');
+        $listMapper->addIdentifier('refDocLine')->add('refDoc')->add('refArticle')->add('libArticle')->add('refDocLineParent')->add('qte');
     }
 }

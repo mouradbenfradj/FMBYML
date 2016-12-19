@@ -27,11 +27,11 @@ class Lanterne
      */
     private $nbrTotaleEnStock;
     /**
-     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\StocksLanternes", mappedBy="lanterne",cascade={"persist","remove"})
+     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\StocksLanternes", mappedBy="lanterne",cascade={"persist","remove"},fetch="EXTRA_LAZY")
      */
     private $stockslanternes;
     /**
-     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Magasins", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Magasins",inversedBy="lanternes")
      * @ORM\JoinColumn(name="magasin", referencedColumnName="id_magasin",nullable=false)
      */
     private $parc;
@@ -50,18 +50,14 @@ class Lanterne
     }
 
     /**
-     * Add stockslanternes
-     * @param \SS\FMBBundle\Entity\StocksLanternes $stockslanternes
-     * @return Lanterne
+     * Get nomLanterne
+     *
+     * @return string
      */
-    public function addStockslanterne(\SS\FMBBundle\Entity\StocksLanternes $stockslanternes)
+    public function getNomLanterne()
     {
-        $this->stockslanternes[] = $stockslanternes;
-        $stockslanternes->setLanterne($this);
-
-        return $this;
+        return $this->nomLanterne;
     }
-
 
     /**
      * Set nomLanterne
@@ -77,13 +73,26 @@ class Lanterne
     }
 
     /**
-     * Get nomLanterne
-     *
-     * @return string 
+     * Add stockslanternes
+     * @param \SS\FMBBundle\Entity\StocksLanternes $stockslanternes
+     * @return Lanterne
      */
-    public function getNomLanterne()
+    public function addStockslanterne(\SS\FMBBundle\Entity\StocksLanternes $stockslanternes)
     {
-        return $this->nomLanterne;
+        $this->stockslanternes[] = $stockslanternes;
+        $stockslanternes->setLanterne($this);
+
+        return $this;
+    }
+
+    /**
+     * Get nbrpoche
+     *
+     * @return integer
+     */
+    public function getNbrpoche()
+    {
+        return $this->nbrpoche;
     }
 
     /**
@@ -97,16 +106,6 @@ class Lanterne
         $this->nbrpoche = $nbrpoche;
 
         return $this;
-    }
-
-    /**
-     * Get nbrpoche
-     *
-     * @return integer 
-     */
-    public function getNbrpoche()
-    {
-        return $this->nbrpoche;
     }
 
     /**
@@ -153,6 +152,15 @@ class Lanterne
         return $this;
     }
 
+    /**
+     * Get nbrTotaleEnStock
+     *
+     * @return integer
+     */
+    public function getNbrTotaleEnStock()
+    {
+        return $this->nbrTotaleEnStock;
+    }
 
     /**
      * Set nbrTotaleEnStock
@@ -165,15 +173,5 @@ class Lanterne
         $this->nbrTotaleEnStock = $nbrTotaleEnStock;
 
         return $this;
-    }
-
-    /**
-     * Get nbrTotaleEnStock
-     *
-     * @return integer 
-     */
-    public function getNbrTotaleEnStock()
-    {
-        return $this->nbrTotaleEnStock;
     }
 }

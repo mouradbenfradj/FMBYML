@@ -1,59 +1,27 @@
-{% extends "SSFMBBundle:Default:index.html.twig" %}
-{% block filiere %}
-    {% for filiere in filieres %}
-        <tr>
-            <td id="{{ filiere.nomFiliere }}" class="filiere">
+{% for id , filiere in filieres %}
+    {% if page not in ["RL","RC"] %}
+        <li class="dd-item" data-id="{{ id }}">
+            <div class="dd-handle" id="{{ filiere.nomFiliere }}">
                 {{ filiere.nomFiliere }}
-                <br/>
-                {% set tailleFiliere =0 %}
-                {% set totaleplace =0 %}
-                {% set totalelanterne =0 %}
-                {% set totalecorde =0 %}
-                {% for segment in filiere.segments %}
-                    {% set tailleFiliere = tailleFiliere+segment.getLongeur %}
-                    {% for flotteur in segment.flotteurs %}
-                        {% for emplacement in flotteur.emplacements %}
-                            {% if emplacement.stockscorde == null and emplacement.stockslanterne == null %}
-                                {% set totaleplace = totaleplace + 1 %}
-                            {% elseif emplacement.stockscorde != null %}
-                                {% set totaleplace = totaleplace + 1 %}
-                                {% set totalecorde = totalecorde + 1 %}
-                            {% elseif emplacement.stockslanterne != null %}
-                                {% set totaleplace = totaleplace + 1 %}
-                                {% set totalelanterne =totalelanterne + 1 %}
-                            {% endif %}
-                        {% endfor %}
-                    {% endfor %}
-                {% endfor %}
-                taille {{ tailleFiliere }} m <br>
-                nombre de place totale : {{ totaleplace }} place <br> nombre de
-                place vide :{{ (totaleplace -(totalecorde + totalelanterne)) }}
-                place
-                || {{ ((totaleplace -(totalecorde + totalelanterne))/totaleplace ) *100 }}
-                %
-                <br>nombre de place remplis
-                :{{ totaleplace - (totaleplace -(totalecorde + totalelanterne)) }}
-                place
-                || {{ ((((totaleplace -(totaleplace -(totalecorde + totalelanterne))))/totaleplace )*100 ) }}
-                %
-                <br>nombre des corde:{{ totalecorde }}
-                <br>nombre des lanterne:{{ totalelanterne }}
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <table class="table table-condensed table-bordered" border="1">
-                    <tbody>
-                    <tr>
-                        {% block segments %}
-                            {{ render(controller('SSFMBBundle:Segment:findByFiliere', {
-                                'filiere':filiere.id
-                            } ) ) }}
-                        {% endblock %}
-                    </tr>
-                    </tbody>
-                </table>
-            </td>
-        </tr>
-    {% endfor %}
-{% endblock %}
+                <br>
+                {% if page == 'suivit' %}
+                    {% include 'SSFMBBundle:Filiere/Include:StatIndexInclude.html.twig' %}
+                {% endif %}
+            </div>
+        {% include '@SSFMB/Segment/Include/listIndexInclude.html.twig' %}
+        </li>
+    {% elseif page in ["RL","RC"] %}
+        {% if filiere.aireDeTravaille %}
+            <li class="dd-item" data-id="{{ id }}">
+                <div class="dd-handle" id="{{ filiere.nomFiliere }}">
+                    {{ filiere.nomFiliere }}
+                    <br>
+                    {% if page == 'suivit' %}
+                        {% include 'SSFMBBundle:Filiere/Include:StatIndexInclude.html.twig' %}
+                    {% endif %}
+                </div>
+                {% include '@SSFMB/Segment/Include/listIndexInclude.html.twig' %}
+            </li>
+        {% endif %}
+    {% endif %}
+{% endfor %}

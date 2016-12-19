@@ -3,6 +3,7 @@
 namespace SS\FMBBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use SS\FMBBundle\Entity\Magasins;
 
 /**
  * EmplacementRepository
@@ -12,4 +13,15 @@ use Doctrine\ORM\EntityRepository;
  */
 class EmplacementRepository extends EntityRepository
 {
+    public function getTotaleEmplacementDuParc(Magasins $parc)
+    {
+        $qb = $this->createQueryBuilder('e')
+            ->select('fi.nomFiliere,s.nomSegment,fl.nomFlotteur,e.place')
+            ->join('e.flotteur', 'fl')->join('fl.segment', 's')->join('s.filiere', 'fi')
+            ->where('fi.parc = :parc')
+            ->andWhere('e.flotteur = fl.id, fl.segment = s.id , s.filiere=fi.id')
+            ->groupBy('e.flotteur.id')
+            ->setParameter('parc', $parc);
+        return $qb->getQuery()->getResult();
+    }
 }

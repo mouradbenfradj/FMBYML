@@ -15,8 +15,8 @@ class DocumentsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('idTypeDoc')
             ->add('docsLines','collection',array(
+                'label' => 'ligne',
                     'type' => new DocsLinesType(),
                     'required' => true,
                     'allow_add' => true,

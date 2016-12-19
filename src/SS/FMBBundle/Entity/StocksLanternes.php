@@ -28,12 +28,12 @@ class StocksLanternes
     private $lanterne;
 
     /**
-     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Poche", mappedBy="stocklanterne",cascade={"persist","remove"})
+     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Poche", mappedBy="stocklanterne",cascade={"persist","remove"},fetch="LAZY")
      */
     private $poches;
 
     /**
-     * @ORM\OneToOne(targetEntity="SS\FMBBundle\Entity\Emplacement", mappedBy="stockslanterne")
+     * @ORM\OneToOne(targetEntity="SS\FMBBundle\Entity\Emplacement", mappedBy="stockslanterne",fetch="LAZY")
      * @ORM\JoinColumn(nullable=true)
      */
     private $emplacement;
@@ -63,6 +63,11 @@ class StocksLanternes
     private $dateDeCreation;
     /**
      *
+     * @ORM\Column(name="date_de_mise_a_eau", type="date",nullable=true)
+     */
+    private $dateDeMiseAEau;
+    /**
+     *
      * @ORM\Column(name="dateDeRetraitTransfert", type="date", nullable=true)
      */
     private $dateDeRetraitTransfert;
@@ -83,6 +88,14 @@ class StocksLanternes
      */
     private $docLine;
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->poches = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
     public function __toString()
     {
         return "" . $this->id;
@@ -99,6 +112,16 @@ class StocksLanternes
     }
 
     /**
+     * Get pret
+     *
+     * @return boolean
+     */
+    public function getPret()
+    {
+        return $this->pret;
+    }
+
+    /**
      * Set pret
      *
      * @param boolean $pret
@@ -112,13 +135,13 @@ class StocksLanternes
     }
 
     /**
-     * Get pret
+     * Get dateDeCreation
      *
-     * @return boolean
+     * @return \DateTime
      */
-    public function getPret()
+    public function getDateDeCreation()
     {
-        return $this->pret;
+        return $this->dateDeCreation;
     }
 
     /**
@@ -135,13 +158,13 @@ class StocksLanternes
     }
 
     /**
-     * Get dateDeCreation
+     * Get lanterne
      *
-     * @return \DateTime
+     * @return \SS\FMBBundle\Entity\Lanterne
      */
-    public function getDateDeCreation()
+    public function getLanterne()
     {
-        return $this->dateDeCreation;
+        return $this->lanterne;
     }
 
     /**
@@ -155,16 +178,6 @@ class StocksLanternes
         $this->lanterne = $lanterne;
 
         return $this;
-    }
-
-    /**
-     * Get lanterne
-     *
-     * @return \SS\FMBBundle\Entity\Lanterne
-     */
-    public function getLanterne()
-    {
-        return $this->lanterne;
     }
 
     /**
@@ -201,6 +214,16 @@ class StocksLanternes
     }
 
     /**
+     * Get emplacement
+     *
+     * @return \SS\FMBBundle\Entity\Emplacement
+     */
+    public function getEmplacement()
+    {
+        return $this->emplacement;
+    }
+
+    /**
      * Set emplacement
      *
      * @param \SS\FMBBundle\Entity\Emplacement $emplacement
@@ -213,13 +236,13 @@ class StocksLanternes
     }
 
     /**
-     * Get emplacement
+     * Get docLine
      *
-     * @return \SS\FMBBundle\Entity\Emplacement
+     * @return \SS\FMBBundle\Entity\DocsLines
      */
-    public function getEmplacement()
+    public function getDocLine()
     {
-        return $this->emplacement;
+        return $this->docLine;
     }
 
     /**
@@ -236,21 +259,13 @@ class StocksLanternes
     }
 
     /**
-     * Get docLine
+     * Get article
      *
-     * @return \SS\FMBBundle\Entity\DocsLines
+     * @return \SS\FMBBundle\Entity\StocksArticlesSn
      */
-    public function getDocLine()
+    public function getArticle()
     {
-        return $this->docLine;
-    }
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->poches = new \Doctrine\Common\Collections\ArrayCollection();
+        return $this->article;
     }
 
     /**
@@ -267,13 +282,13 @@ class StocksLanternes
     }
 
     /**
-     * Get article
+     * Get numeroSerie
      *
-     * @return \SS\FMBBundle\Entity\StocksArticlesSn
+     * @return string
      */
-    public function getArticle()
+    public function getNumeroSerie()
     {
-        return $this->article;
+        return $this->numeroSerie;
     }
 
     /**
@@ -290,15 +305,14 @@ class StocksLanternes
     }
 
     /**
-     * Get numeroSerie
+     * Get dateDeRetirement
      *
-     * @return string
+     * @return \DateTime
      */
-    public function getNumeroSerie()
+    public function getDateDeRetirement()
     {
-        return $this->numeroSerie;
+        return $this->dateDeRetirement;
     }
-
 
     /**
      * Set dateDeRetirement
@@ -314,15 +328,14 @@ class StocksLanternes
     }
 
     /**
-     * Get dateDeRetirement
+     * Get dateDeRetraitTransfert
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
-    public function getDateDeRetirement()
+    public function getDateDeRetraitTransfert()
     {
-        return $this->dateDeRetirement;
+        return $this->dateDeRetraitTransfert;
     }
-
 
     /**
      * Set dateDeRetraitTransfert
@@ -338,13 +351,13 @@ class StocksLanternes
     }
 
     /**
-     * Get dateDeRetraitTransfert
+     * Get dateDeMAETransfert
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
-    public function getDateDeRetraitTransfert()
+    public function getDateDeMAETransfert()
     {
-        return $this->dateDeRetraitTransfert;
+        return $this->dateDeMAETransfert;
     }
 
     /**
@@ -361,12 +374,25 @@ class StocksLanternes
     }
 
     /**
-     * Get dateDeMAETransfert
+     * Set dateDeMiseAEau
+     *
+     * @param \DateTime $dateDeMiseAEau
+     * @return StocksLanternes
+     */
+    public function setDateDeMiseAEau($dateDeMiseAEau)
+    {
+        $this->dateDeMiseAEau = $dateDeMiseAEau;
+
+        return $this;
+    }
+
+    /**
+     * Get dateDeMiseAEau
      *
      * @return \DateTime 
      */
-    public function getDateDeMAETransfert()
+    public function getDateDeMiseAEau()
     {
-        return $this->dateDeMAETransfert;
+        return $this->dateDeMiseAEau;
     }
 }

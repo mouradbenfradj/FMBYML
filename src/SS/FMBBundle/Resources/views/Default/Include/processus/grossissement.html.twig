@@ -1,0 +1,116 @@
+{% set ouvert = false %}
+{% for tab in gr %}
+    {% if tab|length != 0 %}
+        {% set ouvert = true %}
+    {% endif %}
+{% endfor %}
+{% if ouvert %}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="portlet">
+                <div class="portlet-heading bg-info">
+                    <h3 class="portlet-title">
+                        grossisement
+                    </h3>
+                    <div class="portlet-widgets">
+                        <a href="javascript:;" data-toggle="reload"><i
+                                    class="ion-refresh"></i></a>
+                        <span class="divider"></span>
+                        <a data-toggle="collapse" data-parent="#accordion1"
+                           href="#bg-info2"><i
+                                    class="ion-minus-round"></i></a>
+                        <span class="divider"></span>
+                        <a href="#" data-toggle="remove"><i class="ion-close-round"></i></a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div id="bg-info2" class="panel-collapse collapse in">
+                    <div class="portlet-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="card-box">
+                                    <table id="demo-foo-accordion-2" class="table m-b-0 toggle-arrow-tiny">
+                                        <thead>
+                                        <tr>
+                                            <th data-toggle="true">etape</th>
+                                            <th data-hide="all"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for emplacementgr in gr %}
+                                            {% set etp = loop.index0 %}
+                                            <tr>
+                                                <td> {% if loop.index0 == 6 %}
+                                                        h3
+                                                    {% elseif loop.index0 == 7 %}
+                                                        h2
+                                                    {% elseif loop.index0 == 8 %}
+                                                        h1
+                                                    {% elseif loop.index0 == 9 %}
+                                                        h0
+                                                    {% elseif loop.index0 == 10 %}
+                                                        h00
+                                                    {% elseif loop.index0 >= 11 %}
+                                                        h000
+                                                    {% else %}
+                                                        g{{ loop.index0 }}
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    <table class="table table-bordered table-striped table-condensed">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>filiere</th>
+                                                            <th>segment</th>
+                                                            <th>flotteur</th>
+                                                            <th>emplacement</th>
+                                                            <th>date de mise a eau</th>
+                                                            <th>doit etre retirer le</th>
+                                                            <th>Densiter U/Corde</th>
+                                                            <th>Densiter totale</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        {% for emplacement in emplacementgr %}
+                                                            <tr>
+                                                                <td>{{ emplacement.filiere }}</td>
+                                                                <td>{{ emplacement.segment }}</td>
+                                                                <td>{{ emplacement.flotteur }}</td>
+                                                                <td>{{ emplacement.place }}</td>
+                                                                <td>{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
+                                                                <td>{{ emplacement.dateDeRemplissage|date_modify("+6 month")|date('Y-m-d') }}</td>
+                                                                <td>
+                                                                    <div class="qtec{{ etp }}">
+                                                                        {{ emplacement.qtec }}
+                                                                    </div>
+                                                                </td>
+                                                                {% if loop.first %}
+                                                                    <td rowspan="{{ emplacementgr|length }}">
+                                                                        <div>
+                                                                            <span id="qtecu{{ etp }}"></span>
+                                                                        </div>
+                                                                        <div>
+                                                                            <span id="qtecdz{{ etp }}"></span>
+                                                                        </div>
+                                                                    </td>
+                                                                {% endif %}
+                                                            </tr>
+                                                        {% endfor %}
+                                                        <tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}

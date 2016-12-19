@@ -12,4 +12,11 @@ use Doctrine\ORM\EntityRepository;
  */
 class ParcRepository extends EntityRepository
 {
+    public function findAllParc()
+    {
+        $qb = $this->createQueryBuilder('m')
+            ->select(array('m.idMagasin', 'm.abrevMagasin'));
+        return $qb->getQuery()->getResult();
+    }
+
 }

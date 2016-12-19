@@ -31,21 +31,21 @@ class DocumentsTypes
      *
      * @ORM\Column(name="code_doc", type="string", length=32, nullable=false)
      */
-    private $codeDoc;
+    private $codeDoc ='';
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="id_type_groupe", type="boolean", nullable=false)
      */
-    private $idTypeGroupe;
+    private $idTypeGroupe=' ';
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="actif", type="boolean", nullable=false)
      */
-    private $actif;
+    private $actif = false;
 
     /**
      * @var integer

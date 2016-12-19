@@ -1,0 +1,223 @@
+{% if page == "suivit" %}
+    {% for id,emplacement in flotteur %}
+        {% if not loop.first %}
+            <div class="col-xs-1 col-sm-1 col-md-1">
+                {% if emplacement.stockscorde == null and emplacement.stockslanterne == null %}
+                    <font color="red"> {{ emplacement.place }}</font>
+                {% elseif emplacement.stockscorde != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatCordeInclude.html.twig" %}
+                {% elseif emplacement.stockslanterne != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatLanterneInclude.html.twig" %}
+                {% endif %}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% elseif page == "MAEL" %}
+    {% for emp,emplacement in flotteur %}
+        {% if not loop.first %}
+            <div class="col-xs-1 col-sm-1 col-md-1">
+                {% if emplacement.stockscorde == null and emplacement.stockslanterne == null %}
+                    {% set verifexsistance =  verifexsistance + 1 %}
+                    <font color="red"> {{ emplacement.place }}</font>
+                    <input type="checkbox" name="placelanterne[]" value="{{ emp }}"/>
+                {% elseif emplacement.stockscorde != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatCordeInclude.html.twig" %}
+                {% elseif emplacement.stockslanterne != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatLanterneInclude.html.twig" %}
+                {% endif %}
+            </div>
+        {% endif %}
+    {% endfor %}
+    <br>
+    {% if verifexsistance != 0 %}
+        <div class="cochage">
+            <div class="col-xs-11 col-sm-11 col-md-11">
+                <input type="button" value="Tout cocher"
+                       onClick="fillCheckbox('{{ filiere.nomFiliere }}{{ segment.nomSegment }}{{ flotteur.nomFlotteur }}','1');">&nbsp;&nbsp;
+                <input type="button" value="Tout décocher"
+                       onClick="fillCheckbox('{{ filiere.nomFiliere }}{{ segment.nomSegment }}{{ flotteur.nomFlotteur }}','0');">
+            </div>
+        </div>
+    {% endif %}
+{% elseif page == "MAEC" %}
+    {% for id, emplacement in flotteur %}
+        {% if not loop.first %}
+            <div class="col-xs-1 col-sm-1 col-md-1">
+                {% if emplacement.stockscorde == null and emplacement.stockslanterne == null %}
+                    {% set verifexsistance =  verifexsistance + 1 %}
+                    <font color="red">{{ emplacement.place }}</font>
+                    <input type="checkbox" name="placecorde[]" value="{{ id }}"/>
+                {% elseif emplacement.stockscorde != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatCordeInclude.html.twig" %}
+                {% elseif emplacement.stockslanterne != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatLanterneInclude.html.twig" %}
+                {% endif %}
+            </div>
+        {% endif %}
+    {% endfor %}
+    <br>
+    {% if verifexsistance != 0 %}
+        <div class="cochage">
+            <div class="col-xs-11 col-sm-11 col-md-11">
+                <input type="button"
+                       value="Tout cocher"
+                       onClick="fillCheckbox('{{ filiere.nomFiliere }}{{ segment.nomSegment }}{{ flotteur.nomFlotteur }}','1');">&nbsp;&nbsp;
+                <input type="button"
+                       value="Tout décocher"
+                       onClick="fillCheckbox('{{ filiere.nomFiliere }}{{ segment.nomSegment }}{{ flotteur.nomFlotteur }}','0');">
+            </div>
+        </div>
+    {% endif %}
+{% elseif page == "RL" %}
+    {% for id,emplacement in flotteur %}
+        {% if not loop.first %}
+            <div class="col-xs-1 col-sm-1 col-md-1">
+                {% if emplacement.stockscorde == null and emplacement.stockslanterne == null %}
+                    <font color="red"> {{ emplacement.place }}</font>
+                {% elseif emplacement.stockscorde != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatCordeInclude.html.twig" %}
+                {% elseif emplacement.stockslanterne != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatLanterneInclude.html.twig" %}
+                    <input type="checkbox"
+                           name="placelanterne[]"
+                           value="{{ id }}"/>
+                    {% set verifexsistance =  verifexsistance + 1 %}
+                {% endif %}
+            </div>
+        {% endif %}
+    {% endfor %}
+    <br>
+    {% if verifexsistance != 0 %}
+        <div class="col-xs-11 col-sm-11 col-md-11">
+            <input type="button"
+                   value="Tout cocher"
+                   onClick="fillCheckbox('{{ filiere.nomFiliere }}{{ segment.nomSegment }}{{ flotteur.nomFlotteur }}','1');">&nbsp;&nbsp;
+            <input type="button"
+                   value="Tout décocher"
+                   onClick="fillCheckbox('{{ filiere.nomFiliere }}{{ segment.nomSegment }}{{ flotteur.nomFlotteur }}','0');">
+        </div>
+    {% endif %}
+{% elseif page == "RC" %}
+    {% for id,emplacement in flotteur %}
+        {% if not loop.first %}
+            <div class="col-xs-1 col-sm-1 col-md-1">
+                {% if emplacement.stockscorde == null and emplacement.stockslanterne == null %}
+                    <font color="red"> {{ emplacement.place }}</font>
+                {% elseif emplacement.stockscorde != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatCordeInclude.html.twig" %}
+                    <input type="checkbox"
+                           name="placecorde[]"
+                           value="{{ id }}"/>
+                    {% set verifexsistance =  verifexsistance + 1 %}
+                {% elseif emplacement.stockslanterne != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatLanterneInclude.html.twig" %}
+                {% endif %}
+            </div>
+        {% endif %}
+    {% endfor %}
+    {% if verifexsistance != 0 %}
+        <br>
+        <div class="col-xs-11 col-sm-11 col-md-11">
+            <input
+                    type="button"
+                    value="Tout cocher"
+                    onClick="fillCheckbox('{{ filiere.nomFiliere }}{{ segment.nomSegment }}{{ flotteur.nomFlotteur }}','1');">&nbsp;&nbsp;
+            <input type="button"
+                   value="Tout décocher"
+                   onClick="fillCheckbox('{{ filiere.nomFiliere }}{{ segment.nomSegment }}{{ flotteur.nomFlotteur }}','0');">
+        </div>
+    {% endif %}
+
+{% elseif page == "RTR" %}
+    {% for id,emplacement in flotteur %}
+        {% if not loop.first %}
+            <div class="col-xs-1 col-sm-1 col-md-1">
+                {% if emplacement.stockscorde == null and emplacement.stockslanterne == null %}
+                    <font color="red"> {{ emplacement.place }}</font>|
+                {% elseif emplacement.stockscorde != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatCordeInclude.html.twig" %}
+                    <input type="checkbox"
+                           name="place[]"
+                           value="{{ id }}"/>
+
+                    {% set verifexsistance =  verifexsistance + 1 %}
+                {% elseif emplacement.stockslanterne != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatLanterneInclude.html.twig" %}
+                    <input type="checkbox"
+                           name="place[]"
+                           value="{{ id }}"/>
+                    {% set verifexsistance =  verifexsistance + 1 %}
+
+
+                {% endif %}
+            </div>
+        {% endif %}
+    {% endfor %}
+    {% if verifexsistance != 0 %}
+        <div class="col-xs-11 col-sm-11 col-md-11">
+            <input
+                    type="button"
+                    value="Tout cocher"
+                    onClick="fillCheckbox('{{ filiere.nomFiliere }}{{ segment.nomSegment }}{{ flotteur.nomFlotteur }}','1');">&nbsp;&nbsp;
+            <input type="button"
+                   value="Tout décocher"
+                   onClick="fillCheckbox('{{ filiere.nomFiliere }}{{ segment.nomSegment }}{{ flotteur.nomFlotteur }}','0');">
+        </div>
+    {% endif %}
+{% elseif page == "RTMAE" %}
+    {% for id, emplacement in flotteur %}
+        {% if not loop.first %}
+            <div class="col-xs-1 col-sm-1 col-md-1">
+                {% if emplacement.stockscorde == null and emplacement.stockslanterne == null %}
+                    {% set verifexsistance =  verifexsistance + 1 %}
+                    <font color="red"> {{ emplacement.place }}</font>
+                    <input type="checkbox"
+                           name="place[]"
+                           value="{{ id }}"/>|
+                    <span style="display: none"
+                          id="dateemplacement">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</span>
+                {% elseif emplacement.stockscorde != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatCordeInclude.html.twig" %}
+                    <span style="display: none"
+                          id="dateemplacement">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</span>
+                {% elseif emplacement.stockslanterne != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatLanterneInclude.html.twig" %}
+                    <span style="display: none"
+                          id="dateemplacement">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</span>
+                {% endif %}
+            </div>
+        {% endif %}
+    {% endfor %}<br>
+    {% if verifexsistance != 0 %}
+        <div class="col-xs-11 col-sm-11 col-md-11">
+            <input type="button"
+                   value="Tout cocher"
+                   onClick="fillCheckbox('{{ filiere.nomFiliere }}{{ segment.nomSegment }}{{ flotteur.nomFlotteur }}','1');">&nbsp;&nbsp;
+            <input type="button"
+                   value="Tout décocher"
+                   onClick="fillCheckbox('{{ filiere.nomFiliere }}{{ segment.nomSegment }}{{ flotteur.nomFlotteur }}','0');">
+        </div>
+    {% endif %}
+
+{% endif %}
+
+
+{#
+{% for emplacement in flotteur.emplacements %}
+    {% if emplacement.stockscorde == null and emplacement.stockslanterne == null %}
+        <font color="red"> {{ emplacement.place }}</font>
+    {% elseif emplacement.stockscorde != null %}
+        {% include "SSFMBBundle:Include:suivitEtatCordeInclude.html.twig" %}
+        {% if(emplacement.dateDeRemplissage != null) %}
+            <span class="dateemplacement"
+                  style="display: none">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}
+                                                                                    </span>
+        {% endif %}
+    {% elseif emplacement.stockslanterne != null %}
+        {% include "SSFMBBundle:Include:suivitEtatLanterneInclude.html.twig" %}
+        <span style="display: none"
+              id="dateemplacement">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}
+                                                                                </span>
+    {% endif %}
+{% endfor %}
+#}

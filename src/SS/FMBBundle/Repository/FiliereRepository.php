@@ -3,6 +3,7 @@
 namespace SS\FMBBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use SS\FMBBundle\Entity\Magasins;
 
 /**
  * FiliereRepository
@@ -12,5 +13,32 @@ use Doctrine\ORM\EntityRepository;
  */
 class FiliereRepository extends EntityRepository
 {
-
+    public function getTotaleContenuFiliere(Magasins $parc)
+    {
+        $qb = $this->createQueryBuilder('fi')
+            ->select('fl.id as flId')
+            ->addSelect('s.id as sId')->addSelect('s.nomSegment')->addSelect('s.longeur')
+            ->addSelect('fl.nomFlotteur')->addSelect('fi.nomFiliere')->addSelect('fi.id as fiId')->addSelect('fi.aireDeTravaille')
+            ->addSelect('e.dateDeRemplissage as dateDeRemplissage')->addSelect('e.id as empId')->addSelect('e.place')
+            ->addSelect('c.id as sc')
+            ->addSelect('c.dateDeMAETransfert as maect')
+            ->addSelect('c.quantiter as qtec')
+            ->addSelect('lan.id as sl')
+            ->addSelect('lan.dateDeMAETransfert as maelt')
+            ->addSelect('poch.quantite as qte')
+            ->addSelect('carticle.numeroSerie as numeroSerie ')
+            ->addSelect('refa.libArticle as libArticle')
+            ->addSelect('cord.nomCorde')
+            ->addSelect('lanter.nomLanterne')->addSelect('lanter.nbrpoche')->addSelect('lart.numeroSerie as numeroSerieLanrt')
+            ->addSelect('reflart.libArticle as llibArticle')
+            ->join('fi.segments', 's')->join('s.flotteurs', 'fl')->join('fl.emplacements', 'e')
+            ->leftJoin('e.stockslanterne', 'lan')->leftJoin('lan.article', 'lart')->leftJoin('lart.refStockArticle', 'reflsart')->leftJoin('reflsart.refArticle', 'reflart')->leftJoin('lan.lanterne', 'lanter')
+            ->leftJoin('lan.poches', 'poch')
+            ->leftJoin('e.stockscorde', 'c')->leftJoin('c.article', 'carticle')->leftJoin('carticle.refStockArticle', 'refsa')->leftJoin('refsa.refArticle', 'refa')
+            ->leftJoin('c.corde', 'cord')
+            ->where('fi.parc = :parc')
+            ->orderBy('fi.nomFiliere', 'ASC')
+            ->setParameter('parc', $parc);
+        return $qb->getQuery()->getResult();
+    }
 }

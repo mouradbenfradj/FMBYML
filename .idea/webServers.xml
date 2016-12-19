@@ -10,6 +10,14 @@
           <option name="port" value="21" />
         </fileTransfer>
       </webServer>
+      <webServer id="8130211d-7767-4be6-bdce-14033b0856c1" name="OYSTERPRO" url="http://oysterpro.sidratsoft.me">
+        <fileTransfer host="oysterpro.sidratsoft.me" port="21">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="21" />
+        </fileTransfer>
+      </webServer>
     </option>
   </component>
 </project>

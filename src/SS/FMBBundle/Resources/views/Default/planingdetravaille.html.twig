@@ -1,829 +1,660 @@
-{% extends "SSFMBBundle::layout.html.twig" %}
-{% block title %}
-    Planing - {{ parent() }}
+{% extends "::base.html.twig" %}
+{% block title %}{{ parent() }} - FMB{% endblock %}
+{% block stylesheet %}
+    {% if(entity != null) %}
+        <link href="{{ asset('bundles/ssfmb/plugins/tablesaw/css/tablesaw.css') }}" rel="stylesheet"/>
+        {{ parent() }}
+    {% endif %}
 {% endblock %}
+{% block header %} {{ parent() }}{% endblock %}
 {% block body %}
     {{ parent() }}
-    <div class="container-fluid">
+    {% set page = 'suivit' %}
+    {% if(entity != null) %}
         <div class="row">
-            <div class="col-md-12">
-                <p>Planing de travaille</p>
-                <ul class="pagination pagination-lg">
-                    {{ knp_menu_render('SSFMBBundle:Builder:parcPlaningMenu') }}
-                </ul>
-                <table class="table table-bordered table-striped table-condensed">
-                    <thead>
-                    <tr class="danger">
-                        <td colspan="2" align="center">Processus Urgent</td>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% if(entity != null) %}
-                        <tr class="danger">
-                            <td>LanternePreparer</td>
-                            <td>nombre de tache a effectuer : {{ lafu|length }}
-                                <table border="1">
-                                    <thead>
-                                    <tr>
-                                        <td>lanterne</td>
-                                        <td>article</td>
-                                        <td>lot</td>
-                                        <td>date De Creation</td>
-                                        <td>quantiter par lanterne</td>
-                                        <td>Densiter totale</td>
-                                    </tr>
-                                    </thead>
-                                    {% for emplacement in lafu %}
-                                        <tr>
-                                            <td>{{ emplacement.lanterne.nomLanterne }}</td>
-                                            <td>{{ emplacement.article.refStockArticle.refArticle }}</td>
-                                            <td>{{ emplacement.article.numeroSerie }}</td>
-                                            <td>{{ emplacement.dateDeCreation|date('Y-m-d') }}</td>
-                                            <td> {% set quantiterTotale = 0 %}
-                                                {% for poche in emplacement.poches %}
-                                                    {% set quantiterTotale = quantiterTotale + poche.quantite %}
-                                                {% endfor %}
-                                                {{ quantiterTotale }} u
-                                            </td>
-                                            {% if loop.index == 1 %}
-                                                <td rowspan="{{ lafu|length }}" valign="top">
-                                                    {% set quantiterTotale = 0 %}
-                                                    {% for emplacement2 in lafu %}
-                                                        {% for poche in emplacement2.poches %}
-                                                            {% set quantiterTotale = quantiterTotale + poche.quantite %}
-                                                        {% endfor %}
-                                                    {% endfor %}
-                                                    {{ quantiterTotale }} u
-                                                    <br>
-                                                    {% set quantiterTotale = quantiterTotale/12 %}
-                                                    {{ quantiterTotale }} dz
-                                                </td>
-                                            {% endif %}
-                                        </tr>
-                                    {% endfor %}
-                                </table>
-                            </td>
-                        </tr>
-                        <tr class="danger">
-                            <td>corde preparer</td>
-                            <td>nombre de tache a effectuer : {{ cafu|length }}
-                                <table border="1">
-                                    <thead>
-                                    <tr>
-                                        <td>corde</td>
-                                        <td>article</td>
-                                        <td>lot</td>
-                                        <td>date De Creation</td>
-                                        <td>quantiter par corde</td>
-                                        <td>Densiter totale</td>
-                                    </tr>
-                                    </thead>
-                                    {% for emplacement in cafu %}
-                                        <tr>
-                                            <td>{{ emplacement.corde.nomCorde }}</td>
-                                            <td>{{ emplacement.article.refStockArticle.refArticle }}</td>
-                                            <td>{{ emplacement.article.numeroSerie }}</td>
-                                            <td>{{ emplacement.dateDeCreation|date('Y-m-d') }}</td>
-                                            <td> {{ emplacement.quantiter }}                                            </td>
-                                            {% if loop.index == 1 %}
-                                                <td rowspan="{{ cafu|length }}" valign="top">
-                                                    {% set quantiterTotale = 0 %}
-                                                    {% for emplacement2 in cafu %}
-                                                        {% set quantiterTotale = quantiterTotale + emplacement2.quantiter %}
-                                                    {% endfor %}
-                                                    {{ quantiterTotale }} u
-                                                    <br>
-                                                    {% set quantiterTotale = quantiterTotale/12 %}
-                                                    {{ quantiterTotale }} dz
+            <div class="col-sm-12">
+                <div class="card-box">
+                    <div class="row ">
+                        <div class="col-md-11">
+                            <h4 class="m-t-0 header-title"><b>Planing de travaille {{ entity.abrevMagasin }}</b></h4>
+                            <p class="text-muted m-b-30 font-13">
+                            </p>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="portlet">
+                                        <div class="portlet-heading bg-danger">
+                                            <h3 class="portlet-title">
+                                                Processus Urgent
+                                            </h3>
+                                            <div class="portlet-widgets">
+                                                <a href="javascript:;" data-toggle="reload"><i class="ion-refresh"></i></a>
+                                                <span class="divider"></span>
+                                                <a data-toggle="collapse" data-parent="#accordion1" href="#bg-danger"><i
+                                                            class="ion-minus-round"></i></a>
+                                                <span class="divider"></span>
+                                                <a href="#" data-toggle="remove"><i class="ion-close-round"></i></a>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div id="bg-danger" class="panel-collapse collapse in">
+                                            <div class="portlet-body">
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="panel-group" id="accordion-test-2">
+                                                            {% if lafu|length != 0 %}
+                                                                <div class="panel panel-default">
+                                                                    <div class="panel-heading">
+                                                                        <h4 class="panel-title">
+                                                                            <a data-toggle="collapse"
+                                                                               data-parent="#accordion-test-2"
+                                                                               href="#collapseOne-2"
+                                                                               aria-expanded="false"
+                                                                               class="collapsed">
+                                                                                Lanterne Preparé
+                                                                            </a>
+                                                                        </h4>
+                                                                    </div>
+                                                                    <div id="collapseOne-2"
+                                                                         class="panel-collapse collapse">
+                                                                        <div class="panel-body">
+                                                                            <p class="text-muted font-13">
+                                                                                {{ lafu|length }} lanterne a mettre a
+                                                                                l'eau
+                                                                            </p>
+                                                                            {% include('@SSFMB/Default/Include/planingDeTravaille/urgent/LanternePreparerUrgentInclude.html.twig') %}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+                                                            {% if cafu|length != 0 %}
+                                                                <div class="panel panel-default">
+                                                                    <div class="panel-heading">
+                                                                        <h4 class="panel-title">
+                                                                            <a data-toggle="collapse"
+                                                                               data-parent="#accordion-test-2"
+                                                                               href="#collapseTwo-2" class="collapsed"
+                                                                               aria-expanded="false">
+                                                                                corde preparé
+                                                                            </a>
+                                                                        </h4>
+                                                                    </div>
+                                                                    <div id="collapseTwo-2"
+                                                                         class="panel-collapse collapse">
+                                                                        <div class="panel-body">
+                                                                            <p class="text-muted font-13">
+                                                                                {{ cafu|length }} corde a mettre a l'eau
+                                                                            </p>
+                                                                            {% include('@SSFMB/Default/Include/planingDeTravaille/urgent/CordePreparerUrgentInclude.html.twig') %}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+                                                            {% if pregrossisementurgent|length != 0 %}
+                                                                <div class="panel panel-default">
+                                                                    <div class="panel-heading">
+                                                                        <h4 class="panel-title">
+                                                                            <a data-toggle="collapse"
+                                                                               data-parent="#accordion-test-2"
+                                                                               href="#collapseThree-2" class="collapsed"
+                                                                               aria-expanded="false">
+                                                                                Prégrossisement
+                                                                            </a>
+                                                                        </h4>
+                                                                    </div>
+                                                                    <div id="collapseThree-2"
+                                                                         class="panel-collapse collapse">
+                                                                        <div class="panel-body">
+                                                                            <p class="text-muted font-13">
+                                                                                {% set nombrearetirer = pregrossisementurgent|length %}
+                                                                                {% set filiere = pregrossisementurgent|length %}
+                                                                                {% for key, segments in pregrossisementurgent %}
+                                                                                    {% set nombrearetirer = nombrearetirer + segments|length -1 %}
+                                                                                    {% for key2, flotteurs in segments %}
+                                                                                        {% set nombrearetirer = nombrearetirer + flotteurs|length -1 %}
+                                                                                        {% for key3, emplacements in flotteurs %}
+                                                                                            {% set nombrearetirer = nombrearetirer + emplacements|length -1 %}
+                                                                                        {% endfor %}
+                                                                                    {% endfor %}
+                                                                                {% endfor %}
+                                                                                {{ nombrearetirer }} Lanterne a retiré
+                                                                            </p>
+                                                                            {% include('@SSFMB/Default/Include/planingDeTravaille/urgent/PregrocissementUrgentInclude.html.twig') %}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+                                                            {% if grossisementurgent|length != 0 %}
+                                                                <div class="panel panel-default">
+                                                                    <div class="panel-heading">
+                                                                        <h4 class="panel-title">
+                                                                            <a data-toggle="collapse"
+                                                                               data-parent="#accordion-test-2"
+                                                                               href="#collapsefour-2" class="collapsed"
+                                                                               aria-expanded="false">
+                                                                                grossisement
+                                                                            </a>
+                                                                        </h4>
+                                                                    </div>
+                                                                    <div id="collapsefour-2"
+                                                                         class="panel-collapse collapse">
+                                                                        <div class="panel-body">
+                                                                            <p class="text-muted font-13">
+                                                                                {% set nombrearetirer = grossisementurgent|length %}
+                                                                                {% set filiere = grossisementurgent|length %}
+                                                                                {% for key, segments in grossisementurgent %}
+                                                                                    {% set nombrearetirer = nombrearetirer + segments|length -1 %}
+                                                                                    {% for key2, flotteurs in segments %}
+                                                                                        {% set nombrearetirer = nombrearetirer + flotteurs|length -1 %}
+                                                                                        {% for key3, emplacements in flotteurs %}
+                                                                                            {% set nombrearetirer = nombrearetirer + emplacements|length -1 %}
+                                                                                        {% endfor %}
+                                                                                    {% endfor %}
+                                                                                {% endfor %}
+                                                                                {{ nombrearetirer }} Corde a retiré
+                                                                            </p>
+                                                                            {% include('@SSFMB/Default/Include/planingDeTravaille/urgent/GrocissementUrgentInclude.html.twig') %}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+                                                            {% if grossisementurgentAW|length != 0 %}
+                                                                <div class="panel panel-default">
+                                                                    <div class="panel-heading">
+                                                                        <h4 class="panel-title">
+                                                                            <a data-toggle="collapse"
+                                                                               data-parent="#accordion-test-2"
+                                                                               href="#collapsesix-2" class="collapsed"
+                                                                               aria-expanded="false">
+                                                                                Aire de travaille grossisement
+                                                                            </a>
+                                                                        </h4>
+                                                                    </div>
+                                                                    <div id="collapsesix-2"
+                                                                         class="panel-collapse collapse">
+                                                                        <div class="panel-body">
+                                                                            <p class="text-muted font-13">
+                                                                                {% set nombrearetirer =  grossisementurgentAW|length %}
+                                                                                {% set filiere =  grossisementurgentAW|length %}
+                                                                                {% for key, segments in  grossisementurgentAW %}
+                                                                                    {% set nombrearetirer = nombrearetirer + segments|length -1 %}
+                                                                                    {% for key2, flotteurs in segments %}
+                                                                                        {% set nombrearetirer = nombrearetirer + flotteurs|length -1 %}
+                                                                                        {% for key3, emplacements in flotteurs %}
+                                                                                            {% set nombrearetirer = nombrearetirer + emplacements|length -1 %}
+                                                                                        {% endfor %}
+                                                                                    {% endfor %}
+                                                                                {% endfor %}
+                                                                                {{ nombrearetirer }} Corde a retiré
+                                                                            </p>
+                                                                            {% include('@SSFMB/Default/Include/planingDeTravaille/urgent/GrocissementUrgentAWInclude.html.twig') %}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+                                                            {% if comercialeurgent|length != 0 %}
+                                                                <div class="panel panel-default">
+                                                                    <div class="panel-heading">
+                                                                        <h4 class="panel-title">
+                                                                            <a data-toggle="collapse"
+                                                                               data-parent="#accordion-test-2"
+                                                                               href="#collapsefive-2" class="collapsed"
+                                                                               aria-expanded="false">
+                                                                                comerciale
+                                                                            </a>
+                                                                        </h4>
+                                                                    </div>
+                                                                    <div id="collapsefive-2"
+                                                                         class="panel-collapse collapse">
+                                                                        <div class="panel-body">
+                                                                            <p class="text-muted font-13">
+                                                                                {% set nombrearetirer =  comercialeurgent|length %}
+                                                                                {% set filiere =  comercialeurgent|length %}
+                                                                                {% for key, segments in  comercialeurgent %}
+                                                                                    {% set nombrearetirer = nombrearetirer + segments|length -1 %}
+                                                                                    {% for key2, flotteurs in segments %}
+                                                                                        {% set nombrearetirer = nombrearetirer + flotteurs|length -1 %}
+                                                                                        {% for key3, emplacements in flotteurs %}
+                                                                                            {% set nombrearetirer = nombrearetirer + emplacements|length -1 %}
+                                                                                        {% endfor %}
+                                                                                    {% endfor %}
+                                                                                {% endfor %}
+                                                                                {{ nombrearetirer }} Corde a retiré </p>
+                                                                            {% include('@SSFMB/Default/Include/planingDeTravaille/urgent/ComercialUrgentInclude.html.twig') %}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="portlet">
+                                        <div class="portlet-heading bg-warning">
+                                            <h3 class="portlet-title">
+                                                Processus a effectuer
+                                            </h3>
+                                            <div class="portlet-widgets">
+                                                <a href="javascript:;" data-toggle="reload"><i
+                                                            class="ion-refresh"></i></a>
+                                                <span class="divider"></span>
+                                                <a data-toggle="collapse" data-parent="#accordion1"
+                                                   href="#bg-warning"><i class="ion-minus-round"></i></a>
+                                                <span class="divider"></span>
+                                                <a href="#" data-toggle="remove"><i
+                                                            class="ion-close-round"></i></a>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div id="bg-warning" class="panel-collapse collapse in">
+                                            <div class="portlet-body">
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="panel-group" id="accordion-test-2">
+                                                            {% if laf|length != 0 %}
+                                                                <div class="panel panel-default">
+                                                                    <div class="panel-heading">
+                                                                        <h4 class="panel-title">
+                                                                            <a data-toggle="collapse"
+                                                                               data-parent="#accordion-test-3"
+                                                                               href="#collapseSeven-2"
+                                                                               aria-expanded="false"
+                                                                               class="collapsed">
+                                                                                Lanterne Preparé
+                                                                            </a>
+                                                                        </h4>
+                                                                    </div>
+                                                                    <div id="collapseSeven-2"
+                                                                         class="panel-collapse collapse">
+                                                                        <div class="panel-body">
+                                                                            <p class="text-muted font-13">
+                                                                                {{ laf|length }} lanterne a
+                                                                                mettre a
+                                                                                l'eau
+                                                                            </p>
+                                                                            {% include('SSFMBBundle:Default/Include/planingDeTravaille/warning:LanternePreparerWarningInclude.html.twig') %}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+                                                            {% if caf|length != 0 %}
+                                                                <div class="panel panel-default">
+                                                                    <div class="panel-heading">
+                                                                        <h4 class="panel-title">
+                                                                            <a data-toggle="collapse"
+                                                                               data-parent="#accordion-test-3"
+                                                                               href="#collapseEight-2"
+                                                                               class="collapsed"
+                                                                               aria-expanded="false">
+                                                                                corde preparé
+                                                                            </a>
+                                                                        </h4>
+                                                                    </div>
+                                                                    <div id="collapseEight-2"
+                                                                         class="panel-collapse collapse">
+                                                                        <div class="panel-body">
+                                                                            <p class="text-muted font-13">
+                                                                                {{ caf|length }} corde a mettre
+                                                                                a
+                                                                                l'eau
+                                                                            </p>
+                                                                            {% include('@SSFMB/Default/Include/planingDeTravaille/warning/CordePreparerWarningInclude.html.twig') %}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+                                                            {% if pregrossisementaeffectuer|length != 0 %}
+                                                                <div class="panel panel-default">
+                                                                    <div class="panel-heading">
+                                                                        <h4 class="panel-title">
+                                                                            <a data-toggle="collapse"
+                                                                               data-parent="#accordion-test-3"
+                                                                               href="#collapseNine-2"
+                                                                               class="collapsed"
+                                                                               aria-expanded="false">
+                                                                                Prégrossisement
+                                                                            </a>
+                                                                        </h4>
+                                                                    </div>
+                                                                    <div id="collapseNine-2"
+                                                                         class="panel-collapse collapse">
+                                                                        <div class="panel-body">
+                                                                            <p class="text-muted font-13">
+                                                                                {% set nombrearetirer = pregrossisementaeffectuer|length %}
+                                                                                {% set filiere = pregrossisementaeffectuer|length %}
+                                                                                {% for key, segments in pregrossisementaeffectuer %}
+                                                                                    {% set nombrearetirer = nombrearetirer + segments|length -1 %}
+                                                                                    {% for key2, flotteurs in segments %}
+                                                                                        {% set nombrearetirer = nombrearetirer + flotteurs|length -1 %}
+                                                                                        {% for key3, emplacements in flotteurs %}
+                                                                                            {% set nombrearetirer = nombrearetirer + emplacements|length -1 %}
+                                                                                        {% endfor %}
+                                                                                    {% endfor %}
+                                                                                {% endfor %}
+                                                                                {{ nombrearetirer }} Lanterne a
+                                                                                retiré
+                                                                            </p>
+                                                                            {% include('@SSFMB/Default/Include/planingDeTravaille/warning/PregrocissementWarningInclude.html.twig') %}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+                                                            {% if grossisementaeffectuer|length != 0 %}
+                                                                <div class="panel panel-default">
+                                                                    <div class="panel-heading">
+                                                                        <h4 class="panel-title">
+                                                                            <a data-toggle="collapse"
+                                                                               data-parent="#accordion-test-3"
+                                                                               href="#collapseTen-2"
+                                                                               class="collapsed"
+                                                                               aria-expanded="false">
+                                                                                grossisement
+                                                                            </a>
+                                                                        </h4>
+                                                                    </div>
+                                                                    <div id="collapseTen-2"
+                                                                         class="panel-collapse collapse">
+                                                                        <div class="panel-body">
+                                                                            <p class="text-muted font-13">
+                                                                                {% set nombrearetirer = grossisementaeffectuer|length %}
+                                                                                {% set filiere = grossisementaeffectuer|length %}
+                                                                                {% for key, segments in grossisementaeffectuer %}
+                                                                                    {% set nombrearetirer = nombrearetirer + segments|length -1 %}
+                                                                                    {% for key2, flotteurs in segments %}
+                                                                                        {% set nombrearetirer = nombrearetirer + flotteurs|length -1 %}
+                                                                                        {% for key3, emplacements in flotteurs %}
+                                                                                            {% set nombrearetirer = nombrearetirer + emplacements|length -1 %}
+                                                                                        {% endfor %}
+                                                                                    {% endfor %}
+                                                                                {% endfor %}
+                                                                                {{ nombrearetirer }} Corde a
+                                                                                retiré
+                                                                            </p>
+                                                                            {% include('@SSFMB/Default/Include/planingDeTravaille/warning/GrocissementWarningInclude.html.twig') %}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+                                                            {% if grossisementaeffectuerAW|length != 0 %}
+                                                                <div class="panel panel-default">
+                                                                    <div class="panel-heading">
+                                                                        <h4 class="panel-title">
+                                                                            <a data-toggle="collapse"
+                                                                               data-parent="#accordion-test-3"
+                                                                               href="#collapseTwelve-2"
+                                                                               class="collapsed"
+                                                                               aria-expanded="false">
+                                                                                Aire de travaille grossisement
+                                                                            </a>
+                                                                        </h4>
+                                                                    </div>
+                                                                    <div id="collapseTwelve-2"
+                                                                         class="panel-collapse collapse">
+                                                                        <div class="panel-body">
+                                                                            <p class="text-muted font-13">
+                                                                                {% set nombrearetirer =  grossisementaeffectuerAW|length %}
+                                                                                {% set filiere =  grossisementaeffectuerAW|length %}
+                                                                                {% for key, segments in  grossisementaeffectuerAW %}
+                                                                                    {% set nombrearetirer = nombrearetirer + segments|length -1 %}
+                                                                                    {% for key2, flotteurs in segments %}
+                                                                                        {% set nombrearetirer = nombrearetirer + flotteurs|length -1 %}
+                                                                                        {% for key3, emplacements in flotteurs %}
+                                                                                            {% set nombrearetirer = nombrearetirer + emplacements|length -1 %}
+                                                                                        {% endfor %}
+                                                                                    {% endfor %}
+                                                                                {% endfor %}
+                                                                                {{ nombrearetirer }} Corde a
+                                                                                retiré
+                                                                            </p>
+                                                                            {% include('@SSFMB/Default/Include/planingDeTravaille/warning/GrocissementWarningAWInclude.html.twig') %}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+                                                            {% if comercialeaeffectuer|length != 0 %}
+                                                                <div class="panel panel-default">
+                                                                    <div class="panel-heading">
+                                                                        <h4 class="panel-title">
+                                                                            <a data-toggle="collapse"
+                                                                               data-parent="#accordion-test-3"
+                                                                               href="#collapseEleven-2"
+                                                                               class="collapsed"
+                                                                               aria-expanded="false">
+                                                                                comerciale
+                                                                            </a>
+                                                                        </h4>
+                                                                    </div>
+                                                                    <div id="collapseEleven-2"
+                                                                         class="panel-collapse collapse">
+                                                                        <div class="panel-body">
+                                                                            <p class="text-muted font-13">
+                                                                                {% set nombrearetirer =  comercialeaeffectuer|length %}
+                                                                                {% set filiere =  comercialeaeffectuer|length %}
+                                                                                {% for key, segments in  comercialeaeffectuer %}
+                                                                                    {% set nombrearetirer = nombrearetirer + segments|length -1 %}
+                                                                                    {% for key2, flotteurs in segments %}
+                                                                                        {% set nombrearetirer = nombrearetirer + flotteurs|length -1 %}
+                                                                                        {% for key3, emplacements in flotteurs %}
+                                                                                            {% set nombrearetirer = nombrearetirer + emplacements|length -1 %}
+                                                                                        {% endfor %}
+                                                                                    {% endfor %}
+                                                                                {% endfor %}
+                                                                                {{ nombrearetirer }} Corde a
+                                                                                retiré
+                                                                            </p>
+                                                                            {% include('@SSFMB/Default/Include/planingDeTravaille/warning/ComercialWarningInclude.html.twig') %}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="portlet">
+                                        <div class="portlet-heading bg-success">
+                                            <h3 class="portlet-title">
+                                                Processus en cour
+                                            </h3>
+                                            <div class="portlet-widgets">
+                                                <a href="javascript:;" data-toggle="reload">
+                                                    <i class="ion-refresh"></i>
+                                                </a>
+                                                <span class="divider"></span>
+                                                <a data-toggle="collapse" data-parent="#accordion1"
+                                                   href="#bg-success">
+                                                    <i class="ion-minus-round"></i>
+                                                </a>
+                                                <span class="divider"></span>
+                                                <a href="#" data-toggle="remove"><i
+                                                            class="ion-close-round"></i></a>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div id="bg-success" class="panel-collapse collapse in">
+                                            <div class="portlet-body">
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="panel-group" id="accordion-test-2">
+                                                            {% if pregrossisement|length != 0 %}
+                                                                <div class="panel panel-default">
+                                                                    <div class="panel-heading">
+                                                                        <h4 class="panel-title">
+                                                                            <a data-toggle="collapse"
+                                                                               data-parent="#accordion-test-4"
+                                                                               href="#collapseThirteen-2"
+                                                                               class="collapsed"
+                                                                               aria-expanded="false">
+                                                                                Prégrossisement
+                                                                            </a>
+                                                                        </h4>
+                                                                    </div>
+                                                                    <div id="collapseThirteen-2"
+                                                                         class="panel-collapse collapse">
+                                                                        <div class="panel-body">
+                                                                            <p class="text-muted font-13">
+                                                                                {% set nombrearetirer = pregrossisement|length %}
+                                                                                {% set filiere = pregrossisement|length %}
+                                                                                {% for key, segments in pregrossisement %}
+                                                                                    {% set nombrearetirer = nombrearetirer + segments|length -1 %}
+                                                                                    {% for key2, flotteurs in segments %}
+                                                                                        {% set nombrearetirer = nombrearetirer + flotteurs|length -1 %}
+                                                                                        {% for key3, emplacements in flotteurs %}
+                                                                                            {% set nombrearetirer = nombrearetirer + emplacements|length -1 %}
+                                                                                        {% endfor %}
+                                                                                    {% endfor %}
+                                                                                {% endfor %}
+                                                                                {{ nombrearetirer }} Lanterne a
+                                                                                retiré
+                                                                            </p>
+                                                                            {% include('@SSFMB/Default/Include/planingDeTravaille/normal/PregrocissementNormalInclude.html.twig') %}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+                                                            {% if grossisement|length != 0 %}
+                                                                <div class="panel panel-default">
+                                                                    <div class="panel-heading">
+                                                                        <h4 class="panel-title">
+                                                                            <a data-toggle="collapse"
+                                                                               data-parent="#accordion-test-4"
+                                                                               href="#collapseFourteen-2"
+                                                                               class="collapsed"
+                                                                               aria-expanded="false">
+                                                                                grossisement
+                                                                            </a>
+                                                                        </h4>
+                                                                    </div>
+                                                                    <div id="collapseFourteen-2"
+                                                                         class="panel-collapse collapse">
+                                                                        <div class="panel-body">
+                                                                            <p class="text-muted font-13">
+                                                                                {% set nombrearetirer = grossisement|length %}
+                                                                                {% set filiere = grossisement|length %}
+                                                                                {% for key, segments in grossisement %}
+                                                                                    {% set nombrearetirer = nombrearetirer + segments|length -1 %}
+                                                                                    {% for key2, flotteurs in segments %}
+                                                                                        {% set nombrearetirer = nombrearetirer + flotteurs|length -1 %}
+                                                                                        {% for key3, emplacements in flotteurs %}
+                                                                                            {% set nombrearetirer = nombrearetirer + emplacements|length -1 %}
+                                                                                        {% endfor %}
+                                                                                    {% endfor %}
+                                                                                {% endfor %}
+                                                                                {{ nombrearetirer }} Corde a
+                                                                                retiré
+                                                                            </p>
+                                                                            {% include('@SSFMB/Default/Include/planingDeTravaille/normal/GrocissementNormalInclude.html.twig') %}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+                                                            {% if grossisementAW|length != 0 %}
+                                                                <div class="panel panel-default">
+                                                                    <div class="panel-heading">
+                                                                        <h4 class="panel-title">
+                                                                            <a data-toggle="collapse"
+                                                                               data-parent="#accordion-test-4"
+                                                                               href="#collapseSixteen-2"
+                                                                               class="collapsed"
+                                                                               aria-expanded="false">
+                                                                                Aire de travaille grossisement
+                                                                            </a>
+                                                                        </h4>
+                                                                    </div>
+                                                                    <div id="collapseSixteen-2"
+                                                                         class="panel-collapse collapse">
+                                                                        <div class="panel-body">
+                                                                            <p class="text-muted font-13">
+                                                                                {% set nombrearetirer =  grossisementAW|length %}
+                                                                                {% set filiere =  grossisementAW|length %}
+                                                                                {% for key, segments in  grossisementAW %}
+                                                                                    {% set nombrearetirer = nombrearetirer + segments|length -1 %}
+                                                                                    {% for key2, flotteurs in segments %}
+                                                                                        {% set nombrearetirer = nombrearetirer + flotteurs|length -1 %}
+                                                                                        {% for key3, emplacements in flotteurs %}
+                                                                                            {% set nombrearetirer = nombrearetirer + emplacements|length -1 %}
+                                                                                        {% endfor %}
+                                                                                    {% endfor %}
+                                                                                {% endfor %}
+                                                                                {{ nombrearetirer }} Corde a
+                                                                                retiré
+                                                                            </p>
+                                                                            {% include('@SSFMB/Default/Include/planingDeTravaille/normal/GrocissementNormalAWInclude.html.twig') %}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+                                                            {% if comerciale|length != 0 %}
+                                                                <div class="panel panel-default">
+                                                                    <div class="panel-heading">
+                                                                        <h4 class="panel-title">
+                                                                            <a data-toggle="collapse"
+                                                                               data-parent="#accordion-test-4"
+                                                                               href="#collapseFifteen-2"
+                                                                               class="collapsed"
+                                                                               aria-expanded="false">
+                                                                                comerciale
+                                                                            </a>
+                                                                        </h4>
+                                                                    </div>
+                                                                    <div id="collapseFifteen-2"
+                                                                         class="panel-collapse collapse">
+                                                                        <div class="panel-body">
+                                                                            <p class="text-muted font-13">
+                                                                                {% set nombrearetirer =  comerciale|length %}
+                                                                                {% set filiere =  comerciale|length %}
+                                                                                {% for key, segments in  comerciale %}
+                                                                                    {% set nombrearetirer = nombrearetirer + segments|length -1 %}
+                                                                                    {% for key2, flotteurs in segments %}
+                                                                                        {% set nombrearetirer = nombrearetirer + flotteurs|length -1 %}
+                                                                                        {% for key3, emplacements in flotteurs %}
+                                                                                            {% set nombrearetirer = nombrearetirer + emplacements|length -1 %}
+                                                                                        {% endfor %}
+                                                                                    {% endfor %}
+                                                                                {% endfor %}
+                                                                                {{ nombrearetirer }} Corde a
+                                                                                retiré
+                                                                            </p>
+                                                                            {% include('@SSFMB/Default/Include/planingDeTravaille/normal/ComercialNormalInclude.html.twig') %}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                                                </td>
-                                            {% endif %}
-                                        </tr>
-                                    {% endfor %}
-                                </table>
-                            </td>
-                        </tr>
-                        <tr class="danger">
-                            <td>Pregrossisement</td>
-                            <td>nombre de tache a effectuer : {{ pregrossisementurgent|length }}
-                                <table border="1">
-                                    <thead>
-                                    <tr>
-                                        <td>filiere</td>
-                                        <td>segment</td>
-                                        <td>flotteur</td>
-                                        <td>emplacement</td>
-                                        <td>lanterne</td>
-                                        <td>article</td>
-                                        <td>lot</td>
-                                        <td>date de mise a eau</td>
-                                        <td>Cycle actuel</td>
-                                        <td>doit etre retirer le</td>
-                                        <td>Densiter U/Lanterne/</td>
-                                        <td>Densiter totale</td>
-                                    </tr>
-                                    </thead>
-                                    {% for emplacement in pregrossisementurgent %}
-                                        <tr>
-                                            <td>{{ emplacement.flotteur.segment.filiere.nomfiliere }}</td>
-                                            <td>{{ emplacement.flotteur.segment.nomsegment }}</td>
-                                            <td>{{ emplacement.flotteur.nomflotteur }}</td>
-                                            <td>{{ emplacement.place }}</td>
-                                            <td>{{ emplacement.stockslanterne.lanterne.nomLanterne }}</td>
-                                            <td>{{ emplacement.stockslanterne.article.refStockArticle.refArticle }}</td>
-                                            <td>{{ emplacement.stockslanterne.article.numeroSerie }}</td>
-                                            <td>{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
-                                            <td>{% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}
-                                                PG{{ difference.m }}</td>
-                                            <td>{{ emplacement.dateDeRemplissage|date_modify("+3 month")|date('Y-m-d') }}</td>
-                                            <td>
-                                                {% set quantiterTotale = 0 %}
-                                                {% for poche in emplacement.stockslanterne.poches %}
-                                                    {% set quantiterTotale = quantiterTotale + poche.quantite %}
-                                                {% endfor %}
-                                                {{ quantiterTotale }} u
-                                            </td>
-                                            {% if loop.index == 1 %}
-                                                <td rowspan="{{ pregrossisementurgent|length }}" valign="top">
-                                                    {% set quantiterTotale = 0 %}
-                                                    {% for emplacement2 in pregrossisementurgent %}
-                                                        {% for poche in emplacement2.stockslanterne.poches %}
-                                                            {% set quantiterTotale = quantiterTotale + poche.quantite %}
-                                                        {% endfor %}
-                                                    {% endfor %}
-                                                    {{ quantiterTotale }} u
-                                                    <br>
-                                                    {% set quantiterTotale = quantiterTotale/12 %}
-                                                    {{ quantiterTotale }} dz
-                                                </td>
-                                            {% endif %}
-                                        </tr>
-                                    {% endfor %}
-                                </table>
-                            </td>
-                        </tr>
-                        <tr class="danger">
-                            <td>grossisement</td>
-                            <td>nombre de tache a effectuer : {{ grossisementurgent|length }}
-                                <table border="1">
-                                    <thead>
-                                    <tr>
-                                        <td>filiere</td>
-                                        <td>segment</td>
-                                        <td>flotteur</td>
-                                        <td>emplacement</td>
-                                        <td>corde</td>
-                                        <td>article</td>
-                                        <td>lot</td>
-                                        <td>date de mise a eau</td>
-                                        <td>Cycleactuel</td>
-                                        <td>doit etre retirer le</td>
-                                        <td>Densiter U/Corde/</td>
-                                        <td>Densiter totale</td>
-                                    </tr>
-                                    </thead>
-                                    {% for emplacement in grossisementurgent %}
-                                        <tr>
-                                            <td>{{ emplacement.flotteur.segment.filiere.nomfiliere }}</td>
-                                            <td>{{ emplacement.flotteur.segment.nomsegment }}</td>
-                                            <td>{{ emplacement.flotteur.nomflotteur }}</td>
-                                            <td>{{ emplacement.place }}</td>
-                                            <td>{{ emplacement.stockscorde.corde.nomCorde }}</td>
-                                            <td>{{ emplacement.stockscorde.article.refStockArticle.refArticle }}</td>
-                                            <td>{{ emplacement.stockscorde.article.numeroSerie }}</td>
-                                            <td>{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
-                                            <td> {% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}{% if difference.m <=5 and difference.y ==0 %}G{{ difference.m }}{% elseif difference.m <=9 and difference.y == 0 %}{% set dif2 = 9- difference.m %}H{{ dif2 }}{% elseif difference.m ==10 and difference.y == 0 %}H00{% elseif difference.m >10 or difference.y >0 %}H000{% endif %}</td>
-                                            <td>{{ emplacement.dateDeRemplissage|date_modify("+6 month")|date('Y-m-d') }}</td>
-                                            <td>{{ emplacement.stockscorde.quantiter }}</td>
-                                            {% if loop.index == 1 %}
-                                                <td rowspan="{{ grossisementurgent|length }}" valign="top">
-                                                    {% set quantiterTotale = 0 %}
-                                                    {% for emplacement2 in grossisementurgent %}
-                                                        {% set quantiterTotale = quantiterTotale + emplacement2.stockscorde.quantiter %}
-                                                    {% endfor %}
-                                                    {{ quantiterTotale }} u
-                                                    <br>
-                                                    {% set quantiterTotale = quantiterTotale/12 %}
-                                                    {{ quantiterTotale }} dz
 
-                                                </td>
-                                            {% endif %}
-                                        </tr>
-                                    {% endfor %}
-                                </table>
-                            </td>
-                        </tr>
-                        <tr class="danger">
-                            <td>Aire de travaille grossisement</td>
-                            <td>nombre de tache a effectuer : {{ grossisementurgentAW|length }}
-                                <table border="1">
-                                    <thead>
-                                    <tr>
-                                        <td>filiere</td>
-                                        <td>segment</td>
-                                        <td>flotteur</td>
-                                        <td>emplacement</td>
-                                        <td>corde</td>
-                                        <td>article</td>
-                                        <td>lot</td>
-                                        <td>date de mise a eau</td>
-                                        <td>Cycle actuel</td>
-                                        <td>doit etre retirer le</td>
-                                        <td>Densiter U/Corde/</td>
-                                        <td>Densiter totale</td>
-                                    </tr>
-                                    </thead>
-                                    {% for emplacement in grossisementurgentAW %}
-                                        <tr>
-                                            <td>{{ emplacement.flotteur.segment.filiere.nomfiliere }}</td>
-                                            <td>{{ emplacement.flotteur.segment.nomsegment }}</td>
-                                            <td>{{ emplacement.flotteur.nomflotteur }}</td>
-                                            <td>{{ emplacement.place }}</td>
-                                            <td>{{ emplacement.stockscorde.corde.nomCorde }}</td>
-                                            <td>{{ emplacement.stockscorde.article.refStockArticle.refArticle }}</td>
-                                            <td>{{ emplacement.stockscorde.article.numeroSerie }}</td>
-                                            <td>{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
-                                            <td> {% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}{% if difference.m <=5 %}G{{ difference.m }}{% elseif difference.m <=9 %}{% set dif2 = 9- difference.m %}H{{ dif2 }}{% elseif difference.m ==10 %}H00{% else %}H000{% endif %}</td>
-                                            <td>{{ emplacement.dateDeRemplissage|date_modify("+9 month")|date('Y-m-d') }}</td>
-                                            <td>{{ emplacement.stockscorde.quantiter }}</td>
-                                            {% if loop.index == 1 %}
-                                                <td rowspan="{{ grossisementurgentAW|length }}" valign="top">
-                                                    {% set quantiterTotale = 0 %}
-                                                    {% for emplacement2 in grossisementurgentAW %}
-                                                        {% set quantiterTotale = quantiterTotale + emplacement2.stockscorde.quantiter %}
-                                                    {% endfor %}
-                                                    {{ quantiterTotale }} u
-                                                    <br>
-                                                    {% set quantiterTotale = quantiterTotale/12 %}
-                                                    {{ quantiterTotale }} dz
-
-                                                </td>
-                                            {% endif %}
-                                        </tr>
-                                    {% endfor %}
-                                </table>
-                            </td>
-                        </tr>
-                        <tr class="danger">
-                            <td>comerciale</td>
-                            <td>nombre de tache a effectuer : {{ comercialeurgent|length }}
-                                <table border="1">
-                                    <thead>
-                                    <tr>
-                                        <td>stocks</td>
-                                        <td>article</td>
-                                        <td>lot</td>
-                                        <td>quantiter en stocks</td>
-                                    </tr>
-                                    </thead>
-                                    {% for emplacement in comercialeurgent %}
-                                        <tr>
-                                            <td>{{ emplacement.article.refStockArticle.idStock.libStock }}</td>
-                                            <td>{{ emplacement.article.refStockArticle.refArticle }}</td>
-                                            <td>{{ emplacement.article.numeroSerie }}</td>
-                                            <td>{{ emplacement.quantiter }}</td>
-                                        </tr>
-                                    {% endfor %}
-                                </table>
-                            </td>
-                        </tr>
-                        </tr>
-                    {% endif %}
-                    </tbody>
-                    <thead>
-                    <tr class="warning">
-                        <td colspan="2" align="center">Processus a effectuer</td>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% if(entity != null) %}
-                        <tr class="warning">
-                            <td>LanternePreparer</td>
-                            <td>nombre de tache a effectuer : {{ laf|length }}
-                                <table border="1">
-                                    <thead>
-                                    <tr>
-                                        <td>lanterne</td>
-                                        <td>article</td>
-                                        <td>lot</td>
-                                        <td>date De Creation</td>
-                                        <td>quantiter par lanterne</td>
-                                        <td>Densiter totale</td>
-                                    </tr>
-                                    </thead>
-                                    {% for emplacement in laf %}
-                                        <tr>
-                                            <td>{{ emplacement.lanterne.nomLanterne }}</td>
-                                            <td>{{ emplacement.article.refStockArticle.refArticle }}</td>
-                                            <td>{{ emplacement.article.numeroSerie }}</td>
-                                            <td>{{ emplacement.dateDeCreation|date('Y-m-d') }}</td>
-                                            <td> {% set quantiterTotale = 0 %}
-                                                {% for poche in emplacement.poches %}
-                                                    {% set quantiterTotale = quantiterTotale + poche.quantite %}
-                                                {% endfor %}
-                                                {{ quantiterTotale }} u
-                                            </td>
-                                            {% if loop.index == 1 %}
-                                                <td rowspan="{{ laf|length }}" valign="top">
-                                                    {% set quantiterTotale = 0 %}
-                                                    {% for emplacement2 in laf %}
-                                                        {% for poche in emplacement2.poches %}
-                                                            {% set quantiterTotale = quantiterTotale + poche.quantite %}
-                                                        {% endfor %}
-                                                    {% endfor %}
-                                                    {{ quantiterTotale }} u
-                                                    <br>
-                                                    {% set quantiterTotale = quantiterTotale/12 %}
-                                                    {{ quantiterTotale }} dz
-                                                </td>
-                                            {% endif %}
-                                        </tr>
-                                    {% endfor %}
-                                </table>
-                            </td>
-                        </tr>
-                        <tr class="warning">
-                            <td>corde preparer</td>
-                            <td>nombre de tache a effectuer : {{ caf|length }}
-                                <table border="1">
-                                    <thead>
-                                    <tr>
-                                        <td>corde</td>
-                                        <td>article</td>
-                                        <td>lot</td>
-                                        <td>date De Creation</td>
-                                        <td>quantiter par corde</td>
-                                        <td>Densiter totale</td>
-                                    </tr>
-                                    </thead>
-                                    {% for emplacement in caf %}
-                                        <tr>
-                                            <td>{{ emplacement.corde.nomCorde }}</td>
-                                            <td>{{ emplacement.article.refStockArticle.refArticle }}</td>
-                                            <td>{{ emplacement.article.numeroSerie }}</td>
-                                            <td>{{ emplacement.dateDeCreation|date('Y-m-d') }}</td>
-                                            <td> {{ emplacement.quantiter }}                                            </td>
-                                            {% if loop.index == 1 %}
-                                                <td rowspan="{{ caf|length }}" valign="top">
-                                                    {% set quantiterTotale = 0 %}
-                                                    {% for emplacement2 in caf %}
-                                                        {% set quantiterTotale = quantiterTotale + emplacement2.quantiter %}
-                                                    {% endfor %}
-                                                    {{ quantiterTotale }} u
-                                                    <br>
-                                                    {% set quantiterTotale = quantiterTotale/12 %}
-                                                    {{ quantiterTotale }} dz
-
-                                                </td>
-                                            {% endif %}
-                                        </tr>
-                                    {% endfor %}
-                                </table>
-                            </td>
-                        </tr>
-                        <tr class="warning">
-                            <td>Pregrossisement</td>
-                            <td>nombre de tache a effectuer : {{ pregrossisementaeffectuer|length }}
-                                <table border="1">
-                                    <thead>
-                                    <tr>
-                                        <td>filiere</td>
-                                        <td>segment</td>
-                                        <td>flotteur</td>
-                                        <td>emplacement</td>
-                                        <td>lanterne</td>
-                                        <td>article</td>
-                                        <td>lot</td>
-                                        <td>date de mise a eau</td>
-                                        <td>Cycle actuel</td>
-                                        <td>doit etre retirer le</td>
-                                        <td>Densiter U/Lanterne/</td>
-                                        <td>Densiter totale</td>
-                                    </tr>
-                                    </thead>
-                                    {% for emplacement in pregrossisementaeffectuer %}
-                                        <tr>
-                                            <td>{{ emplacement.flotteur.segment.filiere.nomfiliere }}</td>
-                                            <td>{{ emplacement.flotteur.segment.nomsegment }}</td>
-                                            <td>{{ emplacement.flotteur.nomflotteur }}</td>
-                                            <td>{{ emplacement.place }}</td>
-                                            <td>{{ emplacement.stockslanterne.lanterne.nomLanterne }}</td>
-                                            <td>{{ emplacement.stockslanterne.article.refStockArticle.refArticle }}</td>
-                                            <td>{{ emplacement.stockslanterne.article.numeroSerie }}</td>
-                                            <td>{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
-                                            <td>{% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}
-                                                PG{{ difference.m }}</td>
-                                            <td>{% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}
-                                                PG{{ difference.m }}</td>
-                                            <td>{{ emplacement.dateDeRemplissage|date_modify("+3 month")|date('Y-m-d') }}</td>
-                                            <td>
-                                                {% set quantiterTotale = 0 %}
-                                                {% for poche in emplacement.stockslanterne.poches %}
-                                                    {% set quantiterTotale = quantiterTotale + poche.quantite %}
-                                                {% endfor %}
-                                                {{ quantiterTotale }} u
-                                            </td>
-                                            {% if loop.index == 1 %}
-                                                <td rowspan="{{ pregrossisementaeffectuer|length }}" valign="top">
-                                                    {% set quantiterTotale = 0 %}
-                                                    {% for emplacement2 in pregrossisementaeffectuer %}
-                                                        {% for poche in emplacement2.stockslanterne.poches %}
-                                                            {% set quantiterTotale = quantiterTotale + poche.quantite %}
-                                                        {% endfor %}
-                                                    {% endfor %}
-                                                    {{ quantiterTotale }} u
-                                                    <br>
-                                                    {% set quantiterTotale = quantiterTotale/12 %}
-                                                    {{ quantiterTotale }} dz
-                                                </td>
-                                            {% endif %}
-                                        </tr>
-                                    {% endfor %}
-                                </table>
-                            </td>
-                        </tr>
-                        <tr class="warning">
-                            <td>grossisement</td>
-                            <td>nombre de tache a effectuer : {{ grossisementaeffectuer|length }}
-                                <table border="1">
-                                    <thead>
-                                    <tr>
-                                        <td>filiere</td>
-                                        <td>segment</td>
-                                        <td>flotteur</td>
-                                        <td>emplacement</td>
-                                        <td>corde</td>
-                                        <td>article</td>
-                                        <td>lot</td>
-                                        <td>date de mise a eau</td>
-                                        <td>Cycle actuel</td>
-                                        <td>doit etre retirer le</td>
-                                        <td>Densiter U/Corde/</td>
-                                        <td>Densiter totale</td>
-                                    </tr>
-                                    </thead>
-                                    {% for emplacement in grossisementaeffectuer %}
-                                        <tr>
-                                            <td>{{ emplacement.flotteur.segment.filiere.nomfiliere }}</td>
-                                            <td>{{ emplacement.flotteur.segment.nomsegment }}</td>
-                                            <td>{{ emplacement.flotteur.nomflotteur }}</td>
-                                            <td>{{ emplacement.place }}</td>
-                                            <td>{{ emplacement.stockscorde.corde.nomCorde }}</td>
-                                            <td>{{ emplacement.stockscorde.article.refStockArticle.refArticle }}</td>
-                                            <td>{{ emplacement.stockscorde.article.numeroSerie }}</td>
-                                            <td>{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
-                                            <td> {% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}{% if difference.m <=5 %}G{{ difference.m }}{% elseif difference.m <=9 %}{% set dif2 = 9- difference.m %}H{{ dif2 }}{% elseif difference.m ==10 %}H00{% else %}H000{% endif %}</td>
-                                            <td>{{ emplacement.dateDeRemplissage|date_modify("+6 month")|date('Y-m-d') }}</td>
-                                            <td>{{ emplacement.stockscorde.quantiter }}</td>
-                                            {% if loop.index == 1 %}
-                                                <td rowspan="{{ grossisementaeffectuer|length }}" valign="top">
-                                                    {% set quantiterTotale = 0 %}
-                                                    {% for emplacement2 in grossisementaeffectuer %}
-                                                        {% set quantiterTotale = quantiterTotale + emplacement2.stockscorde.quantiter %}
-                                                    {% endfor %}
-                                                    {{ quantiterTotale }} u
-                                                    <br>
-                                                    {% set quantiterTotale = quantiterTotale/12 %}
-                                                    {{ quantiterTotale }} dz
-                                                </td>
-                                            {% endif %}
-                                        </tr>
-                                    {% endfor %}
-                                </table>
-                            </td>
-                        </tr>
-                        <tr class="warning">
-                            <td>Aire de travaille grossisement</td>
-                            <td>nombre de tache a effectuer : {{ grossisementaeffectuerAW|length }}
-                                <table border="1">
-                                    <thead>
-                                    <tr>
-                                        <td>filiere</td>
-                                        <td>segment</td>
-                                        <td>flotteur</td>
-                                        <td>emplacement</td>
-                                        <td>corde</td>
-                                        <td>article</td>
-                                        <td>lot</td>
-                                        <td>date de mise a eau</td>
-                                        <td>Cycle actuel</td>
-                                        <td>doit etre retirer le</td>
-                                        <td>Densiter U/Corde/</td>
-                                        <td>Densiter totale</td>
-                                    </tr>
-                                    </thead>
-                                    {% for emplacement in grossisementaeffectuerAW %}
-                                        <tr>
-                                            <td>{{ emplacement.flotteur.segment.filiere.nomfiliere }}</td>
-                                            <td>{{ emplacement.flotteur.segment.nomsegment }}</td>
-                                            <td>{{ emplacement.flotteur.nomflotteur }}</td>
-                                            <td>{{ emplacement.place }}</td>
-                                            <td>{{ emplacement.stockscorde.corde.nomCorde }}</td>
-                                            <td>{{ emplacement.stockscorde.article.refStockArticle.refArticle }}</td>
-                                            <td>{{ emplacement.stockscorde.article.numeroSerie }}</td>
-                                            <td>{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
-                                            <td>{% if emplacement.stockscorde != null %}
-                                                    {% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}
-                                                    {% if difference.m <=5 %}
-                                                        G{{ difference.m }}
-                                                    {% elseif difference.m <=9 %}
-                                                        {% set dif2 = 9- difference.m %}
-                                                        H{{ dif2 }}
-                                                    {% elseif difference.m ==10 %}
-                                                        H00
-                                                    {% else %}
-                                                        H000
-                                                    {% endif %}
-                                                {% endif %}
-                                            </td>
-                                            <td>{{ emplacement.dateDeRemplissage|date_modify("+8 month")|date('Y-m-d') }}</td>
-                                            <td>{{ emplacement.stockscorde.quantiter }}</td>
-                                            {% if loop.index == 1 %}
-                                                <td rowspan="{{ grossisementaeffectuerAW|length }}" valign="top">
-                                                    {% set quantiterTotale = 0 %}
-                                                    {% for emplacement2 in grossisementaeffectuerAW %}
-                                                        {% set quantiterTotale = quantiterTotale + emplacement2.stockscorde.quantiter %}
-                                                    {% endfor %}
-                                                    {{ quantiterTotale }} u
-                                                    <br>
-                                                    {% set quantiterTotale = quantiterTotale/12 %}
-                                                    {{ quantiterTotale }} dz
-                                                </td>
-                                            {% endif %}
-                                        </tr>
-                                    {% endfor %}
-                                </table>
-                            </td>
-                        </tr>
-                        <tr class="warning">
-                            <td>comerciale</td>
-                            <td>nombre de tache a effectuer : {{ comercialeaeffectuer|length }}
-                                <table border="1">
-                                    <thead>
-                                    <tr>
-                                        <td>stocks</td>
-                                        <td>article</td>
-                                        <td>lot</td>
-                                        <td>quantiter en stocks</td>
-                                    </tr>
-                                    </thead>
-                                    {% for emplacement in comercialeaeffectuer %}
-                                        <tr>
-                                            <td>{{ emplacement.article.refStockArticle.idStock.libStock }}</td>
-                                            <td>{{ emplacement.article.refStockArticle.refArticle }}</td>
-                                            <td>{{ emplacement.article.numeroSerie }}</td>
-                                            <td>{{ emplacement.quantiter }}</td>
-                                        </tr>
-                                    {% endfor %}
-                                </table>
-                            </td>
-                        </tr>
-                        </tr>
-                    {% endif %}
-
-                    </tbody>
-                    <thead>
-                    <tr class="success">
-                        <td colspan="2" align="center">Processus en cour</td>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% if(entity != null) %}
-                        <tr class="success">
-                            <td>Pregrossisement</td>
-                            <td>nombre de tache a effectuer : {{ pregrossisement|length }}
-                                <table border="1">
-                                    <thead>
-                                    <tr>
-                                        <td>filiere</td>
-                                        <td>segment</td>
-                                        <td>flotteur</td>
-                                        <td>emplacement</td>
-                                        <td>lanterne</td>
-                                        <td>article</td>
-                                        <td>lot</td>
-                                        <td>date de mise a eau</td>
-                                        <td>Cycle actuel</td>
-                                        <td>doit etre retirer le</td>
-                                        <td>Densiter U/Lanterne/</td>
-                                        <td>Densiter totale</td>
-                                    </tr>
-                                    </thead>
-                                    {% for emplacement in pregrossisement %}
-                                        <tr>
-                                            <td>{{ emplacement.flotteur.segment.filiere.nomfiliere }}</td>
-                                            <td>{{ emplacement.flotteur.segment.nomsegment }}</td>
-                                            <td>{{ emplacement.flotteur.nomflotteur }}</td>
-                                            <td>{{ emplacement.place }}</td>
-                                            <td>{{ emplacement.stockslanterne.lanterne.nomLanterne }}</td>
-                                            <td>{{ emplacement.stockslanterne.article.refStockArticle.refArticle }}</td>
-                                            <td>{{ emplacement.stockslanterne.article.numeroSerie }}</td>
-                                            <td>{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
-                                            <td>{% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}
-                                                PG{{ difference.m }}</td>
-                                            <td>{{ emplacement.dateDeRemplissage|date_modify("+3 month")|date('Y-m-d') }}</td>
-                                            <td>
-                                                {% set quantiterTotale = 0 %}
-                                                {% for poche in emplacement.stockslanterne.poches %}
-                                                    {% set quantiterTotale = quantiterTotale + poche.quantite %}
-                                                {% endfor %}
-                                                {{ quantiterTotale }} u
-                                            </td>
-                                            {% if loop.index == 1 %}
-                                                <td rowspan="{{ pregrossisement|length }}" valign="top">
-                                                    {% set quantiterTotale = 0 %}
-                                                    {% for emplacement2 in pregrossisement %}
-                                                        {% for poche in emplacement2.stockslanterne.poches %}
-                                                            {% set quantiterTotale = quantiterTotale + poche.quantite %}
-                                                        {% endfor %}
-                                                    {% endfor %}
-                                                    {{ quantiterTotale }} u
-                                                    <br>
-                                                    {% set quantiterTotale = quantiterTotale/12 %}
-                                                    {{ quantiterTotale }} dz
-                                                </td>
-                                            {% endif %}
-                                        </tr>
-                                    {% endfor %}
-                                </table>
-                            </td>
-                        </tr>
-                        <tr class="success">
-                            <td>grossisement</td>
-                            <td>nombre de tache a effectuer : {{ grossisement|length }}
-                                <table border="1">
-                                    <thead>
-                                    <tr>
-                                        <td>filiere</td>
-                                        <td>segment</td>
-                                        <td>flotteur</td>
-                                        <td>emplacement</td>
-                                        <td>corde</td>
-                                        <td>article</td>
-                                        <td>lot</td>
-                                        <td>date de mise a eau</td>
-                                        <td>Cycle actuel</td>
-                                        <td>doit etre retirer le</td>
-                                        <td>Densiter U/Corde/</td>
-                                        <td>Densiter totale</td>
-                                    </tr>
-                                    </thead>
-                                    {% for emplacement in grossisement %}
-                                        <tr>
-                                            <td>{{ emplacement.flotteur.segment.filiere.nomfiliere }}</td>
-                                            <td>{{ emplacement.flotteur.segment.nomsegment }}</td>
-                                            <td>{{ emplacement.flotteur.nomflotteur }}</td>
-                                            <td>{{ emplacement.place }}</td>
-                                            <td>{{ emplacement.stockscorde.corde.nomCorde }}</td>
-                                            <td>{{ emplacement.stockscorde.article.refStockArticle.refArticle }}</td>
-                                            <td>{{ emplacement.stockscorde.article.numeroSerie }}</td>
-                                            <td>{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
-                                            <td> {% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}{% if difference.m <=5 %}G{{ difference.m }}{% elseif difference.m <=9 %}{% set dif2 = 9- difference.m %}H{{ dif2 }}{% elseif difference.m ==10 %}H00{% else %}H000{% endif %}</td>
-                                            <td>{{ emplacement.dateDeRemplissage|date_modify("+6 month")|date('Y-m-d') }}</td>
-                                            <td>{{ emplacement.stockscorde.quantiter }}</td>
-                                            {% if loop.index == 1 %}
-                                                <td rowspan="{{ grossisement|length }}" valign="top">
-                                                    {% set quantiterTotale = 0 %}
-                                                    {% for emplacement2 in grossisement %}
-                                                        {% set quantiterTotale = quantiterTotale + emplacement2.stockscorde.quantiter %}
-                                                    {% endfor %}
-                                                    {{ quantiterTotale }} u
-                                                    <br>
-                                                    {% set quantiterTotale = quantiterTotale/12 %}
-                                                    {{ quantiterTotale }} dz
-                                                </td>
-                                            {% endif %}
-                                        </tr>
-                                    {% endfor %}
-                                </table>
-                            </td>
-                        </tr>
-                        <tr class="success">
-                            <td>Aire de travaille grossisement</td>
-                            <td>nombre de tache a effectuer : {{ grossisementAW|length }}
-                                <table border="1">
-                                    <thead>
-                                    <tr>
-                                        <td>filiere</td>
-                                        <td>segment</td>
-                                        <td>flotteur</td>
-                                        <td>emplacement</td>
-                                        <td>corde</td>
-                                        <td>article</td>
-                                        <td>lot</td>
-                                        <td>date de mise a eau</td>
-                                        <td>cycle actuel</td>
-                                        <td>doit etre retirer le</td>
-                                        <td>Densiter U/Corde/</td>
-                                        <td>Densiter totale</td>
-                                    </tr>
-                                    </thead>
-                                    {% for emplacement in grossisementAW %}
-                                        <tr>
-                                            <td>{{ emplacement.flotteur.segment.filiere.nomfiliere }}</td>
-                                            <td>{{ emplacement.flotteur.segment.nomsegment }}</td>
-                                            <td>{{ emplacement.flotteur.nomflotteur }}</td>
-                                            <td>{{ emplacement.place }}</td>
-                                            <td>{{ emplacement.stockscorde.corde.nomCorde }}</td>
-                                            <td>{{ emplacement.stockscorde.article.refStockArticle.refArticle }}</td>
-                                            <td>{{ emplacement.stockscorde.article.numeroSerie }}</td>
-                                            <td>{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
-                                            <td> {% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}{% if difference.m <=5 %}G{{ difference.m }}{% elseif difference.m <=9 %}{% set dif2 = 9- difference.m %}H{{ dif2 }}{% elseif difference.m ==10 %}H00{% else %}H000{% endif %}</td>
-                                            <td>{{ emplacement.dateDeRemplissage|date_modify("+7 month")|date('Y-m-d') }}</td>
-                                            <td>{{ emplacement.stockscorde.quantiter }}</td>
-                                            {% if loop.index == 1 %}
-                                                <td rowspan="{{ grossisementAW|length }}" valign="top">
-                                                    {% set quantiterTotale = 0 %}
-                                                    {% for emplacement2 in grossisementAW %}
-                                                        {% set quantiterTotale = quantiterTotale + emplacement2.stockscorde.quantiter %}
-                                                    {% endfor %}
-                                                    {{ quantiterTotale }} u
-                                                    <br>
-                                                    {% set quantiterTotale = quantiterTotale/12 %}
-                                                    {{ quantiterTotale }} dz
-                                                </td>
-                                            {% endif %}
-                                        </tr>
-                                    {% endfor %}
-                                </table>
-                            </td>
-                        </tr>
-                        <tr class="success">
-                            <td>comerciale</td>
-                            <td>nombre de tache a effectuer : {{ comerciale|length }}
-                                <br>
-                                <table border="1">
-                                    <thead>
-                                    <tr>
-                                        <td>stocks</td>
-                                        <td>article</td>
-                                        <td>lot</td>
-                                        <td>quantiter en stocks</td>
-                                    </tr>
-                                    </thead>
-                                    {% for emplacement in comerciale %}
-
-                                        <tr>
-                                            <td>{{ emplacement.article.refStockArticle.idStock.libStock }}</td>
-                                            <td>{{ emplacement.article.refStockArticle.refArticle }}</td>
-                                            <td>{{ emplacement.article.numeroSerie }}</td>
-                                            <td>{{ emplacement.quantiter }}</td>
-                                        </tr>
-                                    {% endfor %}
-                                </table>
-                            </td>
-                        </tr>
-                    {% endif %}
-
-                    </tbody>
-                </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+        {% block footer %}
+            {{ parent() }}
+        {% endblock %}
+    {% endif %}
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript">
-        $(document).ready(function () {
+    <script src="{{ asset('bundles/ssfmb/plugins/tablesaw/js/tablesaw.js') }}"></script>
+    <script src="{{ asset('bundles/ssfmb/plugins/tablesaw/js/tablesaw-init.js') }}"></script>
+    <script src="{{ asset('bundles/ssfmb/js/planing.js') }}"></script>
 
-            function diffdate(d1, d2, u) {
-                div = 1
-                switch (u) {
-                    case 's':
-                        div = 1000;
-                        break;
-                    case 'm':
-                        div = 1000 * 60
-                        break;
-                    case 'h':
-                        div = 1000 * 60 * 60
-                        break;
-                    case 'd':
-                        div = 1000 * 60 * 60 * 24
-                        break;
-                }
-                var Diff = d2.getTime() - d1.getTime();
-                return Math.ceil((Diff / div))
-            }
-
-            $('.dateemplacement').each(function (ele, val) {
-                console.log(ele + "     " + val)
-                var datejour = $(this).text().split("-");
-                var Date1 = new Date(datejour[0], datejour[1] - 1, datejour[2]);
-                var Date2 = new Date();
-                if ($(this).parent('.flotteur').has('dateemplacement'))
-                    if (0 < diffdate(Date1, Date2, 'd') < 10) {
-                        if ($(this).parent('.flotteur').has('dateemplacement'))
-                            var str = 'il reste ' + diffdate(Date1, Date2, 'd') + ' jours pour l article de la filiere ' + $(this).parent() + ' contenu dans le segment ' + $('.segment').text() + ' a partir du flotteur ' + $('.flotteur').text() + ' a lemplacement ' + $('.emplacement').text() + '<br>'
-                        $('#alertejaune').html('<button type="button" class="close" data-dismiss="alert" aria-hidden="true">× </button> <h4> Alert! </h4> <strong>Warning!</strong> ' + str + '<a href="#" class="alert-link">alert link</a>');
-                        $('#alertejaune').show();
-                    }
-                if (diffdate(Date1, Date2, 'd') <= 0) {
-                    var str2 = 'il reste ' + (diffdate(Date1, Date2, 'd') * -1) + ' jours pour l article de la filiere ' + $('#filiere').text() + ' contenu dans le segment ' + $('#segment').text() + ' a partir du flotteur ' + $('#flotteur').text() + ' a lemplacement ' + $('#emplacement').text()
-                    $('#alerterouge').html('<button type="button" class="close" data-dismiss="alert" aria-hidden="true">× </button> <h4> Alert! </h4> <strong>Warning!</strong> ' + str2 + '<a href="#" class="alert-link">alert link</a>');
-                    $('#alerterouge').show();
-                }
-            });
-        });
-    </script>
 {% endblock %}

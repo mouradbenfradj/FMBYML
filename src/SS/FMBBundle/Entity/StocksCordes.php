@@ -63,6 +63,11 @@ class StocksCordes
     private $dateDeCreation;
     /**
      *
+     * @ORM\Column(name="date_de_mise_a_eau", type="date",nullable=true)
+     */
+    private $dateDeMiseAEau;
+    /**
+     *
      * @ORM\Column(name="dateDeRetraitTransfert", type="date", nullable=true)
      */
     private $dateDeRetraitTransfert;
@@ -167,6 +172,16 @@ class StocksCordes
     }
 
     /**
+     * Get dateDeCreation
+     *
+     * @return \DateTime
+     */
+    public function getDateDeCreation()
+    {
+        return $this->dateDeCreation;
+    }
+
+    /**
      * Set dateDeCreation
      *
      * @param \DateTime $dateDeCreation
@@ -180,13 +195,13 @@ class StocksCordes
     }
 
     /**
-     * Get dateDeCreation
+     * Get corde
      *
-     * @return \DateTime
+     * @return \SS\FMBBundle\Entity\Corde
      */
-    public function getDateDeCreation()
+    public function getCorde()
     {
-        return $this->dateDeCreation;
+        return $this->corde;
     }
 
     /**
@@ -203,13 +218,13 @@ class StocksCordes
     }
 
     /**
-     * Get corde
+     * Get article
      *
-     * @return \SS\FMBBundle\Entity\Corde
+     * @return \SS\FMBBundle\Entity\StocksArticlesSn
      */
-    public function getCorde()
+    public function getArticle()
     {
-        return $this->corde;
+        return $this->article;
     }
 
     /**
@@ -226,13 +241,13 @@ class StocksCordes
     }
 
     /**
-     * Get article
+     * Get numeroSerie
      *
-     * @return \SS\FMBBundle\Entity\StocksArticlesSn
+     * @return string
      */
-    public function getArticle()
+    public function getNumeroSerie()
     {
-        return $this->article;
+        return $this->numeroSerie;
     }
 
     /**
@@ -249,13 +264,13 @@ class StocksCordes
     }
 
     /**
-     * Get numeroSerie
+     * Get docLine
      *
-     * @return string
+     * @return \SS\FMBBundle\Entity\DocsLines
      */
-    public function getNumeroSerie()
+    public function getDocLine()
     {
-        return $this->numeroSerie;
+        return $this->docLine;
     }
 
     /**
@@ -272,13 +287,13 @@ class StocksCordes
     }
 
     /**
-     * Get docLine
+     * Get dateDeRetirement
      *
-     * @return \SS\FMBBundle\Entity\DocsLines
+     * @return \DateTime
      */
-    public function getDocLine()
+    public function getDateDeRetirement()
     {
-        return $this->docLine;
+        return $this->dateDeRetirement;
     }
 
     /**
@@ -295,13 +310,13 @@ class StocksCordes
     }
 
     /**
-     * Get dateDeRetirement
+     * Get dateDeRetraitTransfert
      *
      * @return \DateTime
      */
-    public function getDateDeRetirement()
+    public function getDateDeRetraitTransfert()
     {
-        return $this->dateDeRetirement;
+        return $this->dateDeRetraitTransfert;
     }
 
     /**
@@ -318,13 +333,13 @@ class StocksCordes
     }
 
     /**
-     * Get dateDeRetraitTransfert
+     * Get dateDeMAETransfert
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
-    public function getDateDeRetraitTransfert()
+    public function getDateDeMAETransfert()
     {
-        return $this->dateDeRetraitTransfert;
+        return $this->dateDeMAETransfert;
     }
 
     /**
@@ -341,12 +356,25 @@ class StocksCordes
     }
 
     /**
-     * Get dateDeMAETransfert
+     * Set dateDeMiseAEau
+     *
+     * @param \DateTime $dateDeMiseAEau
+     * @return StocksCordes
+     */
+    public function setDateDeMiseAEau($dateDeMiseAEau)
+    {
+        $this->dateDeMiseAEau = $dateDeMiseAEau;
+
+        return $this;
+    }
+
+    /**
+     * Get dateDeMiseAEau
      *
      * @return \DateTime 
      */
-    public function getDateDeMAETransfert()
+    public function getDateDeMiseAEau()
     {
-        return $this->dateDeMAETransfert;
+        return $this->dateDeMiseAEau;
     }
 }
