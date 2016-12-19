@@ -157,6 +157,10 @@ composer.phar
 # mpeltonen/sbt-idea plugin
 .idea_modules/
 
+
+# phpstorm
+.idea/
+
 # JIRA plugin
 atlassian-ide-plugin.xml
 
