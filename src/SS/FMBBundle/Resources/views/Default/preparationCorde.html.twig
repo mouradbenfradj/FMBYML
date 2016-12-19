@@ -47,6 +47,8 @@
                                 {{ form_label(form.libStock) }}
                             </div>
                             <div class="col-md-8">
+                                <img src="{{ asset('bundles/ssfmb/images/stock.gif') }}" height="50" width="50"
+                                     id="loadstock">
                                 {{ form_widget(form.libStock) }}
                             </div>
                         </div>
@@ -55,6 +57,8 @@
                                 {{ form_label(form.nomCorde) }}
                             </div>
                             <div class="col-md-8">
+                                <img src="{{ asset('bundles/ssfmb/images/stock.gif') }}" height="50" width="50"
+                                     id="loadcorde">
                                 {{ form_widget(form.nomCorde) }}
                             </div>
                         </div>
@@ -63,7 +67,9 @@
                                 {{ form_label(form.quantiterEnStock) }}
                             </div>
                             <div class="col-md-8">
-                                {{ form_widget(form.quantiterEnStock) }}
+                                <img src="{{ asset('bundles/ssfmb/images/stock.gif') }}" height="50" width="50"
+                                     id="loadqtelstock">
+                                <div id="divqteenstocks">{{ form_widget(form.quantiterEnStock) }}</div>
                             </div>
                         </div>
 
@@ -92,14 +98,20 @@
                                 {{ form_label(form.numeroSerie) }}
                             </div>
                             <div class="col-md-8">
+                                <img src="{{ asset('bundles/ssfmb/images/stock.gif') }}" height="50" width="50"
+                                     id="loadlot">
                                 {{ form_widget(form.numeroSerie) }}
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-4">
+
                                 {{ form_label(form.qte) }}
                             </div>
                             <div class="col-md-8">
+                                <img src="{{ asset('bundles/ssfmb/images/stock.gif') }}" height="50" width="50"
+                                     id="loadqte">
+                                <input type="number" readonly="true" value="0" class="form-control" id="totalqte">
                                 {{ form_widget(form.qte) }}
                             </div>
                         </div>
@@ -108,11 +120,20 @@
                                 {{ form_label(form.nombre) }}
                             </div>
                             <div class="col-md-8">
-                                {{ form_widget(form.nombre) }}
+                                {{ form_widget(form.nombre,{'attr': {'class' : "form-control", 'onblur': 'if (this.value!=\'\') test()'} }) }}
                             </div>
                         </div>
-                        <div class="col-md-4">
+
+                        <div class="col-sm-3 col-xs-6 col-md-2" style="float: right" id="envoie">
+                            <div class="p-20">
+                                <section class="progress-demo">
+                                    <button class="ladda-button btn btn-primary" data-style="expand-right">
+                                        <div id="cmptnombre">Validé</div>
+                                    </button>
+                                </section>
+                            </div>
                         </div>
+
                         {{ form_end(form) }}
                     </div>
                     <div class="col-md-1">
@@ -171,22 +192,60 @@
     <script type="text/javascript">
         $(document).ready(function () {
             jQuery('#ss_fmbbundle_preparationcorde_date').datepicker({language: 'fr'});
-            jQuery('#ss_fmbbundle_preparationcorde_libStock').hide();
-            jQuery('#ss_fmbbundle_preparationcorde_nomCorde').hide();
-            jQuery('#ss_fmbbundle_preparationcorde_qte').hide();
-            jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').hide();
-            jQuery('#ss_fmbbundle_preparationcorde_submit').hide();
-            jQuery('#ss_fmbbundle_preparationcorde_numeroSerie').hide()
+
+
+
+
+
             jQuery('#ss_fmbbundle_preparationcorde_Parc').ready(function () {
                 var val = jQuery("#ss_fmbbundle_preparationcorde_Parc").val();
-
                 jQuery.ajax({
                     type: "POST",
                     url: "{{ url('ssfmb_parcstock') }}?parc_id=" + val,
+                    complete: function () {
+                        jQuery('#totalqte').ready(function () {
+                            jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').ready(function () {
+                                if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').val() < 1) {
+                                    jQuery('#envoie').hide();
+                                } else {
+                                    jQuery('#envoie').show();
+                                }
+                            });
+                        });
+                        jQuery('#ss_fmbbundle_preparationcorde_nomCorde').change(function () {
+                            jQuery('#totalqte').ready(function () {
+                                if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').val() < 1) {
+                                    jQuery('#envoie').hide();
+                                } else {
+                                    jQuery('#envoie').show();
+                                }
+                            });
+                        });
+                        jQuery('#totalqte').change(function () {
+                            jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').ready(function () {
+                                if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').val() < 1) {
+                                    jQuery('#envoie').hide();
+                                } else {
+                                    jQuery('#envoie').show();
+                                }
+                            });
+                        });
+                    },
+                    beforeSend: function () {
+                        jQuery('#ss_fmbbundle_preparationcorde_libStock').hide();
+                        jQuery('#ss_fmbbundle_preparationcorde_nomCorde').hide();
+                        jQuery('#ss_fmbbundle_preparationcorde_qte').hide();
+                        jQuery('#ss_fmbbundle_preparationcorde_numeroSerie').hide()
+
+                        jQuery('#totalqte').hide();
+                        jQuery('#divqteenstocks').hide();
+                        jQuery('#envoie').hide();
+                        jQuery('#loadstock').show();
+                    },
                     success: function (data) {
                         if (jQuery.trim(data)) {
                             jQuery('#ss_fmbbundle_preparationcorde_libStock').show();
-
+                            jQuery('#loadstock').hide();
                             // Remove current options
                             jQuery('#ss_fmbbundle_preparationcorde_libStock').html('');
                             jQuery.each(data, function (k, v) {
@@ -195,12 +254,46 @@
                             jQuery.ajax({
                                 type: "POST",
                                 url: "{{ url('ssfmb_parccorde') }}?parc_id=" + val,
+                                complete: function () {
+                                    jQuery('#totalqte').ready(function () {
+                                        jQuery('#ss_fmbbundle_preparationcore_quantiterEnStock').ready(function () {
+                                            if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').val() < 1) {
+                                                jQuery('#envoie').hide();
+                                            } else {
+                                                jQuery('#envoie').show();
+                                            }
+                                        });
+                                    });
+                                    jQuery('#ss_fmbbundle_preparationcorde_nomCorde').change(function () {
+                                        jQuery('#totalqte').ready(function () {
+                                            if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').val() < 1) {
+                                                jQuery('#envoie').hide();
+                                            } else {
+                                                jQuery('#envoie').show();
+                                            }
+                                        });
+                                    });
+                                    jQuery('#totalqte').change(function () {
+                                        jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').ready(function () {
+                                            if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').val() < 1) {
+                                                jQuery('#envoie').hide();
+                                            } else {
+                                                jQuery('#envoie').show();
+                                            }
+                                        });
+                                    });
+                                },
+                                beforeSend: function () {
+                                    jQuery('#loadcorde').show();
+                                    jQuery('#loadqtelstock').show();
+                                },
                                 success: function (data) {
                                     if (jQuery.trim(data)) {
                                         var pos = true;
                                         var lan = '';
                                         jQuery('#ss_fmbbundle_preparationcorde_nomCorde').show();
-
+                                        jQuery('#loadcorde').hide();
+                                        jQuery('#loadqtelstock').hide();
                                         // Remove current options
                                         jQuery('#ss_fmbbundle_preparationcorde_nomCorde').html('');
                                         jQuery.each(data, function (k, v) {
@@ -210,27 +303,58 @@
                                                 pos = false;
                                             } else {
                                                 if (jQuery('#ss_fmbbundle_preparationcorde_nomCorde').val() == lan) {
-                                                    jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').show();
+                                                    jQuery('#divqteenstocks').show();
                                                     jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').val(v);
                                                 }
                                                 pos = true;
-
                                             }
                                         });
-                                        jQuery('#ss_fmbbundle_preparationcorde_submit').show();
                                     }
                                 }
                             });
-                            jQuery.noConflict();
                             jQuery.ajax({
                                 type: "POST",
                                 url: "{{ url('ssfmb_articlestock') }}?stock_id=" + jQuery('#ss_fmbbundle_preparationcorde_libStock').val() + "&article=" + jQuery('#ss_fmbbundle_preparationcorde_refArticle').val(),
+                                beforeSend: function () {
+                                    jQuery('#loadlot').show();
+                                    jQuery('#loadqte').show();
+                                },
+                                complete: function () {
+                                    jQuery('#totalqte').ready(function () {
+                                        jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').ready(function () {
+                                            if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').val() < 1) {
+                                                jQuery('#envoie').hide();
+                                            } else {
+                                                jQuery('#envoie').show();
+                                            }
+                                        });
+                                    });
+                                    jQuery('#ss_fmbbundle_preparationcorde_nomCorde').change(function () {
+                                        jQuery('#totalqte').ready(function () {
+                                            if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').val() < 1) {
+                                                jQuery('#envoie').hide();
+                                            } else {
+                                                jQuery('#envoie').show();
+                                            }
+                                        });
+                                    });
+                                    jQuery('#totalqte').change(function () {
+                                        jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').ready(function () {
+                                            if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').val() < 1) {
+                                                jQuery('#envoie').hide();
+                                            } else {
+                                                jQuery('#envoie').show();
+                                            }
+                                        });
+                                    });
+                                },
                                 success: function (data) {
                                     if (jQuery.trim(data)) {
                                         var pos = true;
                                         var lan = '';
                                         jQuery('#ss_fmbbundle_preparationcorde_numeroSerie').show();
-
+                                        jQuery('#loadlot').hide();
+                                        jQuery('#loadqte').hide();
                                         // Remove current options
                                         jQuery('#ss_fmbbundle_preparationcorde_numeroSerie').html('');
                                         jQuery.each(data, function (k, v) {
@@ -241,12 +365,13 @@
                                             } else {
                                                 if (jQuery('#ss_fmbbundle_preparationcorde_numeroSerie').val() == lan) {
                                                     jQuery('#ss_fmbbundle_preparationcorde_qte').show();
-                                                    jQuery('#ss_fmbbundle_preparationcorde_qte').val(v);
+                                                    jQuery('#ss_fmbbundle_preparationcorde_qte').val(0);
+                                                    jQuery('#totalqte').show();
+                                                    jQuery('#totalqte').val(v);
                                                 }
                                                 pos = true;
                                             }
                                         });
-                                        jQuery('#ss_fmbbundle_preparationcorde_submit').show();
                                     }
                                 }
                             });
@@ -256,18 +381,53 @@
                 return false;
             });
             jQuery('#ss_fmbbundle_preparationcorde_refArticle').change(function () {
-                jQuery('#ss_fmbbundle_preparationcorde_numeroSerie').hide()
-                jQuery('#ss_fmbbundle_preparationcorde_qte').hide();
                 jQuery.ajax({
                     type: "POST",
                     url: "{{ url('ssfmb_articlestock') }}?stock_id=" + jQuery('#ss_fmbbundle_preparationcorde_libStock').val() + "&article=" + jQuery('#ss_fmbbundle_preparationcorde_refArticle').val(),
+                    beforeSend: function () {
+                        jQuery('#ss_fmbbundle_preparationcorde_numeroSerie').hide()
+                        jQuery('#ss_fmbbundle_preparationcorde_qte').hide();
+                        jQuery('#loadlot').show();
+                        jQuery('#loadqte').show();
+                        jQuery('#totalqte').hide();
+                        jQuery('#envoie').hide();
+                    },
+                    complete: function () {
+                        jQuery('#loadlot').hide();
+                        jQuery('#loadqte').hide();
+                        jQuery('#totalqte').ready(function () {
+                            jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').ready(function () {
+                                if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').val() < 1) {
+                                    jQuery('#envoie').hide();
+                                } else {
+                                    jQuery('#envoie').show();
+                                }
+                            });
+                        });
+                        jQuery('#ss_fmbbundle_preparationcorde_nomCorde').change(function () {
+                            jQuery('#totalqte').ready(function () {
+                                if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').val() < 1) {
+                                    jQuery('#envoie').hide();
+                                } else {
+                                    jQuery('#envoie').show();
+                                }
+                            });
+                        });
+                        jQuery('#totalqte').change(function () {
+                            jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').ready(function () {
+                                if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').val() < 1) {
+                                    jQuery('#envoie').hide();
+                                } else {
+                                    jQuery('#envoie').show();
+                                }
+                            });
+                        });
+                    },
                     success: function (data) {
                         if (jQuery.trim(data)) {
                             var pos = true;
                             var lan = '';
                             jQuery('#ss_fmbbundle_preparationcorde_numeroSerie').show();
-
-                            // Remove current options
                             jQuery('#ss_fmbbundle_preparationcorde_numeroSerie').html('');
                             jQuery.each(data, function (k, v) {
                                 if (pos) {
@@ -276,14 +436,15 @@
                                     pos = false;
                                 } else {
                                     if (jQuery('#ss_fmbbundle_preparationcorde_numeroSerie').val() == lan) {
+                                        jQuery('#envoie').show();
                                         jQuery('#ss_fmbbundle_preparationcorde_qte').show();
-                                        jQuery('#ss_fmbbundle_preparationcorde_qte').val(v);
+                                        jQuery('#ss_fmbbundle_preparationcorde_qte').val(0);
+                                        jQuery('#totalqte').show();
+                                        jQuery('#totalqte').val(v);
                                     }
                                     pos = true;
-
                                 }
                             });
-                            jQuery('#ss_fmbbundle_preparationcorde_submit').show();
                         }
                     }
                 });
@@ -293,13 +454,50 @@
                 jQuery('#ss_fmbbundle_preparationcorde_libStock').hide();
                 jQuery('#ss_fmbbundle_preparationcorde_nomCorde').hide();
                 jQuery('#ss_fmbbundle_preparationcorde_qte').hide();
-                jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').hide();
-                jQuery('#ss_fmbbundle_preparationcorde_submit').hide();
+                jQuery('#totalqte').hide();
+                jQuery('#divqteenstocks').hide();
+                jQuery('#envoie').hide();
                 jQuery('#ss_fmbbundle_preparationcorde_numeroSerie').hide()
                 var val = jQuery(this).val();
                 jQuery.ajax({
                     type: "POST",
                     url: "{{ url('ssfmb_parcstock') }}?parc_id=" + val,
+                    complete: function () {
+                        jQuery('#totalqte').ready(function () {
+                            jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').ready(function () {
+                                if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').val() < 1) {
+                                    jQuery('#envoie').hide();
+                                } else {
+                                    jQuery('#envoie').show();
+                                }
+                            });
+                        });
+                        jQuery('#ss_fmbbundle_preparationcorde_nomCorde').change(function () {
+                            jQuery('#totalqte').ready(function () {
+                                if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').val() < 1) {
+                                    jQuery('#envoie').hide();
+                                } else {
+                                    jQuery('#envoie').show();
+                                }
+                            });
+                        });
+                        jQuery('#totalqte').change(function () {
+                            jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').ready(function () {
+                                if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').val() < 1) {
+                                    jQuery('#envoie').hide();
+                                } else {
+                                    jQuery('#envoie').show();
+                                }
+                            });
+                        });
+                    },
+                    beforeSend: function () {
+                        jQuery('#loadstock').show();
+                        jQuery('#loadcorde').show();
+                        jQuery('#loadqtelstock').show();
+                        jQuery('#loadlot').show();
+                        jQuery('#loadqte').show();
+                    },
                     success: function (data) {
                         if (jQuery.trim(data)) {
                             jQuery('#ss_fmbbundle_preparationcorde_libStock').show();
@@ -312,6 +510,38 @@
                             jQuery.ajax({
                                 type: "POST",
                                 url: "{{ url('ssfmb_parccorde') }}?parc_id=" + val,
+                                complete: function () {
+                                    jQuery('#loadcorde').hide();
+                                    jQuery('#loadqtelstock').hide();
+                                    jQuery('#totalqte').ready(function () {
+                                        jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').ready(function () {
+                                            if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').val() < 1) {
+                                                jQuery('#envoie').hide();
+                                            } else {
+                                                jQuery('#envoie').show();
+                                            }
+                                        });
+                                    });
+                                    jQuery('#ss_fmbbundle_preparationcorde_nomCorde').change(function () {
+                                        jQuery('#totalqte').ready(function () {
+                                            if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').val() < 1) {
+                                                jQuery('#envoie').hide();
+                                            } else {
+                                                jQuery('#envoie').show();
+                                            }
+                                        });
+                                    });
+                                    jQuery('#totalqte').change(function () {
+                                        jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').ready(function () {
+                                            if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').val() < 1) {
+                                                jQuery('#envoie').hide();
+                                            } else {
+                                                jQuery('#envoie').show();
+                                            }
+                                        });
+                                    });
+
+                                },
                                 success: function (data) {
                                     if (jQuery.trim(data)) {
                                         var pos = true;
@@ -329,24 +559,53 @@
                                                 if (jQuery('#ss_fmbbundle_preparationcorde_nomCorde').val() == lan) {
                                                     jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').show();
                                                     jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').val(v);
+                                                    jQuery('#divqteenstocks').show();
                                                 }
                                                 pos = true;
-
                                             }
                                         });
-                                        jQuery('#ss_fmbbundle_preparationcorde_submit').show();
                                     }
                                 }
                             });
                             jQuery.ajax({
                                 type: "POST",
                                 url: "{{ url('ssfmb_articlestock') }}?stock_id=" + jQuery('#ss_fmbbundle_preparationcorde_libStock').val() + "&article=" + jQuery('#ss_fmbbundle_preparationcorde_refArticle').val(),
+                                complete: function () {
+                                    jQuery('#loadlot').hide();
+                                    jQuery('#loadqte').hide();
+                                    jQuery('#totalqte').ready(function () {
+                                        jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').ready(function () {
+                                            if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').val() < 1) {
+                                                jQuery('#envoie').hide();
+                                            } else {
+                                                jQuery('#envoie').show();
+                                            }
+                                        });
+                                    });
+                                    jQuery('#ss_fmbbundle_preparationcorde_nomCorde').change(function () {
+                                        jQuery('#totalqte').ready(function () {
+                                            if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').val() < 1) {
+                                                jQuery('#envoie').hide();
+                                            } else {
+                                                jQuery('#envoie').show();
+                                            }
+                                        });
+                                    });
+                                    jQuery('#totalqte').change(function () {
+                                        jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').ready(function () {
+                                            if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').val() < 1) {
+                                                jQuery('#envoie').hide();
+                                            } else {
+                                                jQuery('#envoie').show();
+                                            }
+                                        });
+                                    });
+                                },
                                 success: function (data) {
                                     if (jQuery.trim(data)) {
                                         var pos = true;
                                         var lan = '';
                                         jQuery('#ss_fmbbundle_preparationcorde_numeroSerie').show();
-
                                         // Remove current options
                                         jQuery('#ss_fmbbundle_preparationcorde_numeroSerie').html('');
                                         jQuery.each(data, function (k, v) {
@@ -356,14 +615,15 @@
                                                 pos = false;
                                             } else {
                                                 if (jQuery('#ss_fmbbundle_preparationcorde_numeroSerie').val() == lan) {
+                                                    jQuery('#totalqte').show();
                                                     jQuery('#ss_fmbbundle_preparationcorde_qte').show();
-                                                    jQuery('#ss_fmbbundle_preparationcorde_qte').val(v);
+                                                    jQuery('#totalqte').val(v);
+                                                    jQuery('#ss_fmbbundle_preparationcorde_qte').val(0);
                                                 }
                                                 pos = true;
 
                                             }
                                         });
-                                        jQuery('#ss_fmbbundle_preparationcorde_submit').show();
                                     }
                                 }
                             });
@@ -373,55 +633,119 @@
                 return false;
             });
             jQuery('#ss_fmbbundle_preparationcorde_nomCorde').change(function () {
-                jQuery('#ss_fmbbundle_preparationcorde_submit').hide();
-                jQuery('#ss_fmbbundle_preparationcorde_nomCorde').hide();
-                jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').hide();
+                jQuery('#envoie').hide();
+                jQuery('#divqteenstocks').hide();
                 var val = jQuery("#ss_fmbbundle_preparationcorde_Parc").val();
 
                 jQuery.ajax({
                     type: "POST",
                     url: "{{ url('ssfmb_parccorde') }}?parc_id=" + val,
+                    beforeSend: function () {
+                        jQuery('#loadqtelstock').show();
+                    },
+                    complete: function () {
+                        jQuery('#loadqtelstock').hide();
+                        jQuery('#totalqte').ready(function () {
+                            jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').ready(function () {
+                                if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').val() < 1) {
+                                    jQuery('#envoie').hide();
+                                } else {
+                                    jQuery('#envoie').show();
+                                }
+                            });
+                        });
+                        jQuery('#ss_fmbbundle_preparationcorde_nomCorde').change(function () {
+                            jQuery('#totalqte').ready(function () {
+                                if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').val() < 1) {
+                                    jQuery('#envoie').hide();
+                                } else {
+                                    jQuery('#envoie').show();
+                                }
+                            });
+                        });
+                        jQuery('#totalqte').change(function () {
+                            jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').ready(function () {
+                                if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').val() < 1) {
+                                    jQuery('#envoie').hide();
+                                } else {
+                                    jQuery('#envoie').show();
+                                }
+                            });
+                        });
+                    },
                     success: function (data) {
                         if (jQuery.trim(data)) {
                             var pos = true;
                             var lan = '';
-                            jQuery('#ss_fmbbundle_preparationcorde_nomCorde').show();
                             jQuery.each(data, function (k, v) {
                                 if (pos) {
                                     lan = k;
                                     pos = false;
                                 } else {
                                     if (jQuery('#ss_fmbbundle_preparationcorde_nomCorde').val() == lan) {
-                                        jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').show();
+                                        jQuery('#divqteenstocks').show();
                                         jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').val(v);
                                     }
                                     pos = true;
-
                                 }
                             });
-                            jQuery('#ss_fmbbundle_preparationcorde_submit').show();
                         }
                     }
                 });
             });
 
             jQuery('#ss_fmbbundle_preparationcorde_numeroSerie').change(function () {
-                jQuery('#ss_fmbbundle_preparationcorde_submit').hide();
+                jQuery('#envoie').hide();
+                jQuery('#totalqte').hide();
                 jQuery('#ss_fmbbundle_preparationcorde_qte').hide();
                 var val = jQuery("#ss_fmbbundle_preparationcorde_Parc").val();
 
                 jQuery.ajax({
                     type: "POST",
                     url: "{{ url('ssfmb_articlestocklot') }}?stock_id=" + jQuery('#ss_fmbbundle_preparationcorde_libStock').val() + "&article=" + jQuery('#ss_fmbbundle_preparationcorde_refArticle').val() + "&lot=" + jQuery('#ss_fmbbundle_preparationcorde_numeroSerie').val(),
+                    complete: function () {
+                        jQuery('#totalqte').ready(function () {
+                            jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').ready(function () {
+                                if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').val() < 1) {
+                                    jQuery('#envoie').hide();
+                                } else {
+                                    jQuery('#envoie').show();
+                                }
+                            });
+                        });
+                        jQuery('#ss_fmbbundle_preparationcorde_nomCorde').change(function () {
+                            jQuery('#totalqte').ready(function () {
+                                if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').val() < 1) {
+                                    jQuery('#envoie').hide();
+                                } else {
+                                    jQuery('#envoie').show();
+                                }
+                            });
+                        });
+                        jQuery('#totalqte').change(function () {
+                            jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').ready(function () {
+                                if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationcorde_quantiterEnStock').val() < 1) {
+                                    jQuery('#envoie').hide();
+                                } else {
+                                    jQuery('#envoie').show();
+                                }
+                            });
+                        });
+                    },
+                    beforeSend: function () {
+                        jQuery('#loadqte').show();
+                    },
                     success: function (data) {
                         if (jQuery.trim(data)) {
+                            jQuery('#totalqte').show();
                             jQuery('#ss_fmbbundle_preparationcorde_qte').show();
+                            jQuery('#loadqte').hide();
                             // Remove current options
                             jQuery('#ss_fmbbundle_preparationcorde_qte').html('');
                             jQuery.each(data, function (k, v) {
-                                jQuery('#ss_fmbbundle_preparationcorde_qte').val(v);
+                                jQuery('#totalqte').val(v);
+                                jQuery('#ss_fmbbundle_preparationcorde_qte').val(0);
                             });
-                            jQuery('#ss_fmbbundle_preparationcorde_submit').show();
                         }
                     }
                 });

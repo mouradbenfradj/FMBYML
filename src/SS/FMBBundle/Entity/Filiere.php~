@@ -29,12 +29,121 @@ class Filiere
     private $nomFiliere;
 
     /**
-     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Parc", inversedBy="filieres",cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Magasins", inversedBy="filieres",)
+     * @ORM\JoinColumn(name="magasin", referencedColumnName="id_magasin",nullable=false)
      */
     private $parc;
     /**
-     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Segment", mappedBy="filiere" ,cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Segment", mappedBy="filiere" ,cascade={"persist","remove"})
      */
     private $segments;
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="aireDeTravaille", type="boolean")
+     */
+    private $aireDeTravaille;
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->segments = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Add segments
+     *
+     * @param \SS\FMBBundle\Entity\Segment $segments
+     * @return Filiere
+     */
+    public function addSegment(\SS\FMBBundle\Entity\Segment $segments)
+    {
+        $this->segments[] = $segments;
+        $segments->setFiliere($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove segments
+     *
+     * @param \SS\FMBBundle\Entity\Segment $segments
+     */
+    public function removeSegment(\SS\FMBBundle\Entity\Segment $segments)
+    {
+        $this->segments->removeElement($segments);
+    }
+
+    /**
+     * Get segments
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSegments()
+    {
+        return $this->segments;
+    }
+
+    public function __toString()
+    {
+        return $this->getNomFiliere();
+    }
+
+    /**
+     * Get nomFiliere
+     *
+     * @return string
+     */
+    public function getNomFiliere()
+    {
+        return $this->nomFiliere;
+    }
+
+    /**
+     * Set nomFiliere
+     *
+     * @param string $nomFiliere
+     * @return Filiere
+     */
+    public function setNomFiliere($nomFiliere)
+    {
+        $this->nomFiliere = $nomFiliere;
+
+        return $this;
+    }
+
+    /**
+     * Get parc
+     *
+     * @return \SS\FMBBundle\Entity\Magasins
+     */
+    public function getParc()
+    {
+        return $this->parc;
+    }
+
+    /**
+     * Set parc
+     *
+     * @param \SS\FMBBundle\Entity\Magasins $parc
+     * @return Filiere
+     */
+    public function setParc(\SS\FMBBundle\Entity\Magasins $parc)
+    {
+        $this->parc = $parc;
+
+        return $this;
+    }
+
 }

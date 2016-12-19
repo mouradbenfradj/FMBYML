@@ -33,7 +33,7 @@ class PreparationCordeType extends AbstractType
             }, 'label' => 'article', 'attr' => array('class' => "form-control")))
             ->add('numeroSerie', 'entity', array('class' => 'SSFMBBundle:StocksArticlesSn', 'label' => 'lot', 'mapped' => false, 'attr' => array('class' => "form-control")))
             ->add('qte', 'number', array('label' => 'Densiter', 'attr' => array('class' => "form-control")))
-            ->add('nombre', 'number', array('label' => 'nombre de lanterne a fabriquer', 'mapped' => false));
+            ->add('nombre', 'number', array('label' => 'nombre de Corde a fabriquer', 'mapped' => false));
         $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'));
         $builder->addEventListener(FormEvents::PRE_SUBMIT, array($this, 'onPreSubmit'));
     }
@@ -67,7 +67,7 @@ class PreparationCordeType extends AbstractType
             'attr' => array('class' => "form-control")
         ));
         $form->add('nomCorde', 'entity', array(
-            'label' => 'choix du lanterne',
+            'label' => 'choix du Corde',
             'empty_value' => '-- Selectionne le parc en premier lieu --',
             'class' => 'SSFMBBundle:Corde',
             'property' => 'id',
@@ -75,7 +75,7 @@ class PreparationCordeType extends AbstractType
             'attr' => array('class' => "form-control")
         ));
         $form->add('quantiterEnStock', 'number', array(
-            'label' => 'nombre de lanterne non utilisé en stock',
+            'label' => 'nombre de Corde non utilisé en stock',
             'mapped' => false,
             'attr' => array('class' => "form-control", 'readonly' => "", 'value' => "Readonly value")
         ));

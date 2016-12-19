@@ -1,10 +1,10 @@
-<div>Listez des filieres</div>
+<div >Listez des filieres</div>
 {% for filiere in entity.filieres %}
     {% if page not in ["RL","RC"] %}
-        <span class="lienfiliereint"><a href="#{{ filiere.nomFiliere }}">{{ filiere.nomFiliere }}</a></span>
+        <div class="col-sm-2"><a href="#{{ filiere.nomFiliere }}">{{ filiere.nomFiliere }}</a></div>
     {% elseif page in ["RL","RC"] %}
         {% if filiere.aireDeTravaille %}
-            <span class="lienfiliereint"><a href="#{{ filiere.nomFiliere }}">{{ filiere.nomFiliere }}</a></span>
+            <div class="col-sm-2"><a href="#{{ filiere.nomFiliere }}">{{ filiere.nomFiliere }}</a></div>
         {% endif %}
     {% endif %}
 {% endfor %}

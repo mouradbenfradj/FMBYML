@@ -30,6 +30,14 @@
 <table valign="top" class="table table-striped m-0" border="1">
     <thead>
     <tr>
+        <th colspan="6">
+            <div class="progressme">
+                <div role="progressbar" aria-valuenow="{{ ((((totaleplace -(totaleplace -(totalecorde + totalelanterne))))/totaleplace )*100 )|number_format }}" aria-valuemin="0" aria-valuemax="102" style="width: {{ ((((totaleplace -(totaleplace -(totalecorde + totalelanterne))))/totaleplace )*100 )|number_format }}%;" class="progress-bar progress-bar-danger progress-bar-striped active">remplit {{ ((((totaleplace -(totaleplace -(totalecorde + totalelanterne))))/totaleplace )*100 )|number_format }}%</div>
+                <div role="progressbar" aria-valuenow="{{  (((totaleplace -(totalecorde + totalelanterne))/totaleplace ) *100)|number_format }}" aria-valuemin="0" aria-valuemax="102" style="width:{{ (((totaleplace -(totalecorde + totalelanterne))/totaleplace ) *100)|number_format }}%;" class="progress-bar progress-bar-success progress-bar-striped"> vide {{ (((totaleplace -(totalecorde + totalelanterne))/totaleplace ) *100)|number_format }}%</div>
+            </div>
+        </th>
+    </tr>
+    <tr>
         <th>
             taille
         </th>

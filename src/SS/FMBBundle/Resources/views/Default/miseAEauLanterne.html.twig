@@ -64,13 +64,15 @@
                     <div>^</div>
                 </div>
                 <!-- sidenavi data //-->
-                <div class="side-navi-data">
+                <div class="side-navi-data" style="overflow:auto">
                     <div class="side-navi-tab">
                         <div>
                             {% include '@SSFMB/Include/couleurCleInclude.html.twig' %}
                             {% include "@SSFMB/Filiere/Include/listMenuIndexInclude.html.twig" %}
                             <p>quantiter disponible</p>
                             <p>
+                                <img src="{{ asset('bundles/ssfmb/images/stock.gif') }}" height="50" width="50"
+                                     id="loadquantit">
                                 <input type="number" id="quantit" readonly="true" value="0">
                             </p>
                             <p>date de preparation des lanternes</p>
@@ -145,6 +147,7 @@
                 }
             }
             $(document).ready(function () {
+                $('#loadquantit').hide();
                 $('#choixqtearticle').ready(function () {
                     $('input:checkbox').hide();
                     $('#choixqtearticle').hide();
@@ -165,7 +168,11 @@
                     type: "POST",
                     url: "{{ url('ssfmb_articlestock') }}?stock_id=" + $('#idstockparc').text() + "&sarticle=" + $('#articlechoix').val(),
                     beforeSend: function () {
+                        $('#loadquantit').show();
                         $('#quantit').val(0);
+                    },
+                    complete: function () {
+                        $('#loadquantit').hide();
                     },
                     success: function (data) {
                         if ($.trim(data)) {
@@ -196,8 +203,12 @@
                                 },
                                 dataType: 'json',
                                 beforeSend: function () {
+                                    $('#loadquantit').show();
                                     $('#quantit').val(0);
                                     $('#quantierchoix').empty();
+                                },
+                                complete: function () {
+                                    $('#loadquantit').hide();
                                 },
                                 success: function (json) {
                                     $('#quantierchoix').html('');
@@ -227,7 +238,11 @@
                                                 },
                                                 dataType: 'json',
                                                 beforeSend: function () {
+                                                    $('#loadquantit').show();
                                                     $('#quantit').val(0);
+                                                },
+                                                complete: function () {
+                                                    $('#loadquantit').hide();
                                                 },
                                                 success: function (json) {
                                                     if ($.trim(json)) {
@@ -255,7 +270,6 @@
                                         });
                                     }
                                     ;
-
                                     $.each(json, function (index, value) {
                                         $('#quantit').val(value.nombre);
                                         $('#quantierchoix').append('<option value="' + value.qte + '">' + value.qte + '</option>');
@@ -279,8 +293,12 @@
                     },
                     dataType: 'json',
                     beforeSend: function () {
+                        $('#loadquantit').show();
                         $('#quantit').val(0);
                         $('#quantierchoix').empty();
+                    },
+                    complete: function () {
+                        $('#loadquantit').hide();
                     },
                     success: function (json) {
                         $('#quantierchoix').html('');
@@ -310,7 +328,11 @@
                                     },
                                     dataType: 'json',
                                     beforeSend: function () {
+                                        $('#loadquantit').show();
                                         $('#quantit').val(0);
+                                    },
+                                    complete: function () {
+                                        $('#loadquantit').hide();
                                     },
                                     success: function (json) {
                                         if ($.trim(json)) {
@@ -358,8 +380,12 @@
                     },
                     dataType: 'json',
                     beforeSend: function () {
+                        $('#loadquantit').show();
                         $('#quantit').val(0);
                         $('#quantierchoix').empty();
+                    },
+                    complete: function () {
+                        $('#loadquantit').hide();
                     },
                     success: function (json) {
                         $('#quantierchoix').html('');
@@ -391,7 +417,11 @@
                                     },
                                     dataType: 'json',
                                     beforeSend: function () {
+                                        $('#loadquantit').show();
                                         $('#quantit').val(0);
+                                    },
+                                    complete: function () {
+                                        $('#loadquantit').hide();
                                     },
                                     success: function (json) {
 
@@ -440,8 +470,12 @@
                     },
                     dataType: 'json',
                     beforeSend: function () {
+                        $('#loadquantit').show();
                         $('#quantit').val(0);
                         $('#quantierchoix').empty();
+                    },
+                    complete: function () {
+                        $('#loadquantit').hide();
                     },
                     success: function (json) {
                         $('#quantierchoix').html('');
@@ -475,6 +509,10 @@
                                     dataType: 'json',
                                     beforeSend: function () {
                                         $('#quantit').val(0);
+                                        $('#loadquantit').show();
+                                    },
+                                    complete: function () {
+                                        $('#loadquantit').hide();
                                     },
                                     success: function (json) {
                                         if ($.trim(json)) {
@@ -522,7 +560,11 @@
                     },
                     dataType: 'json',
                     beforeSend: function () {
+                        $('#loadquantit').show();
                         $('#quantit').val(0);
+                    },
+                    complete: function () {
+                        $('#loadquantit').hide();
                     },
                     success: function (json) {
                         if ($.trim(json)) {

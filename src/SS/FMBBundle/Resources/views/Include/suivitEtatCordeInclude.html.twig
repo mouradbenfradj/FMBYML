@@ -6,11 +6,11 @@
 -date dernier transfert:{% if  emplacement.dateDTC %}{{ emplacement.dateDTC|date('Y-m-d') }} {% else %} aucun {% endif %}"
    href="">
     {% set difference2 = date("now").diff(date(emplacement.dateDeRemplissage)) %}
-    {% if difference2.m <=5 %}
+    {% if difference.m <=5 and difference.y ==0 %}
         <font color="blue" class="emplacement">{{ emplacement.place }}</font>
-    {% elseif difference2.m <=8 %}
+    {% elseif difference2.m <=8 and difference.y ==0  %}
         <font color="aqua" class="emplacement">{{ emplacement.place }}</font>
-    {% elseif difference2.m >8 %}
+    {% elseif difference2.m >8 or difference.y > 0 %}
         <font color="#8a2be2" class="emplacement">{{ emplacement.place }}</font>
     {% endif %}
 </a>

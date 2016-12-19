@@ -208,7 +208,6 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(new PreparationCordeType($em), null, array('action' => $this->generateUrl('ssfmb_preparationcorde'), 'method' => 'POST', 'attr' => array('class' => "form-horizontal")));
-        $form->add('submit', 'submit', array('label' => 'Valider', 'attr' => array('class' => 'col-md-6 btn btn-purple waves-effect waves-light')));
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             $stockarticles = $em->getRepository('SSFMBBundle:StocksArticles')->findOneBy(array('idStock' => $form['libStock']->getData()->getIdStock(), 'refArticle' => $form['refArticle']->getData()->getRefArticle()));

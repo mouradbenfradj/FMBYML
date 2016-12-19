@@ -80,24 +80,18 @@ var SideNavi = ( function () {
 		var pos = getPos()*1;
 
 		if ( isVisible && pos < getPosEnd () || ! isVisible && pos > getPosStart ()  ) {
-
 			pos = (isVisible) ?  pos+posStep : pos-posStep;
-
 			if (isVisible && pos + posStep >= getPosEnd () || ! isVisible && pos - posStep <= getPosStart ()) {
-
 				pos = (isVisible) ?  getPosEnd () : getPosStart ();
 				container.css(posDirection, pos+'px');
 				isSlideing = false;
-
 			} else {
 				container.css(posDirection, pos+'px');
 				setTimeout(function () {slideEvent()}, 30 );
 			}
-
 		} else {
 			isSlideing = false;
 		}
-
 	}
 	function slide () {
 		if ( ! isSlideing) {
@@ -106,19 +100,13 @@ var SideNavi = ( function () {
 		}
 	}
 	function setEventParam (item) {
-
 		activeIndex = $(cssElements.item, container).index(item);
-
 		if (isActiveItem(item)) {
 			toggleIsVisible();
 			setDefaultItem(item);
-
 			changeVisibility = true;
-
 		} else {
-
 			setActiveItem(item);
-
 			if ( ! isVisible) {
 				toggleIsVisible();
 				changeVisibility = true;
@@ -126,28 +114,22 @@ var SideNavi = ( function () {
 		}
 	}
 	function eventListener () {
-
 		$(cssElements.item, container).on('click', function (event) {
-
 			event.preventDefault();
 			setEventParam($(this));
-
 			if (changeVisibility) {
 				slide();
 			}
 		});
 	}
 	function init (direction, conf) {
-
 		posDirection = direction;
 		cssElements = conf;
 		container = $(cssElements.container);
-
 		eventListener();
 	}
 
 	return {
 		init : init
 	};
-
 })();

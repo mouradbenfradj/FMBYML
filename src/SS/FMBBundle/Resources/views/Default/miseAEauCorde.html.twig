@@ -76,7 +76,9 @@
                         {% include '@SSFMB/Include/couleurCleInclude.html.twig' %}
                         {% include "@SSFMB/Filiere/Include/listMenuIndexInclude.html.twig" %}
                         <p>quantiter disponible</p>
-                        <p><input type="number" id="quantit" readonly="true" value="0"></p>
+                        <p><img src="{{ asset('bundles/ssfmb/images/stock.gif') }}" height="50" width="50"
+                                id="loadquantit">
+                            <input type="number" id="quantit" readonly="true" value="0"></p>
                         <p>date de preparation des laternes</p>
                         {% set now =  "now"|date("Y-m-d") %}
                         <p><input type="date" name="dateMAECorde" value="{{ now }}"></p>
@@ -168,6 +170,12 @@
              $.ajax({
                  type: "POST",
                  url: "{{ url('ssfmb_articlestock') }}?stock_id=" + $('#idstockparc').text() + "&sarticle=" + $('#articlechoix').val(),
+                 beforeSend: function () {
+                     $('#loadquantit').show();
+                 },
+                 complete: function () {
+                     $('#loadquantit').hide();
+                 },
                  success: function (data) {
                      if ($.trim(data)) {
                          var pos = true;
@@ -225,7 +233,11 @@
                                              },
                                              dataType: 'json',
                                              beforeSend: function () {
-                                                 $('#quantit').val('chargement');
+                                                 $('#loadquantit').show();
+                                                 $('#quantit').val(0);
+                                             },
+                                             complete: function () {
+                                                 $('#loadquantit').hide();
                                              },
                                              success: function (json) {
                                                  if ($.trim(json)) {
@@ -271,6 +283,12 @@
              $.ajax({
                  type: "POST",
                  url: "{{ url('ssfmb_articlestock') }}?stock_id=" + $('#idstockparc').text() + "&sarticle=" + $('#articlechoix').val(),
+                 beforeSend: function () {
+                     $('#loadquantit').show();
+                 },
+                 complete: function () {
+                     $('#loadquantit').hide();
+                 },
                  success: function (data) {
                      if ($.trim(data)) {
                          var pos = true;
@@ -330,8 +348,11 @@
                                              },
                                              dataType: 'json',
                                              beforeSend: function () {
-                                                 $('#quantit').val('chargement');
+                                                 $('#loadquantit').show();
                                                  $('#quantit').val(0);
+                                             },
+                                             complete: function () {
+                                                 $('#loadquantit').hide();
                                              },
                                              success: function (json) {
                                                  if ($.trim(json)) {
@@ -384,9 +405,12 @@
                  },
                  dataType: 'json',
                  beforeSend: function () {
+                     $('#loadquantit').show();
                      $('#quantit').val(0);
-
                      $('#quantierchoix').empty();
+                 },
+                 complete: function () {
+                     $('#loadquantit').hide();
                  },
                  success: function (json) {
                      $('#quantierchoix').html('');
@@ -419,8 +443,11 @@
                                  },
                                  dataType: 'json',
                                  beforeSend: function () {
+                                     $('#loadquantit').show();
                                      $('#quantit').val(0);
-                                     $('#quantit').val('chargement');
+                                 },
+                                 complete: function () {
+                                     $('#loadquantit').hide();
                                  },
                                  success: function (json) {
 
@@ -469,10 +496,12 @@
                  },
                  dataType: 'json',
                  beforeSend: function () {
-                     $('#quantit').val('chargement');
+                     $('#loadquantit').show();
                      $('#quantit').val(0);
-
                      $('#quantierchoix').empty();
+                 },
+                 complete: function () {
+                     $('#loadquantit').hide();
                  },
                  success: function (json) {
                      $('#quantierchoix').html('');
@@ -505,8 +534,11 @@
                                  },
                                  dataType: 'json',
                                  beforeSend: function () {
-                                     $('#quantit').val('chargement');
+                                     $('#loadquantit').show();
                                      $('#quantit').val(0);
+                                 },
+                                 complete: function () {
+                                     $('#loadquantit').hide();
                                  },
                                  success: function (json) {
                                      if ($.trim(json)) {
@@ -554,8 +586,12 @@
                  },
                  dataType: 'json',
                  beforeSend: function () {
-                     $('#quantit').val('chargement');
+                     $('#loadquantit').show();
                      $('#quantit').val(0);
+                     $('#quantierchoix').empty();
+                 },
+                 complete: function () {
+                     $('#loadquantit').hide();
                  },
                  success: function (json) {
                      if ($.trim(json)) {

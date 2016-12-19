@@ -5,12 +5,12 @@ namespace SS\FMBBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * StocksLanternes
+ * Corde
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="SS\FMBBundle\Repository\StocksLanternesRepository")
+ * @ORM\Entity(repositoryClass="SS\FMBBundle\Repository\StocksCordesRepository")
  */
-class StocksLanternes
+class StocksCordes
 {
     /**
      * @var integer
@@ -20,30 +20,29 @@ class StocksLanternes
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
     /**
-     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Lanterne", inversedBy="stockslanternes",cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false,  referencedColumnName="nomLanterne")
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Corde", inversedBy="stockscordes",cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false,  referencedColumnName="id")
      */
-    private $lanterne;
+    private $corde;
 
     /**
-     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Poche", mappedBy="stocklanterne",cascade={"persist","remove"},fetch="LAZY")
+     * @var integer
+     *
+     * @ORM\Column(name="quantiter", type="integer")
      */
-    private $poches;
-
+    private $quantiter;
     /**
-     * @ORM\OneToOne(targetEntity="SS\FMBBundle\Entity\Emplacement", mappedBy="stockslanterne")
+     * @ORM\OneToOne(targetEntity="SS\FMBBundle\Entity\Emplacement", mappedBy="stockscorde")
      * @ORM\JoinColumn(nullable=true)
      */
     private $emplacement;
-
     /**
      * @var boolean
      *
      * @ORM\Column(name="pret", type="boolean")
      */
-    private $pret =false;
+    private $pret;
 
     /**
      * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\StocksArticlesSn")
@@ -56,6 +55,7 @@ class StocksLanternes
      * @ORM\Column(name="numero_serie", type="string", length=32)
      */
     private $numeroSerie;
+
     /**
      *
      * @ORM\Column(name="dateDeCreation", type="date")
@@ -81,20 +81,11 @@ class StocksLanternes
      * @ORM\Column(name="dateDeRetirement", type="date", nullable=true)
      */
     private $dateDeRetirement;
-
     /**
      * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\DocsLines")
      * @ORM\JoinColumn(name="doc_line", referencedColumnName="ref_doc_line")
      */
     private $docLine;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->poches = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     public function __toString()
     {
@@ -112,6 +103,52 @@ class StocksLanternes
     }
 
     /**
+     * Get quantiter
+     *
+     * @return integer
+     */
+    public function getQuantiter()
+    {
+        return $this->quantiter;
+    }
+
+    /**
+     * Set quantiter
+     *
+     * @param integer $quantiter
+     * @return Corde
+     */
+    public function setQuantiter($quantiter)
+    {
+        $this->quantiter = $quantiter;
+
+        return $this;
+    }
+
+    /**
+     * Get emplacement
+     *
+     * @return \SS\FMBBundle\Entity\Emplacement
+     */
+    public function getEmplacement()
+    {
+        return $this->emplacement;
+    }
+
+    /**
+     * Set emplacement
+     *
+     * @param \SS\FMBBundle\Entity\Emplacement $emplacement
+     * @return Corde
+     */
+    public function setEmplacement(\SS\FMBBundle\Entity\Emplacement $emplacement = null)
+    {
+        $this->emplacement = $emplacement;
+
+        return $this;
+    }
+
+    /**
      * Get pret
      *
      * @return boolean
@@ -125,7 +162,7 @@ class StocksLanternes
      * Set pret
      *
      * @param boolean $pret
-     * @return StocksLanternes
+     * @return Corde
      */
     public function setPret($pret)
     {
@@ -148,7 +185,7 @@ class StocksLanternes
      * Set dateDeCreation
      *
      * @param \DateTime $dateDeCreation
-     * @return StocksLanternes
+     * @return Corde
      */
     public function setDateDeCreation($dateDeCreation)
     {
@@ -158,102 +195,24 @@ class StocksLanternes
     }
 
     /**
-     * Get lanterne
+     * Get corde
      *
-     * @return \SS\FMBBundle\Entity\Lanterne
+     * @return \SS\FMBBundle\Entity\Corde
      */
-    public function getLanterne()
+    public function getCorde()
     {
-        return $this->lanterne;
+        return $this->corde;
     }
 
     /**
-     * Set lanterne
+     * Set corde
      *
-     * @param \SS\FMBBundle\Entity\Lanterne $lanterne
-     * @return StocksLanternes
+     * @param \SS\FMBBundle\Entity\Corde $corde
+     * @return StocksCordes
      */
-    public function setLanterne(\SS\FMBBundle\Entity\Lanterne $lanterne)
+    public function setCorde(\SS\FMBBundle\Entity\Corde $corde)
     {
-        $this->lanterne = $lanterne;
-
-        return $this;
-    }
-
-    /**
-     * Add poches
-     *
-     * @param \SS\FMBBundle\Entity\Poche $poches
-     * @return StocksLanternes
-     */
-    public function addPoch(\SS\FMBBundle\Entity\Poche $poches)
-    {
-        $this->poches[] = $poches;
-        $poches->setStocklanterne($this);
-        return $this;
-    }
-
-    /**
-     * Remove poches
-     *
-     * @param \SS\FMBBundle\Entity\Poche $poches
-     */
-    public function removePoch(\SS\FMBBundle\Entity\Poche $poches)
-    {
-        $this->poches->removeElement($poches);
-    }
-
-    /**
-     * Get poches
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPoches()
-    {
-        return $this->poches;
-    }
-
-    /**
-     * Get emplacement
-     *
-     * @return \SS\FMBBundle\Entity\Emplacement
-     */
-    public function getEmplacement()
-    {
-        return $this->emplacement;
-    }
-
-    /**
-     * Set emplacement
-     *
-     * @param \SS\FMBBundle\Entity\Emplacement $emplacement
-     * @return StocksLanternes
-     */
-    public function setEmplacement(\SS\FMBBundle\Entity\Emplacement $emplacement = null)
-    {
-        $this->emplacement = $emplacement;
-        return $this;
-    }
-
-    /**
-     * Get docLine
-     *
-     * @return \SS\FMBBundle\Entity\DocsLines
-     */
-    public function getDocLine()
-    {
-        return $this->docLine;
-    }
-
-    /**
-     * Set docLine
-     *
-     * @param \SS\FMBBundle\Entity\DocsLines $docLine
-     * @return StocksLanternes
-     */
-    public function setDocLine(\SS\FMBBundle\Entity\DocsLines $docLine = null)
-    {
-        $this->docLine = $docLine;
+        $this->corde = $corde;
 
         return $this;
     }
@@ -272,7 +231,7 @@ class StocksLanternes
      * Set article
      *
      * @param \SS\FMBBundle\Entity\StocksArticlesSn $article
-     * @return StocksLanternes
+     * @return StocksCordes
      */
     public function setArticle(\SS\FMBBundle\Entity\StocksArticlesSn $article = null)
     {
@@ -295,11 +254,34 @@ class StocksLanternes
      * Set numeroSerie
      *
      * @param string $numeroSerie
-     * @return StocksLanternes
+     * @return StocksCordes
      */
     public function setNumeroSerie($numeroSerie)
     {
         $this->numeroSerie = $numeroSerie;
+
+        return $this;
+    }
+
+    /**
+     * Get docLine
+     *
+     * @return \SS\FMBBundle\Entity\DocsLines
+     */
+    public function getDocLine()
+    {
+        return $this->docLine;
+    }
+
+    /**
+     * Set docLine
+     *
+     * @param \SS\FMBBundle\Entity\DocsLines $docLine
+     * @return StocksCordes
+     */
+    public function setDocLine(\SS\FMBBundle\Entity\DocsLines $docLine = null)
+    {
+        $this->docLine = $docLine;
 
         return $this;
     }
@@ -318,7 +300,7 @@ class StocksLanternes
      * Set dateDeRetirement
      *
      * @param \DateTime $dateDeRetirement
-     * @return StocksLanternes
+     * @return StocksCordes
      */
     public function setDateDeRetirement($dateDeRetirement)
     {
@@ -341,7 +323,7 @@ class StocksLanternes
      * Set dateDeRetraitTransfert
      *
      * @param \DateTime $dateDeRetraitTransfert
-     * @return StocksLanternes
+     * @return StocksCordes
      */
     public function setDateDeRetraitTransfert($dateDeRetraitTransfert)
     {
@@ -364,7 +346,7 @@ class StocksLanternes
      * Set dateDeMAETransfert
      *
      * @param \DateTime $dateDeMAETransfert
-     * @return StocksLanternes
+     * @return StocksCordes
      */
     public function setDateDeMAETransfert($dateDeMAETransfert)
     {

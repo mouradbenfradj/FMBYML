@@ -75,7 +75,7 @@ class PreparationLanterneType extends AbstractType
         $form->add('quantiterEnStock', 'number', array(
             'label' => 'nombre de lanterne non utilisé en stock',
             'mapped' => false,
-            'attr' => array('class' => "form-control", 'readonly' => "", 'value' => "Readonly value")
+            'attr' => array('class' => "form-control", 'readonly' => "true", 'value' => '0')
         ));
         $form->add($dt);
 
