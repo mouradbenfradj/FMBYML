@@ -1,0 +1,8 @@
+{% set somme = 0 %}
+        {% for flotteur in segment %}
+            {% for emplacement in flotteur %}
+                {% set somme = somme +emplacement.qte %}
+            {% endfor %}
+        {% endfor %}
+<p>{{ somme|number_format(0, ',', '.') }} u</p>
+<p>{{ (somme /12)|number_format(2, ',', '.') }} dz</p>

@@ -849,66 +849,123 @@ class DefaultController extends Controller
                                                             if ($interval->y == 0) {
                                                                 switch ($interval->m) {
                                                                     case 0 :
-                                                                        $pg[0] = array_merge($pg[0], array($emplacement));
+                                                                        if (isset($pg[0][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]]))
+                                                                            $pg[0][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]] = array_merge($pg[0][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]], array($emplacement));
+                                                                        else
+                                                                            $pg[0][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]] = array($emplacement);
                                                                         break;
                                                                     case 1 :
-                                                                        $pg[1] = array_merge($pg[1], array($emplacement));
+                                                                        if (isset($pg[1][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]]))
+                                                                            $pg[1][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]] = array_merge($pg[1][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]], array($emplacement));
+                                                                        else
+                                                                            $pg[1][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]] = array($emplacement);
                                                                         break;
                                                                     case 2 :
-                                                                        $pg[2] = array_merge($pg[2], array($emplacement));
+                                                                        if (isset($pg[2][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]]))
+                                                                            $pg[2][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]] = array_merge($pg[2][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]], array($emplacement));
+                                                                        else
+                                                                            $pg[2][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]] = array($emplacement);
                                                                         break;
                                                                     case 3 :
-                                                                        $pg[3] = array_merge($pg[3], array($emplacement));
+                                                                        if (isset($pg[3][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]]))
+                                                                            $pg[3][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]] = array_merge($pg[3][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]], array($emplacement));
+                                                                        else
+                                                                            $pg[3][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]] = array($emplacement);
                                                                         break;
                                                                     default :
-                                                                        $pg[4] = array_merge($pg[4], array($emplacement));
+                                                                        if (isset($pg[4][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]]))
+                                                                            $pg[4][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]] = array_merge($pg[4][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]], array($emplacement));
+                                                                        else
+                                                                            $pg[4][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]] = array($emplacement);
                                                                         break;
                                                                 }
                                                             } else {
-                                                                $pg[4] = array_merge($pg[4], array($emplacement));
+                                                                if (isset($pg[4][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]]))
+                                                                    $pg[4][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]] = array_merge($pg[4][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]], array($emplacement));
+                                                                else
+                                                                    $pg[4][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]] = array($emplacement);
                                                             }
                                                         } elseif ($emplacement['stockscorde']) {
                                                             if ($interval->y == 0) {
                                                                 switch ($interval->m) {
                                                                     case 0 :
-                                                                        $gr[0] = array_merge($gr[0], array($emplacement));
+                                                                        if (isset($gr[0][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]]))
+                                                                            $gr[0][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]] = array_merge($gr[0][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]], array($emplacement));
+                                                                        else
+                                                                            $gr[0][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]] = array($emplacement);
                                                                         break;
                                                                     case 1 :
-                                                                        $gr[1] = array_merge($gr[1], array($emplacement));
+                                                                        if (isset($gr[1][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]]))
+                                                                            $gr[1][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]] = array_merge($gr[1][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]], array($emplacement));
+                                                                        else
+                                                                            $gr[1][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]] = array($emplacement);
                                                                         break;
                                                                     case 2 :
-                                                                        $gr[2] = array_merge($gr[2], array($emplacement));
+                                                                        if (isset($gr[2][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]]))
+                                                                            $gr[2][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]] = array_merge($gr[2][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]], array($emplacement));
+                                                                        else
+                                                                            $gr[2][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]] = array($emplacement);
                                                                         break;
                                                                     case 3 :
-                                                                        $gr[3] = array_merge($gr[3], array($emplacement));
+                                                                        if (isset($gr[3][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]]))
+                                                                            $gr[3][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]] = array_merge($gr[3][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]], array($emplacement));
+                                                                        else
+                                                                            $gr[3][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]] = array($emplacement);
                                                                         break;
                                                                     case 4 :
-                                                                        $gr[4] = array_merge($gr[4], array($emplacement));
+                                                                        if (isset($gr[4][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]]))
+                                                                            $gr[4][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]] = array_merge($gr[4][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]], array($emplacement));
+                                                                        else
+                                                                            $gr[4][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]] = array($emplacement);
                                                                         break;
                                                                     case 5 :
-                                                                        $gr[5] = array_merge($gr[5], array($emplacement));
+                                                                        if (isset($gr[5][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]]))
+                                                                            $gr[5][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]] = array_merge($gr[5][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]], array($emplacement));
+                                                                        else
+                                                                            $gr[5][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]] = array($emplacement);
                                                                         break;
                                                                     case 6 :
-                                                                        $gr[6] = array_merge($gr[6], array($emplacement));
+                                                                        if (isset($gr[6][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]]))
+                                                                            $gr[6][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]] = array_merge($gr[6][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]], array($emplacement));
+                                                                        else
+                                                                            $gr[6][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]] = array($emplacement);
                                                                         break;
                                                                     case 7 :
-                                                                        $gr[7] = array_merge($gr[7], array($emplacement));
+                                                                        if (isset($gr[7][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]]))
+                                                                            $gr[7][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]] = array_merge($gr[7][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]], array($emplacement));
+                                                                        else
+                                                                            $gr[7][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]] = array($emplacement);
                                                                         break;
                                                                     case 8 :
-                                                                        $gr[8] = array_merge($gr[8], array($emplacement));
+                                                                        if (isset($gr[8][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]]))
+                                                                            $gr[8][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]] = array_merge($gr[8][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]], array($emplacement));
+                                                                        else
+                                                                            $gr[8][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]] = array($emplacement);
                                                                         break;
                                                                     case 9 :
-                                                                        $gr[9] = array_merge($gr[9], array($emplacement));
+                                                                        if (isset($gr[9][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]]))
+                                                                            $gr[9][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]] = array_merge($gr[9][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]], array($emplacement));
+                                                                        else
+                                                                            $gr[9][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]] = array($emplacement);
                                                                         break;
                                                                     case 10 :
-                                                                        $gr[10] = array_merge($gr[10], array($emplacement));
+                                                                        if (isset($gr[10][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]]))
+                                                                            $gr[10][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]] = array_merge($gr[10][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]], array($emplacement));
+                                                                        else
+                                                                            $gr[10][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]] = array($emplacement);
                                                                         break;
                                                                     default :
-                                                                        $gr[11] = array_merge($gr[11], array($emplacement));
+                                                                        if (isset($gr[11][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]]))
+                                                                            $gr[11][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]] = array_merge($gr[11][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]], array($emplacement));
+                                                                        else
+                                                                            $gr[11][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]] = array($emplacement);
                                                                         break;
                                                                 }
                                                             } else {
-                                                                $gr[11] = array_merge($gr[11], array($emplacement));
+                                                                if (isset($gr[11][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]]))
+                                                                    $gr[11][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]] = array_merge($gr[11][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]], array($emplacement));
+                                                                else
+                                                                    $gr[11][$filiere["nomFiliere"]][$segment['nomSegment']][$flotteur["nomFlotteur"]] = array($emplacement);
                                                             }
                                                         }
                                                     }

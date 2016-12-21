@@ -55,4 +55,30 @@ class DefaultImpl implements DefaultInterface
         }
         return $poche;
     }
+
+    public function ordonnanceurTableau($filieres)
+    {
+        //11978
+        $tableau = $this->distainctTable($filieres, 'fiId');
+        die();
+        var_dump($filieres);
+
+
+        return $tableau;
+    }
+
+    public function distainctTable($tableau, $colonne)
+    {  //11798
+        foreach ($tableau as $key => $value) {
+            $tab[$value[$colonne]] = $value;
+        }
+        foreach ($tab as $key => $value) {
+            var_dump($key);
+        }
+        die();
+        var_dump($tableau);
+
+        die();
+        return $tableau;
+    }
 }

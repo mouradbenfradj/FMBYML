@@ -28,21 +28,9 @@
                             {% if(entity != null) %}
                                 {% include('@SSFMB/Default/Include/processus/pregrossissement.html.twig') %}
                                 {% include('@SSFMB/Default/Include/processus/grossissement.html.twig') %}
-                                {% include('@SSFMB/Default/Include/processus/comerciale.html.twig') %}
+                                {#     {% include('@SSFMB/Default/Include/processus/comerciale.html.twig') %}
+                                     #}
                             {% endif %}
-                            {#
-                                                 <div class="custom-dd dd" id="nestable_list_2">
-                                                     <ol class="dd-list">
-                                                       {#
-                                                          {{ render(controller(
-                                                          'SSFMBBundle:Filiere:findByParc',
-                                                          { 'parc': entity }
-                                                          )) }}
-
-                                                        {% include '@SSFMB/Filiere/Include/listIndexInclude.html.twig' %}
-                                                    </ol>
-                                                </div>
-                                                 #}
                         </div>
                         <!-- end col -->
                     </div> <!-- end row -->
@@ -61,6 +49,7 @@
     {% if(entity != null) %}
         <!--script for this page only-->
         <script src="{{ asset('bundles/ssfmb/plugins/nestable/jquery.nestable.js') }}"></script>
+        <script src="{{ asset('bundles/ssfmb/pages/nestable.js') }}"></script>
         <script src="{{ asset('bundles/ssfmb/plugins/footable/js/footable.all.min.js') }}"></script>
 
         <script src="{{ asset('bundles/ssfmb/plugins/bootstrap-select/js/bootstrap-select.min.js') }}"

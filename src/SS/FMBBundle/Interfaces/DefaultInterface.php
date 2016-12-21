@@ -18,4 +18,8 @@ interface DefaultInterface
     public function modifierQtePoche($poche, $qte);
 
     public function calculerQuantiterLanterne($tableauPoches);
+
+    public function ordonnanceurTableau($filieres);
+
+    public function distainctTable($tableau, $colonne);
 }
