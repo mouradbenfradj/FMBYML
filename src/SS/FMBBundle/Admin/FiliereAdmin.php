@@ -40,12 +40,14 @@ class FiliereAdmin extends Admin
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('id')->add('parc')->add('nomFiliere')->add('aireDeTravaille')->add('segments');
+        $datagridMapper->add('id')->add('parc')->add('nomFiliere')->add('aireDeTravaille')
+            ->add('segments');
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('id')->add('parc')->add('nomFiliere')->add('aireDeTravaille')->add('segments');
+        $listMapper->addIdentifier('id')->add('parc')->add('nomFiliere')->add('aireDeTravaille')->add('observation','choice')
+            ->add('segments');
 
     }
 }

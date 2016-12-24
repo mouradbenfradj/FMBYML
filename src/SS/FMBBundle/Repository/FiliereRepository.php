@@ -16,7 +16,7 @@ class FiliereRepository extends EntityRepository
     public function getTotaleContenuFiliere(Magasins $parc)
     {
         $qb = $this->createQueryBuilder('fi')
-            ->select('fl.id as flId')
+            ->select('fl.id as flId')->addSelect('fi.observation as observation')
             ->addSelect('s.id as sId')->addSelect('s.nomSegment')->addSelect('s.longeur')
             ->addSelect('fl.nomFlotteur')->addSelect('fi.nomFiliere')->addSelect('fi.id as fiId')->addSelect('fi.aireDeTravaille')
             ->addSelect('e.dateDeRemplissage as dateDeRemplissage')->addSelect('e.id as empId')->addSelect('e.place')

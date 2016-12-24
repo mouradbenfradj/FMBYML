@@ -6,9 +6,10 @@
                 <br>
                 {% if page == 'suivit' %}
                     {% include 'SSFMBBundle:Filiere/Include:StatIndexInclude.html.twig' %}
+                    {{ include('@SSFMB/Filiere/Include/observationInclude.html.twig', {filiere: filiere, id: id}) }}
                 {% endif %}
             </div>
-        {% include '@SSFMB/Segment/Include/listIndexInclude.html.twig' %}
+            {% include '@SSFMB/Segment/Include/listIndexInclude.html.twig' %}
         </li>
     {% elseif page in ["RL","RC"] %}
         {% if filiere.aireDeTravaille %}

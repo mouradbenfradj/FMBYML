@@ -193,8 +193,8 @@ fos_user:
 
 
 sonata_admin:
-    title:                'FMB'
-    title_logo:           bundles/sonataadmin/logo_title.png
+    title:                'OYSTERPRO'
+    title_logo:           bundles/ssfmb/assets/images/avatar-1.jpg
 
 sonata_block:
     default_contexts: [cms]

@@ -29,6 +29,12 @@ class Filiere
     private $nomFiliere;
 
     /**
+     * @var array
+     *
+     * @ORM\Column(name="observation", type="array",nullable=true)
+     */
+    private $observation = array();
+    /**
      * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Magasins", inversedBy="filieres")
      * @ORM\JoinColumn(name="magasin", referencedColumnName="id_magasin",nullable=false)
      */
@@ -43,6 +49,7 @@ class Filiere
      * @ORM\Column(name="aireDeTravaille", type="boolean")
      */
     private $aireDeTravaille;
+
     /**
      * Constructor
      */
@@ -167,5 +174,28 @@ class Filiere
         $this->aireDeTravaille = $aireDeTravaille;
 
         return $this;
+    }
+
+    /**
+     * Set observation
+     *
+     * @param array $observation
+     * @return Filiere
+     */
+    public function setObservation($observation)
+    {
+        $this->observation = $observation;
+
+        return $this;
+    }
+
+    /**
+     * Get observation
+     *
+     * @return array
+     */
+    public function getObservation()
+    {
+        return $this->observation;
     }
 }

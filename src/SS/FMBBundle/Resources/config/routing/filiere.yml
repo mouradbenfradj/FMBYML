@@ -28,3 +28,7 @@ filiere_delete:
     path:     /{id}/delete
     defaults: { _controller: "SSFMBBundle:Filiere:delete" }
     methods:  [POST, DELETE]
+
+filiere_observation:
+    path:     /observation
+    defaults: { _controller: "SSFMBBundle:Filiere:observation" }
