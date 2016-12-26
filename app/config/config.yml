@@ -195,6 +195,11 @@ fos_user:
 sonata_admin:
     title:                'OYSTERPRO'
     title_logo:           bundles/ssfmb/assets/images/avatar-1.jpg
+    templates:
+        dashboard: SSAdminBundle:Core:dashboard.html.twig
+        layout:    SSAdminBundle::standard_layout.html.twig
+    options:
+        html5_validate:       true
 
 sonata_block:
     default_contexts: [cms]
