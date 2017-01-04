@@ -1,5 +1,5 @@
 {% if page == "suivit" %}
-    {% for id,emplacement in flotteur %}
+    {% for idemp,emplacement in flotteur %}
         {% if not loop.first %}
             <div class="col-xs-1 col-sm-1 col-md-1">
                 {% if emplacement.stockscorde == null and emplacement.stockslanterne == null %}
@@ -40,13 +40,13 @@
         </div>
     {% endif %}
 {% elseif page == "MAEC" %}
-    {% for id, emplacement in flotteur %}
+    {% for idemp, emplacement in flotteur %}
         {% if not loop.first %}
             <div class="col-xs-1 col-sm-1 col-md-1">
                 {% if emplacement.stockscorde == null and emplacement.stockslanterne == null %}
                     {% set verifexsistance =  verifexsistance + 1 %}
                     <font color="red">{{ emplacement.place }}</font>
-                    <input type="checkbox" name="placecorde[]" value="{{ id }}"/>
+                    <input type="checkbox" name="placecorde[]" value="{{ idemp }}"/>
                 {% elseif emplacement.stockscorde != null %}
                     {% include "SSFMBBundle:Include:suivitEtatCordeInclude.html.twig" %}
                 {% elseif emplacement.stockslanterne != null %}
@@ -69,7 +69,7 @@
         </div>
     {% endif %}
 {% elseif page == "RL" %}
-    {% for id,emplacement in flotteur %}
+    {% for idemp,emplacement in flotteur %}
         {% if not loop.first %}
             <div class="col-xs-1 col-sm-1 col-md-1">
                 {% if emplacement.stockscorde == null and emplacement.stockslanterne == null %}
@@ -80,7 +80,7 @@
                     {% include "SSFMBBundle:Include:suivitEtatLanterneInclude.html.twig" %}
                     <input type="checkbox"
                            name="placelanterne[]"
-                           value="{{ id }}"/>
+                           value="{{ idemp }}"/>
                     {% set verifexsistance =  verifexsistance + 1 %}
                 {% endif %}
             </div>
@@ -98,7 +98,7 @@
         </div>
     {% endif %}
 {% elseif page == "RC" %}
-    {% for id,emplacement in flotteur %}
+    {% for idemp,emplacement in flotteur %}
         {% if not loop.first %}
             <div class="col-xs-1 col-sm-1 col-md-1">
                 {% if emplacement.stockscorde == null and emplacement.stockslanterne == null %}
@@ -107,7 +107,7 @@
                     {% include "SSFMBBundle:Include:suivitEtatCordeInclude.html.twig" %}
                     <input type="checkbox"
                            name="placecorde[]"
-                           value="{{ id }}"/>
+                           value="{{ idemp }}"/>
                     {% set verifexsistance =  verifexsistance + 1 %}
                 {% elseif emplacement.stockslanterne != null %}
                     {% include "SSFMBBundle:Include:suivitEtatLanterneInclude.html.twig" %}
@@ -129,7 +129,7 @@
     {% endif %}
 
 {% elseif page == "RTR" %}
-    {% for id,emplacement in flotteur %}
+    {% for idemp,emplacement in flotteur %}
         {% if not loop.first %}
             <div class="col-xs-1 col-sm-1 col-md-1">
                 {% if emplacement.stockscorde == null and emplacement.stockslanterne == null %}
@@ -138,14 +138,14 @@
                     {% include "SSFMBBundle:Include:suivitEtatCordeInclude.html.twig" %}
                     <input type="checkbox"
                            name="place[]"
-                           value="{{ id }}"/>
+                           value="{{ idemp }}"/>
 
                     {% set verifexsistance =  verifexsistance + 1 %}
                 {% elseif emplacement.stockslanterne != null %}
                     {% include "SSFMBBundle:Include:suivitEtatLanterneInclude.html.twig" %}
                     <input type="checkbox"
                            name="place[]"
-                           value="{{ id }}"/>
+                           value="{{ idemp }}"/>
                     {% set verifexsistance =  verifexsistance + 1 %}
 
 
@@ -165,7 +165,7 @@
         </div>
     {% endif %}
 {% elseif page == "RTMAE" %}
-    {% for id, emplacement in flotteur %}
+    {% for idemp, emplacement in flotteur %}
         {% if not loop.first %}
             <div class="col-xs-1 col-sm-1 col-md-1">
                 {% if emplacement.stockscorde == null and emplacement.stockslanterne == null %}
@@ -173,17 +173,17 @@
                     <font color="red"> {{ emplacement.place }}</font>
                     <input type="checkbox"
                            name="place[]"
-                           value="{{ id }}"/>|
+                           value="{{ idemp }}"/>|
                     <span style="display: none"
-                          id="dateemplacement">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</span>
+                          idemp="dateemplacement">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</span>
                 {% elseif emplacement.stockscorde != null %}
                     {% include "SSFMBBundle:Include:suivitEtatCordeInclude.html.twig" %}
                     <span style="display: none"
-                          id="dateemplacement">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</span>
+                          idemp="dateemplacement">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</span>
                 {% elseif emplacement.stockslanterne != null %}
                     {% include "SSFMBBundle:Include:suivitEtatLanterneInclude.html.twig" %}
                     <span style="display: none"
-                          id="dateemplacement">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</span>
+                          idemp="dateemplacement">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</span>
                 {% endif %}
             </div>
         {% endif %}
@@ -216,7 +216,7 @@
     {% elseif emplacement.stockslanterne != null %}
         {% include "SSFMBBundle:Include:suivitEtatLanterneInclude.html.twig" %}
         <span style="display: none"
-              id="dateemplacement">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}
+              idemp="dateemplacement">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}
                                                                                 </span>
     {% endif %}
 {% endfor %}

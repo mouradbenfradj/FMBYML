@@ -1,6 +1,9 @@
 ssfmb_homepage:
     path:     /
     defaults: { _controller: SSFMBBundle:Default:index }
+ssfmb_suivit:
+    path:     /suivit
+    defaults: { _controller: SSFMBBundle:Default:suivit }
 
 ssfmb_preparationcorde:
     path:     /preparationcorde

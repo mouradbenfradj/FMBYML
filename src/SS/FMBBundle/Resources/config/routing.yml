@@ -1,3 +1,11 @@
+ssfmb_stockslanternes:
+    resource: "@SSFMBBundle/Resources/config/routing/stockslanternes.yml"
+    prefix:   /stockslanternes
+
+ssfmb_historique:
+    resource: "@SSFMBBundle/Resources/config/routing/historique.yml"
+    prefix:   /historique
+
 ssfmb_emplacement:
     resource: "@SSFMBBundle/Resources/config/routing/emplacement.yml"
     prefix:   /emplacement

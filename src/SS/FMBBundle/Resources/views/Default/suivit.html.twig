@@ -1,0 +1,294 @@
+{% extends "::base.html.twig" %}
+{% block title %}{{ parent() }} - FMB{% endblock %}
+{% block stylesheet %}
+    {% if(entity != null) %}
+        <link href="{{ asset('bundles/ssfmb/plugins/nestable/jquery.nestable.css') }}" rel="stylesheet"/>
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+{% block header %} {{ parent() }}{% endblock %}
+{% block body %}
+    {{ parent() }}
+    {% set page = 'suivit' %}
+    {% if(entity != null) %}
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="text-left" id="nestable_list_menu">
+                    <button type="button" class="btn btn-pink waves-effect waves-light" data-action="expand-all">
+                        Expand All
+                    </button>
+                    <button type="button" class="btn btn-purple waves-effect waves-light"
+                            data-action="collapse-all">Collapse All
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- End row -->
+
+
+
+        <br>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card-box">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4 class="m-t-0 header-title"><b>Suivit {{ entity.abrevMagasin }}</b></h4>
+                            <p class="text-muted m-b-30 font-13">
+                            </p>
+
+                            <div class="custom-dd dd" id="nestable_list_2">
+                                <ol class="dd-list">
+                                    {{ render(controller('SSFMBBundle:Filiere:findByParc',{ 'parc': entity,'page':page })) }}
+                                    {#
+{{ render(controller('SSFMBBundle:Filiere:findByParc',{ 'parc': entity })) }}
+{% include '@SSFMB/Filiere/Include/listIndexInclude.html.twig' %}
+#}
+                                </ol>
+                            </div>
+                        </div>
+                       <!-- end col -->
+                        <!-- end col -->
+                    </div> <!-- end row -->
+                </div> <!-- end card-box -->
+            </div> <!-- end col -->
+        </div>
+        <!-- end Row -->
+        <div id="sideNavi">
+            <!-- sidenavi menu //-->
+            <div class="side-navi-item-default"></div>
+            <div class="side-navi-item item1">
+                <div>^</div>
+            </div>
+            <!-- sidenavi data //-->
+            <div class="side-navi-data">
+                <div class="side-navi-tab">
+                    <div>
+                        {% include '@SSFMB/Include/couleurCleInclude.html.twig' %}
+                        {% include "@SSFMB/Filiere/Include/listMenuIndexInclude.html.twig" %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% block footer %}
+            {{ parent() }}
+        {% endblock %}
+    {% endif %}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {% if(entity != null) %}
+        <!--script for this page only-->
+        <script src="{{ asset('bundles/ssfmb/plugins/nestable/jquery.nestable.js') }}"></script>
+        <script src="{{ asset('bundles/ssfmb/pages/nestable.js') }}"></script>
+    {% endif %}
+    <script src="http://malsup.github.com/jquery.form.js"></script>
+{% endblock %}
+{#
+{% extends "SSFMBBundle::layout.html.twig" %}
+{% block title %}
+    Suivit - {{ parent() }}
+{% endblock %}
+ {% block stylesheets %}
+     {{ parent() }}
+ {% endblock %}
+{% block menu %}
+    {{ parent() }}
+{% endblock %}
+{% block body %}
+    {{ parent() }}
+    {% if(entity != null) %}
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="text-left" id="nestable_list_menu">
+                    <button type="button" class="btn btn-pink waves-effect waves-light" data-action="expand-all">Expand
+                        All
+                    </button>
+                    <button type="button" class="btn btn-purple waves-effect waves-light" data-action="collapse-all">
+                        Collapse All
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card-box">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4 class="m-t-0 header-title"><b>Nestable Lists 1</b></h4>
+                            <p class="text-muted m-b-30 font-13">
+                                Drag & drop hierarchical list with mouse and touch compatibility (jQuery plugin).
+                            </p>
+
+                            <div class="custom-dd dd" id="nestable_list_1">
+                                <ol class="dd-list">
+                                    <li class="dd-item" data-id="1">
+                                        <div class="dd-handle">
+                                            Item 1
+                                        </div>
+                                    </li>
+                                    <li class="dd-item" data-id="2">
+                                        <div class="dd-handle">
+                                            Item 2
+                                        </div>
+                                        <ol class="dd-list">
+                                            <li class="dd-item" data-id="3">
+                                                <div class="dd-handle">
+                                                    Item 3
+                                                </div>
+                                            </li>
+                                            <li class="dd-item" data-id="4">
+                                                <div class="dd-handle">
+                                                    Item 4
+                                                </div>
+                                            </li>
+                                            <li class="dd-item" data-id="5">
+                                                <div class="dd-handle">
+                                                    Item 5
+                                                </div>
+                                                <ol class="dd-list">
+                                                    <li class="dd-item" data-id="6">
+                                                        <div class="dd-handle">
+                                                            Item 6
+                                                        </div>
+                                                    </li>
+                                                    <li class="dd-item" data-id="7">
+                                                        <div class="dd-handle">
+                                                            Item 7
+                                                        </div>
+                                                    </li>
+                                                    <li class="dd-item" data-id="8">
+                                                        <div class="dd-handle">
+                                                            Item 8
+                                                        </div>
+                                                    </li>
+                                                </ol>
+                                            </li>
+                                            <li class="dd-item" data-id="9">
+                                                <div class="dd-handle">
+                                                    Item 9
+                                                </div>
+                                            </li>
+                                            <li class="dd-item" data-id="10">
+                                                <div class="dd-handle">
+                                                    Item 10
+                                                </div>
+                                            </li>
+                                        </ol>
+                                    </li>
+
+                                </ol>
+                            </div>
+                        </div><!-- end col -->
+
+                        <div class="col-md-6">
+                            <h4 class="m-t-0 header-title"><b>Nestable Lists 2</b></h4>
+                            <p class="text-muted m-b-30 font-13">
+                                Drag & drop hierarchical list with mouse and touch compatibility (jQuery plugin).
+                            </p>
+
+                            <div class="custom-dd dd" id="nestable_list_2">
+                                <ol class="dd-list">
+                                    <li class="dd-item" data-id="11">
+                                        <div class="dd-handle">
+                                            Item 11
+                                        </div>
+                                    </li>
+                                    <li class="dd-item" data-id="12">
+                                        <div class="dd-handle">
+                                            Item 12
+                                        </div>
+                                    </li>
+                                    <li class="dd-item" data-id="13">
+                                        <div class="dd-handle">
+                                            Item 13
+                                        </div>
+                                    </li>
+                                    <li class="dd-item" data-id="14">
+                                        <div class="dd-handle">
+                                            Item 14
+                                        </div>
+                                    </li>
+                                    <li class="dd-item" data-id="15">
+                                        <div class="dd-handle">
+                                            Item 15
+                                        </div>
+                                        <ol class="dd-list">
+                                            <li class="dd-item" data-id="16">
+                                                <div class="dd-handle">
+                                                    Item 16
+                                                </div>
+                                            </li>
+                                            <li class="dd-item" data-id="17">
+                                                <div class="dd-handle">
+                                                    Item 17
+                                                </div>
+                                            </li>
+                                            <li class="dd-item" data-id="18">
+                                                <div class="dd-handle">
+                                                    Item 18
+                                                </div>
+                                            </li>
+                                        </ol>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div> <!-- end col -->
+                    </div> <!-- end row -->
+                </div> <!-- end card-box -->
+            </div> <!-- end col -->
+        </div>
+
+    {% endif %}
+{% endblock %}
+    {% block javascripts %}
+        {{ parent() }}
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                function diffdate(d1, d2, u) {
+                    div = 1;
+                    switch (u) {
+                        case 's':
+                            div = 1000;
+                            break;
+                        case 'm':
+                            div = 1000 * 60;
+                            break;
+                        case 'h':
+                            div = 1000 * 60 * 60;
+                            break;
+                        case 'd':
+                            div = 1000 * 60 * 60 * 24;
+                            break;
+                    }
+                    var Diff = d2.getTime() - d1.getTime();
+                    return Math.ceil((Diff / div))
+                }
+
+                /*
+                 $('.dateemplacement').each(function (ele, val) {
+                 var datejour = $(this).text().split("-");
+                 var Date1 = new Date(datejour[0], datejour[1] - 1, datejour[2]);
+                 var Date2 = new Date();
+                 if ($(this).parent('.flotteur').has('dateemplacement'))
+                 if (0 < diffdate(Date1, Date2, 'd') < 10) {
+                 if ($(this).parent('.flotteur').has('dateemplacement'))
+                 var str = 'il reste ' + diffdate(Date1, Date2, 'd') + ' jours pour l article de la filiere ' + $(this).parent() + ' contenu dans le segment ' + $('.segment').text() + ' a partir du flotteur ' + $('.flotteur').text() + ' a lemplacement ' + $('.emplacement').text() + '<br>'
+                 $('#alertejaune').html('<button type="button" class="close" data-dismiss="alert" aria-hidden="true">× </button> <h4> Alert! </h4> <strong>Warning!</strong> ' + str + '<a href="#" class="alert-link">alert link</a>');
+                 //$('#alertejaune').show();
+                 }
+                 if (diffdate(Date1, Date2, 'd') <= 0) {
+                 var str2 = 'il reste ' + (diffdate(Date1, Date2, 'd') * -1) + ' jours pour l article de la filiere ' + $('#filiere').text() + ' contenu dans le segment ' + $('#segment').text() + ' a partir du flotteur ' + $('#flotteur').text() + ' a lemplacement ' + $('#emplacement').text()
+                 $('#alerterouge').html('<button type="button" class="close" data-dismiss="alert" aria-hidden="true">× </button> <h4> Alert! </h4> <strong>Warning!</strong> ' + str2 + '<a href="#" class="alert-link">alert link</a>');
+                 //$('#alerterouge').show();
+                 }
+                 });
+                 */
+            });
+        </script>
+    {% endblock %}
+#}

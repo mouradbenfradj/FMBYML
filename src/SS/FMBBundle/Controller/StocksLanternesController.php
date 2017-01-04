@@ -29,6 +29,7 @@ class StocksLanternesController extends Controller
             'entities' => $entities,
         ));
     }
+
     /**
      * Creates a new StocksLanternes entity.
      *
@@ -49,7 +50,7 @@ class StocksLanternesController extends Controller
 
         return $this->render('SSFMBBundle:StocksLanternes:new.html.twig', array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         ));
     }
 
@@ -79,11 +80,11 @@ class StocksLanternesController extends Controller
     public function newAction()
     {
         $entity = new StocksLanternes();
-        $form   = $this->createCreateForm($entity);
+        $form = $this->createCreateForm($entity);
 
         return $this->render('SSFMBBundle:StocksLanternes:new.html.twig', array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         ));
     }
 
@@ -96,7 +97,6 @@ class StocksLanternesController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('SSFMBBundle:StocksLanternes')->find($id);
-
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find StocksLanternes entity.');
         }
@@ -104,7 +104,7 @@ class StocksLanternesController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('SSFMBBundle:StocksLanternes:show.html.twig', array(
-            'entity'      => $entity,
+            'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -127,19 +127,19 @@ class StocksLanternesController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('SSFMBBundle:StocksLanternes:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }
 
     /**
-    * Creates a form to edit a StocksLanternes entity.
-    *
-    * @param StocksLanternes $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
+     * Creates a form to edit a StocksLanternes entity.
+     *
+     * @param StocksLanternes $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
     private function createEditForm(StocksLanternes $entity)
     {
         $form = $this->createForm(new StocksLanternesType(), $entity, array(
@@ -151,6 +151,7 @@ class StocksLanternesController extends Controller
 
         return $form;
     }
+
     /**
      * Edits an existing StocksLanternes entity.
      *
@@ -176,11 +177,12 @@ class StocksLanternesController extends Controller
         }
 
         return $this->render('SSFMBBundle:StocksLanternes:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }
+
     /**
      * Deletes a StocksLanternes entity.
      *
@@ -218,7 +220,6 @@ class StocksLanternesController extends Controller
             ->setAction($this->generateUrl('stockslanternes_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
-        ;
+            ->getForm();
     }
 }

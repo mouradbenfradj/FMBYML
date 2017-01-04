@@ -19,7 +19,7 @@
                 {% elseif key >= 11 %}
                     h000
                 {% else %}
-                    g{{ key }}
+                    GH{{ key + 1 }}
                 {% endif %}
             </td>
             <td>{{ include('@SSFMB/Default/Include/processus/somme/gTotaleSomme.html.twig', {pros: emplacementgr } ) }}</td>

@@ -7,6 +7,7 @@ use SS\FMBBundle\Entity\Articles;
 use SS\FMBBundle\Entity\Corde;
 use SS\FMBBundle\Entity\DocsLines;
 use SS\FMBBundle\Entity\Documents;
+use SS\FMBBundle\Entity\Historique;
 use SS\FMBBundle\Entity\StocksArticles;
 use SS\FMBBundle\Entity\StocksArticlesSn;
 use SS\FMBBundle\Entity\StocksArticlesSnVirtuel;
@@ -31,14 +32,29 @@ class DefaultController extends Controller
         return $this->render('SSFMBBundle:Default:index.html.twig', array('entity' => $parc));
     }
 
+    public function suivitAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        if ($request->get('idparc') == null)
+            $parc = null;
+        else
+            $parc = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('idparc'));
+        return $this->render('SSFMBBundle:Default:suivit.html.twig', array('entity' => $parc));
+    }
+
     public function preparationLanterneAction(Request $request)
     {
+        $historique = new Historique();
+        $historique->setOperation("preparationLanterne");
+        $historique->setUtilisateur($this->container->get('security.context')->getToken()->getUser());
+        $tacheEffectuer = array();
         $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(new PreparationLanterneType($em), null, array('action' => $this->generateUrl('ssfmb_preparationlanterne'), 'method' => 'POST', 'attr' => array('class' => "form-horizontal")));
         if ($request->isMethod('POST')) {
             $defaultmetier = new DefaultImpl($em);
             $form->handleRequest($request);
             $stockarticles = $em->getRepository('SSFMBBundle:StocksArticles')->findOneBy(array('idStock' => $form['libStock']->getData()->getIdStock(), 'refArticle' => $form['refArticle']->getData()->getRefArticle()));
+
             if (!empty($stockarticles)) {
                 $document = new Documents();
                 $time = explode("/", $form['date']->getData());
@@ -75,7 +91,22 @@ class DefaultController extends Controller
             } else {
                 return $this->render('@SSFMB/Default/preparationLanterne.html.twig', array('form' => $form->createView()));
             }
+            $tacheEffectuer =
+                array(
+                    'parc' =>  $form['Parc']->getData()->getLibMagasin(),
+                    'stock' => $form['libStock']->getData()->getLibStock(),
+                    'lanterne'=> $form['nomLanterne']->getData()->getNomLanterne(),
+                    'datePreparation' => $form['date']->getData(),
+                    'article' => $form['refArticle']->getData()->getLibArticle(),
+                    'lot' => $request->request->get("ss_fmbbundle_preparationlanterne")['numeroSerie'],
+                    'dentiter' => $form['qte']->getData(),
+                    'nombre' => $form['nombre']->getData(),
+                    'ligneDocument'=> $doclin2->getRefDocLine()
+
+                );
             $lant->setNbrTotaleEnStock($lant->getNbrTotaleEnStock() - $form['nombre']->getData());
+            $historique->setTacheEffectuer($tacheEffectuer);
+            $em->persist($historique);
             $em->flush();
             return $this->redirectToRoute('ssfmb_homepage');
         }

@@ -4,7 +4,7 @@
 -processus : {% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}PG{{ difference.m }}
 -date de MAE :{{ emplacement.dateDeRemplissage|date('Y-m-d') }}
    -date dernier transfert:{% if  emplacement.dateDTL %}{{ emplacement.dateDTL|date('Y-m-d') }} {% else %} aucun {% endif %}"
-href="#">
+href="{{ path('stockslanternes_show', { 'id': emplacement.stockslanterne }) }}">
     <font color="#adff2f"
           class="emplacement">{{ emplacement.place }}
     </font>
