@@ -32,8 +32,13 @@ class Emplacement
      */
     private $stockscorde;
     /**
-     * @ORM\OneToOne(targetEntity="SS\FMBBundle\Entity\StocksLanternes", inversedBy="emplacement",fetch="EAGER")
+     * @ORM\OneToOne(targetEntity="SS\FMBBundle\Entity\StocksPochesBS", inversedBy="emplacement",fetch="EAGER")
      * @ORM\JoinColumn(nullable=true)
+     */
+    private $stockspoches;
+    /**
+     * @ORM\OneToOne(targetEntity="SS\FMBBundle\Entity\StocksLanternes", inversedBy="emplacement")
+     * @ORM\JoinColumn(nullable=true,  referencedColumnName="id")
      */
     private $stockslanterne;
     /**
@@ -175,5 +180,29 @@ class Emplacement
         $this->stockscorde = $stockscorde;
 
         return $this;
+    }
+
+
+    /**
+     * Set stockspoches
+     *
+     * @param \SS\FMBBundle\Entity\StocksPochesBS $stockspoches
+     * @return Emplacement
+     */
+    public function setStockspoches(\SS\FMBBundle\Entity\StocksPochesBS $stockspoches = null)
+    {
+        $this->stockspoches = $stockspoches;
+
+        return $this;
+    }
+
+    /**
+     * Get stockspoches
+     *
+     * @return \SS\FMBBundle\Entity\StocksPochesBS 
+     */
+    public function getStockspoches()
+    {
+        return $this->stockspoches;
     }
 }

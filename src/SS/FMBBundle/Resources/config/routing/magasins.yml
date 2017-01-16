@@ -7,6 +7,10 @@ ssfmb_parclanterne:
 ssfmb_parccorde:
     path:     /parccorde
     defaults: { _controller: SSFMBBundle:Magasins:parccordes }
+ssfmb_parcpoche:
+    path:     /parcpoche
+    defaults: { _controller: SSFMBBundle:Magasins:parcpoches }
+
 
 magasins:
     path:     /

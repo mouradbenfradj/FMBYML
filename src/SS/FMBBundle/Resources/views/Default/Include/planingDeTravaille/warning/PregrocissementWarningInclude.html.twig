@@ -104,29 +104,5 @@
             {% endfor %}
         {% endfor %}
     {% endfor %}
-    {#<td>{{ emplacement.flotteur.segment.filiere.nomfiliere }}</td>
-    <td>
-        {% set quantiterTotale = 0 %}
-        {% for poche in emplacement.stockslanterne.poches %}
-            {% set quantiterTotale = quantiterTotale + poche.quantite %}
-        {% endfor %}
-        {{ quantiterTotale }} u
-    </td>
-    {% if loop.index == 1 %}
-        <td rowspan="{{ pregrossisementurgent|length }}"
-            valign="top">
-            {% set quantiterTotale = 0 %}
-            {% for emplacement2 in pregrossisementurgent %}
-                {% for poche in emplacement2.stockslanterne.poches %}
-                    {% set quantiterTotale = quantiterTotale + poche.quantite %}
-                {% endfor %}
-            {% endfor %}
-            {{ quantiterTotale }} u
-            <br>
-            {% set quantiterTotale = quantiterTotale/12 %}
-            {{ quantiterTotale }} dz
-        </td>
-    {% endif %}
-    #}
     </tbody>
 </table>

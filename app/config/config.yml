@@ -34,8 +34,11 @@ framework:
 
 # Twig Configuration
 twig:
+    globals:
+        parc: "%parc%"
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+
 
 # Assetic Configuration
 assetic:
@@ -131,7 +134,6 @@ doctrine:
         #     path:     "%database_path%"
 
     orm:
-
         auto_generate_proxy_classes: "%kernel.debug%"
         entity_managers:
             default:
@@ -169,6 +171,7 @@ doctrine:
                         dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Tree/Entity"
                         alias: GedmoTree # (optional) it will default to the name set for the mapping
                         is_bundle: false
+
 
 # Swiftmailer Configuration
 swiftmailer:

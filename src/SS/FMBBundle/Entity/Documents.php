@@ -526,4 +526,17 @@ class Documents
     {
         return $this->docsLines;
     }
+
+    /**
+     * Set refDoc
+     *
+     * @param string $refDoc
+     * @return Documents
+     */
+    public function setRefDoc($refDoc)
+    {
+        $this->refDoc = $refDoc;
+
+        return $this;
+    }
 }

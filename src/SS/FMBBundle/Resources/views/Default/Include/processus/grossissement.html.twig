@@ -39,65 +39,11 @@
                                         </thead>
                                         <tbody>
                                         {{ include('@SSFMB/Default/Include/processus/g/processus.html.twig') }}
-{#
-                                        {% for emplacementgr in gr %}
-                                            {% set etp = loop.index0 %}
-                                            <tr>
-                                                <td>
-                                                </td>
-                                                <td>
-                                                    <table class="table table-bordered table-striped table-condensed">
-                                                        <thead>
-                                                        <tr>
-                                                            <th>filiere</th>
-                                                            <th>segment</th>
-                                                            <th>flotteur</th>
-                                                            <th>emplacement</th>
-                                                            <th>date de mise a eau</th>
-                                                            <th>doit etre retirer le</th>
-                                                            <th>Densiter U/Corde</th>
-                                                            <th>Densiter totale</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        {% for emplacement in emplacementgr %}
-                                                            <tr>
-                                                                <td>{{ emplacement.filiere }}</td>
-                                                                <td>{{ emplacement.segment }}</td>
-                                                                <td>{{ emplacement.flotteur }}</td>
-                                                                <td>{{ emplacement.place }}</td>
-                                                                <td>{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
-                                                                <td>{{ emplacement.dateDeRemplissage|date_modify("+6 month")|date('Y-m-d') }}</td>
-                                                                <td>
-                                                                    <div class="qtec{{ etp }}">
-                                                                        {{ emplacement.qtec }}
-                                                                    </div>
-                                                                </td>
-                                                                {% if loop.first %}
-                                                                    <td rowspan="{{ emplacementgr|length }}">
-                                                                        <div>
-                                                                            <span id="qtecu{{ etp }}"></span>
-                                                                        </div>
-                                                                        <div>
-                                                                            <span id="qtecdz{{ etp }}"></span>
-                                                                        </div>
-                                                                    </td>
-                                                                {% endif %}
-                                                            </tr>
-                                                        {% endfor %}
-                                                        <tbody>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                        {% endfor %}
-                                        #}
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
             </div>

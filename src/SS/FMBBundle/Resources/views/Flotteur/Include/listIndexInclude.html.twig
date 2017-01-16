@@ -1,4 +1,4 @@
-{% if page in ["MAEL","MAEC","RL","RC","RTR","RTMAE"] %}
+{% if page in ["MAEL","MAEC","MAEP","RL","RC","RTR","RTMAE","CHAU"] %}
     {% set verifexsistance = 0 %}
 {% endif %}
 {% for key, flotteur in segment %}
@@ -14,12 +14,3 @@
         </div>
     {% endif %}
 {% endfor %}
-{#
-{% for flotteur in segment.flotteurs %}
-    <p class="flotteur">
-        {{ flotteur.getNomFlotteur }}
-        {% include '@SSFMB/Emplacement/Render/listEmplacementIndexRender.html.twig' %}
-
-    </p>
-{% endfor %}
-#}

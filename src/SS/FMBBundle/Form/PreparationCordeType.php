@@ -29,7 +29,8 @@ class PreparationCordeType extends AbstractType
         $builder->add('date', 'text', array('label' => 'Date de la Préparation des Cordes', 'attr' => array('class' => 'form-control', 'placeholder' => "dd/mm/yyyy", 'id' => "datepicker")));
         $builder->add('refArticle', 'entity', array('class' => 'SSFMBBundle:Articles',
             'query_builder' => function (EntityRepository $er) {
-                return $er->createQueryBuilder('a')->where('a.libArticle LIKE :articles')->setParameter('articles', 'CORDE%');
+                return $er->createQueryBuilder('a')->where('a.libArticle LIKE :articles')->setParameter('articles', 'CORDE%')
+                    ->orWhere('a.libArticle LIKE :articles2')->setParameter('articles2', '%MOULES');
             }, 'label' => 'article', 'attr' => array('class' => "form-control")))
             ->add('numeroSerie', 'entity', array('class' => 'SSFMBBundle:StocksArticlesSn', 'label' => 'lot', 'mapped' => false, 'attr' => array('class' => "form-control")))
             ->add('qte', 'number', array('label' => 'Densiter', 'attr' => array('class' => "form-control")))

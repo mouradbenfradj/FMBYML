@@ -2,9 +2,14 @@ ssfmb_articlestock:
     path:     /articlestock
     defaults: { _controller: SSFMBBundle:Articles:articleStocks }
 
-ssfmb_snarticle:
-    path:     /articlestock
-    defaults: { _controller: SSFMBBundle:Articles:articleSn }
+ssfmb_pochearticle:
+    path:     /pochearticle
+    defaults: { _controller: SSFMBBundle:Articles:pocheArticle}
+
 ssfmb_articlestocklot:
     path:     /articlestocklot
     defaults: { _controller: SSFMBBundle:Articles:articleStockslot }
+
+ssfmb_nombrepochearticle:
+    path:     /nombrepochearticle
+    defaults: { _controller: SSFMBBundle:Articles:nombrePocheArticle}

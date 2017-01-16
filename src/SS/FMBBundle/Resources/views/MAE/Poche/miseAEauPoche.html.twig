@@ -1,5 +1,5 @@
 {% extends "::base.html.twig" %}
-{% block title %}{{ parent() }} - MAEC{% endblock %}
+{% block title %}{{ parent() }} - MAEP{% endblock %}
 {% block stylesheet %}
     {% if(entity != null) %}
         <link href="{{ asset('bundles/ssfmb/plugins/nestable/jquery.nestable.css') }}" rel="stylesheet"/>
@@ -9,7 +9,7 @@
 {% block header %} {{ parent() }}{% endblock %}
 {% block body %}
     {{ parent() }}
-    {% set page = 'MAEC' %}
+    {% set page = 'MAEP' %}
     {% if(entity != null) %}
         <div class="row">
             <div class="col-lg-12">
@@ -29,10 +29,10 @@
 
         <br>
         <form action="" method="post" onsubmit="return validation()">
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="card-box">
-                    <div class="row">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card-box">
+                        <div class="row">
                             <div class="col-md-12">
                                 <div id="idstockparc" hidden="true">{{ entity.idStock.idStock }}</div>
                                 <div id="idparc" hidden="true">{{ entity.idMagasin }}</div>
@@ -44,13 +44,6 @@
                                 <div class="custom-dd dd" id="nestable_list_2">
                                     <ol class="dd-list">
                                         {{ render(controller('SSFMBBundle:Filiere:findByParc',{ 'parc': entity,'page':page })) }}
-                                        {#
-                                  {{ render(controller(
-                                  'SSFMBBundle:Filiere:findByParc',
-                                  { 'parc': entity }
-                                  )) }}
-                                {% include '@SSFMB/Filiere/Include/listIndexInclude.html.twig' %}
-                                #}
                                     </ol>
                                 </div>
                             </div>
@@ -58,68 +51,12 @@
                                 <div class="custom-dd dd" id="nestable_list_1">
                                 </div>
                             </div><!-- end col -->
-                    </div> <!-- end row -->
-                </div> <!-- end card-box -->
-            </div> <!-- end col -->
-        </div>
-        <!-- end Row -->
-        <div id="sideNavi">
-            <!-- sidenavi menu //-->
-            <div class="side-navi-item-default"></div>
-            <div class="side-navi-item item1">
-                <div>^</div>
+                        </div> <!-- end row -->
+                    </div> <!-- end card-box -->
+                </div> <!-- end col -->
             </div>
-            <!-- sidenavi data //-->
-            <div class="side-navi-data">
-                <div class="side-navi-tab">
-                    <div>
-                        {% include '@SSFMB/Include/couleurCleInclude.html.twig' %}
-                        {% include "@SSFMB/Filiere/Include/listMenuIndexInclude.html.twig" %}
-                        <p>quantiter disponible</p>
-                        <p><img src="{{ asset('bundles/ssfmb/images/stock.gif') }}" height="50" width="50"
-                                id="loadquantit">
-                            <input type="number" id="quantit" readonly="true" value="0"></p>
-                        <p>date de preparation des laternes</p>
-                        {% set now =  "now"|date("Y-m-d") %}
-                        <p><input type="date" name="dateMAECorde" value="{{ now }}"></p>
-                        <p>choisir type cordes</p>
-                        <p>
-                            <select name="cordechoix" id="cordechoix">
-                                {% for corde in cordes %}
-                                    <option value="{{ corde.id }}">{{ corde.nomCorde }}</option>
-                                {% endfor %}
-                            </select>
-                        </p>
-
-                        <p> choisir l'article a mettre</p>
-
-                        <p>
-                            <select name="articlechoix" id="articlechoix">
-                                {% for article in articles %}
-                                    {% if article.refArticle.libArticle starts with 'CORDE' %}
-                                        <option value="{{ article.refStockArticle }}">{{ article.refArticle.libArticle }}</option>
-                                    {% endif %}
-                                {% endfor %}
-                            </select>
-                        </p>
-                        <p> choisir le lot de l'article</p>
-
-                        <p>
-                            <select name="articlelotchoix" id="articlelotchoix"></select>
-                        </p>
-
-                        <div id="choixqtearticle">
-                            <p> Densité (U/Corde) </p>
-                            <p>
-                                <select name="quantierchoix" id="quantierchoix"></select>
-                            </p>
-                            <p><input type="submit" value="confirmer la mise a l'eau"/></p>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+            <!-- end Row -->
+            {{ include('@SSFMB/Default/MAE/Poche/Include/sideNavPocheInclude.html.twig') }}
         </form><!-- end col -->
 
         {% block footer %}
@@ -137,7 +74,7 @@
      <script type="text/javascript">
          function validation() {
              if (parseInt($('#quantit').val()) < 0) {
-                 alert("vous avez demander de mettre un nombre superieur de corde que celle preparé");
+                 alert("vous avez demander de mettre un nombre superieur de poche que celle preparé");
                  return false;
              } else {
                  check = confirm('vous confirmer les données (date de retrait, article , lot que vous avez choisie');
@@ -193,15 +130,15 @@
                                  pos = true;
                              }
                          });
-                         $('#ss_fmbbundle_preparationcorde_submit').show();
+                         $('#ss_fmbbundle_preparationpoche_submit').show();
                          $.ajax({
                              type: 'get',
-                             url: "{{ path('ssfmb_cordearticle') }}",
+                             url: "{{ path('ssfmb_pochearticle') }}",
                              data: {
                                  'idp': $('#idparc').text(),
                                  'lot': $('#articlelotchoix').val(),
                                  'ida': $('#articlechoix').val(),
-                                 'idl': $('#cordechoix').val()
+                                 'idl': $('#pochechoix').val()
                              },
                              dataType: 'json',
                              beforeSend: function () {
@@ -224,11 +161,11 @@
 
                                          $.ajax({
                                              type: 'get',
-                                             url: "{{ path('ssfmb_nombrecordearticle') }}",
+                                             url: "{{ path('ssfmb_nombrepochearticle') }}",
                                              data: {
                                                  'ida': $('#articlechoix').val(),
                                                  'lot': $('#articlelotchoix').val(),
-                                                 'idl': $('#cordechoix').val(),
+                                                 'idl': $('#pochechoix').val(),
                                                  'qtech': $('#quantierchoix').val()
                                              },
                                              dataType: 'json',
@@ -306,15 +243,15 @@
                                  pos = true;
                              }
                          });
-                         $('#ss_fmbbundle_preparationcorde_submit').show();
+                         $('#ss_fmbbundle_preparationpoche_submit').show();
                          $.ajax({
                              type: 'get',
-                             url: "{{ path('ssfmb_cordearticle') }}",
+                             url: "{{ path('ssfmb_pochearticle') }}",
                              data: {
                                  'idp': $('#idparc').text(),
                                  'lot': $('#articlelotchoix').val(),
                                  'ida': $('#articlechoix').val(),
-                                 'idl': $('#cordechoix').val()
+                                 'idl': $('#pochechoix').val()
                              },
                              dataType: 'json',
                              beforeSend: function () {
@@ -339,11 +276,11 @@
 
                                          $.ajax({
                                              type: 'get',
-                                             url: "{{ path('ssfmb_nombrecordearticle') }}",
+                                             url: "{{ path('ssfmb_nombrepochearticle') }}",
                                              data: {
                                                  'ida': $('#articlechoix').val(),
                                                  'lot': $('#articlelotchoix').val(),
-                                                 'idl': $('#cordechoix').val(),
+                                                 'idl': $('#pochechoix').val(),
                                                  'qtech': $('#quantierchoix').val()
                                              },
                                              dataType: 'json',
@@ -393,15 +330,15 @@
                  }
              });
          });
-         $('#cordechoix').change(function () {
+         $('#pochechoix').change(function () {
              $.ajax({
                  type: 'get',
-                 url: "{{ path('ssfmb_cordearticle') }}",
+                 url: "{{ path('ssfmb_pochearticle') }}",
                  data: {
                      'idp': $('#idparc').text(),
                      'lot': $('#articlelotchoix').val(),
                      'ida': $('#articlechoix').val(),
-                     'idl': $('#cordechoix').val()
+                     'idl': $('#pochechoix').val()
                  },
                  dataType: 'json',
                  beforeSend: function () {
@@ -434,11 +371,11 @@
 
                              $.ajax({
                                  type: 'get',
-                                 url: "{{ path('ssfmb_nombrecordearticle') }}",
+                                 url: "{{ path('ssfmb_nombrepochearticle') }}",
                                  data: {
                                      'ida': $('#articlechoix').val(),
                                      'lot': $('#articlelotchoix').val(),
-                                     'idl': $('#cordechoix').val(),
+                                     'idl': $('#pochechoix').val(),
                                      'qtech': $('#quantierchoix').val()
                                  },
                                  dataType: 'json',
@@ -487,12 +424,12 @@
          $('#articlelotchoix').change(function () {
              $.ajax({
                  type: 'get',
-                 url: "{{ path('ssfmb_cordearticle') }}",
+                 url: "{{ path('ssfmb_pochearticle') }}",
                  data: {
                      'idp': $('#idparc').text(),
                      'lot': $('#articlelotchoix').val(),
                      'ida': $('#articlechoix').val(),
-                     'idl': $('#cordechoix').val()
+                     'idl': $('#pochechoix').val()
                  },
                  dataType: 'json',
                  beforeSend: function () {
@@ -525,11 +462,11 @@
 
                              $.ajax({
                                  type: 'get',
-                                 url: "{{ path('ssfmb_nombrecordearticle') }}",
+                                 url: "{{ path('ssfmb_nombrepochearticle') }}",
                                  data: {
                                      'ida': $('#articlechoix').val(),
                                      'lot': $('#articlelotchoix').val(),
-                                     'idl': $('#cordechoix').val(),
+                                     'idl': $('#pochechoix').val(),
                                      'qtech': $('#quantierchoix').val()
                                  },
                                  dataType: 'json',
@@ -577,11 +514,11 @@
          $('#quantierchoix').change(function () {
              $.ajax({
                  type: 'get',
-                 url: "{{ path('ssfmb_nombrecordearticle') }}",
+                 url: "{{ path('ssfmb_nombrepochearticle') }}",
                  data: {
                      'ida': $('#articlechoix').val(),
                      'lot': $('#articlelotchoix').val(),
-                     'idl': $('#cordechoix').val(),
+                     'idl': $('#pochechoix').val(),
                      'qtech': $('#quantierchoix').val()
                  },
                  dataType: 'json',
@@ -639,113 +576,3 @@
              });
          }    </script>
  {% endblock %}
-
-{#
-{% extends "SSFMBBundle::layout.html.twig" %}
-
-{% block title %}
-    MAECorde - {{ parent() }}
-{% endblock %}
-{% block body %}
-    <div class="container-fluid">
-        {{ parent() }}
-        <div class="row">
-            <div class="col-md-12">
-                <p>Mise a eau Corde</p>
-                    <table class="table table-condensed table-bordered" border="1">
-                        <tbody>
-                        <tr>
-                            <td>
-                                    {% if(entity != null) %}
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <table class="table table-condensed table-bordered" border="1">
-                                    <tbody>
-                                    {% for filiere in entity.filieres %}
-                                        <tr>
-                                            <td id="{{ filiere.nomFiliere }}">
-                                                {{ filiere.nomFiliere }}
-                                                <br/>
-                                                {% set tailleFiliere =0 %}
-                                                {% for segment in filiere.segments %}
-                                                    {% set tailleFiliere = tailleFiliere+segment.getLongeur %}
-                                                {% endfor %}
-                                                taille {{ tailleFiliere }} m
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <table class="table table-condensed table-bordered" border="1">
-                                                    <tbody>
-                                                    <tr>
-                                                        {% for segment in filiere.segments %}
-                                                            <td valign="top">
-                                                                <ul>
-                                                                    <li>
-                                                                        {{ segment.getNomSegment }}
-                                                                    </li>
-                                                                    <li>
-                                                                        {{ segment.getLongeur }} m
-                                                                    </li>
-                                                                </ul>
-                                                                <table>
-                                                                    {% for flotteur in segment.flotteurs %}
-                                                                    <tr>
-                                                                        <td>
-                                                                            <div id="{{ filiere.getNomFiliere }}{{ segment.getNomSegment }}{{ flotteur.getNomFlotteur }}">
-                                                                                {{ flotteur.getNomFlotteur }}|
-                                                                                {% set verifexsistance = 0 %}
-
-                                                                            </div>
-                                                                        </td>
-                                                                    </tr>
-                                                                </table>
-                                                            </td>
-                                                        {% endfor %}
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
-                                    </tbody>
-                                </table>
-                            </td>
-                            <td width="20%">
-                                <div data-spy="affix" data-offset-top="60" data-offset-bottom="200" id="menuform">
-                                    <p>
-                                        {% include "SSFMBBundle:Include:couleurCleInclude.html.twig" %}
-                                    </p>
-                                    <p>
-                                    <div><a href="#menuprincipale">menu</a></div>
-                                    <div>Listez des filieres</div>
-                                    {% for filiere in entity.filieres %}
-                                        <span class="lienfiliereint">
-                                            <a href="#{{ filiere.nomFiliere }}">{{ filiere.nomFiliere }}</a>
-                                        </span>
-                                    {% endfor %}
-                                    </p>
-
-
-
-                                </div>
-                            </td>
-                        </tr>
-                        {% endif %}
-
-                        </tbody>
-                    </table>
-                </form>
-            </div>
-        </div>
-    </div>
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-
-{% endblock %}
-#}

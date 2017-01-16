@@ -19,36 +19,3 @@
     </ol>
     {% endif %}
 {% endfor %}
-
-{#  <td valign="top">
-        <ul>
-            <li class="segment">
-                {{ segment.getNomSegment }}
-            </li>
-            <li>{{ segment.getLongeur }} m</li>
-            <li> nombre de place totale : {{ totaleplace }}
-                place
-            </li>
-            <li>nombre de place vide
-                :{{ (totaleplace -(totalecorde + totalelanterne)) }}
-                place
-                || {{ ((totaleplace -(totalecorde + totalelanterne))/totaleplace ) *100 }}
-                %
-            </li>
-            <li> nombre de place
-                remplis:{{ totaleplace - (totaleplace -(totalecorde + totalelanterne)) }}
-                place
-                || {{ ((((totaleplace -(totaleplace -(totalecorde + totalelanterne))))/totaleplace )*100 ) }}
-                %
-            </li>
-            <li>nombre des corde:{{ totalecorde }}</li>
-            <li>nombre des
-                lanterne:{{ totalelanterne }}</li>
-        </ul>
-
-
-        {% include '@SSFMB/Flotteur/Render/listFlotteurIndexRender.html.twig' %}
-
-    </td>
-{% endfor %}
-#}

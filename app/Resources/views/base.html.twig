@@ -31,23 +31,13 @@
 <header id="topnav">
     <div class="topbar-main">
         <div class="container">
-
-            <!-- Logo container-->
             <div class="logo">
                 <a href="{{ path('ssfmb_homepage') }}" class="logo"><span><i class="md md-album"></i>YSTER PR<i
                                 class="md md-album"></i></span></a>
             </div>
-            <!-- End Logo container-->
-
-
             <div class="menu-extras">
                 <ul class="nav navbar-nav navbar-right pull-right">
                     <li class="navbar-c-items">
-                        {#      <form role="search" class="navbar-left app-search pull-left hidden-xs">
-                                  <input type="text" placeholder="Search..." class="form-control">
-                                  <a href=""><i class="fa fa-search"></i></a>
-                              </form>
-                          #}
                     </li>
                     <li class="dropdown navbar-c-items">
                         <a href="#" class="dropdown-toggle waves-effect waves-light profile" data-toggle="dropdown"
@@ -65,8 +55,9 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ path('sonata_admin_dashboard') }}"><i
-                                            class="ti-settings text-custom m-r-10"></i> Administration</a>
+                                <a href="{{ path('sonata_admin_dashboard') }}">
+                                    <i class="ti-settings text-custom m-r-10"></i> Administration
+                                </a>
                             </li>
                             <li>
                                 <a href="{{ path('sonata_admin_dashboard') }}">
@@ -83,7 +74,6 @@
                     </li>
                 </ul>
                 <div class="menu-item">
-                    <!-- Mobile menu toggle-->
                     <a class="navbar-toggle">
                         <div class="lines">
                             <span></span>
@@ -91,18 +81,13 @@
                             <span></span>
                         </div>
                     </a>
-                    <!-- End mobile menu toggle-->
                 </div>
             </div>
 
         </div>
     </div>
-
-    <!-- Navigation Menu-->
     {% include "@SSFMB/Default/menu.html.twig" %}
-    <!-- End navigation menu        -->
 </header>
-<!-- End Navigation Bar-->
 
 <div class="wrapper">
     <div class="container">
@@ -126,17 +111,15 @@
             </div>
             <div class="col-xs-1">
                 <a id="back-to-top" href="#" class="btn btn-primary btn-lg back-to-top" role="button"
-                   title="Click to return on the top page" data-toggle="tooltip" data-placement="left"><span
-                            class="glyphicon glyphicon-chevron-up"></span></a>
+                   title="Click to return on the top page" data-toggle="tooltip" data-placement="left">
+                    <span class="glyphicon glyphicon-chevron-up"></span>
+                </a>
             </div>
         </div>
-    </div> <!-- end container -->
+    </div>
 </div>
 <script src="{{ asset('bundles/ssfmb/assets/js/nprogress.js') }}"></script>
 <script src="{{ asset('bundles/ssfmb/assets/js/sonic.js') }}"></script>
-
-<!-- end wrapper -->
-<!-- jQuery  -->
 <script src="{{ asset('bundles/ssfmb/assets/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('bundles/ssfmb/assets/js/detect.js') }}"></script>
 <script src="{{ asset('bundles/ssfmb/assets/js/fastclick.js') }}"></script>
@@ -146,13 +129,31 @@
 <script src="{{ asset('bundles/ssfmb/assets/js/wow.min.js') }}"></script>
 <script src="{{ asset('bundles/ssfmb/assets/js/jquery.nicescroll.js') }}"></script>
 <script src="{{ asset('bundles/ssfmb/assets/js/jquery.scrollTo.min.js') }}"></script>
-
-
-<!-- App core js -->
 <script src="{{ asset('bundles/ssfmb/assets/js/jquery.core.js') }}"></script>
 <script src="{{ asset('bundles/ssfmb/assets/js/jquery.app.js') }}"></script>
 <script src="{{ asset('bundles/ssfmb/js/SideNavi.js') }}"></script>
 <script src="{{ asset('bundles/ssfmb/js/baseTwig/base.js') }}"></script>
+<script src="http://malsup.github.com/jquery.form.js"></script>
+<script type="text/javascript">
+    var signe = -1;
+    var clignotementFading = function(){
+        var obj2 = document.getElementsByClassName('LblClignotant');
+        var testDivs = Array.prototype.filter.call(obj2, function(obj){
+           if (obj.style.opacity >= 0.96) {
+                signe = -1;
+            }
+            if (obj.style.opacity <= 0.04) {
+                signe = 1;
+            }
+            obj.style.opacity = (obj.style.opacity * 1) + (signe * 0.04);
+        });
+    };
+
+
+    // mise en place de l appel de la fonction toutes les 0.085 secondes
+    // Pour arrêter le clignotement : clearInterval(periode);
+    periode = setInterval(clignotementFading, 85 );
+</script>
 {% block javascripts %}
 {% endblock %}
 </body>

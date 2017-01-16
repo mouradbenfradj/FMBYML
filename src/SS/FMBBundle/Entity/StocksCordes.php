@@ -45,6 +45,12 @@ class StocksCordes
     private $pret;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="chaussement", type="boolean")
+     */
+    private $chaussement =false;
+    /**
      * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\StocksArticlesSn")
      * @Orm\JoinColumns({  @ORM\JoinColumn(name="ref_stock_article", referencedColumnName="ref_stock_article"),@Orm\JoinColumn(name="numero_serie", referencedColumnName="numero_serie")} )
      */
@@ -376,5 +382,28 @@ class StocksCordes
     public function getDateDeMiseAEau()
     {
         return $this->dateDeMiseAEau;
+    }
+
+    /**
+     * Set chaussement
+     *
+     * @param boolean $chaussement
+     * @return StocksCordes
+     */
+    public function setChaussement($chaussement)
+    {
+        $this->chaussement = $chaussement;
+
+        return $this;
+    }
+
+    /**
+     * Get chaussement
+     *
+     * @return boolean 
+     */
+    public function getChaussement()
+    {
+        return $this->chaussement;
     }
 }

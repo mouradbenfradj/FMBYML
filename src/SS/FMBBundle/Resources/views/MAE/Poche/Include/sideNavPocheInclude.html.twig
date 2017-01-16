@@ -1,0 +1,55 @@
+<div id="sideNavi">
+    <!-- sidenavi menu //-->
+    <div class="side-navi-item-default"></div>
+    <div class="side-navi-item item1">
+        <div>^</div>
+    </div>
+    <!-- sidenavi data //-->
+    <div class="side-navi-data">
+        <div class="side-navi-tab">
+            <div>
+                {% include '@SSFMB/Include/couleurCleInclude.html.twig' %}
+                {% include "@SSFMB/Filiere/Include/listMenuIndexInclude.html.twig" %}
+                <p>quantiter disponible</p>
+                <p>
+                    <img src="{{ asset('bundles/ssfmb/images/stock.gif') }}" height="50" width="50" id="loadquantit">
+                    <input type="number" id="quantit" readonly="true" value="0"></p>
+                <p>date de preparation des laternes</p>
+                {% set now =  "now"|date("Y-m-d") %}
+                <p><input type="date" name="dateMAEPoche" value="{{ now }}"></p>
+                <p>choisir type poches</p>
+                <p>
+                    <select name="pochechoix" id="pochechoix">
+                        {% for poche in poches %}
+                            <option value="{{ poche.id }}">{{ poche.nomPoche }}</option>
+                        {% endfor %}
+                    </select>
+                </p>
+                <p> choisir l'article a mettre</p>
+                <p>
+                    <select name="articlechoix" id="articlechoix">
+                        {% for article in articles %}
+                            {% if article.refArticle.libArticle %}
+                                <option value="{{ article.refStockArticle }}">{{ article.refArticle.libArticle }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </p>
+                <p> choisir le lot de l'article</p>
+
+                <p>
+                    <select name="articlelotchoix" id="articlelotchoix"></select>
+                </p>
+
+                <div id="choixqtearticle">
+                    <p> Densité (U/Poche) </p>
+                    <p>
+                        <select name="quantierchoix" id="quantierchoix"></select>
+                    </p>
+                    <p><input type="submit" value="confirmer la mise a l'eau"/></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

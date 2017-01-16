@@ -46,6 +46,13 @@ class StocksLanternes
     private $pret =false;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="chaussement", type="boolean")
+     */
+    private $chaussement =false;
+
+    /**
      * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\StocksArticlesSn")
      * @Orm\JoinColumns({  @ORM\JoinColumn(name="ref_stock_article", referencedColumnName="ref_stock_article"),@Orm\JoinColumn(name="numero_serie", referencedColumnName="numero_serie")} )
      */
@@ -87,6 +94,12 @@ class StocksLanternes
      * @ORM\JoinColumn(name="doc_line", referencedColumnName="ref_doc_line")
      */
     private $docLine;
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="cycle_r", type="integer")
+     */
+    private $cycleR = 0;
 
     /**
      * Constructor
@@ -394,5 +407,51 @@ class StocksLanternes
     public function getDateDeMiseAEau()
     {
         return $this->dateDeMiseAEau;
+    }
+
+    /**
+     * Set chaussement
+     *
+     * @param boolean $chaussement
+     * @return StocksLanternes
+     */
+    public function setChaussement($chaussement)
+    {
+        $this->chaussement = $chaussement;
+
+        return $this;
+    }
+
+    /**
+     * Get chaussement
+     *
+     * @return boolean 
+     */
+    public function getChaussement()
+    {
+        return $this->chaussement;
+    }
+
+    /**
+     * Set cycleR
+     *
+     * @param integer $cycleR
+     * @return StocksLanternes
+     */
+    public function setCycleR($cycleR)
+    {
+        $this->cycleR = $cycleR;
+
+        return $this;
+    }
+
+    /**
+     * Get cycleR
+     *
+     * @return integer 
+     */
+    public function getCycleR()
+    {
+        return $this->cycleR;
     }
 }

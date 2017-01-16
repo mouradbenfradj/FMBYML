@@ -182,4 +182,17 @@ public function __toString()
     {
         return $this->stocksArticlesSn;
     }
+
+    /**
+     * Set refStockArticle
+     *
+     * @param string $refStockArticle
+     * @return StocksArticles
+     */
+    public function setRefStockArticle($refStockArticle)
+    {
+        $this->refStockArticle = $refStockArticle;
+
+        return $this;
+    }
 }

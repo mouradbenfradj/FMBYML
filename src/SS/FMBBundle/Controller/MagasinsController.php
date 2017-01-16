@@ -53,6 +53,19 @@ class MagasinsController extends Controller
         return new JsonResponse($result);
     }
 
+    public function parcPochesAction(Request $request)
+    {// Get the province ID
+        $id = $request->query->get('parc_id');
+        $result = array();
+        // Return a list of cities, based on the selected province
+        $repo = $this->getDoctrine()->getManager()->getRepository('SSFMBBundle:PochesBS');
+        $poches = $repo->findByParc($id, array('parc' => 'asc'));
+        foreach ($poches as $poche) {
+            $result[$poche->getNomPoche()] = $poche->getNomPoche();
+            $result[$poche->getNomPoche() . $poche->getNbrTotaleEnStock()] = $poche->getNbrTotaleEnStock();
+        }
+        return new JsonResponse($result);
+    }
 
     /**
      * Lists all Magasins entities.

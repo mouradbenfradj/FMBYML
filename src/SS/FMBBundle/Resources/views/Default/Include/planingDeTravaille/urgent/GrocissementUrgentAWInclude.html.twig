@@ -105,36 +105,6 @@
             {% endfor %}
         {% endfor %}
     {% endfor %}
-    {#
-    {% for emplacement in grossisementurgentAW %}
-    <tr>
-        <td>{{ emplacement.flotteur.segment.filiere.nomfiliere }}</td>
-        <td>{{ emplacement.flotteur.segment.nomsegment }}</td>
-        <td>{{ emplacement.flotteur.nomflotteur }}</td>
-        <td>{{ emplacement.place }}</td>
-        <td>{{ emplacement.stockscorde.corde.nomCorde }}</td>
-        <td>{{ emplacement.stockscorde.article.refStockArticle.refArticle }}</td>
-        <td>{{ emplacement.stockscorde.article.numeroSerie }}</td>
-        <td>{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
-        <td> </td>
-        <td>{{ emplacement.dateDeRemplissage|date_modify("+9 month")|date('Y-m-d') }}</td>
-        <td>{{ emplacement.stockscorde.quantiter }}</td>
-        {% if loop.index == 1 %}
-            <td rowspan="{{ grossisementurgentAW|length }}"
-                valign="top">
-                {% set quantiterTotale = 0 %}
-                {% for emplacement2 in grossisementurgentAW %}
-                    {% set quantiterTotale = quantiterTotale + emplacement2.stockscorde.quantiter %}
-                {% endfor %}
-                {{ quantiterTotale }} u
-                <br>
-                {% set quantiterTotale = quantiterTotale/12 %}
-                {{ quantiterTotale }} dz
 
-            </td>
-        {% endif %}
-    </tr>
-{% endfor %}
-#}
     </tbody>
 </table>

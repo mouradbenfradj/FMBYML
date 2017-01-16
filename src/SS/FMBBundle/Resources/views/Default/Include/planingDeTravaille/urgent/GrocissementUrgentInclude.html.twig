@@ -109,35 +109,6 @@
         {% endfor %}
 
     {% endfor %}
-    {#
-        {% for emplacement in grossisementurgent %}
-    <tr>
-        <td>{{ emplacement.flotteur.segment.filiere.nomfiliere }}</td>
-        <td>{{ emplacement.flotteur.segment.nomsegment }}</td>
-        <td>{{ emplacement.flotteur.nomflotteur }}</td>
-        <td>{{ emplacement.place }}</td>
-        <td>{{ emplacement.stockscorde.corde.nomCorde }}</td>
-        <td>{{ emplacement.stockscorde.article.refStockArticle.refArticle }}</td>
-        <td>{{ emplacement.stockscorde.article.numeroSerie }}</td>
-        <td>{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
-        <td> {% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}{% if difference.m <=5 and difference.y ==0 %}G{{ difference.m }}{% elseif difference.m <=9 and difference.y == 0 %}{% set dif2 = 9- difference.m %}H{{ dif2 }}{% elseif difference.m ==10 and difference.y == 0 %}H00{% elseif difference.m >10 or difference.y >0 %}H000{% endif %}</td>
-        <td>{{ emplacement.dateDeRemplissage|date_modify("+6 month")|date('Y-m-d') }}</td>
-        <td>{{ emplacement.stockscorde.quantiter }}</td>
-        {% if loop.index == 1 %}
-            <td rowspan="{{ grossisementurgent|length }}"
-                valign="top">
-                {% set quantiterTotale = 0 %}
-                {% for emplacement2 in grossisementurgent %}
-                    {% set quantiterTotale = quantiterTotale + emplacement2.stockscorde.quantiter %}
-                {% endfor %}
-                {{ quantiterTotale }} u
-                <br>
-                {% set quantiterTotale = quantiterTotale/12 %}
-                {{ quantiterTotale }} dz
 
-            </td>
-        {% endif %}
-    </tr>
-{% endfor %}#}
     </tbody>
 </table>

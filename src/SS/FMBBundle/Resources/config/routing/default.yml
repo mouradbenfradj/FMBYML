@@ -1,30 +1,46 @@
 ssfmb_homepage:
     path:     /
     defaults: { _controller: SSFMBBundle:Default:index }
-ssfmb_suivit:
-    path:     /suivit
-    defaults: { _controller: SSFMBBundle:Default:suivit }
+
+ssfmb_statistique:
+    path:     /statistique
+    defaults: { _controller: SSFMBBundle:Menu/Statistique/Statistique:index}
+
+ssfmb_suivi:
+    path:     /suivi
+    defaults: { _controller: SSFMBBundle:Menu/Suivi/Suivi:index }
+
+ssfmb_preparationlanterne:
+    path:     /preparationlanterne
+    defaults: { _controller: SSFMBBundle:Menu/Preparation/Lanterne:lanterneNH }
 
 ssfmb_preparationcorde:
     path:     /preparationcorde
-    defaults: { _controller: SSFMBBundle:Default:preparationCorde }
-ssfmb_preparationlanterne:
-    path:     /preparationlanterne
-    defaults: { _controller: SSFMBBundle:Default:preparationLanterne }
+    defaults: { _controller: SSFMBBundle:Menu/Preparation/Corde:cordeH }
+
+ssfmb_preparationpoche:
+    path:     /preparationpoche
+    defaults: { _controller: SSFMBBundle:Menu/Preparation/Poche:pocheH}
 
 ssfmb_misaaeaucorde:
     path:     /miseaeaucorde
-    defaults: { _controller: SSFMBBundle:Default:miseAEauCorde }
+    defaults: { _controller: SSFMBBundle:Menu/MAE/Corde:miseAEauCorde }
 ssfmb_misaaeaulanterne:
     path:     /miseaeaulanterne
-    defaults: { _controller: SSFMBBundle:Default:miseAEauLanterne }
+    defaults: { _controller: SSFMBBundle:Menu/MAE/Lanterne:miseAEauLanterne }
+ssfmb_misaaeaupoche:
+    path:     /miseaeaupoche
+    defaults: { _controller: SSFMBBundle:Menu/MAE/Poche:miseAEauPoche }
+ssfmb_chaussement:
+    path:     /chaussemet
+    defaults: { _controller: SSFMBBundle:Menu/Chaussement/Chaussement:chassee }
 
 ssfmb_retraitcorde:
     path:     /retraitcorde
-    defaults: { _controller: SSFMBBundle:Default:retraitCorde }
+    defaults: { _controller: SSFMBBundle:Menu/Retrait/Aw:retraitCorde }
 ssfmb_retraitLanterne:
     path:     /retraitlanterne
-    defaults: { _controller: SSFMBBundle:Default:retraitLanterne }
+    defaults: { _controller: SSFMBBundle:Menu/Retrait/Aw:retraitLanterne }
 ssfmb_planingdetravaille:
     path:     /planing
     defaults: { _controller: SSFMBBundle:Default:planingdetravaille}
@@ -33,10 +49,10 @@ ssfmb_processusgrocissement:
     defaults: { _controller: SSFMBBundle:Default:processgrocissmeent}
 ssfmb_transfert:
     path:     /transfert
-    defaults: { _controller: SSFMBBundle:Default:transfert}
+    defaults: { _controller: SSFMBBundle:Menu/Transfert/RetraitT:transfert}
 ssfmb_misaaeautransfert:
     path:     /misaaeautransfert
-    defaults: { _controller: SSFMBBundle:Default:transfertMAE }
+    defaults: { _controller: SSFMBBundle:Menu/Transfert/TransfertMAE:transfertMAE }
 traitementcomerciale:
     path:     /traitementComerciale
-    defaults: { _controller: SSFMBBundle:Default:traitement}
+    defaults: { _controller: SSFMBBundle:Menu/Traitement/Traitement:traitement}

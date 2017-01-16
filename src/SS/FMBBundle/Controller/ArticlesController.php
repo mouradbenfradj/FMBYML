@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use SS\FMBBundle\Entity\Articles;
 use SS\FMBBundle\Form\ArticlesType;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Articles controller.
@@ -37,6 +38,34 @@ class ArticlesController extends Controller
         }
         return new JsonResponse($result);
     }
+    public function pocheArticleAction(Request $request)
+    {
+        $request->get('id');
+        $em = $this->getDoctrine()->getManager();
+        $pochearticle = $em->getRepository('SSFMBBundle:StocksPochesBS')->getPochePreparer(
+            $em->getRepository('SSFMBBundle:StocksArticlesSn')->findOneBy(array('refStockArticle' => $request->get('ida'), 'numeroSerie' => $request->get('lot'))), $request->get('idl')
+        );
+        count($pochearticle);
+        $tabEnsembles = array();
+        $tabtest = array();
+        $i = 0;
+        foreach ($pochearticle as $e) { // transformer la réponse de la requete en tableau qui remplira le select pour ensembles
+            if (!in_array($e->getQuantiter(), $tabtest)) {
+                $tabEnsembles[$i]['id'] = $e->getId();
+                $tabEnsembles[$i]['nombre'] = count($pochearticle);
+                $tabEnsembles[$i]['qte'] =$e->getQuantiter();
+                $tabtest[] = $e->getQuantiter();
+            }
+            $i++;
+        }
+        $response = new Response();
+        $data = json_encode($tabEnsembles); // formater le résultat de la requête en json
+        $response->headers->set('Content-Type', 'miseaeaupoche/json');
+        $response->setContent($data);
+
+        return $response;
+    }
+
 
     public function articleStockslotAction(Request $request)
     {// Get the province ID
@@ -56,6 +85,35 @@ class ArticlesController extends Controller
         return new JsonResponse($result);
     }
 
+    public function nombrePocheArticleAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $pochearticle = $em->getRepository('SSFMBBundle:StocksPochesBS')->getPochePreparer(
+            $em->getRepository('SSFMBBundle:StocksArticlesSn')->findOneBy(array('refStockArticle' => $request->get('ida'), 'numeroSerie' => $request->get('lot')))
+            , $request->get('idl')
+        );
+        count($pochearticle);
+        $tabEnsembles = array();
+        $tabtest = array();
+        $i = 0;
+        $tt = 1;
+        foreach ($pochearticle as $e) { // transformer la réponse de la requete en tableau qui remplira le select pour ensembles
+            if ($e->getQuantiter() == $request->get('qtech')) {
+                $tabEnsembles[$i]['id'] = $e->getId();
+                $tabEnsembles[$i]['nombre'] = $tt;
+                $tabEnsembles[$i]['qte'] = $e->getQuantiter();
+                $tabtest[] = $e->getQuantiter();
+                $tt++;
+            }
+            $i++;
+        }
+        $response = new Response();
+        $data = json_encode($tabEnsembles); // formater le résultat de la requête en json
+        $response->headers->set('Content-Type', 'miseaeaupoche/json');
+        $response->setContent($data);
+
+        return $response;
+    }
     /**
      * Lists all Articles entities.
      *

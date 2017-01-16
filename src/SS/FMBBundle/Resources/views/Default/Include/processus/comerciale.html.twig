@@ -33,17 +33,6 @@
                                     <div id="h{% if ((((cr|length - loop.index0)-2)<0)and(((cr|length - loop.index0)-2)>= -1)) %}0{{ (cr|length - loop.index0)-1 }}{% else %}{{ (cr|length - loop.index0)-2 }}{% endif %}">
                                         h{% if ((((cr|length - loop.index0)-2)<0)and(((cr|length - loop.index0)-2)>= -1)) %}0{{ (cr|length - loop.index0)-1 }}{% else %}{{ (cr|length - loop.index0)-2 }}{% endif %}</div>
                                 </td>
-                                {#
-                                  {% for emplacement in emplacementcr %}
-                                      <td>
-                                          {{ emplacement.article.refStockArticle.idStock.libStock }}
-                                          {{ emplacement.article.refStockArticle.refArticle }}
-                                          {{ emplacement.article.numeroSerie }}
-                                          {{ emplacement.quantiter }}
-                                      </td>
-                                      </tr>
-                                  {% endfor %}
-                                  #}
                                 {% endfor %}
                         </table>
                     </div>

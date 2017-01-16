@@ -13,9 +13,6 @@
     <link href="{{ asset('bundles/ssfmb/plugins/switchery/css/switchery.min.css') }}" rel="stylesheet"/>
     <link href="{{ asset('bundles/ssfmb/plugins/multiselect/css/multi-select.css') }}" rel="stylesheet"
           type="text/css"/>
-    <link href="{{ asset('bundles/ssfmb/plugins/ladda-buttons/css/ladda-themeless.min.css') }}" rel="stylesheet"
-          type="text/css"/>
-
     <link href="{{ asset('bundles/ssfmb/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('bundles/ssfmb/plugins/bootstrap-select/css/bootstrap-select.min.css') }}" rel="stylesheet"/>
     <link href="{{ asset('bundles/ssfmb/plugins/bootstrap-touchspin/css/jquery.bootstrap-touchspin.min.css') }}"
@@ -26,13 +23,13 @@
 {% block header %} {{ parent() }}{% endblock %}
 {% block body %}
     {{ parent() }}
-    {% set page = 'PrLn' %}
+    {% set page = 'PrCr' %}
     <div class="row">
         <div class="col-sm-12">
             <div class="card-box">
                 <div class="row">
                     <div class="col-md-6">
-                        <h4 class="m-t-0 header-title"><b>Preparation Lanterne </b></h4>
+                        <h4 class="m-t-0 header-title"><b>Preparation Poche </b></h4>
                         <p class="text-muted m-b-30 font-13">
                         </p>
                         {{ form_start(form) }}
@@ -57,15 +54,15 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-4">
-                                {{ form_label(form.nomLanterne) }}
+                                {{ form_label(form.nomPoche) }}
                             </div>
                             <div class="col-md-8">
                                 <img src="{{ asset('bundles/ssfmb/images/stock.gif') }}" height="50" width="50"
-                                     id="loadlanterne">
-                                {{ form_widget(form.nomLanterne) }}
+                                     id="loadpoche">
+                                {{ form_widget(form.nomPoche) }}
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" id="divqteenstocks">
                             <div class="col-md-4">
                                 {{ form_label(form.quantiterEnStock) }}
                             </div>
@@ -108,6 +105,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-4">
+
                                 {{ form_label(form.qte) }}
                             </div>
                             <div class="col-md-8">
@@ -135,14 +133,13 @@
                                 </section>
                             </div>
                         </div>
+
                         {{ form_end(form) }}
                     </div>
                     <div class="col-md-1">
                         <div class="custom-dd dd" id="nestable_list_1">
                         </div>
-                    </div>
-
-                    <!-- end col -->
+                    </div><!-- end col -->
                     <!-- end col -->
                 </div> <!-- end row -->
             </div> <!-- end card-box -->
@@ -180,6 +177,9 @@
             type="text/javascript"></script>
     <script src="{{ asset('bundles/ssfmb/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}"
             type="text/javascript"></script>
+
+
+
     <script type="text/javascript"
             src="{{ asset('bundles/ssfmb/plugins/autocomplete/jquery.mockjax.js') }}"></script>
     <script type="text/javascript"
@@ -188,33 +188,30 @@
 
     <script type="text/javascript" src="{{ asset('bundles/ssfmb/pages/jquery.form-advanced.init.js') }}"></script>
 
-    <script src="{{ asset('bundles/ssfmb/plugins/ladda-buttons/js/spin.min.js') }}"></script>
-    <script src="{{ asset('bundles/ssfmb/plugins/ladda-buttons/js/ladda.min.js') }}"></script>
-    <script src="{{ asset('bundles/ssfmb/plugins/ladda-buttons/js/ladda.jquery.min.js') }}"></script>
-    <script src="{{ asset('bundles/ssfmb/js/preparationlanterne.js') }}"></script>
-
     {# Voici le script en question : #}
     <script type="text/javascript">
         $(document).ready(function () {
-            jQuery('#ss_fmbbundle_preparationlanterne_date').datepicker({language: 'fr'});
-            jQuery('#ss_fmbbundle_preparationlanterne_Parc').ready(function () {
-                var val = jQuery("#ss_fmbbundle_preparationlanterne_Parc").val();
+            jQuery('#ss_fmbbundle_preparationpoche_date').datepicker({language: 'fr'});
+            jQuery('#ss_fmbbundle_preparationpoche_Parc').ready(function () {
+                var val = jQuery("#ss_fmbbundle_preparationpoche_Parc").val();
                 jQuery.ajax({
                     type: "POST",
                     url: "{{ url('ssfmb_parcstock') }}?parc_id=" + val,
                     complete: function () {
+                        jQuery('#loadpoche').hide();
+                        jQuery('#loadstock').hide();
                         jQuery('#totalqte').ready(function () {
-                            jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').ready(function () {
-                                if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').val() < 1) {
+                            jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').ready(function () {
+                                if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').val() < 1) {
                                     jQuery('#envoie').hide();
                                 } else {
                                     jQuery('#envoie').show();
                                 }
                             });
                         });
-                        jQuery('#ss_fmbbundle_preparationlanterne_nomLanterne').change(function () {
+                        jQuery('#ss_fmbbundle_preparationpoche_nomPoche').change(function () {
                             jQuery('#totalqte').ready(function () {
-                                if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').val() < 1) {
+                                if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').val() < 1) {
                                     jQuery('#envoie').hide();
                                 } else {
                                     jQuery('#envoie').show();
@@ -222,8 +219,8 @@
                             });
                         });
                         jQuery('#totalqte').change(function () {
-                            jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').ready(function () {
-                                if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').val() < 1) {
+                            jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').ready(function () {
+                                if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').val() < 1) {
                                     jQuery('#envoie').hide();
                                 } else {
                                     jQuery('#envoie').show();
@@ -232,41 +229,41 @@
                         });
                     },
                     beforeSend: function () {
-                        jQuery('#ss_fmbbundle_preparationlanterne_libStock').hide();
-                        jQuery('#ss_fmbbundle_preparationlanterne_nomLanterne').hide();
-                        jQuery('#ss_fmbbundle_preparationlanterne_qte').hide();
-                        jQuery('#ss_fmbbundle_preparationlanterne_numeroSerie').hide()
+                        jQuery('#ss_fmbbundle_preparationpoche_libStock').hide();
+                        jQuery('#ss_fmbbundle_preparationpoche_nomPoche').hide();
+                        jQuery('#ss_fmbbundle_preparationpoche_qte').hide();
+                        jQuery('#ss_fmbbundle_preparationpoche_numeroSerie').hide()
 
-                        jQuery('#envoie').hide();
                         jQuery('#totalqte').hide();
                         jQuery('#divqteenstocks').hide();
+                        jQuery('#envoie').hide();
                         jQuery('#loadstock').show();
                     },
                     success: function (data) {
                         if (jQuery.trim(data)) {
-                            jQuery('#ss_fmbbundle_preparationlanterne_libStock').show();
-                            jQuery('#loadstock').hide();
+                            jQuery('#ss_fmbbundle_preparationpoche_libStock').show();
                             // Remove current options
-                            jQuery('#ss_fmbbundle_preparationlanterne_libStock').html('');
+                            jQuery('#ss_fmbbundle_preparationpoche_libStock').html('');
                             jQuery.each(data, function (k, v) {
-                                jQuery('#ss_fmbbundle_preparationlanterne_libStock').append('<option value="' + v + '">' + k + '</option>');
+                                jQuery('#ss_fmbbundle_preparationpoche_libStock').append('<option value="' + v + '">' + k + '</option>');
                             });
                             jQuery.ajax({
                                 type: "POST",
-                                url: "{{ url('ssfmb_parclanterne') }}?parc_id=" + val,
+                                url: "{{ url('ssfmb_parcpoche') }}?parc_id=" + val,
                                 complete: function () {
+                                    jQuery('#loadpoche').hide();
                                     jQuery('#totalqte').ready(function () {
-                                        jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').ready(function () {
-                                            if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').val() < 1) {
+                                        jQuery('#ss_fmbbundle_preparationcore_quantiterEnStock').ready(function () {
+                                            if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').val() < 1) {
                                                 jQuery('#envoie').hide();
                                             } else {
                                                 jQuery('#envoie').show();
                                             }
                                         });
                                     });
-                                    jQuery('#ss_fmbbundle_preparationlanterne_nomLanterne').change(function () {
+                                    jQuery('#ss_fmbbundle_preparationpoche_nomPoche').change(function () {
                                         jQuery('#totalqte').ready(function () {
-                                            if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').val() < 1) {
+                                            if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').val() < 1) {
                                                 jQuery('#envoie').hide();
                                             } else {
                                                 jQuery('#envoie').show();
@@ -274,8 +271,8 @@
                                         });
                                     });
                                     jQuery('#totalqte').change(function () {
-                                        jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').ready(function () {
-                                            if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').val() < 1) {
+                                        jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').ready(function () {
+                                            if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').val() < 1) {
                                                 jQuery('#envoie').hide();
                                             } else {
                                                 jQuery('#envoie').show();
@@ -284,27 +281,26 @@
                                     });
                                 },
                                 beforeSend: function () {
-                                    jQuery('#loadlanterne').show();
+                                    jQuery('#loadpoche').show();
                                     jQuery('#loadqtelstock').show();
                                 },
                                 success: function (data) {
                                     if (jQuery.trim(data)) {
                                         var pos = true;
                                         var lan = '';
-                                        jQuery('#ss_fmbbundle_preparationlanterne_nomLanterne').show();
-                                        jQuery('#loadlanterne').hide();
+                                        jQuery('#ss_fmbbundle_preparationpoche_nomPoche').show();
                                         jQuery('#loadqtelstock').hide();
                                         // Remove current options
-                                        jQuery('#ss_fmbbundle_preparationlanterne_nomLanterne').html('');
+                                        jQuery('#ss_fmbbundle_preparationpoche_nomPoche').html('');
                                         jQuery.each(data, function (k, v) {
                                             if (pos) {
                                                 lan = k;
-                                                jQuery('#ss_fmbbundle_preparationlanterne_nomLanterne').append('<option value="' + v + '">' + k + '</option>');
+                                                jQuery('#ss_fmbbundle_preparationpoche_nomPoche').append('<option value="' + v + '">' + k + '</option>');
                                                 pos = false;
                                             } else {
-                                                if (jQuery('#ss_fmbbundle_preparationlanterne_nomLanterne').val() == lan) {
+                                                if (jQuery('#ss_fmbbundle_preparationpoche_nomPoche').val() == lan) {
                                                     jQuery('#divqteenstocks').show();
-                                                    jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').val(v);
+                                                    jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').val(v);
                                                 }
                                                 pos = true;
                                             }
@@ -314,24 +310,24 @@
                             });
                             jQuery.ajax({
                                 type: "POST",
-                                url: "{{ url('ssfmb_articlestock') }}?stock_id=" + jQuery('#ss_fmbbundle_preparationlanterne_libStock').val() + "&article=" + jQuery('#ss_fmbbundle_preparationlanterne_refArticle').val(),
+                                url: "{{ url('ssfmb_articlestock') }}?stock_id=" + jQuery('#ss_fmbbundle_preparationpoche_libStock').val() + "&article=" + jQuery('#ss_fmbbundle_preparationpoche_refArticle').val(),
                                 beforeSend: function () {
                                     jQuery('#loadlot').show();
                                     jQuery('#loadqte').show();
                                 },
                                 complete: function () {
                                     jQuery('#totalqte').ready(function () {
-                                        jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').ready(function () {
-                                            if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').val() < 1) {
+                                        jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').ready(function () {
+                                            if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').val() < 1) {
                                                 jQuery('#envoie').hide();
                                             } else {
                                                 jQuery('#envoie').show();
                                             }
                                         });
                                     });
-                                    jQuery('#ss_fmbbundle_preparationlanterne_nomLanterne').change(function () {
+                                    jQuery('#ss_fmbbundle_preparationpoche_nomPoche').change(function () {
                                         jQuery('#totalqte').ready(function () {
-                                            if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').val() < 1) {
+                                            if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').val() < 1) {
                                                 jQuery('#envoie').hide();
                                             } else {
                                                 jQuery('#envoie').show();
@@ -339,8 +335,8 @@
                                         });
                                     });
                                     jQuery('#totalqte').change(function () {
-                                        jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').ready(function () {
-                                            if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').val() < 1) {
+                                        jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').ready(function () {
+                                            if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').val() < 1) {
                                                 jQuery('#envoie').hide();
                                             } else {
                                                 jQuery('#envoie').show();
@@ -352,21 +348,21 @@
                                     if (jQuery.trim(data)) {
                                         var pos = true;
                                         var lan = '';
-                                        jQuery('#ss_fmbbundle_preparationlanterne_numeroSerie').show();
+                                        jQuery('#ss_fmbbundle_preparationpoche_numeroSerie').show();
                                         jQuery('#loadlot').hide();
                                         jQuery('#loadqte').hide();
                                         // Remove current options
-                                        jQuery('#ss_fmbbundle_preparationlanterne_numeroSerie').html('');
+                                        jQuery('#ss_fmbbundle_preparationpoche_numeroSerie').html('');
                                         jQuery.each(data, function (k, v) {
                                             if (pos) {
                                                 lan = k;
-                                                jQuery('#ss_fmbbundle_preparationlanterne_numeroSerie').append('<option value="' + v + '">' + k + '</option>');
+                                                jQuery('#ss_fmbbundle_preparationpoche_numeroSerie').append('<option value="' + v + '">' + k + '</option>');
                                                 pos = false;
                                             } else {
-                                                if (jQuery('#ss_fmbbundle_preparationlanterne_numeroSerie').val() == lan) {
+                                                if (jQuery('#ss_fmbbundle_preparationpoche_numeroSerie').val() == lan) {
+                                                    jQuery('#ss_fmbbundle_preparationpoche_qte').show();
+                                                    jQuery('#ss_fmbbundle_preparationpoche_qte').val(0);
                                                     jQuery('#totalqte').show();
-                                                    jQuery('#ss_fmbbundle_preparationlanterne_qte').show();
-                                                    jQuery('#ss_fmbbundle_preparationlanterne_qte').val(0);
                                                     jQuery('#totalqte').val(v);
                                                 }
                                                 pos = true;
@@ -380,33 +376,33 @@
                 });
                 return false;
             });
-            jQuery('#ss_fmbbundle_preparationlanterne_refArticle').change(function () {
+            jQuery('#ss_fmbbundle_preparationpoche_refArticle').change(function () {
                 jQuery.ajax({
                     type: "POST",
-                    url: "{{ url('ssfmb_articlestock') }}?stock_id=" + jQuery('#ss_fmbbundle_preparationlanterne_libStock').val() + "&article=" + jQuery('#ss_fmbbundle_preparationlanterne_refArticle').val(),
+                    url: "{{ url('ssfmb_articlestock') }}?stock_id=" + jQuery('#ss_fmbbundle_preparationpoche_libStock').val() + "&article=" + jQuery('#ss_fmbbundle_preparationpoche_refArticle').val(),
                     beforeSend: function () {
-                        jQuery('#ss_fmbbundle_preparationlanterne_qte').hide();
+                        jQuery('#ss_fmbbundle_preparationpoche_numeroSerie').hide()
+                        jQuery('#ss_fmbbundle_preparationpoche_qte').hide();
+                        jQuery('#loadlot').show();
+                        jQuery('#loadqte').show();
                         jQuery('#totalqte').hide();
                         jQuery('#envoie').hide();
-                        jQuery('#loadlot').show();
-                        jQuery('#ss_fmbbundle_preparationlanterne_numeroSerie').hide()
-                        jQuery('#loadqte').show();
                     },
                     complete: function () {
                         jQuery('#loadlot').hide();
                         jQuery('#loadqte').hide();
                         jQuery('#totalqte').ready(function () {
-                            jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').ready(function () {
-                                if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').val() < 1) {
+                            jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').ready(function () {
+                                if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').val() < 1) {
                                     jQuery('#envoie').hide();
                                 } else {
                                     jQuery('#envoie').show();
                                 }
                             });
                         });
-                        jQuery('#ss_fmbbundle_preparationlanterne_nomLanterne').change(function () {
+                        jQuery('#ss_fmbbundle_preparationpoche_nomPoche').change(function () {
                             jQuery('#totalqte').ready(function () {
-                                if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').val() < 1) {
+                                if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').val() < 1) {
                                     jQuery('#envoie').hide();
                                 } else {
                                     jQuery('#envoie').show();
@@ -414,8 +410,8 @@
                             });
                         });
                         jQuery('#totalqte').change(function () {
-                            jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').ready(function () {
-                                if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').val() < 1) {
+                            jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').ready(function () {
+                                if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').val() < 1) {
                                     jQuery('#envoie').hide();
                                 } else {
                                     jQuery('#envoie').show();
@@ -427,20 +423,20 @@
                         if (jQuery.trim(data)) {
                             var pos = true;
                             var lan = '';
-                            jQuery('#ss_fmbbundle_preparationlanterne_numeroSerie').show();
-                            jQuery('#ss_fmbbundle_preparationlanterne_numeroSerie').html('');
+                            jQuery('#ss_fmbbundle_preparationpoche_numeroSerie').show();
+                            jQuery('#ss_fmbbundle_preparationpoche_numeroSerie').html('');
                             jQuery.each(data, function (k, v) {
                                 if (pos) {
                                     lan = k;
-                                    jQuery('#ss_fmbbundle_preparationlanterne_numeroSerie').append('<option value="' + v + '">' + k + '</option>');
+                                    jQuery('#ss_fmbbundle_preparationpoche_numeroSerie').append('<option value="' + v + '">' + k + '</option>');
                                     pos = false;
                                 } else {
-                                    if (jQuery('#ss_fmbbundle_preparationlanterne_numeroSerie').val() == lan) {
+                                    if (jQuery('#ss_fmbbundle_preparationpoche_numeroSerie').val() == lan) {
                                         jQuery('#envoie').show();
-                                        jQuery('#ss_fmbbundle_preparationlanterne_qte').show();
+                                        jQuery('#ss_fmbbundle_preparationpoche_qte').show();
+                                        jQuery('#ss_fmbbundle_preparationpoche_qte').val(0);
                                         jQuery('#totalqte').show();
                                         jQuery('#totalqte').val(v);
-                                        jQuery('#ss_fmbbundle_preparationlanterne_qte').val(0);
                                     }
                                     pos = true;
                                 }
@@ -450,31 +446,32 @@
                 });
             });
 
-            jQuery('#ss_fmbbundle_preparationlanterne_Parc').change(function () {
-                jQuery('#ss_fmbbundle_preparationlanterne_libStock').hide();
-                jQuery('#ss_fmbbundle_preparationlanterne_nomLanterne').hide();
-                jQuery('#ss_fmbbundle_preparationlanterne_qte').hide();
+            jQuery('#ss_fmbbundle_preparationpoche_Parc').change(function () {
+                jQuery('#ss_fmbbundle_preparationpoche_libStock').hide();
+                jQuery('#ss_fmbbundle_preparationpoche_nomPoche').hide();
+                jQuery('#ss_fmbbundle_preparationpoche_qte').hide();
                 jQuery('#totalqte').hide();
                 jQuery('#divqteenstocks').hide();
                 jQuery('#envoie').hide();
-                jQuery('#ss_fmbbundle_preparationlanterne_numeroSerie').hide()
+                jQuery('#ss_fmbbundle_preparationpoche_numeroSerie').hide()
                 var val = jQuery(this).val();
                 jQuery.ajax({
                     type: "POST",
                     url: "{{ url('ssfmb_parcstock') }}?parc_id=" + val,
                     complete: function () {
+                        jQuery('#loadstock').hide();
                         jQuery('#totalqte').ready(function () {
-                            jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').ready(function () {
-                                if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').val() < 1) {
+                            jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').ready(function () {
+                                if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').val() < 1) {
                                     jQuery('#envoie').hide();
                                 } else {
                                     jQuery('#envoie').show();
                                 }
                             });
                         });
-                        jQuery('#ss_fmbbundle_preparationlanterne_nomLanterne').change(function () {
+                        jQuery('#ss_fmbbundle_preparationpoche_nomPoche').change(function () {
                             jQuery('#totalqte').ready(function () {
-                                if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').val() < 1) {
+                                if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').val() < 1) {
                                     jQuery('#envoie').hide();
                                 } else {
                                     jQuery('#envoie').show();
@@ -482,8 +479,8 @@
                             });
                         });
                         jQuery('#totalqte').change(function () {
-                            jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').ready(function () {
-                                if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').val() < 1) {
+                            jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').ready(function () {
+                                if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').val() < 1) {
                                     jQuery('#envoie').hide();
                                 } else {
                                     jQuery('#envoie').show();
@@ -493,38 +490,38 @@
                     },
                     beforeSend: function () {
                         jQuery('#loadstock').show();
-                        jQuery('#loadlanterne').show();
+                        jQuery('#loadpoche').show();
                         jQuery('#loadqtelstock').show();
                         jQuery('#loadlot').show();
                         jQuery('#loadqte').show();
                     },
                     success: function (data) {
                         if (jQuery.trim(data)) {
-                            jQuery('#ss_fmbbundle_preparationlanterne_libStock').show();
-                            jQuery('#loadstock').hide();
+                            jQuery('#ss_fmbbundle_preparationpoche_libStock').show();
+
                             // Remove current options
-                            jQuery('#ss_fmbbundle_preparationlanterne_libStock').html('');
+                            jQuery('#ss_fmbbundle_preparationpoche_libStock').html('');
                             jQuery.each(data, function (k, v) {
-                                jQuery('#ss_fmbbundle_preparationlanterne_libStock').append('<option value="' + v + '">' + k + '</option>');
+                                jQuery('#ss_fmbbundle_preparationpoche_libStock').append('<option value="' + v + '">' + k + '</option>');
                             });
                             jQuery.ajax({
                                 type: "POST",
-                                url: "{{ url('ssfmb_parclanterne') }}?parc_id=" + val,
+                                url: "{{ url('ssfmb_parcpoche') }}?parc_id=" + val,
                                 complete: function () {
-                                    jQuery('#loadlanterne').hide();
+                                    jQuery('#loadpoche').hide();
                                     jQuery('#loadqtelstock').hide();
                                     jQuery('#totalqte').ready(function () {
-                                        jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').ready(function () {
-                                            if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').val() < 1) {
+                                        jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').ready(function () {
+                                            if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').val() < 1) {
                                                 jQuery('#envoie').hide();
                                             } else {
                                                 jQuery('#envoie').show();
                                             }
                                         });
                                     });
-                                    jQuery('#ss_fmbbundle_preparationlanterne_nomLanterne').change(function () {
+                                    jQuery('#ss_fmbbundle_preparationpoche_nomPoche').change(function () {
                                         jQuery('#totalqte').ready(function () {
-                                            if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').val() < 1) {
+                                            if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').val() < 1) {
                                                 jQuery('#envoie').hide();
                                             } else {
                                                 jQuery('#envoie').show();
@@ -532,8 +529,8 @@
                                         });
                                     });
                                     jQuery('#totalqte').change(function () {
-                                        jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').ready(function () {
-                                            if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').val() < 1) {
+                                        jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').ready(function () {
+                                            if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').val() < 1) {
                                                 jQuery('#envoie').hide();
                                             } else {
                                                 jQuery('#envoie').show();
@@ -546,20 +543,20 @@
                                     if (jQuery.trim(data)) {
                                         var pos = true;
                                         var lan = '';
-                                        jQuery('#ss_fmbbundle_preparationlanterne_nomLanterne').show();
+                                        jQuery('#ss_fmbbundle_preparationpoche_nomPoche').show();
 
                                         // Remove current options
-                                        jQuery('#ss_fmbbundle_preparationlanterne_nomLanterne').html('');
+                                        jQuery('#ss_fmbbundle_preparationpoche_nomPoche').html('');
                                         jQuery.each(data, function (k, v) {
                                             if (pos) {
                                                 lan = k;
-                                                jQuery('#ss_fmbbundle_preparationlanterne_nomLanterne').append('<option value="' + v + '">' + k + '</option>');
+                                                jQuery('#ss_fmbbundle_preparationpoche_nomPoche').append('<option value="' + v + '">' + k + '</option>');
                                                 pos = false;
                                             } else {
-                                                if (jQuery('#ss_fmbbundle_preparationlanterne_nomLanterne').val() == lan) {
+                                                if (jQuery('#ss_fmbbundle_preparationpoche_nomPoche').val() == lan) {
+                                                    jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').show();
+                                                    jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').val(v);
                                                     jQuery('#divqteenstocks').show();
-                                                    jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').show();
-                                                    jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').val(v);
                                                 }
                                                 pos = true;
                                             }
@@ -569,22 +566,22 @@
                             });
                             jQuery.ajax({
                                 type: "POST",
-                                url: "{{ url('ssfmb_articlestock') }}?stock_id=" + jQuery('#ss_fmbbundle_preparationlanterne_libStock').val() + "&article=" + jQuery('#ss_fmbbundle_preparationlanterne_refArticle').val(),
+                                url: "{{ url('ssfmb_articlestock') }}?stock_id=" + jQuery('#ss_fmbbundle_preparationpoche_libStock').val() + "&article=" + jQuery('#ss_fmbbundle_preparationpoche_refArticle').val(),
                                 complete: function () {
                                     jQuery('#loadlot').hide();
                                     jQuery('#loadqte').hide();
                                     jQuery('#totalqte').ready(function () {
-                                        jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').ready(function () {
-                                            if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').val() < 1) {
+                                        jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').ready(function () {
+                                            if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').val() < 1) {
                                                 jQuery('#envoie').hide();
                                             } else {
                                                 jQuery('#envoie').show();
                                             }
                                         });
                                     });
-                                    jQuery('#ss_fmbbundle_preparationlanterne_nomLanterne').change(function () {
+                                    jQuery('#ss_fmbbundle_preparationpoche_nomPoche').change(function () {
                                         jQuery('#totalqte').ready(function () {
-                                            if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').val() < 1) {
+                                            if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').val() < 1) {
                                                 jQuery('#envoie').hide();
                                             } else {
                                                 jQuery('#envoie').show();
@@ -592,8 +589,8 @@
                                         });
                                     });
                                     jQuery('#totalqte').change(function () {
-                                        jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').ready(function () {
-                                            if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').val() < 1) {
+                                        jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').ready(function () {
+                                            if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').val() < 1) {
                                                 jQuery('#envoie').hide();
                                             } else {
                                                 jQuery('#envoie').show();
@@ -605,20 +602,20 @@
                                     if (jQuery.trim(data)) {
                                         var pos = true;
                                         var lan = '';
-                                        jQuery('#ss_fmbbundle_preparationlanterne_numeroSerie').show();
+                                        jQuery('#ss_fmbbundle_preparationpoche_numeroSerie').show();
                                         // Remove current options
-                                        jQuery('#ss_fmbbundle_preparationlanterne_numeroSerie').html('');
+                                        jQuery('#ss_fmbbundle_preparationpoche_numeroSerie').html('');
                                         jQuery.each(data, function (k, v) {
                                             if (pos) {
                                                 lan = k;
-                                                jQuery('#ss_fmbbundle_preparationlanterne_numeroSerie').append('<option value="' + v + '">' + k + '</option>');
+                                                jQuery('#ss_fmbbundle_preparationpoche_numeroSerie').append('<option value="' + v + '">' + k + '</option>');
                                                 pos = false;
                                             } else {
-                                                if (jQuery('#ss_fmbbundle_preparationlanterne_numeroSerie').val() == lan) {
+                                                if (jQuery('#ss_fmbbundle_preparationpoche_numeroSerie').val() == lan) {
                                                     jQuery('#totalqte').show();
-                                                    jQuery('#ss_fmbbundle_preparationlanterne_qte').show();
+                                                    jQuery('#ss_fmbbundle_preparationpoche_qte').show();
                                                     jQuery('#totalqte').val(v);
-                                                    jQuery('#ss_fmbbundle_preparationlanterne_qte').val(0);
+                                                    jQuery('#ss_fmbbundle_preparationpoche_qte').val(0);
                                                 }
                                                 pos = true;
 
@@ -632,31 +629,31 @@
                 });
                 return false;
             });
-            jQuery('#ss_fmbbundle_preparationlanterne_nomLanterne').change(function () {
+            jQuery('#ss_fmbbundle_preparationpoche_nomPoche').change(function () {
                 jQuery('#envoie').hide();
                 jQuery('#divqteenstocks').hide();
-                var val = jQuery("#ss_fmbbundle_preparationlanterne_Parc").val();
+                var val = jQuery("#ss_fmbbundle_preparationpoche_Parc").val();
 
                 jQuery.ajax({
                     type: "POST",
-                    url: "{{ url('ssfmb_parclanterne') }}?parc_id=" + val,
+                    url: "{{ url('ssfmb_parcpoche') }}?parc_id=" + val,
                     beforeSend: function () {
                         jQuery('#loadqtelstock').show();
                     },
                     complete: function () {
                         jQuery('#loadqtelstock').hide();
                         jQuery('#totalqte').ready(function () {
-                            jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').ready(function () {
-                                if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').val() < 1) {
+                            jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').ready(function () {
+                                if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').val() < 1) {
                                     jQuery('#envoie').hide();
                                 } else {
                                     jQuery('#envoie').show();
                                 }
                             });
                         });
-                        jQuery('#ss_fmbbundle_preparationlanterne_nomLanterne').change(function () {
+                        jQuery('#ss_fmbbundle_preparationpoche_nomPoche').change(function () {
                             jQuery('#totalqte').ready(function () {
-                                if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').val() < 1) {
+                                if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').val() < 1) {
                                     jQuery('#envoie').hide();
                                 } else {
                                     jQuery('#envoie').show();
@@ -664,8 +661,8 @@
                             });
                         });
                         jQuery('#totalqte').change(function () {
-                            jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').ready(function () {
-                                if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').val() < 1) {
+                            jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').ready(function () {
+                                if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').val() < 1) {
                                     jQuery('#envoie').hide();
                                 } else {
                                     jQuery('#envoie').show();
@@ -682,9 +679,9 @@
                                     lan = k;
                                     pos = false;
                                 } else {
-                                    if (jQuery('#ss_fmbbundle_preparationlanterne_nomLanterne').val() == lan) {
+                                    if (jQuery('#ss_fmbbundle_preparationpoche_nomPoche').val() == lan) {
                                         jQuery('#divqteenstocks').show();
-                                        jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').val(v);
+                                        jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').val(v);
                                     }
                                     pos = true;
                                 }
@@ -694,28 +691,28 @@
                 });
             });
 
-            jQuery('#ss_fmbbundle_preparationlanterne_numeroSerie').change(function () {
+            jQuery('#ss_fmbbundle_preparationpoche_numeroSerie').change(function () {
                 jQuery('#envoie').hide();
                 jQuery('#totalqte').hide();
-                jQuery('#ss_fmbbundle_preparationlanterne_qte').hide();
-                var val = jQuery("#ss_fmbbundle_preparationlanterne_Parc").val();
+                jQuery('#ss_fmbbundle_preparationpoche_qte').hide();
+                var val = jQuery("#ss_fmbbundle_preparationpoche_Parc").val();
 
                 jQuery.ajax({
                     type: "POST",
-                    url: "{{ url('ssfmb_articlestocklot') }}?stock_id=" + jQuery('#ss_fmbbundle_preparationlanterne_libStock').val() + "&article=" + jQuery('#ss_fmbbundle_preparationlanterne_refArticle').val() + "&lot=" + jQuery('#ss_fmbbundle_preparationlanterne_numeroSerie').val(),
+                    url: "{{ url('ssfmb_articlestocklot') }}?stock_id=" + jQuery('#ss_fmbbundle_preparationpoche_libStock').val() + "&article=" + jQuery('#ss_fmbbundle_preparationpoche_refArticle').val() + "&lot=" + jQuery('#ss_fmbbundle_preparationpoche_numeroSerie').val(),
                     complete: function () {
                         jQuery('#totalqte').ready(function () {
-                            jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').ready(function () {
-                                if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').val() < 1) {
+                            jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').ready(function () {
+                                if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').val() < 1) {
                                     jQuery('#envoie').hide();
                                 } else {
                                     jQuery('#envoie').show();
                                 }
                             });
                         });
-                        jQuery('#ss_fmbbundle_preparationlanterne_nomLanterne').change(function () {
+                        jQuery('#ss_fmbbundle_preparationpoche_nomPoche').change(function () {
                             jQuery('#totalqte').ready(function () {
-                                if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').val() < 1) {
+                                if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').val() < 1) {
                                     jQuery('#envoie').hide();
                                 } else {
                                     jQuery('#envoie').show();
@@ -723,8 +720,8 @@
                             });
                         });
                         jQuery('#totalqte').change(function () {
-                            jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').ready(function () {
-                                if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationlanterne_quantiterEnStock').val() < 1) {
+                            jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').ready(function () {
+                                if (jQuery('#totalqte').val() < 1 || jQuery('#ss_fmbbundle_preparationpoche_quantiterEnStock').val() < 1) {
                                     jQuery('#envoie').hide();
                                 } else {
                                     jQuery('#envoie').show();
@@ -738,13 +735,13 @@
                     success: function (data) {
                         if (jQuery.trim(data)) {
                             jQuery('#totalqte').show();
-                            jQuery('#ss_fmbbundle_preparationlanterne_qte').show();
+                            jQuery('#ss_fmbbundle_preparationpoche_qte').show();
                             jQuery('#loadqte').hide();
                             // Remove current options
-                            jQuery('#ss_fmbbundle_preparationlanterne_qte').html('');
+                            jQuery('#ss_fmbbundle_preparationpoche_qte').html('');
                             jQuery.each(data, function (k, v) {
                                 jQuery('#totalqte').val(v);
-                                jQuery('#ss_fmbbundle_preparationlanterne_qte').val(0);
+                                jQuery('#ss_fmbbundle_preparationpoche_qte').val(0);
                             });
                         }
                     }

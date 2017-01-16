@@ -89,6 +89,17 @@ services:
             - ~
         calls:
             - [ setTranslationDomain, [SSFMBBundle]]
+    sonata.admin.pochesbs:
+        class: SS\FMBBundle\Admin\PochesBSAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm,group: "Stock",  label: "poche",label_catalogue: "Poche" }
+        arguments:
+            - ~
+            - SS\FMBBundle\Entity\PochesBS
+            - ~
+        calls:
+            - [ setTranslationDomain, [SSFMBBundle]]
+
     sonata.admin.docslines:
         class: SS\FMBBundle\Admin\DocsLinesAdmin
         tags:

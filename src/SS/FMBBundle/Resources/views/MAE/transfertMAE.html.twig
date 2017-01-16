@@ -45,14 +45,7 @@
                                 <div class="custom-dd dd" id="nestable_list_2">
                                     <ol class="dd-list">
                                         {{ render(controller('SSFMBBundle:Filiere:findByParc',{ 'parc': entity,'page':page })) }}
-                                        {#
-                                                                        {{ render(controller(
-                                                                        'SSFMBBundle:Filiere:findByParc',
-                                                                        { 'parc': entity }
-                                                                        )) }}
-
-                                                                       {% include '@SSFMB/Filiere/Include/listIndexInclude.html.twig' %}
-                                                                       #}  </ol>
+                                    </ol>
                                 </div>
                             </div>
                             <div class="col-md-1">
@@ -119,7 +112,7 @@
                 $('input:checkbox').change(
                     function () {
                         if ($(this).is(':checked')) {
-                            $('#quantit').val(parseInt($('#quantit').val())- 1);
+                            $('#quantit').val(parseInt($('#quantit').val()) - 1);
                         } else {
                             $('#quantit').val(parseInt($('#quantit').val()) + 1);
 

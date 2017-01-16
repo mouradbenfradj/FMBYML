@@ -238,7 +238,22 @@ class FiliereController extends Controller
             $filieres[$item['fiId']][$item['sId']]['longeur'] = $item['longeur'];
             $filieres[$item['fiId']][$item['sId']]['nomSegment'] = $item['nomSegment'];
             $filieres[$item['fiId']][$item['sId']][$item['flId']]['nomFlotteur'] = $item['nomFlotteur'];
-            $filieres[$item['fiId']][$item['sId']][$item['flId']][$item['empId']] = array('place' => $item['place'], 'numeroSerieLanrt' => $item['numeroSerieLanrt'], 'llibArticle' => $item['llibArticle'], 'libArticle' => $item['libArticle'], 'nomLanterne' => $item['nomLanterne'], 'numeroSerie' => $item['numeroSerie'], 'dateDTL' => $item['maelt'], 'dateDTC' => $item['maect'], 'dateDeRemplissage' => $item['dateDeRemplissage'], 'stockscorde' => $item['sc'], 'stockslanterne' => $item['sl']);
+            $filieres[$item['fiId']][$item['sId']][$item['flId']][$item['empId']] =
+                array(
+                    'place' => $item['place'],
+                    'numeroSerieLanrt' => $item['numeroSerieLanrt'],
+                    'llibArticle' => $item['llibArticle'],
+                    'libArticle' => $item['libArticle'],
+                    'nomLanterne' => $item['nomLanterne'],
+                    'numeroSerie' => $item['numeroSerie'],
+                    'dateDTL' => $item['maelt'],
+                    'dateDTC' => $item['maect'],
+                    'dateDeRemplissage' => $item['dateDeRemplissage'],
+                    'stockscorde' => $item['sc'],
+                    'stockslanterne' => $item['sl'],
+                    'chausl' => $item['chausl'],
+                    'chausc' => $item['chausc']
+                );
         }
         return $this->render('@SSFMB/Filiere/Render/listFiliereIndexRender.html.twig', array('filieres' => $filieres, 'page' => $page));
     }

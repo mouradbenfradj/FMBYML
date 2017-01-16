@@ -439,4 +439,17 @@ class DocsLines
     {
         return $this->refDoc;
     }
+
+    /**
+     * Set refDocLine
+     *
+     * @param string $refDocLine
+     * @return DocsLines
+     */
+    public function setRefDocLine($refDocLine)
+    {
+        $this->refDocLine = $refDocLine;
+
+        return $this;
+    }
 }
