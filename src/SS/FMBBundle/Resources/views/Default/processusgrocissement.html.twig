@@ -28,8 +28,9 @@
                             {% if(entity != null) %}
                                 {% include('@SSFMB/Default/Include/processus/pregrossissement.html.twig') %}
                                 {% include('@SSFMB/Default/Include/processus/grossissement.html.twig') %}
-                                {#     {% include('@SSFMB/Default/Include/processus/comerciale.html.twig') %}
-                                     #}
+                                {#
+                                     {% include('@SSFMB/Default/Include/processus/comerciale.html.twig') %}
+                                 #}
                             {% endif %}
                         </div>
                         <!-- end col -->
@@ -57,6 +58,16 @@
         <script src="{{ asset('bundles/ssfmb/pages/jquery.footable.js') }}"></script>
         <script src="{{ asset('bundles/ssfmb/js/processus.js') }}"></script>
 
+        <script src="{{ asset('bundles/ssfmb/plugins/flot-chart/jquery.flot.min.js') }}"></script>
+        <script src="{{ asset('bundles/ssfmb/plugins/flot-chart/jquery.flot.time.js') }}"></script>
+        <script src="{{ asset('bundles/ssfmb/plugins/flot-chart/jquery.flot.tooltip.min.js') }}"></script>
+        <script src="{{ asset('bundles/ssfmb/plugins/flot-chart/jquery.flot.resize.js') }}"></script>
+        <script src="{{ asset('bundles/ssfmb/plugins/flot-chart/jquery.flot.pie.js') }}"></script>
+        <script src="{{ asset('bundles/ssfmb/plugins/flot-chart/jquery.flot.selection.js') }}"></script>
+        <script src="{{ asset('bundles/ssfmb/plugins/flot-chart/jquery.flot.stack.js') }}"></script>
+        <script src="{{ asset('bundles/ssfmb/plugins/flot-chart/jquery.flot.orderBars.min.js') }}"></script>
+        <script src="{{ asset('bundles/ssfmb/plugins/flot-chart/jquery.flot.crosshair.js') }}"></script>
+        <script src="{{ asset('bundles/ssfmb/pages/jquery.flot.init.js') }}"></script>
         <script type="text/javascript">
             $(document).ready(function () {
                 function diffdate(d1, d2, u) {

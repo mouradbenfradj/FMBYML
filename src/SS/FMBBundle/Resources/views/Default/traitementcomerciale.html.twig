@@ -35,15 +35,15 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-1"><label class="control-label">Article</label></div>
-                                    <div class="col-md-1"><label class="control-label">0- TL HC RET</label></div>
+                                    <div class="col-md-1"><label class="control-label"  style="color: red">0- TL HC RET</label></div>
                                     <div class="col-md-1"><label class="control-label">1- TL HC VS</label></div>
                                     <div class="col-md-1"><label class="control-label">2- TL HC - MTH</label></div>
                                     <div class="col-md-1"><label class="control-label">3- TL HC - POCHES</label></div>
                                     <div class="col-md-1"><label class="control-label">4- TL HC - MTE</label></div>
-                                    <div class="col-md-2"><label class="control-label">5- TL HC - TRAIT</label></div>
-                                    <div class="col-md-2"><label class="control-label">6- AUTER HC - PERTE & VOL</label>
+                                    <div class="col-md-2"><label class="control-label" style="color: blue">5- TL HC - TRAIT</label></div>
+                                    <div class="col-md-2"><label class="control-label" >6- AUTER HC - PERTE & VOL</label>
                                     </div>
-                                    <div class="col-md-2"><label class="control-label">7- SOLDE HC NON TRAIT</label>
+                                    <div class="col-md-2"><label class="control-label" style="color: blue">7- SOLDE HC NON TRAIT</label>
                                     </div>
                                 </div>
                                 {% for stock in stocksnvirtuel %}
@@ -55,7 +55,7 @@
                                                 <input type="hidden" name="tab[]" value="{{ stock.numeroSerie }}">
                                                 <input type="submit" value="valider le stock comerciale "/>
                                             </div>
-                                            <div class="col-md-1">
+                                            <div class="col-md-1" style="color: red">
                                                 <label class="control-label">
                                                     <div>{{ stock.snQte }} u</div>
                                                     <div>{{ (stock.snQte/12)|number_format(2) }} dz</div>
@@ -107,7 +107,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-2">
-                                                <label class="control-label">
+                                                <label class="control-label" style="color: blue">
                                                     <div>
                                                         {{ stock.snQteTraiterValide + stock.snQteMiseEnVente + stock.snQteARemettreEnPoche + stock.snQteMorte }}
                                                         u
@@ -129,7 +129,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-2">
-                                                <label class="control-label">
+                                                <label class="control-label" style="color: blue">
                                                     <div>{{ (stock.snQte-((stock.snQteTraiterValide + stock.snQteMiseEnVente + stock.snQteARemettreEnPoche + stock.snQteMorte) + stock.snQtePerdu)) }}
                                                         u
                                                     </div>

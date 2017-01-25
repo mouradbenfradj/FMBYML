@@ -32,6 +32,7 @@ class Builder implements ContainerAwareInterface
         $menu['Operation']->addChild('Préparation');
         $menu['Operation']->addChild('MAE lanterne');
         $menu['Operation']->addChild('MAE corde');
+        $menu['Operation']->addChild('MAE Poche');
         $menu['Operation']->addChild('chaussage');
         $menu['Operation']->addChild('Retrait Transfert');
         $menu['Operation']->addChild('Retrait AW lanterne');
@@ -42,8 +43,6 @@ class Builder implements ContainerAwareInterface
         $menu['Operation']['Préparation']->addChild('preparer corde', array('route' => 'ssfmb_preparationcorde'));
         $menu['Operation']['Préparation']->addChild('preparer poche', array('route' => 'ssfmb_preparationpoche'));
         $menu['Operation']['Préparation']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
-        $menu['Operation']["MAE lanterne"]->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
-        $menu['Operation']["MAE corde"]->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
         $menu['Operation']['chaussage']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
         $menu['Operation']['Retrait AW lanterne']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
         $menu['Operation']['Retrait AW corde']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
@@ -55,6 +54,7 @@ class Builder implements ContainerAwareInterface
 
         $menu['Operation']['MAE lanterne']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
         $menu['Operation']['MAE corde']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
+        $menu['Operation']['MAE Poche']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
 
         //   $menu->setChildrenAttribute('class', 'nav navbar-nav');
         $em = $this->container->get('doctrine')->getManager();
@@ -62,6 +62,10 @@ class Builder implements ContainerAwareInterface
         $parcs = $em->getRepository('SSFMBBundle:Magasins')->findAll();
         if ($parcs) {
             foreach ($parcs as $parc) {
+                $menu['Statistique']->addChild($parc->getAbrevMagasin(), array(
+                    'route' => 'ssfmb_statistique',
+                    'routeParameters' => array('idparc' => $parc->getIdMagasin())
+                ));
                 $menu['suivi filières']->addChild($parc->getAbrevMagasin(), array(
                     'route' => 'ssfmb_suivi',
                     'routeParameters' => array('idparc' => $parc->getIdMagasin())
@@ -82,6 +86,10 @@ class Builder implements ContainerAwareInterface
                 $menu['Operation']['Retrait AW lanterne']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
                 $menu['Operation']["MAE corde"]->addChild($parc->getAbrevMagasin(), array(
                     'route' => 'ssfmb_misaaeaucorde',
+                    'routeParameters' => array('idparc' => $parc->getIdMagasin())
+                ));
+                $menu['Operation']["MAE Poche"]->addChild($parc->getAbrevMagasin(), array(
+                    'route' => 'ssfmb_misaaeaupoche',
                     'routeParameters' => array('idparc' => $parc->getIdMagasin())
                 ));
                 $menu['Operation']['Retrait AW corde']->addChild($parc->getAbrevMagasin(), array(

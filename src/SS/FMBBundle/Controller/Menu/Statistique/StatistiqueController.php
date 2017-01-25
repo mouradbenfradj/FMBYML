@@ -13,7 +13,7 @@ class StatistiqueController extends Controller
         if ($request->get('idparc') == null)
             $parc = $em->getRepository('SSFMBBundle:Magasins')->findAll();
         else
-            $parc = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('idparc'));
+            $parc = $em->getRepository('SSFMBBundle:Magasins')->findByIdMagasin($request->get('idparc'));
         return $this->render('SSFMBBundle:Default:index.html.twig', array('entity' => $parc));
     }
 }

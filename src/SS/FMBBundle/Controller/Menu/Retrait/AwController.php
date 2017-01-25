@@ -66,15 +66,21 @@ class AwController extends Controller
                     $em->persist($sarticle);
                     $sarticlesn = $em->getRepository('SSFMBBundle:StocksArticlesSN')->getSAS($sarticle->getRefStockArticle(), $slanterne->getArticle()->getNumeroSerie());
                     if (!$sarticlesn) {
-                        $sarticlesn = new StocksArticlesSn($slanterne->getArticle()->getNumeroSerie(), $implementation->calculerQuantiterLanterne($slanterne), $sarticle);
-                        $em->persist($sarticlesn);
+                        $sarticlesn = new StocksArticlesSn();
+                        $sarticlesn->setNumeroSerie();
+                        $sarticlesn->setSnQte($implementation->calculerQuantiterLanterne($slanterne));
+                        $sarticlesn->setRefStockArticle($sarticle);
+                        $em->persist($slanterne->getArticle()->getNumeroSerie());
                         $em->flush();
                     }
                 } else {
                     $sarticle->setQte($sarticle->getQte() + $implementation->calculerQuantiterLanterne($slanterne));
                     $sarticlesn = $em->getRepository('SSFMBBundle:StocksArticlesSN')->getSAS($sarticle->getRefStockArticle(), $slanterne->getArticle()->getNumeroSerie());
                     if (!$sarticlesn) {
-                        $sarticlesn = new StocksArticlesSn($slanterne->getArticle()->getNumeroSerie(), $implementation->calculerQuantiterLanterne($slanterne), $sarticle);
+                        $sarticlesn = new StocksArticlesSn();
+                        $sarticlesn->setNumeroSerie();
+                        $sarticlesn->setSnQte($implementation->calculerQuantiterLanterne($slanterne));
+                        $sarticlesn->setRefStockArticle($sarticle);
                         $em->persist($sarticlesn);
                         $em->flush();
                     } else {
@@ -189,7 +195,10 @@ class AwController extends Controller
                     $sarticlesn1 = $em->getRepository('SSFMBBundle:StocksArticlesSn')->getSAS($sarticle->getRefStockArticle(), $scorde->getArticle()->getNumeroSerie());
                     $sarticlesn = $em->getRepository('SSFMBBundle:StocksArticlesSnVirtuel')->getSAS($sarticle->getRefStockArticle(), $scorde->getArticle()->getNumeroSerie());
                     if (!$sarticlesn && !$sarticlesn1) {
-                        $sarticlesn1 = new StocksArticlesSn($scorde->getArticle()->getNumeroSerie(), 0, $sarticle);
+                        $sarticlesn1 = new StocksArticlesSn();
+                        $sarticlesn1->setNumeroSerie($scorde->getArticle()->getNumeroSerie());
+                        $sarticlesn1->setSnQte(0);
+                        $sarticlesn1->setRefStockArticle($sarticle);
                         $sarticlesn = new StocksArticlesSnVirtuel($scorde->getArticle()->getNumeroSerie(), $scorde->getQuantiter(), $sarticle);
                         $em->persist($sarticlesn1);
                         $em->persist($sarticlesn);
@@ -201,7 +210,10 @@ class AwController extends Controller
                     $sarticlesn1 = $em->getRepository('SSFMBBundle:StocksArticlesSn')->getSAS($sarticle->getRefStockArticle(), $scorde->getArticle()->getNumeroSerie());
                     $sarticlesn = $em->getRepository('SSFMBBundle:StocksArticlesSnVirtuel')->getSAS($sarticle->getRefStockArticle(), $scorde->getArticle()->getNumeroSerie());
                     if (!$sarticlesn && !$sarticlesn1) {
-                        $sarticlesn1 = new StocksArticlesSn($scorde->getArticle()->getNumeroSerie(), 0, $sarticle);
+                        $sarticlesn1 = new StocksArticlesSn();
+                        $sarticlesn1->setNumeroSerie($scorde->getArticle()->getNumeroSerie());
+                        $sarticlesn1->setSnQte(0);
+                        $sarticlesn1->setRefStockArticle($sarticle);
                         $sarticlesn = new StocksArticlesSnVirtuel($scorde->getArticle()->getNumeroSerie(), $scorde->getQuantiter(), $sarticle);
                         $scorde->setArticle($sarticlesn1);
                         $em->persist($sarticlesn1);

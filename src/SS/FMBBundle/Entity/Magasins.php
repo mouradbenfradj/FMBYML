@@ -91,6 +91,10 @@ class Magasins
      * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Lanterne", mappedBy="parc" ,cascade={"persist","remove"},fetch="EXTRA_LAZY")
      */
     private $lanternes;
+    /**
+     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\PochesBS", mappedBy="parc" ,cascade={"persist","remove"},fetch="EXTRA_LAZY")
+     */
+    private $poches;
 
     /**
      * Constructor
@@ -373,5 +377,38 @@ class Magasins
     public function getLanternes()
     {
         return $this->lanternes;
+    }
+
+    /**
+     * Add poches
+     *
+     * @param \SS\FMBBundle\Entity\PochesBS $poches
+     * @return Magasins
+     */
+    public function addPoch(\SS\FMBBundle\Entity\PochesBS $poches)
+    {
+        $this->poches[] = $poches;
+
+        return $this;
+    }
+
+    /**
+     * Remove poches
+     *
+     * @param \SS\FMBBundle\Entity\PochesBS $poches
+     */
+    public function removePoch(\SS\FMBBundle\Entity\PochesBS $poches)
+    {
+        $this->poches->removeElement($poches);
+    }
+
+    /**
+     * Get poches
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPoches()
+    {
+        return $this->poches;
     }
 }

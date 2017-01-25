@@ -2,12 +2,14 @@
     {% for idemp,emplacement in flotteur %}
         {% if not loop.first %}
             <div class="col-xs-1 col-sm-1 col-md-1">
-                {% if emplacement.stockscorde == null and emplacement.stockslanterne == null %}
+                {% if emplacement.stockscorde == null and emplacement.stockslanterne == null and emplacement.stockspoche == null %}
                     <div style="color: red"> {{ emplacement.place }}</div>
                 {% elseif emplacement.stockscorde != null %}
                     {% include "SSFMBBundle:Include:suivitEtatCordeInclude.html.twig" %}
                 {% elseif emplacement.stockslanterne != null %}
                     {% include "SSFMBBundle:Include:suivitEtatLanterneInclude.html.twig" %}
+                {% elseif emplacement.stockspoche != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatPocheInclude.html.twig" %}
                 {% endif %}
             </div>
         {% endif %}
@@ -16,7 +18,7 @@
     {% for emp,emplacement in flotteur %}
         {% if not loop.first %}
             <div class="col-xs-1 col-sm-1 col-md-1">
-                {% if emplacement.stockscorde == null and emplacement.stockslanterne == null %}
+                {% if emplacement.stockscorde == null and emplacement.stockslanterne == null and emplacement.stockspoche == null %}
                     {% set verifexsistance =  verifexsistance + 1 %}
                     <div style="color: red"> {{ emplacement.place }}</div>
                     <input type="checkbox" name="placelanterne[]" value="{{ emp }}"/>
@@ -24,6 +26,8 @@
                     {% include "SSFMBBundle:Include:suivitEtatCordeInclude.html.twig" %}
                 {% elseif emplacement.stockslanterne != null %}
                     {% include "SSFMBBundle:Include:suivitEtatLanterneInclude.html.twig" %}
+                {% elseif emplacement.stockspoche != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatPocheInclude.html.twig" %}
                 {% endif %}
             </div>
         {% endif %}
@@ -43,7 +47,7 @@
     {% for idemp, emplacement in flotteur %}
         {% if not loop.first %}
             <div class="col-xs-1 col-sm-1 col-md-1">
-                {% if emplacement.stockscorde == null and emplacement.stockslanterne == null %}
+                {% if emplacement.stockscorde == null and emplacement.stockslanterne == null and emplacement.stockspoche == null %}
                     {% set verifexsistance =  verifexsistance + 1 %}
                     <div style="color: red">{{ emplacement.place }}</div>
                     <input type="checkbox" name="placecorde[]" value="{{ idemp }}"/>
@@ -51,6 +55,8 @@
                     {% include "SSFMBBundle:Include:suivitEtatCordeInclude.html.twig" %}
                 {% elseif emplacement.stockslanterne != null %}
                     {% include "SSFMBBundle:Include:suivitEtatLanterneInclude.html.twig" %}
+                {% elseif emplacement.stockspoche != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatPocheInclude.html.twig" %}
                 {% endif %}
             </div>
         {% endif %}
@@ -72,15 +78,16 @@
     {% for idemp, emplacement in flotteur %}
         {% if not loop.first %}
             <div class="col-xs-1 col-sm-1 col-md-1">
-                {% if emplacement.stockscorde == null and emplacement.stockslanterne == null %}
+                {% if emplacement.stockscorde == null and emplacement.stockslanterne == null and emplacement.stockspoche == null %}
                     {% set verifexsistance =  verifexsistance + 1 %}
                     <div style="color: red">{{ emplacement.place }}</div>
-                    <input type="checkbox" name="placecorde[]" value="{{ idemp }}"/>
+                    <input type="checkbox" name="placepoche[]" value="{{ idemp }}"/>
                 {% elseif emplacement.stockscorde != null %}
                     {% include "SSFMBBundle:Include:suivitEtatCordeInclude.html.twig" %}
                 {% elseif emplacement.stockslanterne != null %}
                     {% include "SSFMBBundle:Include:suivitEtatLanterneInclude.html.twig" %}
-                {% endif %}
+                {% elseif emplacement.stockspoche != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatPocheInclude.html.twig" %}{% endif %}
             </div>
         {% endif %}
     {% endfor %}
@@ -101,7 +108,7 @@
     {% for idemp,emplacement in flotteur %}
         {% if not loop.first %}
             <div class="col-xs-1 col-sm-1 col-md-1">
-                {% if emplacement.stockscorde == null and emplacement.stockslanterne == null %}
+                {% if emplacement.stockscorde == null and emplacement.stockslanterne == null and emplacement.stockspoche == null %}
                     <div style="color: red"> {{ emplacement.place }}</div>
                 {% elseif emplacement.stockscorde != null %}
                     {% include "SSFMBBundle:Include:suivitEtatCordeInclude.html.twig" %}
@@ -111,6 +118,8 @@
                            name="placelanterne[]"
                            value="{{ idemp }}"/>
                     {% set verifexsistance =  verifexsistance + 1 %}
+                {% elseif emplacement.stockspoche != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatPocheInclude.html.twig" %}
                 {% endif %}
             </div>
         {% endif %}
@@ -130,7 +139,7 @@
     {% for idemp,emplacement in flotteur %}
         {% if not loop.first %}
             <div class="col-xs-1 col-sm-1 col-md-1">
-                {% if emplacement.stockscorde == null and emplacement.stockslanterne == null %}
+                {% if emplacement.stockscorde == null and emplacement.stockslanterne == null and emplacement.stockspoche == null %}
                     <div style="color: red"> {{ emplacement.place }}</div>
                 {% elseif emplacement.stockscorde != null %}
                     {% include "SSFMBBundle:Include:suivitEtatCordeInclude.html.twig" %}
@@ -140,7 +149,8 @@
                     {% set verifexsistance =  verifexsistance + 1 %}
                 {% elseif emplacement.stockslanterne != null %}
                     {% include "SSFMBBundle:Include:suivitEtatLanterneInclude.html.twig" %}
-                {% endif %}
+                {% elseif emplacement.stockspoche != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatPocheInclude.html.twig" %} {% endif %}
             </div>
         {% endif %}
     {% endfor %}
@@ -161,7 +171,7 @@
     {% for idemp,emplacement in flotteur %}
         {% if not loop.first %}
             <div class="col-xs-1 col-sm-1 col-md-1">
-                {% if emplacement.stockscorde == null and emplacement.stockslanterne == null %}
+                {% if emplacement.stockscorde == null and emplacement.stockslanterne == null and emplacement.stockspoche == null %}
                     <div style="color: red"> {{ emplacement.place }}</div>
                 {% elseif emplacement.stockscorde != null %}
                     {% include "SSFMBBundle:Include:suivitEtatCordeInclude.html.twig" %}
@@ -176,7 +186,8 @@
                            name="place[]"
                            value="{{ idemp }}"/>
                     {% set verifexsistance =  verifexsistance + 1 %}
-
+                {% elseif emplacement.stockspoche != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatPocheInclude.html.twig" %}
 
                 {% endif %}
             </div>
@@ -197,7 +208,7 @@
     {% for idemp, emplacement in flotteur %}
         {% if not loop.first %}
             <div class="col-xs-1 col-sm-1 col-md-1">
-                {% if emplacement.stockscorde == null and emplacement.stockslanterne == null %}
+                {% if emplacement.stockscorde == null and emplacement.stockslanterne == null and emplacement.stockspoche == null %}
                     {% set verifexsistance =  verifexsistance + 1 %}
                     <div style="color: red"> {{ emplacement.place }}</div>
                     <input type="checkbox"
@@ -213,7 +224,8 @@
                     {% include "SSFMBBundle:Include:suivitEtatLanterneInclude.html.twig" %}
                     <span style="display: none"
                           idemp="dateemplacement">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</span>
-                {% endif %}
+                {% elseif emplacement.stockspoche != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatPocheInclude.html.twig" %} {% endif %}
             </div>
         {% endif %}
     {% endfor %}<br>
@@ -231,7 +243,7 @@
     {% for idemp,emplacement in flotteur %}
         {% if not loop.first %}
             <div class="col-xs-1 col-sm-1 col-md-1">
-                {% if emplacement.stockscorde == null and emplacement.stockslanterne == null %}
+                {% if emplacement.stockscorde == null and emplacement.stockslanterne == null and emplacement.stockspoche == null %}
                     <div style="color: red"> {{ emplacement.place }}</div>
                 {% elseif emplacement.stockscorde != null %}
                     {% include "SSFMBBundle:Include:suivitEtatCordeInclude.html.twig" %}
@@ -249,7 +261,8 @@
                                value="{{ idemp }}"/>
                         {% set verifexsistance =  verifexsistance + 1 %}
                     {% endif %}
-
+                {% elseif emplacement.stockspoche != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatPocheInclude.html.twig" %}
                 {% endif %}
             </div>
         {% endif %}

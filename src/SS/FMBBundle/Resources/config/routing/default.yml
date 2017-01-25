@@ -43,7 +43,7 @@ ssfmb_retraitLanterne:
     defaults: { _controller: SSFMBBundle:Menu/Retrait/Aw:retraitLanterne }
 ssfmb_planingdetravaille:
     path:     /planing
-    defaults: { _controller: SSFMBBundle:Default:planingdetravaille}
+    defaults: { _controller: SSFMBBundle:Menu/Planing/Planing:planingdetravaille}
 ssfmb_processusgrocissement:
     path:     /groscissement
     defaults: { _controller: SSFMBBundle:Default:processgrocissmeent}

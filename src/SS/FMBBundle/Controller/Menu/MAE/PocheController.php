@@ -26,17 +26,17 @@ class PocheController extends Controller
             $poche = $em->getRepository('SSFMBBundle:PochesBS')->find($request->request->get('pochechoix'));
             foreach ($request->request->get('placepoche') as $emplacementpoche) {
                 $place = $em->getRepository('SSFMBBundle:Emplacement')->find($emplacementpoche);
-                $pochearticle = $em->getRepository('SSFMBBundle:StocksPoches')->getPochePreparer($em->getRepository('SSFMBBundle:StocksArticlesSn')->getSAS($request->request->get('articlechoix'), $request->request->get('articlelotchoix')), $poche);
+                $pochearticle = $em->getRepository('SSFMBBundle:StocksPochesBS')->getPochePreparer($em->getRepository('SSFMBBundle:StocksArticlesSn')->getSAS($request->request->get('articlechoix'), $request->request->get('articlelotchoix')), $poche);
                 $pochearticle[0]->setEmplacement($place);
                 $pochearticle[0]->setDateDeMiseAEau($dateMiseAEau);
-                $place->setStocksPoche($pochearticle[0]);
+                $place->setStockspoches($pochearticle[0]);
                 $place->setDateDeRemplissage($dateMiseAEau);
                 $em->flush();
             }
             return $this->redirectToRoute('ssfmb_misaaeaupoche');
         }
         return $this->render(
-            '@SSFMB/Default/MAE/Poche/miseAEauPoche.html.twig',
+            '@SSFMB/MAE/Poche/miseAEauPoche.html.twig',
             array(
                 'entity' => $parcs,
                 'articles' => $articles,

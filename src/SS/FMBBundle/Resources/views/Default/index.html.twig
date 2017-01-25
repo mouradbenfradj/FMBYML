@@ -4,6 +4,8 @@
     {% if(entity != null) %}
         <link href="{{ asset('bundles/ssfmb/plugins/nestable/jquery.nestable.css') }}" rel="stylesheet"/>
         {{ parent() }}
+        <link href="{{ asset('bundles/ssfmb/plugins/bootstrap-sweetalert/sweet-alert.css') }}" rel="stylesheet"
+              type="text/css">
     {% endif %}
 {% endblock %}
 {% block header %} {{ parent() }}{% endblock %}
@@ -11,67 +13,97 @@
     {{ parent() }}
     {% set page = 'Statistique' %}
     <div class="row">
-        <br>
-        <br>
-        <table>
-            <tr>
-                <td>nombre totale des parc</td>
-                <td>{{ entity|length }}</td>
-            </tr>
-            <tr>
-                <td>nombre totale des filieres</td>
-                <td>
-                    {% set nbrfiliere = 0 %}
-                    {% for parc in entity %}
-                        {% set nbrfiliere = nbrfiliere + parc.filieres|length %}
-                    {% endfor %}
-                    {{ nbrfiliere }}
-                </td>
-            </tr>
-            <tr>
-                <td>nombre totale des lanternes</td>
-                <td>
-                    {% set nbrfiliere = 0 %}
-                    {% for parc in entity %}
-                        {% for lanterne in parc.lanternes %}
-                            {% set nbrfiliere = nbrfiliere + lanterne.nbrTotaleEnStock %}
-                            {% for lant in lanterne.stockslanternes if not lant.pret  %}
-                                {% set nbrfiliere = nbrfiliere + 1 %}
+        <div class="col-lg-3 col-sm-6">
+            <div class="widget-panel widget-style-2 bg-white">
+                <i class="md md-store-mall-directory text-info"></i>
+                <h2 class="m-0 text-dark counter font-600"><span data-plugin="counterup">{{ entity|length }}</span></h2>
+                <div class="text-muted m-t-5">Total Parc</div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+            <div class="widget-panel widget-style-2 bg-white">
+                <i class="md ion-android-mixer text-primary"></i>
+                <h2 class="m-0 text-dark counter font-600"><span data-plugin="counterup">{% set nbrfiliere = 0 %}
+                        {% for parc in entity %}
+                            {% set nbrfiliere = nbrfiliere + parc.filieres|length %}
+                        {% endfor %}
+                        {{ nbrfiliere }}
+                    </span></h2>
+                <div class="text-muted m-t-5">Total Filière</div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+            <div class="widget-panel widget-style-2 bg-white">
+                <i class="md ti-align-justify text-pink"></i>
+                <h2 class="m-0 text-dark counter font-600"><span data-plugin="counterup">{% set nbrcorde = 0 %}
+                        {% for parc in entity %}
+                            {% for corde in parc.cordes %}
+                                {% set nbrcorde = nbrcorde + corde.nbrTotaleEnStock %}
+                                {% for crd in corde.stockscordes if not crd.pret %}
+                                    {% set nbrcorde = nbrcorde + 1 %}
+                                {% endfor %}
                             {% endfor %}
                         {% endfor %}
-                    {% endfor %}
-                    {{ nbrfiliere }}
-                </td>
-            </tr>
-            <tr>
-                <td>nombre totale des cordes</td>
-                <td>
-                    {% set nbrcorde = 0 %}
-                    {% for parc in entity %}
-                        {% for corde in parc.cordes %}
-                            {% set nbrcorde = nbrcorde + corde.nbrTotaleEnStock %}
-                            {% for crd in corde.stockscordes if not crd.pret  %}
-                                {% set nbrcorde = nbrcorde + 1 %}
+                        {{ nbrcorde }}
+                    </span></h2>
+                <div class="text-muted m-t-5">Totale Corde</div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+            <div class="widget-panel widget-style-2 bg-white">
+                <i class="md typcn typcn-th-menu-outline text-custom"></i>
+                <h2 class="m-0 text-dark counter font-600"><span data-plugin="counterup"> {% set nbrfiliere = 0 %}
+                        {% for parc in entity %}
+                            {% for lanterne in parc.lanternes %}
+                                {% set nbrfiliere = nbrfiliere + lanterne.nbrTotaleEnStock %}
+                                {% for lant in lanterne.stockslanternes if not lant.pret %}
+                                    {% set nbrfiliere = nbrfiliere + 1 %}
+                                {% endfor %}
                             {% endfor %}
                         {% endfor %}
-                    {% endfor %}
-                    {{ nbrcorde }}
-                </td>
-            </tr>
-            <tr>
-                <td>densiter totales d'articles dans l'eau</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>densité totale d'articles hors eau</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>nombre totales des poches</td>
-                <td></td>
-            </tr>
-        </table>
+                        {{ nbrfiliere }}</span></h2>
+                <div class="text-muted m-t-5">Totale Lanterne</div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+            <div class="widget-panel widget-style-2 bg-white">
+                <i class="md typcn typcn-social-dribbble-circular text-custom"></i>
+                <h2 class="m-0 text-dark counter font-600"><span data-plugin="counterup">
+                    {% set nbrpoche = 0 %}
+                        {% for parc in entity %}
+                            {% for poche in parc.poches %}
+                                {% set nbrpoche = nbrpoche + poche.nbrTotaleEnStock %}
+                                {% for pch in poche.stockspoches if not pch.pret %}
+                                    {% set nbrpoche = nbrpoche + 1 %}
+                                {% endfor %}
+                            {% endfor %}
+                        {% endfor %}
+                        {{ nbrpoche }}
+                    </span></h2>
+                <div class="text-muted m-t-5">Totale Poche</div>
+            </div>
+        </div>
+        {{ dump(entity) }}
+        <div class="col-lg-3 col-sm-6">
+            <div class="widget-panel widget-style-2 bg-white">
+                <i class="md typcn typcn-social-dribbble-circular text-custom"></i>
+                <h2 class="m-0 text-dark counter font-600"><span data-plugin="counterup">
+                    {% set nbrarticle = 0 %}
+                        {% for parc in entity %}
+                            {% for poche in parc.poches %}
+                                {% set nbrpoche = nbrpoche + poche.nbrTotaleEnStock %}
+                                {% for pch in poche.stockspoches if not pch.pret %}
+                                    {% set nbrpoche = nbrpoche + 1 %}
+                                {% endfor %}
+                            {% endfor %}
+                        {% endfor %}
+                        {{ nbrpoche }}
+                    </span></h2>
+                <div class="text-muted m-t-5">Totale Article</div>
+            </div>
+        </div>
     </div>
+
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
@@ -80,4 +112,45 @@
         <script src="{{ asset('bundles/ssfmb/plugins/nestable/jquery.nestable.js') }}"></script>
         <script src="{{ asset('bundles/ssfmb/pages/nestable.js') }}"></script>
     {% endif %}
+    <!-- Moment js  -->
+    <script src="{{ asset('bundles/ssfmb/plugins/moment/moment.js') }}"></script>
+
+    <!-- Counter Up  -->
+    <script src="{{ asset('bundles/ssfmb/plugins/waypoints/lib/jquery.waypoints.js') }}"></script>
+    <script src="{{ asset('bundles/ssfmb/plugins/counterup/jquery.counterup.min.js') }}"></script>
+
+    <!-- Sweet Alert  -->
+    <script src="{{ asset('bundles/ssfmb/plugins/bootstrap-sweetalert/sweet-alert.min.js') }}"></script>
+
+    <!-- skycons -->
+    <script src="{{ asset('bundles/ssfmb/plugins/skyicons/skycons.min.js') }}" type="text/javascript"></script>
+
+    <!-- Peity chart js -->
+    <script src="{{ asset('bundles/ssfmb/plugins/peity/jquery.peity.min.js') }}"></script>
+
+    <!-- Widget js -->
+    <script src="{{ asset('bundles/ssfmb/pages/jquery.widgets.js') }}"></script>
+
+    <!-- Todojs  -->
+    <script src="{{ asset('bundles/ssfmb/pages/jquery.todo.js') }}"></script>
+
+    <!-- chatjs  -->
+    <script src="{{ asset('bundles/ssfmb/pages/jquery.chat.js') }}"></script>
+
+    <!-- Knob -->
+    <script src="{{ asset('bundles/ssfmb/plugins/jquery-knob/jquery.knob.js') }} "></script>
+
+    <!-- Sparkline chart -->
+    <script src="{{ asset('bundles/ssfmb/plugins/jquery-sparkline/jquery.sparkline.min.js') }}"></script>
+
+    <!-- App core js -->
+    <script src="{{ asset('bundles/ssfmb/assets/js/jquery.core.js') }}"></script>
+    <script src="{{ asset('bundles/ssfmb/assets/js/jquery.app.js') }}"></script>
+
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+            $(".knob").knob();
+        });
+    </script>
+
 {% endblock %}

@@ -45,6 +45,17 @@ class PochesBS
      */
     private $parc;
 
+    public function __toString()
+    {
+     return $this->nomPoche;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->stockspoches = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -101,36 +112,6 @@ class PochesBS
     {
         return $this->nomPoche;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->stockspoches = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Set parc
-     *
-     * @param \SS\FMBBundle\Entity\Magasins $parc
-     * @return PochesBS
-     */
-    public function setParc(\SS\FMBBundle\Entity\Magasins $parc)
-    {
-        $this->parc = $parc;
-
-        return $this;
-    }
-
-    /**
-     * Get parc
-     *
-     * @return \SS\FMBBundle\Entity\Magasins 
-     */
-    public function getParc()
-    {
-        return $this->parc;
-    }
 
     /**
      * Add stockspoches
@@ -163,5 +144,28 @@ class PochesBS
     public function getStockspoches()
     {
         return $this->stockspoches;
+    }
+
+    /**
+     * Set parc
+     *
+     * @param \SS\FMBBundle\Entity\Magasins $parc
+     * @return PochesBS
+     */
+    public function setParc(\SS\FMBBundle\Entity\Magasins $parc)
+    {
+        $this->parc = $parc;
+
+        return $this;
+    }
+
+    /**
+     * Get parc
+     *
+     * @return \SS\FMBBundle\Entity\Magasins 
+     */
+    public function getParc()
+    {
+        return $this->parc;
     }
 }

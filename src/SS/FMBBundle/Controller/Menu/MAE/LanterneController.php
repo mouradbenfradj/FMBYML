@@ -32,8 +32,7 @@ class LanterneController extends Controller
                 $lanternearticle[0]->setDateDeMiseAEau($dateMiseAEau);
                 $place->setStocksLanterne($lanternearticle[0]);
                 $place->setDateDeRemplissage($dateMiseAEau);
-                var_dump($request->request->get('cyclerestant'));
-                die();
+                $lanternearticle[0]->setCycleR(3);
                 $em->flush();
             }
             return $this->redirectToRoute('ssfmb_misaaeaulanterne');

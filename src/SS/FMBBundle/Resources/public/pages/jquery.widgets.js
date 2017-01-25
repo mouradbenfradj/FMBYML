@@ -38,7 +38,7 @@ $(document).ready(function () {
                 barColor: '#fb6d9d'
             });
 
-            $('#sparkline3').sparkline([20, 40, 30, 10], {
+            $('#sparkline3').sparkline([20, 40, 20, 20], {
                 type: 'pie',
                 width: '165',
                 height: '165',

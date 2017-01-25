@@ -32,8 +32,7 @@ class PreparationLanterneType extends AbstractType
             }, 'label' => 'article', 'attr' => array('class' => "form-control")))
             ->add('numeroSerie', 'entity', array('class' => 'SSFMBBundle:StocksArticlesSn', 'label' => 'lot', 'mapped' => false, 'attr' => array('class' => "form-control")))
             ->add('qte', 'number', array('label' => 'Densiter', 'attr' => array('class' => "form-control")))
-            ->add('nombre', 'number', array('label' => 'nombre de lanterne a fabriquer', 'mapped' => false))
-            ->add('Cycle_Restant', 'number', array('label' => 'Cycle restant', 'data' => 0, 'mapped' => false));
+            ->add('nombre', 'number', array('label' => 'nombre de lanterne a fabriquer', 'mapped' => false));
         $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'));
         $builder->addEventListener(FormEvents::PRE_SUBMIT, array($this, 'onPreSubmit'));
     }

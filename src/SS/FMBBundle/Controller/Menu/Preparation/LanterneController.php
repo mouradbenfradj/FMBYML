@@ -51,7 +51,7 @@ class LanterneController extends Controller
                     $stockslanternes->setDateDeCreation(new \DateTime($time[2] . '-' . $time[1] . '-' . $time[0]));
                     $stockslanternes->setArticle($stocksarticlessn);
                     $stockslanternes->setLanterne($lant);
-                    $stockslanternes->setCycleR($form['Cycle_Restant']->getData());
+                    $stockslanternes->setCycleR(3);
                     $stockslanternes->setDocLine($doclin);
                     $stockarticles->setQte($stockarticles->getQte() - $form['qte']->getData());
                     $stocksarticlessn->setSnQte($stocksarticlessn->getSnQte() - $form['qte']->getData());

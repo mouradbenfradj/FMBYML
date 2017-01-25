@@ -242,17 +242,22 @@ class FiliereController extends Controller
                 array(
                     'place' => $item['place'],
                     'numeroSerieLanrt' => $item['numeroSerieLanrt'],
+                    'numeroSeriePoche' => $item['numeroSeriePoche'],
+                    'plibArticle' => $item['plibArticle'],
                     'llibArticle' => $item['llibArticle'],
                     'libArticle' => $item['libArticle'],
                     'nomLanterne' => $item['nomLanterne'],
                     'numeroSerie' => $item['numeroSerie'],
                     'dateDTL' => $item['maelt'],
                     'dateDTC' => $item['maect'],
+                    'dateDTP' => $item['maept'],
                     'dateDeRemplissage' => $item['dateDeRemplissage'],
                     'stockscorde' => $item['sc'],
                     'stockslanterne' => $item['sl'],
+                    'stockspoche' => $item['sp'],
                     'chausl' => $item['chausl'],
-                    'chausc' => $item['chausc']
+                    'chausc' => $item['chausc'],
+                    'chausp' => $item['chausp']
                 );
         }
         return $this->render('@SSFMB/Filiere/Render/listFiliereIndexRender.html.twig', array('filieres' => $filieres, 'page' => $page));

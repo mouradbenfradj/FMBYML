@@ -86,8 +86,28 @@
                     <td>{{ emplacement.libArticle }}</td>
                     <td>{{ emplacement.numeroSerie }}</td>
                     <td>{{ emplacement.dateDeRemplissage|date('d-m-Y') }}</td>
-                    <td>{% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}{% if difference.m <=5 and difference.y ==0 %}G{{ difference.m }}{% elseif difference.m <=9 and difference.y == 0 %}{% set dif2 = 9- difference.m %}H{{ dif2 }}{% elseif difference.m ==10 and difference.y == 0 %}H00{% elseif difference.m >10 or difference.y >0 %}H000{% endif %}</td>
-                    <td>{{ emplacement.dateDeRemplissage|date_modify("+6 month")|date('d-m-Y') }}</td>
+                    <td>
+                        {% if emplacement.libArticle == 'NAISSAIN MOULES' %}
+                            {% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}
+                            {% if difference.m <=3 and difference.y ==0 %}PG{{ difference.m + 1 }}
+                            {% elseif difference.m <=12 and difference.y == 0 %}G{{ difference.m + - 3 }}
+                            {% elseif difference.m <=1 and difference.y == 1 %}G{{ difference.m + 9 }}
+                            {% elseif difference.m >1 and difference.m <=3 and difference.y == 1 %}MS{{ difference.m - 1 }}
+                            {% elseif difference.m >3 and difference.m <=7 and difference.y == 1 %}ME{{ difference.m - 3 }}
+                            {% elseif difference.m >7 and difference.y == 1 %}MR{{ difference.m - 7 }}
+                            {% elseif difference.y > 1 %}MR4+
+                            {% endif %}
+                        {% else %}
+                            {% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}{% if difference.m <=5 and difference.y ==0 %}G{{ difference.m }}{% elseif difference.m <=9 and difference.y == 0 %}{% set dif2 = 9- difference.m %}H{{ dif2 }}{% elseif difference.m ==10 and difference.y == 0 %}H00{% elseif difference.m >10 or difference.y >0 %}H000{% endif %}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if emplacement.libArticle == 'NAISSAIN MOULES' %}
+                            {{ emplacement.dateDeRemplissage|date_modify("+1 month")|date('d-m-Y') }}
+                        {% else %}
+                            {{ emplacement.dateDeRemplissage|date_modify("+6 month")|date('d-m-Y') }}
+                        {% endif %}
+                    </td>
                     <td>
                         <span class="qteunicrdaf">{{ emplacement.qtec }}</span> u
                         <span class="qteunicrdafdz">
