@@ -23,27 +23,14 @@
         <div class="col-lg-3 col-sm-6">
             <div class="widget-panel widget-style-2 bg-white">
                 <i class="md ion-android-mixer text-primary"></i>
-                <h2 class="m-0 text-dark counter font-600"><span data-plugin="counterup">{% set nbrfiliere = 0 %}
-                        {% for parc in entity %}
-                            {% set nbrfiliere = nbrfiliere + parc.filieres|length %}
-                        {% endfor %}
-                        {{ nbrfiliere }}
-                    </span></h2>
+                <h2 class="m-0 text-dark counter font-600"><span data-plugin="counterup">{{ nbrfiliere }}</span></h2>
                 <div class="text-muted m-t-5">Total Filière</div>
             </div>
         </div>
         <div class="col-lg-3 col-sm-6">
             <div class="widget-panel widget-style-2 bg-white">
                 <i class="md ti-align-justify text-pink"></i>
-                <h2 class="m-0 text-dark counter font-600"><span data-plugin="counterup">{% set nbrcorde = 0 %}
-                        {% for parc in entity %}
-                            {% for corde in parc.cordes %}
-                                {% set nbrcorde = nbrcorde + corde.nbrTotaleEnStock %}
-                                {% for crd in corde.stockscordes if not crd.pret %}
-                                    {% set nbrcorde = nbrcorde + 1 %}
-                                {% endfor %}
-                            {% endfor %}
-                        {% endfor %}
+                <h2 class="m-0 text-dark counter font-600"><span data-plugin="counterup">
                         {{ nbrcorde }}
                     </span></h2>
                 <div class="text-muted m-t-5">Totale Corde</div>
@@ -52,16 +39,9 @@
         <div class="col-lg-3 col-sm-6">
             <div class="widget-panel widget-style-2 bg-white">
                 <i class="md typcn typcn-th-menu-outline text-custom"></i>
-                <h2 class="m-0 text-dark counter font-600"><span data-plugin="counterup"> {% set nbrfiliere = 0 %}
-                        {% for parc in entity %}
-                            {% for lanterne in parc.lanternes %}
-                                {% set nbrfiliere = nbrfiliere + lanterne.nbrTotaleEnStock %}
-                                {% for lant in lanterne.stockslanternes if not lant.pret %}
-                                    {% set nbrfiliere = nbrfiliere + 1 %}
-                                {% endfor %}
-                            {% endfor %}
-                        {% endfor %}
-                        {{ nbrfiliere }}</span></h2>
+                <h2 class="m-0 text-dark counter font-600"><span data-plugin="counterup">
+
+                        {{ nbrlanterne }}</span></h2>
                 <div class="text-muted m-t-5">Totale Lanterne</div>
             </div>
         </div>
@@ -69,37 +49,9 @@
             <div class="widget-panel widget-style-2 bg-white">
                 <i class="md typcn typcn-social-dribbble-circular text-custom"></i>
                 <h2 class="m-0 text-dark counter font-600"><span data-plugin="counterup">
-                    {% set nbrpoche = 0 %}
-                        {% for parc in entity %}
-                            {% for poche in parc.poches %}
-                                {% set nbrpoche = nbrpoche + poche.nbrTotaleEnStock %}
-                                {% for pch in poche.stockspoches if not pch.pret %}
-                                    {% set nbrpoche = nbrpoche + 1 %}
-                                {% endfor %}
-                            {% endfor %}
-                        {% endfor %}
                         {{ nbrpoche }}
                     </span></h2>
                 <div class="text-muted m-t-5">Totale Poche</div>
-            </div>
-        </div>
-        {{ dump(entity) }}
-        <div class="col-lg-3 col-sm-6">
-            <div class="widget-panel widget-style-2 bg-white">
-                <i class="md typcn typcn-social-dribbble-circular text-custom"></i>
-                <h2 class="m-0 text-dark counter font-600"><span data-plugin="counterup">
-                    {% set nbrarticle = 0 %}
-                        {% for parc in entity %}
-                            {% for poche in parc.poches %}
-                                {% set nbrpoche = nbrpoche + poche.nbrTotaleEnStock %}
-                                {% for pch in poche.stockspoches if not pch.pret %}
-                                    {% set nbrpoche = nbrpoche + 1 %}
-                                {% endfor %}
-                            {% endfor %}
-                        {% endfor %}
-                        {{ nbrpoche }}
-                    </span></h2>
-                <div class="text-muted m-t-5">Totale Article</div>
             </div>
         </div>
     </div>

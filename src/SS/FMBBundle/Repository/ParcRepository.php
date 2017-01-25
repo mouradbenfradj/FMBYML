@@ -19,4 +19,244 @@ class ParcRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function countTotaleNbrFiliere()
+    {
+        $qb = $this->createQueryBuilder('m')
+            ->select('COUNT(f)')
+            ->join('m.filieres', 'f');
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function countTotaleNbrCordeAEau()
+    {
+        $qb = $this->createQueryBuilder('m')
+            ->select('COUNT(sc)')
+            ->join('m.cordes', 'c')
+            ->leftJoin('c.stockscordes', 'sc')
+            ->where('sc.emplacement IS NOT NULL')
+            ->andWhere('sc.pret = :pres')
+            ->setParameter('pres', false);
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function countTotaleNbrCordePreparer()
+    {
+
+        $qb = $this->createQueryBuilder('m')
+            ->select('COUNT(sc)')
+            ->join('m.cordes', 'c')
+            ->leftJoin('c.stockscordes', 'sc')
+            ->where('sc.emplacement IS NULL')
+            ->andWhere('sc.pret = :pres')
+            ->setParameter('pres', false);
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function countTotaleNbrCordeEnStock()
+    {
+
+        $qb = $this->createQueryBuilder('m')
+            ->select('SUM(c.nbrTotaleEnStock)')
+            ->join('m.cordes', 'c');
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function countTotaleNbrLanterneAEau()
+    {
+        $qb = $this->createQueryBuilder('m')
+            ->select('COUNT(sl)')
+            ->join('m.lanternes', 'l')
+            ->leftJoin('l.stockslanternes', 'sl')
+            ->where('sl.emplacement IS NOT NULL')
+            ->andWhere('sl.pret = :pres')
+            ->setParameter('pres', false);
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function countTotaleNbrLanternePreparer()
+    {
+
+        $qb = $this->createQueryBuilder('m')
+            ->select('COUNT(sl)')
+            ->join('m.lanternes', 'l')
+            ->leftJoin('l.stockslanternes', 'sl')
+            ->where('sl.emplacement IS NULL')
+            ->andWhere('sl.pret = :pres')
+            ->setParameter('pres', false);
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function countTotaleNbrLanterneEnStock()
+    {
+
+        $qb = $this->createQueryBuilder('m')
+            ->select('SUM(l.nbrTotaleEnStock)')
+            ->join('m.lanternes', 'l');
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function countTotaleNbrPocheAEau()
+    {
+        $qb = $this->createQueryBuilder('m')
+            ->select('COUNT(sp)')
+            ->join('m.poches', 'p')
+            ->leftJoin('p.stockspoches', 'sp')
+            ->where('sp.emplacement IS NOT NULL')
+            ->andWhere('sp.pret = :pres')
+            ->setParameter('pres', false);
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function countTotaleNbrPochePreparer()
+    {
+
+        $qb = $this->createQueryBuilder('m')
+            ->select('COUNT(sp)')
+            ->join('m.poches', 'p')
+            ->leftJoin('p.stockspoches', 'sp')
+            ->where('sp.emplacement IS NULL')
+            ->andWhere('sp.pret = :pres')
+            ->setParameter('pres', false);
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function countTotaleNbrPocheEnStock()
+    {
+
+        $qb = $this->createQueryBuilder('m')
+            ->select('SUM(p.nbrTotaleEnStock)')
+            ->join('m.poches', 'p');
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+
+    public function countTotaleNbrFiliereByParc($parc)
+    {
+        $qb = $this->createQueryBuilder('m')
+            ->select('COUNT(f)')
+            ->join('m.filieres', 'f')
+            ->where('f.parc = :parc')
+            ->setParameter('parc', $parc);
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function countTotaleNbrCordeAEauByParc($parc)
+    {
+        $qb = $this->createQueryBuilder('m')
+            ->select('COUNT(sc)')
+            ->join('m.cordes', 'c')
+            ->leftJoin('c.stockscordes', 'sc')
+            ->where('sc.emplacement IS NOT NULL')
+            ->andWhere('sc.pret = :pres')
+            ->setParameter('pres', false)
+            ->andWhere('c.parc = :parc')
+            ->setParameter('parc', $parc);
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function countTotaleNbrCordePreparerByParc($parc)
+    {
+        $qb = $this->createQueryBuilder('m')
+            ->select('COUNT(sc)')
+            ->join('m.cordes', 'c')
+            ->leftJoin('c.stockscordes', 'sc')
+            ->where('sc.emplacement IS NULL')
+            ->andWhere('sc.pret = :pres')
+            ->setParameter('pres', false)
+            ->andWhere('c.parc = :parc')
+            ->setParameter('parc', $parc);
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function countTotaleNbrCordeEnStockByParc($parc)
+    {
+        $qb = $this->createQueryBuilder('m')
+            ->select('SUM(c.nbrTotaleEnStock)')
+            ->join('m.cordes', 'c')
+            ->where('c.parc = :parc')
+            ->setParameter('parc', $parc);
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function countTotaleNbrLanterneAEauByParc($parc)
+    {
+        $qb = $this->createQueryBuilder('m')
+            ->select('COUNT(sl)')
+            ->join('m.lanternes', 'l')
+            ->leftJoin('l.stockslanternes', 'sl')
+            ->where('sl.emplacement IS NOT NULL')
+            ->andWhere('sl.pret = :pres')
+            ->setParameter('pres', false)
+            ->andWhere('l.parc = :parc')
+            ->setParameter('parc', $parc);
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function countTotaleNbrLanternePreparerByParc($parc)
+    {
+
+        $qb = $this->createQueryBuilder('m')
+            ->select('COUNT(sl)')
+            ->join('m.lanternes', 'l')
+            ->leftJoin('l.stockslanternes', 'sl')
+            ->where('sl.emplacement IS NULL')
+            ->andWhere('sl.pret = :pres')
+            ->setParameter('pres', false)
+            ->andWhere('l.parc = :parc')
+            ->setParameter('parc', $parc);
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function countTotaleNbrLanterneEnStockByParc($parc)
+    {
+
+        $qb = $this->createQueryBuilder('m')
+            ->select('SUM(l.nbrTotaleEnStock)')
+            ->join('m.lanternes', 'l')
+            ->where('l.parc = :parc')
+            ->setParameter('parc', $parc);
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function countTotaleNbrPocheAEauByParc($parc)
+    {
+        $qb = $this->createQueryBuilder('m')
+            ->select('COUNT(sp)')
+            ->join('m.poches', 'p')
+            ->leftJoin('p.stockspoches', 'sp')
+            ->where('sp.emplacement IS NOT NULL')
+            ->andWhere('sp.pret = :pres')
+            ->setParameter('pres', false)
+            ->andWhere('p.parc = :parc')
+            ->setParameter('parc', $parc);
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function countTotaleNbrPochePreparerByParc($parc)
+    {
+
+        $qb = $this->createQueryBuilder('m')
+            ->select('COUNT(sp)')
+            ->join('m.poches', 'p')
+            ->leftJoin('p.stockspoches', 'sp')
+            ->where('sp.emplacement IS NULL')
+            ->andWhere('sp.pret = :pres')
+            ->setParameter('pres', false)
+            ->andWhere('p.parc = :parc')
+            ->setParameter('parc', $parc);
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function countTotaleNbrPocheEnStockByParc($parc)
+    {
+
+        $qb = $this->createQueryBuilder('m')
+            ->select('SUM(p.nbrTotaleEnStock)')
+            ->join('m.poches', 'p')
+            ->where('p.parc = :parc')
+            ->setParameter('parc', $parc);
+        return $qb->getQuery()->getSingleScalarResult();
+    }
 }
