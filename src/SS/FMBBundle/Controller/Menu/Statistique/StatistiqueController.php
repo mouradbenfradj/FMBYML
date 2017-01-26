@@ -49,8 +49,17 @@ class StatistiqueController extends Controller
             array(
                 'entity' => $parc,
                 'nbrcorde' => ($nbCorde),
+                'nbrcordev' => ($nbCordeES),
+                'nbrcordep' => ($nbCordeP),
+                'nbrcordeae' => ($nbCordeAe),
                 'nbrlanterne' => ($nbLanterne),
+                'nbrlanternev' => ($nbLanterneES),
+                'nbrlanternep' => ($nbLanterneP),
+                'nbrlanterneae' => ($nbLanterneAe),
                 'nbrpoche' => ($nbPoche),
+                'nbrpochev' => ($nbPocheES),
+                'nbrpochep' => ($nbPocheP),
+                'nbrpocheae' => ($nbPocheAe),
                 'nbrfiliere' => $nbfiliere
             )
         );
