@@ -22,4 +22,6 @@ interface DefaultInterface
     public function ordonnanceurTableau($filieres);
 
     public function distainctTable($tableau, $colonne);
+
+    public function DefinirNiveauAlerte($emplacement, $dateActuel, $cycle);
 }

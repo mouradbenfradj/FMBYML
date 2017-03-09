@@ -7,6 +7,21 @@ ssfmb_parclanterne:
 ssfmb_parccorde:
     path:     /parccorde
     defaults: { _controller: SSFMBBundle:Magasins:parccordes }
+
+ssfmb_parcCorde:
+    path:     /parcCorde
+    defaults: { _controller: SSFMBBundle:Magasins:parccorde }
+
+ssfmb_parcPoch:
+    path:     /parcpoche
+    defaults: { _controller: SSFMBBundle:Magasins:parcPoche }
+
+ssfmb_quantiterCordeEnStock:
+    path:     /quantiterCordeEnStock
+    defaults: { _controller: SSFMBBundle:Magasins:quantiterCordeEnStock }
+
+
+
 ssfmb_parcpoche:
     path:     /parcpoche
     defaults: { _controller: SSFMBBundle:Magasins:parcpoches }

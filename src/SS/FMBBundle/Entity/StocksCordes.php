@@ -25,6 +25,11 @@ class StocksCordes
      * @ORM\JoinColumn(nullable=false,  referencedColumnName="id")
      */
     private $corde;
+    /**
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Processus")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $processus;
 
     /**
      * @var integer
@@ -405,5 +410,28 @@ class StocksCordes
     public function getChaussement()
     {
         return $this->chaussement;
+    }
+
+    /**
+     * Set processus
+     *
+     * @param \SS\FMBBundle\Entity\Processus $processus
+     * @return StocksCordes
+     */
+    public function setProcessus(\SS\FMBBundle\Entity\Processus $processus = null)
+    {
+        $this->processus = $processus;
+
+        return $this;
+    }
+
+    /**
+     * Get processus
+     *
+     * @return \SS\FMBBundle\Entity\Processus 
+     */
+    public function getProcessus()
+    {
+        return $this->processus;
     }
 }

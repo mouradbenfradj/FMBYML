@@ -6,7 +6,7 @@
  */
 
 (function ($) {
-
+    var cmp = 0;
     'use strict';
 
     var EditableTable = {
@@ -47,6 +47,8 @@
                     null,
                     null,
                     null,
+                    null,
+                    null,
                     {"bSortable": false}
                 ]
             });
@@ -62,7 +64,7 @@
             this.$table
                 .on('click', 'a.save-row', function (e) {
                     e.preventDefault();
-
+                    cmp = 0;
                     _self.rowSave($(this).closest('tr'));
                 })
                 .on('click', 'a.cancel-row', function (e) {
@@ -105,7 +107,8 @@
 
             this.$addButton.on('click', function (e) {
                 e.preventDefault();
-
+                cmp = 0;
+                choixPoche($('input[name="parcP"]:checked').val());
                 _self.rowAdd();
             });
 
@@ -134,7 +137,7 @@
                 '<a href="#" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>'
             ].join(' ');
 
-            data = this.datatable.row.add(['', '', '', actions]);
+            data = this.datatable.row.add(['', '', '', '', '', actions]);
             $row = this.datatable.row(data[0]).nodes().to$();
 
             $row
@@ -181,7 +184,17 @@
                 if ($this.hasClass('actions')) {
                     _self.rowSetActionsEditing($row);
                 } else {
-                    $this.html('<input type="text" class="form-control input-block" value="' + data[i] + '"/>');
+                    if ((cmp != 3) && (cmp != 4)) {
+                        $this.html('<select id="valeurPoche' + cmp + '"  class="form-control input-block" /></select>');
+                    }
+
+                    if (cmp == 4) {
+                        $this.html('<input type="number" id="valeurPoche' + cmp + '" class="form-control input-block" />');
+                    }
+                    if (cmp == 3) {
+                        $this.html('<span id="nbrPoche"></span>');
+                    }
+                    cmp++;
                 }
             });
         },
@@ -203,7 +216,13 @@
                     _self.rowSetActionsDefault($row);
                     return _self.datatable.cell(this).data();
                 } else {
-                    return $.trim($this.find('input').val());
+                    cmp++;
+                    if (cmp == 5) {
+                        $('#affichageParcCorde').after('<div class="time-item"> <div class="item-info"><p> <input type="hidden" class="contenu" name="contenu[]" value="' + $('#nbrPoche').text() + ' "><input type="hidden" class="contenu" name="contenu[]" value="' + $('#valeurPoche4').val() + ' ">' + $('#valeurPoche4').val() + ' <input name="contenu[]" class="contenu" type="hidden" value="' + $('#valeurPoche0').val() + ' ">' + $('#valeurPoche0').text() + ' cree le <input name="contenu[]" class="contenu" type="hidden" value="' + $('#valeurPoche1').val() + ' ">' + $('#valeurPoche1').val() + ' de <input name="contenu[]" class="contenu" type="hidden" value="' + $('#valeurPoche2').val() + ' ">' + $('#valeurPoche2').val() + ' u/p</p> </div> </div>');
+                        return $.trim($this.find('input').val());
+                    } else {
+                        return $.trim($this.find('select option:selected').text());
+                    }
                 }
             });
 

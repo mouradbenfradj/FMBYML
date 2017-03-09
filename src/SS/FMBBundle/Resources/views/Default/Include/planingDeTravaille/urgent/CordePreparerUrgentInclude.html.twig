@@ -38,22 +38,21 @@
     <tbody>
     {% for emplacement in cafu %}
         <tr>
-            <td>{{ emplacement.corde.nomCorde }}</td>
-            <td>{{ emplacement.article.refStockArticle.refArticle }}</td>
-            <td>{{ emplacement.article.numeroSerie }}</td>
+            <td>{{ emplacement.nomCorde }}</td>
+            <td>{{ emplacement.libArticle }}</td>
+            <td>{{ emplacement.numeroSerie }}</td>
             <td>{{ emplacement.dateDeCreation|date('Y-m-d') }}</td>
-            <td> {{ emplacement.quantiter }}</td>
+            <td>{{ emplacement.quantiter }}</td>
             {% if loop.index == 1 %}
-                <td rowspan="{{ cafu|length }}" valign="top">
+                <td rowspan="{{ caf|length }}" valign="top">
                     {% set quantiterTotale = 0 %}
-                    {% for emplacement2 in cafu %}
+                    {% for emplacement2 in caf %}
                         {% set quantiterTotale = quantiterTotale + emplacement2.quantiter %}
                     {% endfor %}
                     {{ quantiterTotale }} u
                     <br>
                     {% set quantiterTotale = quantiterTotale/12 %}
-                    {{ quantiterTotale }} dz
-
+                    {{ quantiterTotale|number_format(2) }} dz
                 </td>
             {% endif %}
         </tr>

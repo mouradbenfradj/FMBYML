@@ -8,6 +8,7 @@ use SS\FMBBundle\Entity\StocksArticles;
 use SS\FMBBundle\Entity\StocksArticlesSn;
 use SS\FMBBundle\Entity\StocksArticlesSnVirtuel;
 use SS\FMBBundle\Implementation\DefaultImpl;
+use SS\FMBBundle\Implementation\ProcessusImplementation;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -18,10 +19,12 @@ class AwController extends Controller
         $em = $this->getDoctrine()->getManager();
         if ($request->get('idparc') == null) {
             $parcs = null;
+            $processus = null;
             $stock = null;
             $articles = null;
         } else {
             $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('idparc'));
+            $processus = $em->getRepository('SSFMBBundle:Processus')->findAll();
             $articles = $em->getRepository('SSFMBBundle:StocksArticles')->findByIdStock($parcs->getIdStock());
         }
 
@@ -31,10 +34,10 @@ class AwController extends Controller
             foreach ($request->request->get('placelanterne') as $emplacementcorde) {
                 $place = $em->getRepository('SSFMBBundle:Emplacement')->find($emplacementcorde);
                 $slanterne = $place->getStockslanterne();
-                $article = $em->getRepository('SSFMBBundle:Articles')->findOneByLibArticle("CORDE HUITRES");
+                $article = $em->getRepository('SSFMBBundle:Articles')->findOneByLibArticle($slanterne->getProcessus()->getArticleSortie());
                 if (!$article) {
                     $article = new Articles();
-                    $article->setLibArticle("CORDE HUITRES");
+                    $article->setLibArticle($slanterne->getProcessus()->getArticleSortie());
                     $article->setLibTicket('');
                     $article->setDescCourte('');
                     $article->setDescLongue('');
@@ -67,10 +70,10 @@ class AwController extends Controller
                     $sarticlesn = $em->getRepository('SSFMBBundle:StocksArticlesSN')->getSAS($sarticle->getRefStockArticle(), $slanterne->getArticle()->getNumeroSerie());
                     if (!$sarticlesn) {
                         $sarticlesn = new StocksArticlesSn();
-                        $sarticlesn->setNumeroSerie();
+                        $sarticlesn->setNumeroSerie($slanterne->getArticle()->getNumeroSerie());
                         $sarticlesn->setSnQte($implementation->calculerQuantiterLanterne($slanterne));
                         $sarticlesn->setRefStockArticle($sarticle);
-                        $em->persist($slanterne->getArticle()->getNumeroSerie());
+                        $em->persist($sarticlesn);
                         $em->flush();
                     }
                 } else {
@@ -78,7 +81,7 @@ class AwController extends Controller
                     $sarticlesn = $em->getRepository('SSFMBBundle:StocksArticlesSN')->getSAS($sarticle->getRefStockArticle(), $slanterne->getArticle()->getNumeroSerie());
                     if (!$sarticlesn) {
                         $sarticlesn = new StocksArticlesSn();
-                        $sarticlesn->setNumeroSerie();
+                        $sarticlesn->setNumeroSerie($slanterne->getArticle()->getNumeroSerie());
                         $sarticlesn->setSnQte($implementation->calculerQuantiterLanterne($slanterne));
                         $sarticlesn->setRefStockArticle($sarticle);
                         $em->persist($sarticlesn);
@@ -95,9 +98,7 @@ class AwController extends Controller
                 $place->setStockslanterne(null);
                 $place->setDateDeRemplissage(null);
             }
-
             $em->flush();
-
             return $this->redirectToRoute('ssfmb_retraitLanterne');
         }
 
@@ -105,6 +106,7 @@ class AwController extends Controller
             array(
                 'entity' => $parcs,
                 'articles' => $articles,
+                'processus' => $processus
             )
         );
     }
@@ -115,54 +117,34 @@ class AwController extends Controller
         $em = $this->getDoctrine()->getManager();
         if ($request->get('idparc') == null) {
             $parcs = null;
+            $processus = null;
             $stock = null;
             $articles = null;
         } else {
             $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('idparc'));
+            $processus = $em->getRepository('SSFMBBundle:Processus')->findAll();
             $articles = $em->getRepository('SSFMBBundle:StocksArticles')->findByIdStock($parcs->getIdStock());
         }
 
         if ($request->isMethod('POST')) {
             $date1 = new DateTime("now");
+            $implementationProcessus = new ProcessusImplementation();
             $stock = $em->getRepository('SSFMBBundle:Stocks')->find($request->request->get('stockchoix'));
+
+            ///////////////////////////////////////////////::
+
             foreach ($request->request->get('placecorde') as $emplacementcorde) {
                 $place = $em->getRepository('SSFMBBundle:Emplacement')->find($emplacementcorde);
                 $interval = date_diff($place->getDateDeRemplissage(), $date1);
                 $scorde = $place->getStockscorde();
-                if (($interval->m <= 5) && ($interval->y == 0))
-                    $article = $em->getRepository('SSFMBBundle:Articles')->findOneByLibArticle("HUITRES G" . $interval->m . " COM");
-                elseif (($interval->m == 6) && ($interval->y == 0))
-                    $article = $em->getRepository('SSFMBBundle:Articles')->findOneByLibArticle("HUITRES H3 COM");
-                elseif (($interval->m == 7) && ($interval->y == 0))
-                    $article = $em->getRepository('SSFMBBundle:Articles')->findOneByLibArticle("HUITRES H2 COM");
-                elseif (($interval->m == 8) && ($interval->y == 0))
-                    $article = $em->getRepository('SSFMBBundle:Articles')->findOneByLibArticle("HUITRES H1 COM");
-                elseif (($interval->m == 9) && ($interval->y == 0))
-                    $article = $em->getRepository('SSFMBBundle:Articles')->findOneByLibArticle("HUITRES H0 COM");
-                elseif (($interval->m == 10) && ($interval->y == 0))
-                    $article = $em->getRepository('SSFMBBundle:Articles')->findOneByLibArticle("HUITRES H00 COM");
-                elseif (($interval->m == 11) && ($interval->y == 0))
-                    $article = $em->getRepository('SSFMBBundle:Articles')->findOneByLibArticle("HUITRES H000 COM");
-                elseif (($interval->m >= 12) || ($interval->y > 0))
-                    $article = $em->getRepository('SSFMBBundle:Articles')->findOneByLibArticle("HUITRES H0000 COM");
+                $actualProcess = $implementationProcessus->processusArticle($scorde->getProcessus(), $date1, $place->getDateDeRemplissage());
+                $cycleProcess = $implementationProcessus->cycleArticle($scorde->getProcessus(), $date1, $place->getDateDeRemplissage());
+
+
+                $article = $em->getRepository('SSFMBBundle:Articles')->findOneByLibArticle($actualProcess->getArticleSortie() . $cycleProcess . " COM");
                 if (!$article) {
                     $article = new Articles();
-                    if (($interval->m <= 5) && ($interval->y == 0))
-                        $article->setLibArticle("HUITRES G" . $interval->m . " COM");
-                    elseif (($interval->m == 6) && ($interval->y == 0))
-                        $article->setLibArticle("HUITRES H3 COM");
-                    elseif (($interval->m == 7) && ($interval->y == 0))
-                        $article->setLibArticle("HUITRES H2 COM");
-                    elseif (($interval->m == 8) && ($interval->y == 0))
-                        $article->setLibArticle("HUITRES H1 COM");
-                    elseif (($interval->m == 9) && ($interval->y == 0))
-                        $article->setLibArticle("HUITRES H0 COM");
-                    elseif (($interval->m == 10) && ($interval->y == 0))
-                        $article->setLibArticle("HUITRES H00 COM");
-                    elseif (($interval->m == 11) && ($interval->y == 0))
-                        $article->setLibArticle("HUITRES H000 COM");
-                    elseif (($interval->m >= 12) || ($interval->y > 0))
-                        $article->setLibArticle("HUITRES H0000 COM");
+                    $article->setLibArticle($actualProcess->getArticleSortie() . $cycleProcess . " COM");
                     $article->setLibTicket('l');
                     $article->setDescCourte('e');
                     $article->setDescLongue('e');
@@ -239,6 +221,7 @@ class AwController extends Controller
             array(
                 'entity' => $parcs,
                 'articles' => $articles,
+                'processus' => $processus
             )
         );
     }

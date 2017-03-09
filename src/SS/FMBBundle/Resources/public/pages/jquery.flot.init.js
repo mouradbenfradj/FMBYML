@@ -386,10 +386,10 @@
             var pielabels = ["NH1", "NH2", "NH3", "NH4", "NH5"];
             var datas = [NH1, NH2, NH3, NH4, NH5];
             var colors = ["#32cd32", "#7cfc00", "#9acd32", 'yellow', 'red'];
-            var pielabels2 = ["Series 1", "Series 2", "Series 3"];
+            var pielabels2 = ["NH1", "NH2", "NH3", "NH4", "NH5"];
             var datas2 = [0, 0, 0];
             var colors2 = ["#5fbeaa", "#6c85bd", "#34d3eb"];
-            var pielabels3 = ["Series 1", "Series 2", "Series 3"];
+            var pielabels3 = ["NH1", "NH2", "NH3", "NH4", "NH5"];
             var datas3 = [0, 0, 0];
             var colors3 = ["#5fbeaa", "#6c85bd", "#34d3eb"];
             this.createPieGraph("#pie-chart #pie-chart-container", pielabels, datas, colors);
@@ -439,113 +439,4 @@
         "use strict";
         $.FlotChart.init()
     }(window.jQuery);
-
-$(document).ready(function () {
-
-
-
-    //------------- Ordered bars chart -------------//
-    $(function () {
-        //some data
-        var d1 = [];
-        for (var i = 0; i <= 10; i += 1)
-            d1.push([i, parseInt(Math.random() * 30)]);
-
-        var d2 = [];
-        for (var i = 0; i <= 10; i += 1)
-            d2.push([i, parseInt(Math.random() * 30)]);
-
-        var d3 = [];
-        for (var i = 0; i <= 10; i += 1)
-            d3.push([i, parseInt(Math.random() * 30)]);
-
-        var ds = new Array();
-
-        ds.push({
-            label: "Data One",
-            data: d1,
-            bars: {
-                order: 1
-            }
-        });
-        ds.push({
-            label: "Data Two",
-            data: d2,
-            bars: {
-                order: 2
-            }
-        });
-        ds.push({
-            label: "Data Three",
-            data: d3,
-            bars: {
-                order: 3
-            }
-        });
-
-        var stack = 0,
-            bars = false,
-            lines = false,
-            steps = false;
-
-        var options = {
-            bars: {
-                show: true,
-                barWidth: 0.2,
-                fill: 1
-            },
-            grid: {
-                show: true,
-                aboveData: false,
-                labelMargin: 5,
-                axisMargin: 0,
-                borderWidth: 1,
-                minBorderMargin: 5,
-                clickable: true,
-                hoverable: true,
-                autoHighlight: false,
-                mouseActiveRadius: 20,
-                borderColor: '#f5f5f5'
-            },
-            series: {
-                stack: stack
-            },
-            legend: {
-                position: "ne",
-                margin: [0, -24],
-                noColumns: 0,
-                labelBoxBorderColor: null,
-                labelFormatter: function (label, series) {
-                    // just add some space to labes
-                    return '' + label + '&nbsp;&nbsp;';
-                },
-                width: 30,
-                height: 2
-            },
-            yaxis: {
-                tickColor: '#f5f5f5',
-                font: {
-                    color: '#bdbdbd'
-                }
-            },
-            xaxis: {
-                tickColor: '#f5f5f5',
-                font: {
-                    color: '#bdbdbd'
-                }
-            },
-            colors: ["#6e8cd7", "#34d3eb", "#5fbeaa"],
-            tooltip: true, //activate tooltip
-            tooltipOpts: {
-                content: "%s : %y.0",
-                shifts: {
-                    x: -30,
-                    y: -50
-                }
-            }
-        };
-
-        $.plot($("#ordered-bars-chart"), ds, options);
-    });
-});
 

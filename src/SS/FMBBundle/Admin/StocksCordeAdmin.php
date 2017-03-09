@@ -18,16 +18,16 @@ class StocksCordeAdmin extends Admin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('id')->add('quantiter')->add('pret')->add('emplacement')->add('numeroSerie')->add('dateDeCreation')->add('dateDeRetirement');
+        $formMapper->add('id')->add('quantiter')->add('pret')->add('emplacement')->add('numeroSerie')->add('dateDeCreation')->add('dateDeRetirement')->add('processus');
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('id')->add('corde')->add('quantiter')->add('pret')->add('emplacement')->add('numeroSerie')->add('dateDeCreation')->add('dateDeRetirement');
+        $datagridMapper->add('id')->add('corde')->add('quantiter')->add('pret')->add('emplacement')->add('numeroSerie')->add('dateDeCreation')->add('dateDeRetirement')->add('processus');
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('id')->add('corde')->add('quantiter')->add('pret')->add('emplacement')->add('numeroSerie')->add('dateDeCreation')->add('dateDeRetirement');
+        $listMapper->addIdentifier('id')->add('corde')->add('quantiter')->add('pret')->add('emplacement')->add('numeroSerie')->add('dateDeCreation')->add('dateDeRetirement')->add('processus');
     }
 }

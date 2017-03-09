@@ -4,6 +4,7 @@
     {% if(entity != null) %}
         <link href="{{ asset('bundles/ssfmb/plugins/nestable/jquery.nestable.css') }}" rel="stylesheet"/>
         {{ parent() }}
+        <link rel="stylesheet" href="{{ asset('bundles/ssfmb/css/sidenavi-right.css') }}">
     {% endif %}
 {% endblock %}
 {% block header %} {{ parent() }}{% endblock %}
@@ -71,6 +72,8 @@
          <script src="{{ asset('bundles/ssfmb/plugins/nestable/jquery.nestable.js') }}"></script>
          <script src="{{ asset('bundles/ssfmb/pages/nestable.js') }}"></script>
      {% endif %}
+     <script src="{{ asset('bundles/ssfmb/js/SideNavi.js') }}"></script>
+     <script src="{{ asset('bundles/ssfmb/js/SideNav.js') }}"></script>
      <script type="text/javascript">
          function validation() {
              if (parseInt($('#quantit').val()) < 0) {

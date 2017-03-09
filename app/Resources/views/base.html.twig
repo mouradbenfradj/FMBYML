@@ -3,10 +3,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc.">
-    <meta name="author" content="Coderthemes">
+    <meta name="description" content="">
+    <meta name="author" content="SIDRATSOFT">
     <link rel="shortcut icon" href="{{ asset('favicon.ico' ) }}">
-    <title>{% block title %}FMB{% endblock %}</title>
+    <title>{% block title %}OYSTERPRO{% endblock %}</title>
+    {#starter page  default#}
     <link href="{{ asset('bundles/ssfmb/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('bundles/ssfmb/assets/css/core.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('bundles/ssfmb/assets/css/components.css') }}" rel="stylesheet" type="text/css"/>
@@ -15,19 +16,27 @@
     <link href="{{ asset('bundles/ssfmb/assets/css/pages.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('bundles/ssfmb/assets/css/menu.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('bundles/ssfmb/assets/css/responsive.css') }}" rel="stylesheet" type="text/css"/>
-    <link rel="stylesheet" href="{{ asset('bundles/ssfmb/css/index.css') }}">
-    <link rel="stylesheet" href="{{ asset('bundles/ssfmb/css/sidenavi-right.css') }}">
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-    <script src="{{ asset('bundles/ssfmb/assets/js/modernizr.min.js') }}"></script>
-    <link rel="stylesheet" href="{{ asset('bundles/ssfmb/assets/css/nprogress.css') }}">
-    <link rel="stylesheet" href="{{ asset('bundles/ssfmb/css/baseTwig/base.css') }}">
+    {#end starterpage default#}
+    {#nprogress css#}
+    <link rel="stylesheet" href="{{ asset('bundles/ssfmb/css/nProgress/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/ssfmb/css/nProgress/nprogress.css') }}">
+    <script src="{{ asset('bundles/ssfmb/js/nProgress/nprogress.js') }}"></script>
+    {#end nprogress css#}
+
+    {#
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <link rel="stylesheet" href="{{ asset('bundles/ssfmb/css/baseTwig/base.css') }}">
+        #}
     {% block stylesheet %}
     {% endblock %}
+    {#starterpage2#}
+    <script src="{{ asset('bundles/ssfmb/assets/js/modernizr.min.js') }}"></script>
     <script src="{{ asset('bundles/ssfmb/assets/js/jquery.min.js') }}"></script>
+
+    {#end starterpage2#}
 </head>
 <body>
-<span class='nprogress-logo fade out'></span>
 <header id="topnav">
     <div class="topbar-main">
         <div class="container">
@@ -88,38 +97,38 @@
     </div>
     {% include "@SSFMB/Default/menu.html.twig" %}
 </header>
-
-<div class="wrapper">
-    <div class="container">
-        {% block body %}
-            {% block footer %}
-                <footer class="footer text-right">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-xs-6">
-                                © 2016. All rights reserved. / POWERED BY FMB & SIDRATSOFT
-                            </div>
-                            <div class="col-xs-6">
+{#<div class='contents fade out'>#}
+    <div class="wrapper">
+        <div class="container">
+            {% block body %}
+                {% block footer %}
+                    <footer class="footer text-right">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    © 2016. All rights reserved. / POWERED BY FMB & SIDRATSOFT
+                                </div>
+                                <div class="col-xs-6">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </footer>
+                    </footer>
+                {% endblock %}
             {% endblock %}
-        {% endblock %}
-        <div class="row">
-            <div class="col-xs-11">
-            </div>
-            <div class="col-xs-1">
-                <a id="back-to-top" href="#" class="btn btn-primary btn-lg back-to-top" role="button"
-                   title="Click to return on the top page" data-toggle="tooltip" data-placement="left">
-                    <span class="glyphicon glyphicon-chevron-up"></span>
-                </a>
+            <div class="row">
+                <div class="col-xs-11">
+                </div>
+                <div class="col-xs-1">
+                    <a id="back-to-top" href="#" class="btn btn-primary btn-lg back-to-top" role="button"
+                       title="Click to return on the top page" data-toggle="tooltip" data-placement="left">
+                        <span class="glyphicon glyphicon-chevron-up"></span>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<script src="{{ asset('bundles/ssfmb/assets/js/nprogress.js') }}"></script>
-<script src="{{ asset('bundles/ssfmb/assets/js/sonic.js') }}"></script>
+{#</div>#}
+{# general css#}
 <script src="{{ asset('bundles/ssfmb/assets/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('bundles/ssfmb/assets/js/detect.js') }}"></script>
 <script src="{{ asset('bundles/ssfmb/assets/js/fastclick.js') }}"></script>
@@ -129,32 +138,37 @@
 <script src="{{ asset('bundles/ssfmb/assets/js/wow.min.js') }}"></script>
 <script src="{{ asset('bundles/ssfmb/assets/js/jquery.nicescroll.js') }}"></script>
 <script src="{{ asset('bundles/ssfmb/assets/js/jquery.scrollTo.min.js') }}"></script>
-<script src="{{ asset('bundles/ssfmb/assets/js/jquery.core.js') }}"></script>
-<script src="{{ asset('bundles/ssfmb/assets/js/jquery.app.js') }}"></script>
-<script src="{{ asset('bundles/ssfmb/js/SideNavi.js') }}"></script>
-<script src="{{ asset('bundles/ssfmb/js/baseTwig/base.js') }}"></script>
-<script src="http://malsup.github.com/jquery.form.js"></script>
-<script type="text/javascript">
-    var signe = -1;
-    var clignotementFading = function(){
-        var obj2 = document.getElementsByClassName('LblClignotant');
-        var testDivs = Array.prototype.filter.call(obj2, function(obj){
-           if (obj.style.opacity >= 0.96) {
-                signe = -1;
-            }
-            if (obj.style.opacity <= 0.04) {
-                signe = 1;
-            }
-            obj.style.opacity = (obj.style.opacity * 1) + (signe * 0.04);
-        });
-    };
-
-
-    // mise en place de l appel de la fonction toutes les 0.085 secondes
-    // Pour arrêter le clignotement : clearInterval(periode);
-    periode = setInterval(clignotementFading, 33 );
-</script>
+{# end general css#}
 {% block javascripts %}
 {% endblock %}
+{# general css#}
+<script src="{{ asset('bundles/ssfmb/assets/js/jquery.core.js') }}"></script>
+<script src="{{ asset('bundles/ssfmb/assets/js/jquery.app.js') }}"></script>
+{# end general css#}
+
+<script src="{{ asset('bundles/ssfmb/js/baseTwig/base.js') }}"></script>
+<script src="{{ asset('bundles/ssfmb/js/clignotement.js') }}"></script>
+
+
+<script>
+    $('body').show();
+    NProgress.start();
+    setTimeout(function () {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 1000);
+    $("#b-0").click(function () {
+        NProgress.start();
+    });
+    $("#b-40").click(function () {
+        NProgress.set(0.4);
+    });
+    $("#b-inc").click(function () {
+        NProgress.inc();
+    });
+    $("#b-100").click(function () {
+        NProgress.done();
+    });
+</script>
 </body>
 </html>

@@ -3,6 +3,7 @@
 {% block stylesheet %}
     {% if(entity != null) %}
         <link href="{{ asset('bundles/ssfmb/plugins/nestable/jquery.nestable.css') }}" rel="stylesheet"/>
+        <link rel="stylesheet" href="{{ asset('bundles/ssfmb/css/sidenavi-right.css') }}">
         {{ parent() }}
     {% endif %}
 {% endblock %}
@@ -50,9 +51,29 @@
             </div>
             <div class="side-navi-data">
                 <div class="side-navi-tab">
-                    <div>
-                        {% include '@SSFMB/Include/couleurCleInclude.html.twig' %}
-                        {% include "@SSFMB/Filiere/Include/listMenuIndexInclude.html.twig" %}
+                    <div class="col-lg-12">
+                        <ul class="nav nav-tabs tabs">
+                            <li class="active tab">
+                                <a href="#home-2" data-toggle="tab" aria-expanded="false">
+                                    <span class="visible-xs"><i class="fa fa-home"></i></span>
+                                    <span class="hidden-xs">Code Couelur</span>
+                                </a>
+                            </li>
+                            <li class="tab">
+                                <a href="#profile-2" data-toggle="tab" aria-expanded="false">
+                                    <span class="visible-xs"><i class="fa fa-user"></i></span>
+                                    <span class="hidden-xs">Liste Filières</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="home-2">
+                                {% include '@SSFMB/Include/couleurCleInclude.html.twig' %}
+                            </div>
+                            <div class="tab-pane" id="profile-2">
+                                {% include "@SSFMB/Filiere/Include/listMenuIndexInclude.html.twig" %}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -67,5 +88,9 @@
     {% if(entity != null) %}
         <script src="{{ asset('bundles/ssfmb/plugins/nestable/jquery.nestable.js') }}"></script>
         <script src="{{ asset('bundles/ssfmb/pages/nestable.js') }}"></script>
+        <script src="http://malsup.github.com/jquery.form.js"></script>
     {% endif %}
+    <script src="{{ asset('bundles/ssfmb/js/SideNavi.js') }}"></script>
+    <script src="{{ asset('bundles/ssfmb/js/SideNav.js') }}"></script>
+
 {% endblock %}

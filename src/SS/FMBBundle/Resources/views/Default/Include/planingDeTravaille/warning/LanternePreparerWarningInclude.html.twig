@@ -43,28 +43,21 @@
     <tbody>
     {% for emplacement in laf %}
         <tr>
-            <td>{{ emplacement.lanterne.nomLanterne }}</td>
-            <td>{{ emplacement.article.refStockArticle.refArticle }}</td>
-            <td>{{ emplacement.article.numeroSerie }}</td>
-            <td>{{ emplacement.dateDeCreation|date('Y-m-d') }}</td>
-            <td> {% set quantiterTotale = 0 %}
-                {% for poche in emplacement.poches %}
-                    {% set quantiterTotale = quantiterTotale + poche.quantite %}
-                {% endfor %}
-                {{ quantiterTotale }} u
-            </td>
+            <td>{{emplacement.nomLanterne }}</td>
+            <td>{{emplacement.libArticle }}</td>
+            <td>{{emplacement.numeroSerie }}</td>
+            <td>{{emplacement.dateDeCreation|date('Y-m-d')  }}</td>
+            <td>{{emplacement.quantiter }}</td>
             {% if loop.index == 1 %}
                 <td rowspan="{{ laf|length }}" valign="top">
                     {% set quantiterTotale = 0 %}
                     {% for emplacement2 in laf %}
-                        {% for poche in emplacement2.poches %}
-                            {% set quantiterTotale = quantiterTotale + poche.quantite %}
-                        {% endfor %}
+                            {% set quantiterTotale = quantiterTotale + emplacement.quantiter %}
                     {% endfor %}
                     {{ quantiterTotale }} u
                     <br>
                     {% set quantiterTotale = quantiterTotale/12 %}
-                    {{ quantiterTotale }} dz
+                    {{ quantiterTotale|number_format(2) }} dz
                 </td>
             {% endif %}
         </tr>

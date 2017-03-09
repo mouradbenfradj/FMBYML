@@ -26,6 +26,11 @@ class StocksLanternes
      * @ORM\JoinColumn(nullable=false,  referencedColumnName="nomLanterne")
      */
     private $lanterne;
+    /**
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Processus")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $processus;
 
     /**
      * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Poche", mappedBy="stocklanterne",cascade={"persist","remove"},fetch="LAZY")
@@ -147,28 +152,6 @@ class StocksLanternes
         return $this;
     }
 
-    /**
-     * Get dateDeCreation
-     *
-     * @return \DateTime
-     */
-    public function getDateDeCreation()
-    {
-        return $this->dateDeCreation;
-    }
-
-    /**
-     * Set dateDeCreation
-     *
-     * @param \DateTime $dateDeCreation
-     * @return StocksLanternes
-     */
-    public function setDateDeCreation($dateDeCreation)
-    {
-        $this->dateDeCreation = $dateDeCreation;
-
-        return $this;
-    }
 
     /**
      * Get lanterne
@@ -318,98 +301,6 @@ class StocksLanternes
     }
 
     /**
-     * Get dateDeRetirement
-     *
-     * @return \DateTime
-     */
-    public function getDateDeRetirement()
-    {
-        return $this->dateDeRetirement;
-    }
-
-    /**
-     * Set dateDeRetirement
-     *
-     * @param \DateTime $dateDeRetirement
-     * @return StocksLanternes
-     */
-    public function setDateDeRetirement($dateDeRetirement)
-    {
-        $this->dateDeRetirement = $dateDeRetirement;
-
-        return $this;
-    }
-
-    /**
-     * Get dateDeRetraitTransfert
-     *
-     * @return \DateTime
-     */
-    public function getDateDeRetraitTransfert()
-    {
-        return $this->dateDeRetraitTransfert;
-    }
-
-    /**
-     * Set dateDeRetraitTransfert
-     *
-     * @param \DateTime $dateDeRetraitTransfert
-     * @return StocksLanternes
-     */
-    public function setDateDeRetraitTransfert($dateDeRetraitTransfert)
-    {
-        $this->dateDeRetraitTransfert = $dateDeRetraitTransfert;
-
-        return $this;
-    }
-
-    /**
-     * Get dateDeMAETransfert
-     *
-     * @return \DateTime
-     */
-    public function getDateDeMAETransfert()
-    {
-        return $this->dateDeMAETransfert;
-    }
-
-    /**
-     * Set dateDeMAETransfert
-     *
-     * @param \DateTime $dateDeMAETransfert
-     * @return StocksLanternes
-     */
-    public function setDateDeMAETransfert($dateDeMAETransfert)
-    {
-        $this->dateDeMAETransfert = $dateDeMAETransfert;
-
-        return $this;
-    }
-
-    /**
-     * Set dateDeMiseAEau
-     *
-     * @param \DateTime $dateDeMiseAEau
-     * @return StocksLanternes
-     */
-    public function setDateDeMiseAEau($dateDeMiseAEau)
-    {
-        $this->dateDeMiseAEau = $dateDeMiseAEau;
-
-        return $this;
-    }
-
-    /**
-     * Get dateDeMiseAEau
-     *
-     * @return \DateTime 
-     */
-    public function getDateDeMiseAEau()
-    {
-        return $this->dateDeMiseAEau;
-    }
-
-    /**
      * Set chaussement
      *
      * @param boolean $chaussement
@@ -453,5 +344,143 @@ class StocksLanternes
     public function getCycleR()
     {
         return $this->cycleR;
+    }
+
+    /**
+     * Set processus
+     *
+     * @param \SS\FMBBundle\Entity\Processus $processus
+     * @return StocksLanternes
+     */
+    public function setProcessus(\SS\FMBBundle\Entity\Processus $processus = null)
+    {
+        $this->processus = $processus;
+
+        return $this;
+    }
+
+    /**
+     * Get processus
+     *
+     * @return \SS\FMBBundle\Entity\Processus 
+     */
+    public function getProcessus()
+    {
+        return $this->processus;
+    }
+
+    /**
+     * Set dateDeCreation
+     *
+     * @param \DateTime $dateDeCreation
+     * @return StocksLanternes
+     */
+    public function setDateDeCreation($dateDeCreation)
+    {
+        $this->dateDeCreation = $dateDeCreation;
+
+        return $this;
+    }
+
+    /**
+     * Get dateDeCreation
+     *
+     * @return \DateTime 
+     */
+    public function getDateDeCreation()
+    {
+        return $this->dateDeCreation;
+    }
+
+    /**
+     * Set dateDeMiseAEau
+     *
+     * @param \DateTime $dateDeMiseAEau
+     * @return StocksLanternes
+     */
+    public function setDateDeMiseAEau($dateDeMiseAEau)
+    {
+        $this->dateDeMiseAEau = $dateDeMiseAEau;
+
+        return $this;
+    }
+
+    /**
+     * Get dateDeMiseAEau
+     *
+     * @return \DateTime 
+     */
+    public function getDateDeMiseAEau()
+    {
+        return $this->dateDeMiseAEau;
+    }
+
+    /**
+     * Set dateDeRetraitTransfert
+     *
+     * @param \DateTime $dateDeRetraitTransfert
+     * @return StocksLanternes
+     */
+    public function setDateDeRetraitTransfert($dateDeRetraitTransfert)
+    {
+        $this->dateDeRetraitTransfert = $dateDeRetraitTransfert;
+
+        return $this;
+    }
+
+    /**
+     * Get dateDeRetraitTransfert
+     *
+     * @return \DateTime 
+     */
+    public function getDateDeRetraitTransfert()
+    {
+        return $this->dateDeRetraitTransfert;
+    }
+
+    /**
+     * Set dateDeMAETransfert
+     *
+     * @param \DateTime $dateDeMAETransfert
+     * @return StocksLanternes
+     */
+    public function setDateDeMAETransfert($dateDeMAETransfert)
+    {
+        $this->dateDeMAETransfert = $dateDeMAETransfert;
+
+        return $this;
+    }
+
+    /**
+     * Get dateDeMAETransfert
+     *
+     * @return \DateTime 
+     */
+    public function getDateDeMAETransfert()
+    {
+        return $this->dateDeMAETransfert;
+    }
+
+    /**
+     * Set dateDeRetirement
+     *
+     * @param \DateTime $dateDeRetirement
+     * @return StocksLanternes
+     */
+    public function setDateDeRetirement($dateDeRetirement)
+    {
+        $this->dateDeRetirement = $dateDeRetirement;
+
+        return $this;
+    }
+
+    /**
+     * Get dateDeRetirement
+     *
+     * @return \DateTime 
+     */
+    public function getDateDeRetirement()
+    {
+        return $this->dateDeRetirement;
     }
 }

@@ -36,13 +36,14 @@
     </tr>
     </thead>
     <tbody>
+
     {% for emplacement in caf %}
         <tr>
-            <td>{{ emplacement.corde.nomCorde }}</td>
-            <td>{{ emplacement.article.refStockArticle.refArticle }}</td>
-            <td>{{ emplacement.article.numeroSerie }}</td>
+            <td>{{ emplacement.nomCorde }}</td>
+            <td>{{ emplacement.libArticle }}</td>
+            <td>{{ emplacement.numeroSerie }}</td>
             <td>{{ emplacement.dateDeCreation|date('Y-m-d') }}</td>
-            <td> {{ emplacement.quantiter }}</td>
+            <td>{{ emplacement.quantiter }}</td>
             {% if loop.index == 1 %}
                 <td rowspan="{{ caf|length }}" valign="top">
                     {% set quantiterTotale = 0 %}
@@ -52,7 +53,7 @@
                     {{ quantiterTotale }} u
                     <br>
                     {% set quantiterTotale = quantiterTotale/12 %}
-                    {{ quantiterTotale }} dz
+                    {{ quantiterTotale|number_format(2) }} dz
 
                 </td>
             {% endif %}

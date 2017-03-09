@@ -1,6 +1,7 @@
 <?php
 
 namespace SS\FMBBundle\Controller\Menu\MAE;
+
 use SS\FMBBundle\Implementation\DefaultImpl;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,11 +16,13 @@ class LanterneController extends Controller
         if ($request->get('idparc') == null) {
             $parcs = null;
             $stock = null;
+            $processus = null;
             $lanternes = null;
             $articles = null;
         } else {
             $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('idparc'));
             $lanternes = $em->getRepository('SSFMBBundle:Lanterne')->findByParc($parcs);
+            $processus = $em->getRepository('SSFMBBundle:Processus')->findAll();
             $articles = $em->getRepository('SSFMBBundle:StocksArticles')->findByIdStock($parcs->getIdStock());
         }
         if ($request->isMethod('POST')) {
@@ -30,6 +33,7 @@ class LanterneController extends Controller
                 $lanternearticle = $em->getRepository('SSFMBBundle:StocksLanternes')->getLanternePreparer($em->getRepository('SSFMBBundle:StocksArticlesSn')->getSAS($request->request->get('articlechoix'), $request->request->get('articlelotchoix')), $lanterne);
                 $lanternearticle[0]->setEmplacement($place);
                 $lanternearticle[0]->setDateDeMiseAEau($dateMiseAEau);
+                $lanternearticle[0]->setProcessus($em->getRepository('SSFMBBundle:Processus')->find($request->request->get('articlecyclechoix')));
                 $place->setStocksLanterne($lanternearticle[0]);
                 $place->setDateDeRemplissage($dateMiseAEau);
                 $lanternearticle[0]->setCycleR(3);
@@ -37,7 +41,7 @@ class LanterneController extends Controller
             }
             return $this->redirectToRoute('ssfmb_misaaeaulanterne');
         }
-        return $this->render('@SSFMB/MAE/Lanterne/miseAEauLanterne.html.twig', array('entity' => $parcs, 'articles' => $articles, 'lanternes' => $lanternes,));
+        return $this->render('@SSFMB/MAE/Lanterne/miseAEauLanterne.html.twig', array('entity' => $parcs, 'articles' => $articles, 'lanternes' => $lanternes, 'processus' => $processus));
     }
 
 }

@@ -53,6 +53,32 @@ class MagasinsController extends Controller
         return new JsonResponse($result);
     }
 
+
+    public function parcCordeAction(Request $request)
+    {// Get the province ID
+        $id = $request->query->get('parc_id');
+        $result = array();
+        // Return a list of cities, based on the selected province
+        $repo = $this->getDoctrine()->getManager()->getRepository('SSFMBBundle:Corde');
+        $cordes = $repo->findByParc($id, array('parc' => 'asc'));
+        foreach ($cordes as $corde) {
+            $result[$corde->getId()] = $corde->getNomCorde();
+        }
+        return new JsonResponse($result);
+    }
+
+    public function quantiterCordeEnStockAction(Request $request)
+    {// Get the province ID
+        $id = $request->query->get('cordeId');
+        $result = array();
+        // Return a list of cities, based on the selected province
+        $repo = $this->getDoctrine()->getManager()->getRepository('SSFMBBundle:Corde');
+        $corde = $repo->find($id);
+        $result[$corde->getId() . $corde->getNomCorde()] = $corde->getNbrTotaleEnStock();
+
+        return new JsonResponse($result);
+    }
+
     public function parcPochesAction(Request $request)
     {// Get the province ID
         $id = $request->query->get('parc_id');
@@ -63,6 +89,19 @@ class MagasinsController extends Controller
         foreach ($poches as $poche) {
             $result[$poche->getNomPoche()] = $poche->getNomPoche();
             $result[$poche->getNomPoche() . $poche->getNbrTotaleEnStock()] = $poche->getNbrTotaleEnStock();
+        }
+        return new JsonResponse($result);
+    }
+
+    public function parcPocheAction(Request $request)
+    {// Get the province ID
+        $id = $request->query->get('parc_id');
+        $result = array();
+        // Return a list of cities, based on the selected province
+        $repo = $this->getDoctrine()->getManager()->getRepository('SSFMBBundle:PochesBS');
+        $poches = $repo->findByParc($id, array('parc' => 'asc'));
+        foreach ($poches as $poche) {
+            $result[$poche->getId()] = $poche->getNomPoche();
         }
         return new JsonResponse($result);
     }

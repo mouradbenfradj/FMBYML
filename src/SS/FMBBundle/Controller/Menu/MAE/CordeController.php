@@ -1,6 +1,7 @@
 <?php
 
 namespace SS\FMBBundle\Controller\Menu\MAE;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -13,11 +14,13 @@ class CordeController extends Controller
         if ($request->get('idparc') == null) {
             $parcs = null;
             $stock = null;
+            $processus = null;
             $cordes = null;
             $articles = null;
         } else {
             $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('idparc'));
             $cordes = $em->getRepository('SSFMBBundle:Corde')->findByParc($parcs);
+            $processus = $em->getRepository('SSFMBBundle:Processus')->findAll();
             $articles = $em->getRepository('SSFMBBundle:StocksArticles')->findByIdStock($parcs->getIdStock());
         }
         if ($request->isMethod('POST')) {
@@ -28,6 +31,7 @@ class CordeController extends Controller
                 $cordearticle = $em->getRepository('SSFMBBundle:StocksCordes')->getCordePreparer($em->getRepository('SSFMBBundle:StocksArticlesSn')->getSAS($request->request->get('articlechoix'), $request->request->get('articlelotchoix')), $corde);
                 $cordearticle[0]->setEmplacement($place);
                 $cordearticle[0]->setDateDeMiseAEau($dateMiseAEau);
+                $cordearticle[0]->setProcessus($em->getRepository('SSFMBBundle:Processus')->find($request->request->get('articlecyclechoix')));
                 $place->setStocksCorde($cordearticle[0]);
                 $place->setDateDeRemplissage($dateMiseAEau);
                 $em->flush();
@@ -40,6 +44,7 @@ class CordeController extends Controller
                 'entity' => $parcs,
                 'articles' => $articles,
                 'cordes' => $cordes,
+                'processus' => $processus
             )
         );
     }

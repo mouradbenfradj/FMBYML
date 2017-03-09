@@ -4,6 +4,7 @@
     {% if(entity != null) %}
         <link href="{{ asset('bundles/ssfmb/plugins/nestable/jquery.nestable.css') }}" rel="stylesheet"/>
         {{ parent() }}
+        <link rel="stylesheet" href="{{ asset('bundles/ssfmb/css/sidenavi-right.css') }}">
     {% endif %}
 {% endblock %}
 {% block header %} {{ parent() }}{% endblock %}
@@ -71,21 +72,53 @@
                 <!-- sidenavi data //-->
                 <div class="side-navi-data">
                     <div class="side-navi-tab">
-                        <div>
-                            {% include '@SSFMB/Include/couleurCleInclude.html.twig' %}
-                            {% include "@SSFMB/Filiere/Include/listMenuIndexInclude.html.twig" %}
-                            <p>date de retrait des cordes</p>
-                            {% set now =  "now"|date("Y-m-d") %}
-                            <p><input type="date" name="dateRetraitCorde" value="{{ now }}"></p>
-                            <p>quantiter retirer</p>
-                            <p><input type="number" id="quantit" readonly="true" value="0"></p>
-                            <p>stocks de reception</p>
-                            <p>
-                                <input type="text" name="stockchoix" hidden="true" id="stockchoix"
-                                       value="{{ entity.idStock.idStock }}">
-                                <input type="text" readonly="true" value="{{ entity.idStock.libStock }}">
-                            </p>
-                            <p><input type="submit" value="confirmer le retrait"/></p>
+                        <div class="col-lg-12">
+                            <ul class="nav nav-tabs tabs">
+                                <li class="active tab">
+                                    <a href="#home-2" data-toggle="tab" aria-expanded="false">
+                                        <span class="visible-xs"><i class="fa fa-home"></i></span>
+                                        <span class="hidden-xs">Clé Couleur </span>
+                                    </a>
+                                </li>
+                                <li class="tab">
+                                    <a href="#profile-2" data-toggle="tab" aria-expanded="false">
+                                        <span class="visible-xs"><i class="fa fa-user"></i></span>
+                                        <span class="hidden-xs">Liste Filières</span>
+                                    </a>
+                                </li>
+                                <li class="tab">
+                                    <a href="#messages-2" data-toggle="tab" aria-expanded="true">
+                                        <span class="visible-xs"><i class="fa fa-envelope-o"></i></span>
+                                        <span class="hidden-xs">Formulaire</span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="home-2">
+                                    {% include '@SSFMB/Include/couleurCleInclude.html.twig' %}
+                                </div>
+                                <div class="tab-pane" id="profile-2">
+                                    {% include "@SSFMB/Filiere/Include/listMenuIndexInclude.html.twig" %}
+                                </div>
+                                <div class="tab-pane" id="messages-2">
+                                    <div class="row">
+                                        <div class="col-lg-12">date de retrait des cordes</div>
+                                        {% set now =  "now"|date("Y-m-d") %}
+                                        <div class="col-lg-12"><input type="date" name="dateRetraitCorde"
+                                                                      value="{{ now }}"></div>
+                                        <div class="col-lg-12">quantiter retirer</div>
+                                        <div class="col-lg-12"><input type="number" id="quantit" readonly="true"
+                                                                      value="0"></div>
+                                        <div class="col-lg-12">stocks de reception</div>
+                                        <div class="col-lg-12">
+                                            <input type="text" name="stockchoix" hidden="true" id="stockchoix"
+                                                   value="{{ entity.idStock.idStock }}">
+                                            <input type="text" readonly="true" value="{{ entity.idStock.libStock }}">
+                                        </div>
+                                        <div class="col-lg-12"><input type="submit" value="confirmer le retrait"/></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -104,6 +137,8 @@
          <!--script for this page only-->
          <script src="{{ asset('bundles/ssfmb/plugins/nestable/jquery.nestable.js') }}"></script>
          <script src="{{ asset('bundles/ssfmb/pages/nestable.js') }}"></script>
+         <script src="{{ asset('bundles/ssfmb/js/SideNavi.js') }}"></script>
+         <script src="{{ asset('bundles/ssfmb/js/SideNav.js') }}"></script>
          <script type="text/javascript">
              function validation() {
                  check = confirm('vous confirmer les données (date de retrait, article , lot que vous avez choisie');

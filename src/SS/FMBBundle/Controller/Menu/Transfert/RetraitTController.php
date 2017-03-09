@@ -16,11 +16,13 @@ class RetraitTController extends Controller
 
         if ($request->get('idparc') == null) {
             $parcs = null;
+            $processus = null;
             $stock = null;
             $lanternes = null;
             $articles = null;
         } else {
             $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('idparc'));
+            $processus = $em->getRepository('SSFMBBundle:Processus')->findAll();
             $lanternes = $em->getRepository('SSFMBBundle:Lanterne')->findByParc($parcs);
             $articles = $em->getRepository('SSFMBBundle:StocksArticles')->findByIdStock($parcs->getIdStock());
         }
@@ -47,6 +49,7 @@ class RetraitTController extends Controller
                 'entity' => $parcs,
                 'articles' => $articles,
                 'lanternes' => $lanternes,
+                'processus' => $processus
             )
         );
     }

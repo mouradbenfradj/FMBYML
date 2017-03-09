@@ -27,9 +27,8 @@ class Builder implements ContainerAwareInterface
         $menu->addChild('planing de travaille');
         $menu->addChild('Processus');
 
-
-        $menu['Operation']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
         $menu['Operation']->addChild('Préparation');
+        $menu['Operation']->addChild('Assemblage');
         $menu['Operation']->addChild('MAE lanterne');
         $menu['Operation']->addChild('MAE corde');
         $menu['Operation']->addChild('MAE Poche');
@@ -38,23 +37,10 @@ class Builder implements ContainerAwareInterface
         $menu['Operation']->addChild('Retrait AW lanterne');
         $menu['Operation']->addChild('Retrait AW corde');
         $menu['Operation']->addChild('Traitement Comercial');
-
         $menu['Operation']['Préparation']->addChild('preparer lanterne', array('route' => 'ssfmb_preparationlanterne'));
         $menu['Operation']['Préparation']->addChild('preparer corde', array('route' => 'ssfmb_preparationcorde'));
         $menu['Operation']['Préparation']->addChild('preparer poche', array('route' => 'ssfmb_preparationpoche'));
-        $menu['Operation']['Préparation']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
-        $menu['Operation']['chaussage']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
-        $menu['Operation']['Retrait AW lanterne']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
-        $menu['Operation']['Retrait AW corde']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
-
-
-        $menu['Statistique']->setAttribute('class', 'has-submenu')->setUri("/app_dev.php/")->setChildrenAttribute('class', 'submenu');
-        $menu['suivi filières']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
-
-
-        $menu['Operation']['MAE lanterne']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
-        $menu['Operation']['MAE corde']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
-        $menu['Operation']['MAE Poche']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
+        $menu['Operation']['Assemblage']->addChild('Poche a corde', array('route' => 'ssfmb_assemblage'));
 
         //   $menu->setChildrenAttribute('class', 'nav navbar-nav');
         $em = $this->container->get('doctrine')->getManager();
@@ -101,28 +87,40 @@ class Builder implements ContainerAwareInterface
                     'route' => 'traitementcomerciale',
                     'routeParameters' => array('idparc' => $parc->getIdMagasin())
                 ));
-                $menu['Operation']['Traitement Comercial']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
                 $menu['planing de travaille']->addChild($parc->getAbrevMagasin(), array(
                     'route' => 'ssfmb_planingdetravaille',
                     'routeParameters' => array('idparc' => $parc->getIdMagasin())
                 ));
-                $menu['planing de travaille']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
                 $menu['Processus']->addChild($parc->getAbrevMagasin(), array(
                     'route' => 'ssfmb_processusgrocissement',
                     'routeParameters' => array('idparc' => $parc->getIdMagasin())
                 ));
-                $menu['Processus']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
                 $menu['Operation']['Retrait Transfert']->addChild($parc->getAbrevMagasin(), array(
                     'route' => 'ssfmb_transfert',
                     'routeParameters' => array('idparc' => $parc->getIdMagasin())
                 ));
-                $menu['Operation']['Retrait Transfert']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
 
             }
 
         }
-        /*
-      */
+
+        $menu['Statistique']->setAttribute('class', 'has-submenu')->setUri("/app_dev.php/")->setChildrenAttribute('class', 'submenu');
+        $menu['suivi filières']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
+        $menu['Operation']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
+        $menu['planing de travaille']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
+        $menu['Processus']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
+
+        $menu['Operation']['Préparation']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
+        $menu['Operation']['Assemblage']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
+        $menu['Operation']['MAE lanterne']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
+        $menu['Operation']['MAE corde']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
+        $menu['Operation']['MAE Poche']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
+        $menu['Operation']['chaussage']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
+        $menu['Operation']['Retrait Transfert']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
+        $menu['Operation']['Retrait AW lanterne']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
+        $menu['Operation']['Retrait AW corde']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
+        $menu['Operation']['Traitement Comercial']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
+
         return $menu;
     }
 

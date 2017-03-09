@@ -12,5 +12,20 @@ use Doctrine\ORM\EntityRepository;
  */
 class LanterneRepository extends EntityRepository
 {
+    public function lanternePreparerYellowWarning(){
+
+    }
+    public function lanternePreparerRedWarning(){
+
+    }
+    public function lanternePGGreenWarning(){
+
+    }
+    public function lanternePGYellowWarning(){
+
+    }
+    public function lanternePGRedWarning(){
+
+    }
 
 }

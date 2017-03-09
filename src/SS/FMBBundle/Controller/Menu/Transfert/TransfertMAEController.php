@@ -17,10 +17,12 @@ class TransfertMAEController extends Controller
         $em = $this->getDoctrine()->getManager();
         if ($request->get('idparc') == null) {
             $parcs = null;
+            $processus = null;
             $stock = null;
             $cordes = null;
             $articles = null;
         } else {
+            $processus = $em->getRepository('SSFMBBundle:Processus')->findAll();
             $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('idparc'));
             $cordes = $em->getRepository('SSFMBBundle:Corde')->findByParc($parcs);
             $articles = $em->getRepository('SSFMBBundle:StocksArticles')->findByIdStock($parcs->getIdStock());
@@ -70,6 +72,7 @@ class TransfertMAEController extends Controller
                 'entity' => $parcs,
                 'articles' => $articles,
                 'cordes' => $cordes,
+                'processus' => $processus
             )
         );
     }

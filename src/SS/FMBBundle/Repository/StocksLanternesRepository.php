@@ -27,4 +27,53 @@ class StocksLanternesRepository extends EntityRepository
             ->setParameter(3, $lanterne);
         return $qb->getQuery()->getResult();
     }
+
+    public function getLanternePreparerYellowWarning($parc)
+    {
+        $qb = $this->createQueryBuilder('stlanterne')
+            ->select('lanterne.nomLanterne')
+            ->addSelect('article.libArticle')
+            ->addSelect('stocksarticlessn.numeroSerie')
+            ->addSelect('stlanterne.dateDeCreation')
+            ->addSelect('SUM(poche.quantite) as quantiter')
+            ->join('stlanterne.article', 'stocksarticlessn')
+            ->join('stlanterne.lanterne', 'lanterne')
+            ->join('stocksarticlessn.refStockArticle', 'stocksarticle')
+            ->join('stocksarticle.refArticle', 'article')
+            ->join('stlanterne.poches', 'poche')
+            ->where('lanterne.parc = :parc')
+            ->andWhere('stlanterne.dateDeCreation = :date')
+            ->andWhere('stlanterne.pret = :pret')
+            ->andWhere('stlanterne.emplacement IS NULL')
+            ->setParameter('date', new \DateTime(Date('Y-m-d')))
+            ->setParameter('pret', false)
+            ->setParameter('parc', $parc)
+            ->groupBy('stlanterne.id');
+        ;
+        return $qb->getQuery()->getResult();
+    }
+
+    public function getLanternePreparerRedWarning($parc)
+    {
+        $qb = $this->createQueryBuilder('stlanterne')
+            ->select('lanterne.nomLanterne')
+            ->addSelect('article.libArticle')
+            ->addSelect('stocksarticlessn.numeroSerie')
+            ->addSelect('stlanterne.dateDeCreation')
+            ->addSelect('SUM(poche.quantite) as quantiter')
+            ->join('stlanterne.article', 'stocksarticlessn')
+            ->join('stlanterne.lanterne', 'lanterne')
+            ->join('stocksarticlessn.refStockArticle', 'stocksarticle')
+            ->join('stocksarticle.refArticle', 'article')
+            ->join('stlanterne.poches', 'poche')
+            ->where('lanterne.parc = :parc')
+            ->andWhere('stlanterne.dateDeCreation < :date')
+            ->andWhere('stlanterne.emplacement IS NULL')
+            ->andWhere('stlanterne.pret = :pret')
+            ->setParameter('date', new \DateTime(Date('Y-m-d')))
+            ->setParameter('pret', false)
+            ->setParameter('parc', $parc)
+            ->groupBy('stlanterne.id');
+        return $qb->getQuery()->getResult();
+    }
 }

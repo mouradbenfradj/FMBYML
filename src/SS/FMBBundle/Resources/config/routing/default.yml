@@ -21,6 +21,9 @@ ssfmb_preparationcorde:
 ssfmb_preparationpoche:
     path:     /preparationpoche
     defaults: { _controller: SSFMBBundle:Menu/Preparation/Poche:pocheH}
+ssfmb_assemblage:
+    path:     /assemblage
+    defaults: { _controller: SSFMBBundle:Menu/Assemblage/PocheACorde/PocheACorde:index}
 
 ssfmb_misaaeaucorde:
     path:     /miseaeaucorde
@@ -46,7 +49,7 @@ ssfmb_planingdetravaille:
     defaults: { _controller: SSFMBBundle:Menu/Planing/Planing:planingdetravaille}
 ssfmb_processusgrocissement:
     path:     /groscissement
-    defaults: { _controller: SSFMBBundle:Default:processgrocissmeent}
+    defaults: { _controller: SSFMBBundle:Menu/Processus/Processus:processgrocissmeent}
 ssfmb_transfert:
     path:     /transfert
     defaults: { _controller: SSFMBBundle:Menu/Transfert/RetraitT:transfert}
@@ -56,3 +59,16 @@ ssfmb_misaaeautransfert:
 traitementcomerciale:
     path:     /traitementComerciale
     defaults: { _controller: SSFMBBundle:Menu/Traitement/Traitement:traitement}
+
+ssfmb_PochPreparer:
+    path:     /pochePreparer
+    defaults: { _controller: SSFMBBundle:Default:pochePreparer}
+
+ssfmb_datePochPreparer:
+    path:     /datepochePreparer
+    defaults: { _controller: SSFMBBundle:Default:datePochePreparer}
+
+
+ssfmb_nombrePochPreparer:
+    path:     /nombrePochPreparer
+    defaults: { _controller: SSFMBBundle:Default:nombrePochePreparer}

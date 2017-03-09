@@ -16,6 +16,20 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class ArticlesController extends Controller
 {
+    public function articleCycleAction(Request $request)
+    {// Get the province ID
+        $sarticle = $request->query->get('sarticle');
+        $repo = $this->getDoctrine()->getManager()->getRepository('SSFMBBundle:StocksArticles');
+
+        $stocks = $repo->findOneBy(array('refStockArticle' => $sarticle));
+        $result = array();
+        $repo = $this->getDoctrine()->getManager()->getRepository('SSFMBBundle:Processus')->findByArticleDebut($stocks->getRefArticle());
+        foreach ($repo as $stock) {
+            $result[$stock->getNomProcessus()] = $stock->getId();
+        }
+        return new JsonResponse($result);
+    }
+
     public function articleStocksAction(Request $request)
     {// Get the province ID
         $id = $request->query->get('stock_id');
@@ -26,7 +40,7 @@ class ArticlesController extends Controller
         if ($article != '')
             $stocks = $repo->findBy(array('idStock' => $id, 'refArticle' => $article));
         if ($sarticle != '')
-            $stocks = $repo->findBy(array('refStockArticle' =>$sarticle));
+            $stocks = $repo->findBy(array('refStockArticle' => $sarticle));
 
 
         foreach ($stocks as $stock) {
@@ -38,6 +52,7 @@ class ArticlesController extends Controller
         }
         return new JsonResponse($result);
     }
+
     public function pocheArticleAction(Request $request)
     {
         $request->get('id');
@@ -53,7 +68,7 @@ class ArticlesController extends Controller
             if (!in_array($e->getQuantiter(), $tabtest)) {
                 $tabEnsembles[$i]['id'] = $e->getId();
                 $tabEnsembles[$i]['nombre'] = count($pochearticle);
-                $tabEnsembles[$i]['qte'] =$e->getQuantiter();
+                $tabEnsembles[$i]['qte'] = $e->getQuantiter();
                 $tabtest[] = $e->getQuantiter();
             }
             $i++;
@@ -114,6 +129,7 @@ class ArticlesController extends Controller
 
         return $response;
     }
+
     /**
      * Lists all Articles entities.
      *

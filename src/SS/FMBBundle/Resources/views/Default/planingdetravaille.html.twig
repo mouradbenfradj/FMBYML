@@ -3,6 +3,7 @@
 {% block stylesheet %}
     {% if(entity != null) %}
         <link href="{{ asset('bundles/ssfmb/plugins/tablesaw/css/tablesaw.css') }}" rel="stylesheet"/>
+        <link href="{{ asset('bundles/ssfmb/plugins/nestable/jquery.nestable.css') }}" rel="stylesheet"/>
         {{ parent() }}
     {% endif %}
 {% endblock %}
@@ -17,51 +18,53 @@
                     <div class="row ">
                         <div class="col-md-11">
                             <h4 class="m-t-0 header-title"><b>Planing de travaille {{ entity.abrevMagasin }}</b></h4>
-                            <p class="text-muted m-b-30 font-13">
-                            </p>
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="portlet">
-                                        <div class="portlet-heading bg-danger">
-                                            <h3 class="portlet-title">
-                                                Processus Urgent
-                                            </h3>
-                                            <div class="portlet-widgets">
-                                                <a href="javascript:;" data-toggle="reload"><i class="ion-refresh"></i></a>
-                                                <span class="divider"></span>
-                                                <a data-toggle="collapse" data-parent="#accordion1" href="#bg-danger"><i
-                                                            class="ion-minus-round"></i></a>
-                                                <span class="divider"></span>
-                                                <a href="#" data-toggle="remove"><i class="ion-close-round"></i></a>
+                            {% set dernierArret = 0 %}
+                            {% for niveauAlert , alert in tableDesProcessus %}
+                                {% set dernierArret = dernierArret+ loop.index0 %}
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="portlet">
+                                            <div class="portlet-heading {{ alert.classColor }}">
+                                                <h3 class="portlet-title">
+                                                    {{ niveauAlert }}
+                                                </h3>
+                                                <div class="portlet-widgets">
+                                                    <a href="javascript:;" data-toggle="reload"><i
+                                                                class="ion-refresh"></i></a>
+                                                    <span class="divider"></span>
+                                                    <a data-toggle="collapse" data-parent="#accordion1"
+                                                       href="#{{ alert.classColor }}"><i
+                                                                class="ion-minus-round"></i></a>
+                                                    <span class="divider"></span>
+                                                    <a href="#" data-toggle="remove"><i class="ion-close-round"></i></a>
+                                                </div>
+                                                <div class="clearfix"></div>
                                             </div>
-                                            <div class="clearfix"></div>
+                                            <div id="{{ alert.classColor }}" class="panel-collapse collapse in">
+                                                <div class="portlet-body">
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            {% for nomProcess, tprocess in alert if nomProcess != "classColor" %}
+                                                                {% set dernierArret = dernierArret+ loop.index %}
+                                                                {% if nomProcess == "Lanterne Preparé" %}
+                                                                    {% include('@SSFMB/Default/Include/planingDeTravaille/Include/LanternePreparerInclude.html.twig') %}
+                                                                {% elseif nomProcess == "Corde Preparé" %}
+                                                                    {% include('@SSFMB/Default/Include/planingDeTravaille/Include/CordePreparerInclude.html.twig') %}
+                                                                {% else %}
+                                                                    {% include('@SSFMB/Default/Include/planingDeTravaille/Include/GeneralInclude.html.twig') %}
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                         </div>
-                                        <div id="bg-danger" class="panel-collapse collapse in">
-                                            <div class="portlet-body">
-                                                <div class="row">
-                                                    <div class="col-lg-12">
-                                                        <div class="panel-group" id="accordion-test-2">
-                                                            {% if lafu|length != 0 %}
-                                                                <div class="panel panel-default">
-                                                                    <div class="panel-heading">
-                                                                        <h4 class="panel-title">
-                                                                            <a data-toggle="collapse"
-                                                                               data-parent="#accordion-test-2"
-                                                                               href="#collapseOne-2"
-                                                                               aria-expanded="false"
-                                                                               class="collapsed">
-                                                                                Lanterne Preparé
-                                                                            </a>
-                                                                        </h4>
-                                                                    </div>
-                                                                    <div id="collapseOne-2"
-                                                                         class="panel-collapse collapse">
-                                                                        <div class="panel-body">
-                                                                            <p class="text-muted font-13">
-                                                                                {{ lafu|length }} lanterne a mettre a
-                                                                                l'eau
-                                                                            </p>
-                                                                            {% include('@SSFMB/Default/Include/planingDeTravaille/urgent/LanternePreparerUrgentInclude.html.twig') %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            {#
+
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -116,7 +119,7 @@
                                                                                         {% endfor %}
                                                                                     {% endfor %}
                                                                                 {% endfor %}
-                                                                                {{ nombrearetirer }} Lanterne a retiré
+                                                                                {{ nombrearetirer }} Corde a retiré
                                                                             </p>
                                                                             {% include('@SSFMB/Default/Include/planingDeTravaille/urgent/PregrocissementUrgentInclude.html.twig') %}
                                                                         </div>
@@ -265,7 +268,7 @@
                                                                                href="#collapseSeven-2"
                                                                                aria-expanded="false"
                                                                                class="collapsed">
-                                                                                Lanterne Preparé
+                                                                                Corde Preparé
                                                                             </a>
                                                                         </h4>
                                                                     </div>
@@ -277,7 +280,7 @@
                                                                                 mettre a
                                                                                 l'eau
                                                                             </p>
-                                                                            {% include('SSFMBBundle:Default/Include/planingDeTravaille/warning:LanternePreparerWarningInclude.html.twig') %}
+                                                                            {% include('SSFMBBundle:Default/Include/planingDeTravaille/warning:CordePreparerWarningInclude.html.twig') %}
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -336,7 +339,7 @@
                                                                                         {% endfor %}
                                                                                     {% endfor %}
                                                                                 {% endfor %}
-                                                                                {{ nombrearetirer }} Lanterne a
+                                                                                {{ nombrearetirer }} Corde a
                                                                                 retiré
                                                                             </p>
                                                                             {% include('@SSFMB/Default/Include/planingDeTravaille/warning/PregrocissementWarningInclude.html.twig') %}
@@ -515,7 +518,7 @@
                                                                                         {% endfor %}
                                                                                     {% endfor %}
                                                                                 {% endfor %}
-                                                                                {{ nombrearetirer }} Lanterne a
+                                                                                {{ nombrearetirer }} Corde a
                                                                                 retiré
                                                                             </p>
                                                                             {% include('@SSFMB/Default/Include/planingDeTravaille/normal/PregrocissementNormalInclude.html.twig') %}
@@ -639,8 +642,7 @@
                                     </div>
                                 </div>
                             </div>
-
-
+                            #}
                         </div>
                     </div>
                 </div>
@@ -655,6 +657,8 @@
     {{ parent() }}
     <script src="{{ asset('bundles/ssfmb/plugins/tablesaw/js/tablesaw.js') }}"></script>
     <script src="{{ asset('bundles/ssfmb/plugins/tablesaw/js/tablesaw-init.js') }}"></script>
+    <script src="{{ asset('bundles/ssfmb/plugins/nestable/jquery.nestable.js') }}"></script>
+    <script src="{{ asset('bundles/ssfmb/pages/nestable.js') }}"></script>
     <script src="{{ asset('bundles/ssfmb/js/planing.js') }}"></script>
 
 {% endblock %}

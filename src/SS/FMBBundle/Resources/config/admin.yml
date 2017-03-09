@@ -100,6 +100,30 @@ services:
         calls:
             - [ setTranslationDomain, [SSFMBBundle]]
 
+    sonata.admin.processus:
+            class: SS\FMBBundle\Admin\ProcessusAdmin
+            tags:
+                - { name: sonata.admin, manager_type: orm,group: "Processus",  label: "Processus",label_catalogue: "Processus" }
+            arguments:
+                - ~
+                - SS\FMBBundle\Entity\Processus
+                - ~
+            calls:
+                - [ setTranslationDomain, [SSFMBBundle]]
+
+
+    sonata.admin.phases:
+            class: SS\FMBBundle\Admin\PhasesAdmin
+            tags:
+                - { name: sonata.admin, manager_type: orm,group: "Processus",  label: "Phases",label_catalogue: "Phases" }
+            arguments:
+                - ~
+                - SS\FMBBundle\Entity\Phases
+                - ~
+            calls:
+                - [ setTranslationDomain, [SSFMBBundle]]
+
+
     sonata.admin.docslines:
         class: SS\FMBBundle\Admin\DocsLinesAdmin
         tags:
@@ -248,7 +272,7 @@ services:
     sonata.admin.poche:
         class: SS\FMBBundle\Admin\PocheAdmin
         tags:
-            - { name: sonata.admin, manager_type: orm, group: "Stock", label: "Poche",label_catalogue: "Lanterne" }
+            - { name: sonata.admin, manager_type: orm, group: "Stock", label: "Poche lanterne",label_catalogue: "Lanterne" }
         arguments:
             - ~
             - SS\FMBBundle\Entity\Poche

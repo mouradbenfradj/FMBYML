@@ -27,4 +27,48 @@ class StocksCordesRepository extends EntityRepository
             ->setParameter(3, $corde);
         return $qb->getQuery()->getResult();
     }
+
+    public function getCordePreparerYellowWarning($parc)
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->select('corde.nomCorde')
+            ->addSelect('article.libArticle')
+            ->addSelect('stocksarticlessn.numeroSerie')
+            ->addSelect('c.dateDeCreation')
+            ->addSelect('c.quantiter')
+            ->join('c.article', 'stocksarticlessn')
+            ->join('c.corde', 'corde')
+            ->join('stocksarticlessn.refStockArticle', 'stocksarticle')
+            ->join('stocksarticle.refArticle', 'article')
+            ->where('corde.parc = :parc')
+            ->andWhere('c.dateDeCreation = :date')
+            ->andWhere('c.pret = :pret')
+            ->andWhere('c.emplacement IS NULL')
+            ->setParameter('date', new \DateTime(Date('Y-m-d')))
+            ->setParameter('pret', false)
+        ->setParameter('parc', $parc);
+        return $qb->getQuery()->getResult();
+    }
+
+    public function getCordePreparerRedWarning($parc)
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->select('corde.nomCorde')
+            ->addSelect('article.libArticle')
+            ->addSelect('stocksarticlessn.numeroSerie')
+            ->addSelect('c.dateDeCreation')
+            ->addSelect('c.quantiter')
+            ->join('c.article', 'stocksarticlessn')
+            ->join('c.corde', 'corde')
+            ->join('stocksarticlessn.refStockArticle', 'stocksarticle')
+            ->join('stocksarticle.refArticle', 'article')
+            ->where('corde.parc = :parc')
+            ->andWhere('c.dateDeCreation < :date')
+            ->andWhere('c.emplacement IS NULL')
+            ->andWhere('c.pret = :pret')
+            ->setParameter('date', new \DateTime(Date('Y-m-d')))
+            ->setParameter('pret', false)
+            ->setParameter('parc', $parc);
+        return $qb->getQuery()->getResult();
+    }
 }

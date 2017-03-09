@@ -1,94 +1,15 @@
-{% if emplacement.libArticle == 'NAISSAIN MOULES' %}
-  <b>  <a title="article: {{ emplacement.libArticle }}
+<b> <a title="article: {{ emplacement.libArticle }}
 -lot : {{ emplacement.numeroSerie }}
--processus : {% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}
-{% if difference.m <=3 and difference.y ==0 %}PG{{ difference.m + 1 }}
-{% elseif difference.m <=12 and difference.y == 0 %}G{{ difference.m + - 3 }}
-{% elseif difference.m <=1 and difference.y == 1 %}G{{ difference.m + 9 }}
-{% elseif difference.m >1 and difference.m <=3 and difference.y == 1 %}MS{{ difference.m - 1 }}
-{% elseif difference.m >3 and difference.m <=7 and difference.y == 1 %}ME{{ difference.m - 3 }}
-{% elseif difference.m >7 and difference.y == 1 %}MR{{ difference.m - 7 }}
-{% elseif difference.y > 1 %}MR4+
-{% endif %}
+-processus : {{ emplacement.abrevProcessus }}{{ emplacement.cycle }}
 -date de MAE :{{ emplacement.dateDeRemplissage|date('Y-m-d') }}
 -date dernier transfert:{% if  emplacement.dateDTC %}{{ emplacement.dateDTC|date('Y-m-d') }} {% else %} aucun {% endif %}"
        href="">
-        {% set difference2 = date("now").diff(date(emplacement.dateDeRemplissage)) %}
-        {% if difference.m <=3 and difference.y ==0 %}
-            {% if emplacement.chausc %}
-                <div style="color: sandybrown" class="emplacement LblClignotant">{{ emplacement.place }}</div>
-            {% else %}
-                <div style="color: sandybrown" class="emplacement">{{ emplacement.place }}</div>
-            {% endif %}
-        {% elseif difference2.m <=12 and difference.y ==0 %}
-            {% if emplacement.chausc %}
-                <div style="color: sandybrown" class="emplacement LblClignotant">{{ emplacement.place }}</div>
-            {% else %}
-                <div style="color: sandybrown" class="emplacement">{{ emplacement.place }}</div>
-            {% endif %}
-        {% elseif difference2.m <=1 and difference.y ==1 %}
-            {% if emplacement.chausc %}
-                <div style="color: sandybrown" class="emplacement LblClignotant">{{ emplacement.place }}</div>
-            {% else %}
-                <div style="color: sandybrown" class="emplacement">{{ emplacement.place }}</div>
-            {% endif %}
-        {% elseif difference2.m >1 and difference2.m <=3 and difference.y ==1 %}
-            {% if emplacement.chausc %}
-                <div style="color: brown" class="emplacement LblClignotant">{{ emplacement.place }}</div>
-            {% else %}
-                <div style="color: brown" class="emplacement">{{ emplacement.place }}</div>
-            {% endif %}
-        {% elseif difference2.m >3 and difference2.m <=7 and difference.y ==1 %}
-            {% if emplacement.chausc %}
-                <div style="color: black" class="emplacement LblClignotant">{{ emplacement.place }}</div>
-            {% else %}
-                <div style="color: black" class="emplacement">{{ emplacement.place }}</div>
-            {% endif %}
-        {% elseif difference2.m >7 and difference.y == 1 %}
-            {% if emplacement.chausc %}
-                <div style="color: deeppink" class="emplacement LblClignotant">{{ emplacement.place }}</div>
-            {% else %}
-                <div style="color: deeppink" class="emplacement">{{ emplacement.place }}</div>
-            {% endif %}
-        {% elseif difference.y > 1 %}
-            {% if emplacement.chausc %}
-                <div style="color: deeppink" class="emplacement LblClignotant">{{ emplacement.place }}</div>
-            {% else %}
-                <div style="color: deeppink" class="emplacement">{{ emplacement.place }}</div>
-            {% endif %}
+        {% if emplacement.chausc %}
+            <div style="color: {{ emplacement.couleur }};background-color: {{ emplacement.couleurDuFond }}"
+                 class="emplacement LblClignotant">{{ emplacement.place }}</div>
+        {% else %}
+            <div style="color: {{ emplacement.couleur }};background-color: {{ emplacement.couleurDuFond }}"
+                 class="emplacement">{{ emplacement.place }}</div>
         {% endif %}
     </a>
-  </b>
-{% else %}
-   <b> <a title="article: {{ emplacement.libArticle }}
--lot : {{ emplacement.numeroSerie }}
--processus : {% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}{% if difference.m <=5 and difference.y ==0 %}G{{ difference.m }}{% elseif difference.m <=9 and difference.y == 0 %}{% set dif2 = 9- difference.m %}H{{ dif2 }}{% elseif difference.m ==10 and difference.y == 0 %}H00{% elseif difference.m >10 or difference.y >0 %}H000{% endif %}
-
--date de MAE :{{ emplacement.dateDeRemplissage|date('Y-m-d') }}
--date dernier transfert:{% if  emplacement.dateDTC %}{{ emplacement.dateDTC|date('Y-m-d') }} {% else %} aucun {% endif %}"
-       href="">
-        {% set difference2 = date("now").diff(date(emplacement.dateDeRemplissage)) %}
-        {% if difference.m <=5 and difference.y ==0 %}
-            {% if emplacement.chausc %}
-                <div style="color: aqua" class="emplacement LblClignotant">{{ emplacement.place }}</div>
-            {% else %}
-                <div style="color: aqua" class="emplacement">{{ emplacement.place }}</div>
-            {% endif %}
-        {% elseif difference2.m <=8 and difference.y ==0 %}
-            {% if emplacement.chausc %}
-                <div style="color: blue" class="emplacement LblClignotant">{{ emplacement.place }}</div>
-            {% else %}
-                <div style="color: blue" class="emplacement">{{ emplacement.place }}</div>
-            {% endif %}
-
-
-        {% elseif difference2.m >8 or difference.y > 0 %}
-            {% if emplacement.chausc %}
-                <div style="color: #8a2be2" class="emplacement LblClignotant">{{ emplacement.place }}</div>
-            {% else %}
-                <div style="color: #8a2be2" class="emplacement">{{ emplacement.place }}</div>
-            {% endif %}
-        {% endif %}
-    </a>
-   </b>
-{% endif %}
+</b>

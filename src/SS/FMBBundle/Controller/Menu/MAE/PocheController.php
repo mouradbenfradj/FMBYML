@@ -14,10 +14,12 @@ class PocheController extends Controller
         if ($request->get('idparc') == null) {
             $parcs = null;
             $stock = null;
+            $processus = null;
             $poches = null;
             $articles = null;
         } else {
             $parcs = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('idparc'));
+            $processus = $em->getRepository('SSFMBBundle:Processus')->findAll();
             $poches = $em->getRepository('SSFMBBundle:PochesBS')->findByParc($parcs);
             $articles = $em->getRepository('SSFMBBundle:StocksArticles')->findByIdStock($parcs->getIdStock());
         }
@@ -41,6 +43,7 @@ class PocheController extends Controller
                 'entity' => $parcs,
                 'articles' => $articles,
                 'poches' => $poches,
+                'processus' => $processus
             )
         );
     }

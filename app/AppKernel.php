@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new SS\UserBundle\SSUserBundle(),
             new SS\AdminBundle\SSAdminBundle(),
 
+            new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new Sonata\CoreBundle\SonataCoreBundle(),
             new Sonata\BlockBundle\SonataBlockBundle(),

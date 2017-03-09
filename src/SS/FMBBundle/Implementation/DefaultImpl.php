@@ -9,6 +9,7 @@
 namespace SS\FMBBundle\Implementation;
 
 
+use DateTime;
 use SS\FMBBundle\Entity\Lot;
 use SS\FMBBundle\Entity\Poche;
 use SS\FMBBundle\Interfaces\DefaultInterface;
@@ -80,5 +81,55 @@ class DefaultImpl implements DefaultInterface
 
         die();
         return $tableau;
+    }
+
+    public function DefinirNiveauAlerte($emplacement, $dateActuel, $cycle)
+    {
+        $dc = new DateTime($emplacement['dateDeRemplissage']->format("Y-m-d"));
+        $idCycleArticle = 0;
+
+        if ($emplacement['stockscorde']) {
+            $idCycleArticle = $emplacement['processusc'];
+        }
+        foreach ($cycle as $item) {
+            if ($item->getId() == $idCycleArticle) {
+                $cycleArticle = $item;
+            }
+            if ($item->getIdProcessusParent()) {
+                if ($item->getIdProcessusParent()->getId() == $idCycleArticle) {
+                    $cycleSuivant = $item;
+                }
+            }
+        }
+        $dc->modify($cycleArticle->getDuree()['jours'] . ' day');
+        $dc->modify($cycleArticle->getDuree()['mois'] . ' month');
+        $dc->modify($cycleArticle->getDuree()['annee'] . ' year');
+        $aj = new DateTime($dc->format("Y-m-d"));
+        $aj->modify($cycleArticle->getAlerteJaune()['jours'] . '  day');
+        $aj->modify($cycleArticle->getAlerteJaune()['mois'] . ' month');
+        $aj->modify($cycleArticle->getAlerteJaune()['annee'] . '  year');
+        $ar = new DateTime($dc->format("Y-m-d"));
+        $ar->modify($cycleArticle->getAlerteRouge()['jours'] . '  day');
+        $ar->modify($cycleArticle->getAlerteRouge()['mois'] . ' month');
+        $ar->modify($cycleArticle->getAlerteRouge()['annee'] . '  year');
+
+        var_dump($emplacement);
+        var_dump($emplacement['dateDeRemplissage']->format("Y-m-d"));
+        var_dump($dc);
+        var_dump($aj);
+        var_dump($ar);
+        if ($ar < $dateActuel) {
+            return 3;
+        } elseif ($aj > $dateActuel) {
+            return 1;
+        } else {
+            return 2;
+        }
+        die();
+
+        die();
+
+
+        return 0;
     }
 }

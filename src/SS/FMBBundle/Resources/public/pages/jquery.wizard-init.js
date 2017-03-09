@@ -49,7 +49,53 @@
                     return $form_container.valid();
                 },
                 onFinished: function (event, currentIndex) {
-                    alert("Submitted!");
+                    //Routing.generate('ssfmb_PochPreparer', { parc: $("input[name='parc']").val(), corde: "bar", nbrCorde: "bar", contenu: "bar" });
+                    //alert("Submitted!");
+                    var nombreCordeChoisie = $('input[name="nbrCordeAssemblage"]').val();
+                    var nombreCordeDemande = $('#nbrCorde').text();
+                    var op = 0;
+                    var quantiter = 0;
+                    var quantiterDemander = 0;
+                    var quantiterU = 0;
+                    var ok = true;
+                    if (nombreCordeChoisie > nombreCordeDemande) {
+                        alert('vous avez demander a preparer un nombre de corde superieur au nombre de corde en stock');
+                    } else {
+                        $.each($(':hidden.contenu'), function (index, value) {
+                            op++;
+                            switch (op) {
+                                case 1:
+                                    quantiter = $(value).val();
+                                    break;
+                                case 2:
+                                    quantiterDemander = $(value).val();
+                                    break;
+                                case 3:
+                                    break;
+                                case 4:
+                                    break;
+                                case 5:
+                                    quantiterU = $(value).val();
+                                    console.log(quantiterDemander);
+                                    console.log(nombreCordeChoisie);
+                                    console.log(quantiter);
+                                    if ((quantiterDemander * nombreCordeChoisie) > quantiter) {
+                                        alert("il vous manque " + ((quantiterDemander * nombreCordeChoisie) - quantiter) + " poche H de quantiter " + quantiterU + "pour effectué cette operation");
+                                        ok = false;
+                                    }
+                                    op = 0;
+                                    break;
+                                default:
+                                    console.log('erreur');
+                            }
+                        });
+                        if (ok) {
+                            alert('la tache demander ne sera pas effectué ,cette operation est en cours de construction ');
+                            // $("#wizard-validation-form").submit();
+                        } else {
+                            alert('operation non effectué veillez verifié vos valeurs');
+                        }
+                    }
                 }
             });
 

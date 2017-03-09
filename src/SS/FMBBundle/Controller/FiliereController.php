@@ -4,6 +4,8 @@ namespace SS\FMBBundle\Controller;
 
 use DateTime;
 use SS\FMBBundle\Entity\Magasins;
+use SS\FMBBundle\Entity\Processus;
+use SS\FMBBundle\Implementation\ProcessusImplementation;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -97,7 +99,6 @@ class FiliereController extends Controller
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-
         $entity = $em->getRepository('SSFMBBundle:Filiere')->find($id);
 
         if (!$entity) {
@@ -228,9 +229,12 @@ class FiliereController extends Controller
 
     public function findByParcAction(Magasins $parc, $page)
     {
+        $datenow = new DateTime('now');
         $em = $this->getDoctrine()->getManager();
+        $implementation = new ProcessusImplementation();
         $filieress = $em->getRepository('SSFMBBundle:Filiere')->getTotaleContenuFiliere($parc);
         $filieres = array();
+        $pp = 0;
         foreach ($filieress as $item) {
             $filieres[$item['fiId']]['nomFiliere'] = $item['nomFiliere'];
             $filieres[$item['fiId']]['observation'] = $item['observation'];
@@ -238,6 +242,43 @@ class FiliereController extends Controller
             $filieres[$item['fiId']][$item['sId']]['longeur'] = $item['longeur'];
             $filieres[$item['fiId']][$item['sId']]['nomSegment'] = $item['nomSegment'];
             $filieres[$item['fiId']][$item['sId']][$item['flId']]['nomFlotteur'] = $item['nomFlotteur'];
+            $clp = '';
+            $clpf = '';
+            $abp = '';
+            $debC = 0;
+            $cycle = 0;
+            if ($item['processusl']) {
+                if ($item['processusl'] != $pp) {
+                    $process = $em->getRepository('SSFMBBundle:Processus')->find($item['processusl']);
+                    $debC = $item['numDebCyclel'];
+                    $pp = $item['processusl'];
+                }
+            } elseif ($item['processusc']) {
+                if ($item['processusc'] != $pp) {
+                    $process = $em->getRepository('SSFMBBundle:Processus')->find($item['processusc']);
+                    $debC = $item['numDebCyclec'];
+                    $pp = $item['processusc'];
+                }
+            } elseif ($item['processusp']) {
+                if ($item['processusp'] != $pp) {
+                    $process = $em->getRepository('SSFMBBundle:Processus')->find($item['processusp']);
+                    $debC = $item['numDebCyclep'];
+                    $pp = $item['processusp'];
+                }
+            }
+
+            if ($item['dateDeRemplissage']) {
+
+                if ($implementation->processusArticle($process, $datenow, $item['dateDeRemplissage'])) {
+                    $processus = $implementation->processusArticle($process, $datenow, $item['dateDeRemplissage']);
+                    $abp = $processus->getAbrevProcessus();
+                    $clp = $processus->getCouleur();
+                    $clpf = $processus->getCouleurDuFond();
+                    $cycle = $implementation->cycleArticle($process, $datenow, $item['dateDeRemplissage']);
+                }
+            } else {
+                $abp = "error test ";
+            }
             $filieres[$item['fiId']][$item['sId']][$item['flId']][$item['empId']] =
                 array(
                     'place' => $item['place'],
@@ -257,7 +298,14 @@ class FiliereController extends Controller
                     'stockspoche' => $item['sp'],
                     'chausl' => $item['chausl'],
                     'chausc' => $item['chausc'],
-                    'chausp' => $item['chausp']
+                    'chausp' => $item['chausp'],
+                    'cycle' => $cycle,
+                    'numDebCyclel' => $debC,
+                    'abrevProcessus' => $abp,
+                    'couleur' => $clp,
+                    'couleurDuFond' => $clpf,
+
+                    'processusp' => $item['processusp']
                 );
         }
         return $this->render('@SSFMB/Filiere/Render/listFiliereIndexRender.html.twig', array('filieres' => $filieres, 'page' => $page));
