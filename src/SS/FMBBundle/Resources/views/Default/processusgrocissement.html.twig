@@ -88,6 +88,18 @@
                                                                                             <span id="{{ processus.nomProcessus }}{{ numCycle }}"
                                                                                                   value="{{ cycle.quantiterLanterne }}">
                                                                                                 {{ cycle.quantiterLanterne|number_format(0, ',', '.') }}
+                                                                                                <input type="hidden"
+                                                                                                       value="{{ phase.nomPhase }}"
+                                                                                                       class="phase"
+                                                                                                       name="phase[]">
+                                                                                                <input type="hidden"
+                                                                                                       value="{{ processus.nomProcessus }}{{ numCycle }}"
+                                                                                                       class="processus"
+                                                                                                       name="processus[]">
+                                                                                                <input type="hidden"
+                                                                                                       value="{{ cycle.quantiterLanterne|number_format(0, ',', '.') }}"
+                                                                                                       class="processusqte"
+                                                                                                       name="processusqte[]">
                                                                                             </span>
                                                                                                     u/
                                                                                                     {{ (cycle.quantiterLanterne /12)|number_format(2, ',', '.') }}
@@ -98,6 +110,18 @@
                                                                                             {% endif %}
                                                                                             {% if(cycle.quantiterCorde  + cycle.nombreCorde ) != 0 %}
                                                                                                 <p>
+                                                                                                    <input type="hidden"
+                                                                                                           value="{{ phase.nomPhase }}"
+                                                                                                           class="phase"
+                                                                                                           name="phase[]">
+                                                                                                    <input type="hidden"
+                                                                                                           value="{{ processus.nomProcessus }}{{ numCycle }}"
+                                                                                                           class="processus"
+                                                                                                           name="processus[]">
+                                                                                                    <input type="hidden"
+                                                                                                           value="{{ cycle.quantiterCorde|number_format(0, ',', '.') }}"
+                                                                                                           class="processusqte"
+                                                                                                           name="processusqte[]">
                                                                                                     {{ cycle.quantiterCorde|number_format(0, ',', '.') }}
                                                                                                     u/
                                                                                                     {{ (cycle.quantiterCorde/12)|number_format(2, ',', '.') }}
@@ -108,6 +132,18 @@
                                                                                             {% endif %}
                                                                                             {% if(cycle.quantiterPoche  + cycle.nombrePoche ) != 0 %}
                                                                                                 <p>
+                                                                                                    <input type="hidden"
+                                                                                                           value="{{ phase.nomPhase }}"
+                                                                                                           class="phase"
+                                                                                                           name="phase[]">
+                                                                                                    <input type="hidden"
+                                                                                                           value="{{ processus.nomProcessus }}{{ numCycle }}"
+                                                                                                           class="processus"
+                                                                                                           name="processus[]">
+                                                                                                    <input type="hidden"
+                                                                                                           value="{{ cycle.quantiterPoche|number_format(0, ',', '.') }}"
+                                                                                                           class="processusqte"
+                                                                                                           name="processusqte[]">
                                                                                                     {{ cycle.quantiterPoche|number_format(0, ',', '.') }}
                                                                                                     u/
                                                                                                     {{ (cycle.quantiterPoche/12)|number_format(2, ',', '.') }}
@@ -221,10 +257,16 @@
                                                                                                                                             {% endif %}
                                                                                                                                         </div>
                                                                                                                                         <div class="col-xs-12 col-sm-12 col-md-12">
-                                                                                                                                            <table  class="table table-bordered table-striped table-condensed">
+                                                                                                                                            <table class="table table-bordered table-striped table-condensed">
                                                                                                                                                 <tr>
                                                                                                                                                     <th>
                                                                                                                                                         place
+                                                                                                                                                    </th>
+                                                                                                                                                    <th>
+                                                                                                                                                        article
+                                                                                                                                                    </th>
+                                                                                                                                                    <th>
+                                                                                                                                                        lot
                                                                                                                                                     </th>
                                                                                                                                                     <th>
                                                                                                                                                         date
@@ -248,6 +290,25 @@
                                                                                                                                                 {% for idEmplacement,emplacement in flotteur.emplacement %}
                                                                                                                                                     <tr>
                                                                                                                                                         <td>{{ emplacement.place }}</td>
+                                                                                                                                                        <td>
+                                                                                                                                                            {% if emplacement.stockslanterne %}
+
+                                                                                                                                                                {{ emplacement.stockslanterne.article.refStockArticle.refArticle.libArticle }}
+                                                                                                                                                            {% elseif emplacement.stockscorde %}
+                                                                                                                                                                {{ emplacement.stockscorde.article.refStockArticle.refArticle.libArticle }}
+                                                                                                                                                            {% elseif emplacement.stockspoches %}
+                                                                                                                                                                {{ emplacement.stockspoches.article.refStockArticle.refArticle.libArticle }}
+                                                                                                                                                            {% endif %}
+                                                                                                                                                        </td>
+                                                                                                                                                        <td>
+                                                                                                                                                            {% if emplacement.stockslanterne %}
+                                                                                                                                                                {{ emplacement.stockslanterne.article.numeroSerie }}
+                                                                                                                                                            {% elseif emplacement.stockscorde %}
+                                                                                                                                                                {{ emplacement.stockscorde.article.numeroSerie }}
+                                                                                                                                                            {% elseif emplacement.stockspoches %}
+                                                                                                                                                                {{ emplacement.stockspoches.article.numeroSerie }}
+                                                                                                                                                            {% endif %}
+                                                                                                                                                        </td>
                                                                                                                                                         <td>{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
                                                                                                                                                         <td>
                                                                                                                                                             {% set dateDebut = emplacement.dateDeRemplissage|date("Y-m-d") %}
@@ -345,11 +406,11 @@
                                                             </script>
                                                             {% set defId  = defId + 1 %}
 
-                                                            <div class="col-lg-4">
+                                                            <div class="col-lg-12">
                                                                 <div class="portlet"><!-- /primary heading -->
                                                                     <div class="portlet-heading">
                                                                         <h3 class="portlet-title text-dark">
-                                                                            Huitre
+                                                                            {{ phase.nomPhase }}
                                                                         </h3>
                                                                         <div class="portlet-widgets">
                                                                             <a href="javascript:;" data-toggle="reload"><i
@@ -377,70 +438,6 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            {% set defId  = defId + 1 %}
-                                                            <div class="col-lg-4">
-                                                                <div class="portlet"><!-- /primary heading -->
-                                                                    <div class="portlet-heading">
-                                                                        <h3 class="portlet-title text-dark">
-                                                                            Moule
-                                                                        </h3>
-                                                                        <div class="portlet-widgets">
-                                                                            <a href="javascript:;" data-toggle="reload"><i
-                                                                                        class="ion-refresh"></i></a>
-                                                                            <span class="divider"></span>
-                                                                            <a data-toggle="collapse"
-                                                                               data-parent="#accordion{{ idPhase }}"
-                                                                               href="#portlet5"><i
-                                                                                        class="ion-minus-round"></i></a>
-                                                                            <span class="divider"></span>
-                                                                        </div>
-                                                                        <div class="clearfix"></div>
-                                                                    </div>
-                                                                    <div id="portlet{{ defId }}"
-                                                                         class="panel-collapse collapse in">
-                                                                        <div class="portlet-body">
-                                                                            <div id="pie-chart{{ defId }}">
-                                                                                <div id="pie-chart-container{{ defId }}"
-                                                                                     class="flot-chart"
-                                                                                     style="height: 320px;">
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            {% set defId  = defId + 1 %}
-                                                            <div class="col-lg-4">
-                                                                <div class="portlet"><!-- /primary heading -->
-                                                                    <div class="portlet-heading">
-                                                                        <h3 class="portlet-title text-dark">
-                                                                            Poche
-                                                                        </h3>
-                                                                        <div class="portlet-widgets">
-                                                                            <a href="javascript:;" data-toggle="reload"><i
-                                                                                        class="ion-refresh"></i></a>
-                                                                            <span class="divider"></span>
-                                                                            <a data-toggle="collapse"
-                                                                               data-parent="#accordion{{ idPhase }}"
-                                                                               href="#portlet6"><i
-                                                                                        class="ion-minus-round"></i></a>
-                                                                            <span class="divider"></span>
-                                                                        </div>
-                                                                        <div class="clearfix"></div>
-                                                                    </div>
-                                                                    <div id="portlet{{ defId }}"
-                                                                         class="panel-collapse collapse in">
-                                                                        <div class="portlet-body">
-                                                                            <div id="pie-chart{{ defId }}">
-                                                                                <div id="pie-chart-container{{ defId }}"
-                                                                                     class="flot-chart"
-                                                                                     style="height: 320px;">
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
                                                         </div>
 
                                                         <div class="row">
@@ -449,8 +446,9 @@
                                                                 <div class="portlet">
                                                                     <!-- /primary heading -->
                                                                     <div class="portlet-heading">
-                                                                        <h3 class="portlet-title text-dark"> Bar
-                                                                            Chart </h3>
+                                                                        <h3 class="portlet-title text-dark">
+                                                                            {{ phase.nomPhase }}
+                                                                        </h3>
                                                                         <div class="portlet-widgets">
                                                                             <a href="javascript:;" data-toggle="reload"><i
                                                                                         class="ion-refresh"></i></a>

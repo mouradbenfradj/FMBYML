@@ -10,46 +10,155 @@
     var MorrisCharts = function () {
     };
 
-
-    //creates Bar chart
-    MorrisCharts.prototype.createBarChart = function (element, data, xkey, ykeys, labels, lineColors) {
-        Morris.Bar({
+    //creates line chart
+    MorrisCharts.prototype.createLineChart = function (element, data, xkey, ykeys, labels, opacity, Pfillcolor, Pstockcolor, lineColors) {
+        Morris.Line({
             element: element,
             data: data,
             xkey: xkey,
             ykeys: ykeys,
             labels: labels,
+            fillOpacity: opacity,
+            pointFillColors: Pfillcolor,
+            pointStrokeColors: Pstockcolor,
+            behaveLikeLine: true,
+            gridLineColor: '#eef0f2',
             hideHover: 'auto',
             resize: true, //defaulted to true
-            gridLineColor: '#eeeeee',
-            barColors: lineColors
+            lineColors: lineColors
         });
     },
-
+        //creates area chart
+        MorrisCharts.prototype.createAreaChart = function (element, pointSize, lineWidth, data, xkey, ykeys, labels, lineColors) {
+            Morris.Area({
+                element: element,
+                pointSize: 0,
+                lineWidth: 0,
+                data: data,
+                xkey: xkey,
+                ykeys: ykeys,
+                labels: labels,
+                hideHover: 'auto',
+                resize: true,
+                gridLineColor: '#eef0f2',
+                lineColors: lineColors
+            });
+        },
+        //creates area chart with dotted
+        MorrisCharts.prototype.createAreaChartDotted = function (element, pointSize, lineWidth, data, xkey, ykeys, labels, Pfillcolor, Pstockcolor, lineColors) {
+            Morris.Area({
+                element: element,
+                pointSize: 3,
+                lineWidth: 1,
+                data: data,
+                xkey: xkey,
+                ykeys: ykeys,
+                labels: labels,
+                hideHover: 'auto',
+                pointFillColors: Pfillcolor,
+                pointStrokeColors: Pstockcolor,
+                resize: true,
+                gridLineColor: '#eef0f2',
+                lineColors: lineColors
+            });
+        },
+        //creates Bar chart
+        MorrisCharts.prototype.createBarChart = function (element, data, xkey, ykeys, labels, lineColors) {
+            Morris.Bar({
+                element: element,
+                data: data,
+                xkey: xkey,
+                ykeys: ykeys,
+                labels: labels,
+                hideHover: 'auto',
+                resize: true, //defaulted to true
+                gridLineColor: '#eeeeee',
+                barColors: lineColors
+            });
+        },
+        //creates Stacked chart
+        MorrisCharts.prototype.createStackedChart = function (element, data, xkey, ykeys, labels, lineColors) {
+            Morris.Bar({
+                element: element,
+                data: data,
+                xkey: xkey,
+                ykeys: ykeys,
+                stacked: true,
+                labels: labels,
+                hideHover: 'auto',
+                resize: true, //defaulted to true
+                gridLineColor: '#eeeeee',
+                barColors: lineColors
+            });
+        },
+        //creates Donut chart
+        MorrisCharts.prototype.createDonutChart = function (element, data, colors) {
+            Morris.Donut({
+                element: element,
+                data: data,
+                resize: true, //defaulted to true
+                colors: colors
+            });
+        },
         MorrisCharts.prototype.init = function () {
 
-            var NH1 = 0, NH2 = 0, NH3 = 0, NH4 = 0, NH5 = 0;
-            var NM1 = 0, NM2 = 0, NM3 = 0, NM4 = 0, NM5 = 0;
-            var P1 = 0, P2 = 0, P3 = 0, P4 = 0, P5 = 0;
-            if (document.getElementById('NH1') != null)
-                NH1 = document.getElementById('NH1').getAttribute('value');
-            if (document.getElementById('NH2') != null)
-                NH2 = document.getElementById('NH2').getAttribute('value');
-            if (document.getElementById('NH3') != null)
-                NH3 = document.getElementById('NH3').getAttribute('value');
-            if (document.getElementById('NH4') != null)
-                NH4 = document.getElementById('NH4').getAttribute('value');
-            if (document.getElementById('NH5') != null)
-                NH5 = document.getElementById('NH5').getAttribute('value');
-            //creating bar chart
-            var $barData = [
-                {y: 'NH1', a: NH1, b: 0, c: 0},
-                {y: 'NH2', a: NH2, b: 0, c: 0},
-                {y: 'NH3', a: NH3, b: 0, c: 0},
-                {y: 'NH4', a: NH4, b: 0, c: 0},
-                {y: 'NH5', a: NH5, b: 0, c: 0}
-            ];
-            this.createBarChart('morris-bar-example', $barData, 'y', ['a', 'b', 'c'], ['Huitre', 'Moule', 'Poche'], ['#5fbeaa', '#5d9cec', '#ebeff2']);
+            var nomProcess = [];
+            var randomColor = [];
+            $.each($(':hidden.processus'), function (index, value) {
+                nomProcess.push($(value).val());
+                randomColor.push('#' + Math.floor(Math.random() * 16777215).toString(16));
+            });
+            var qteProcess = [];
+            $.each($(':hidden.processusqte'), function (index2, value2) {
+                qteProcess.push($(value2).val());
+            });
+            var phase = [];
+            $.each($(':hidden.phase'), function (index3, value3) {
+                phase.push($(value3).val());
+            });
+
+
+            var $barData1 = [];
+            var $barData2 = [];
+            var $barData3 = [];
+            var op = 0;
+            var etape = '';
+            $.each(phase, function (index4, value4) {
+                if (etape == value4) {
+                    switch (op) {
+                        case 1:
+                            $barData1.push({y: nomProcess[index4], a: qteProcess[index4]})
+                            break;
+                        case 2:
+                            $barData2.push({y: nomProcess[index4], a: qteProcess[index4]})
+
+                            break;
+                        case 3:
+                            $barData3.push({y: nomProcess[index4], a: qteProcess[index4]})
+                            break;
+                    }
+                } else {
+                    etape = value4;
+                    op++;
+                    switch (op) {
+                        case 1:
+                            $barData1.push({y: nomProcess[index4], a: qteProcess[index4]})
+                            break;
+                        case 2:
+                            $barData2.push({y: nomProcess[index4], a: qteProcess[index4]})
+
+                            break;
+                        case 3:
+                            $barData3.push({y: nomProcess[index4], a: qteProcess[index4]})
+                            break;
+                    }
+                }
+            });
+
+
+            this.createBarChart('morris-bar-example1', $barData1, 'y', ['a'], ['Series A'], ['#5fbeaa']);
+            this.createBarChart('morris-bar-example2', $barData2, 'y', ['a'], ['Series A'], ['#5fbeaa']);
+            this.createBarChart('morris-bar-example3', $barData3, 'y', ['a'], ['Series A'], ['#5fbeaa']);
         },
         //init
         $.MorrisCharts = new MorrisCharts, $.MorrisCharts.Constructor = MorrisCharts

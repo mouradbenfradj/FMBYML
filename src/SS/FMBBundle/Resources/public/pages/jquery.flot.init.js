@@ -118,6 +118,12 @@
             }, {
                 label: labels[5],
                 data: datas[5]
+            }, {
+                label: labels[6],
+                data: datas[6]
+            }, {
+                label: labels[7],
+                data: datas[7]
             }];
             var options = {
                 series: {
@@ -233,6 +239,18 @@
             }, {
                 label: labels[3],
                 data: datas[3]
+            }, {
+                label: labels[4],
+                data: datas[4]
+            }, {
+                label: labels[5],
+                data: datas[5]
+            }, {
+                label: labels[6],
+                data: datas[6]
+            }, {
+                label: labels[7],
+                data: datas[7]
             }];
             var options = {
                 series: {
@@ -310,6 +328,18 @@
                 bars: {
                     show: true
                 }
+            }, {
+                label: labels[6],
+                data: datas[6],
+                bars: {
+                    show: true
+                }
+            }, {
+                label: labels[7],
+                data: datas[7],
+                bars: {
+                    show: true
+                }
             }];
             var options = {
                 series: {
@@ -370,31 +400,86 @@
              this.createPlotGraph("#website-stats", uploads, downloads, plabels, pcolors, borderColor, bgColor);
              */
             //Pie graph data
-            var NH1 = 0, NH2 = 0, NH3 = 0, NH4 = 0, NH5 = 0;
-            var NM1 = 0, NM2 = 0, NM3 = 0, NM4 = 0, NM5 = 0;
-            var P1 = 0, P2 = 0, P3 = 0, P4 = 0, P5 = 0;
-            if (document.getElementById('NH1') != null)
-                NH1 = document.getElementById('NH1').getAttribute('value');
-            if (document.getElementById('NH2') != null)
-                NH2 = document.getElementById('NH2').getAttribute('value');
-            if (document.getElementById('NH3') != null)
-                NH3 = document.getElementById('NH3').getAttribute('value');
-            if (document.getElementById('NH4') != null)
-                NH4 = document.getElementById('NH4').getAttribute('value');
-            if (document.getElementById('NH5') != null)
-                NH5 = document.getElementById('NH5').getAttribute('value');
-            var pielabels = ["NH1", "NH2", "NH3", "NH4", "NH5"];
-            var datas = [NH1, NH2, NH3, NH4, NH5];
-            var colors = ["#32cd32", "#7cfc00", "#9acd32", 'yellow', 'red'];
-            var pielabels2 = ["NH1", "NH2", "NH3", "NH4", "NH5"];
-            var datas2 = [0, 0, 0];
-            var colors2 = ["#5fbeaa", "#6c85bd", "#34d3eb"];
-            var pielabels3 = ["NH1", "NH2", "NH3", "NH4", "NH5"];
-            var datas3 = [0, 0, 0];
-            var colors3 = ["#5fbeaa", "#6c85bd", "#34d3eb"];
-            this.createPieGraph("#pie-chart #pie-chart-container", pielabels, datas, colors);
-            this.createPieGraph("#pie-chart #pie-chart-container2", pielabels2, datas2, colors2);
-            this.createPieGraph("#pie-chart #pie-chart-container3", pielabels3, datas3, colors3);
+            var nomProcess = [];
+            var randomColor = [];
+            $.each($(':hidden.processus'), function (index, value) {
+                nomProcess.push($(value).val());
+                randomColor.push('#' + Math.floor(Math.random() * 16777215).toString(16));
+            });
+            var qteProcess = [];
+            $.each($(':hidden.processusqte'), function (index2, value2) {
+                qteProcess.push($(value2).val());
+            });
+            var phase = [];
+            $.each($(':hidden.phase'), function (index3, value3) {
+                phase.push($(value3).val());
+            });
+
+            var nomProcess1 = [];
+            var randomColor1 = [];
+            var qteProcess1 = [];
+            var nomProcess2 = [];
+            var randomColor2 = [];
+            var qteProcess2 = [];
+            var nomProcess3 = [];
+            var randomColor3 = [];
+            var qteProcess3 = [];
+            var op = 0;
+            var etape = '';
+            $.each(phase, function (index4, value4) {
+                if (etape == value4) {
+                    switch (op) {
+                        case 1:
+                            nomProcess1.push(nomProcess[index4]);
+                            randomColor1.push(randomColor[index4]);
+                            qteProcess1.push(qteProcess[index4]);
+                            break;
+                        case 2:
+                            nomProcess2.push(nomProcess[index4]);
+                            randomColor2.push(randomColor[index4]);
+                            qteProcess2.push(qteProcess[index4]);
+                            break;
+                        case 3:
+                            nomProcess3.push(nomProcess[index4]);
+                            randomColor3.push(randomColor[index4]);
+                            qteProcess3.push(qteProcess[index4]);
+                            break;
+                    }
+                } else {
+                    etape = value4;
+                    op++;
+                    switch (op) {
+                        case 1:
+                            nomProcess1.push(nomProcess[index4]);
+                            randomColor1.push(randomColor[index4]);
+                            qteProcess1.push(qteProcess[index4]);
+                            break;
+                        case 2:
+                            nomProcess2.push(nomProcess[index4]);
+                            randomColor2.push(randomColor[index4]);
+                            qteProcess2.push(qteProcess[index4]);
+                            break;
+                        case 3:
+                            nomProcess3.push(nomProcess[index4]);
+                            randomColor3.push(randomColor[index4]);
+                            qteProcess3.push(qteProcess[index4]);
+                            break;
+                    }
+                }
+            });
+
+            var pielabels1 = nomProcess1;
+            var datas1 = qteProcess1;
+            var colors1 = randomColor1;
+            var pielabels2 = nomProcess2;
+            var datas2 = qteProcess2;
+            var colors2 = randomColor2;
+            var pielabels3 = nomProcess3;
+            var datas3 = qteProcess3;
+            var colors3 = randomColor3;
+            this.createPieGraph("#pie-chart1 #pie-chart-container1", pielabels1, datas1, colors1);
+            this.createPieGraph("#pie-chart2 #pie-chart-container2", pielabels2, datas2, colors2);
+            this.createPieGraph("#pie-chart3 #pie-chart-container3", pielabels3, datas3, colors3);
             /*
              //real time data representation
              var plot = this.createRealTimeGraph('#flotRealTime', this.randomData(), ['#5fbeaa']);
