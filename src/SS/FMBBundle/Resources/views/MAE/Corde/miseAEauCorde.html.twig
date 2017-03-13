@@ -351,6 +351,27 @@
                  },
                  complete: function () {
                      $('#loadquantit').hide();
+                     $.ajax({
+                         type: "POST",
+                         url: "{{ url('ssfmb_articlecyclechoix') }}?sarticle=" + $('#articlechoix').val(),
+                         beforeSend: function () {
+                             $('#loadquantit').show();
+                         },
+                         complete: function () {
+                             $('#loadquantit').hide();
+                         },
+                         success: function (data) {
+                             if ($.trim(data)) {
+                                 $('#articlecyclechoix').show();
+
+                                 // Remove current options
+                                 $('#articlecyclechoix').html('');
+                                 $.each(data, function (k, v) {
+                                     $('#articlecyclechoix').append('<option value="' + v + '">' + k + '</option>');
+                                 });
+                             }
+                         }
+                     });
                  },
                  success: function (data) {
                      if ($.trim(data)) {
