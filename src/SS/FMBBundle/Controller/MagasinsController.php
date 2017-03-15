@@ -33,8 +33,8 @@ class MagasinsController extends Controller
         $repo = $this->getDoctrine()->getManager()->getRepository('SSFMBBundle:Lanterne');
         $lanternes = $repo->findByParc($id, array('parc' => 'asc'));
         foreach ($lanternes as $lanterne) {
-            $result[$lanterne->getNomLanterne()] = $lanterne->getNomLanterne();
-            $result[$lanterne->getNomLanterne() . $lanterne->getNbrTotaleEnStock()] = $lanterne->getNbrTotaleEnStock();
+            $result[$lanterne->getNomLanterne()]['nomLanterne'] = $lanterne->getNomLanterne();
+            $result[$lanterne->getNomLanterne()]['nombreEnStocks'] = $lanterne->getNbrTotaleEnStock();
         }
         return new JsonResponse($result);
     }
@@ -47,8 +47,8 @@ class MagasinsController extends Controller
         $repo = $this->getDoctrine()->getManager()->getRepository('SSFMBBundle:Corde');
         $cordes = $repo->findByParc($id, array('parc' => 'asc'));
         foreach ($cordes as $corde) {
-            $result[$corde->getNomCorde()] = $corde->getNomCorde();
-            $result[$corde->getNomCorde() . $corde->getNbrTotaleEnStock()] = $corde->getNbrTotaleEnStock();
+            $result[$corde->getNomCorde()]['nomCorde'] = $corde->getNomCorde();
+            $result[$corde->getNomCorde()]['nombreEnStocks'] = $corde->getNbrTotaleEnStock();
         }
         return new JsonResponse($result);
     }
@@ -58,11 +58,11 @@ class MagasinsController extends Controller
     {// Get the province ID
         $id = $request->query->get('parc_id');
         $result = array();
-        // Return a list of cities, based on the selected province
         $repo = $this->getDoctrine()->getManager()->getRepository('SSFMBBundle:Corde');
         $cordes = $repo->findByParc($id, array('parc' => 'asc'));
         foreach ($cordes as $corde) {
-            $result[$corde->getId()] = $corde->getNomCorde();
+            $result[$corde->getId()]['nomCorde'] = $corde->getNomCorde();
+            $result[$corde->getId()]['nombre'] = $corde->getNbrTotaleEnStock();
         }
         return new JsonResponse($result);
     }
@@ -87,8 +87,8 @@ class MagasinsController extends Controller
         $repo = $this->getDoctrine()->getManager()->getRepository('SSFMBBundle:PochesBS');
         $poches = $repo->findByParc($id, array('parc' => 'asc'));
         foreach ($poches as $poche) {
-            $result[$poche->getNomPoche()] = $poche->getNomPoche();
-            $result[$poche->getNomPoche() . $poche->getNbrTotaleEnStock()] = $poche->getNbrTotaleEnStock();
+            $result[$poche->getId()] = $poche->getNomPoche();
+            $result[$poche->getId() . $poche->getNbrTotaleEnStock()] = $poche->getNbrTotaleEnStock();
         }
         return new JsonResponse($result);
     }
@@ -101,7 +101,8 @@ class MagasinsController extends Controller
         $repo = $this->getDoctrine()->getManager()->getRepository('SSFMBBundle:PochesBS');
         $poches = $repo->findByParc($id, array('parc' => 'asc'));
         foreach ($poches as $poche) {
-            $result[$poche->getId()] = $poche->getNomPoche();
+            $result[$poche->getId()]['poche'] = $poche->getNomPoche();
+            $result[$poche->getId()]['quantiter'] = $poche->getNbrTotaleEnStock();
         }
         return new JsonResponse($result);
     }

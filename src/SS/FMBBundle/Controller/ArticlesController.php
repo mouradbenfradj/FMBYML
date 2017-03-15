@@ -34,20 +34,15 @@ class ArticlesController extends Controller
     {// Get the province ID
         $id = $request->query->get('stock_id');
         $article = $request->query->get('article');
-        $sarticle = $request->query->get('sarticle');
         $result = array();
         $repo = $this->getDoctrine()->getManager()->getRepository('SSFMBBundle:StocksArticles');
         if ($article != '')
             $stocks = $repo->findBy(array('idStock' => $id, 'refArticle' => $article));
-        if ($sarticle != '')
-            $stocks = $repo->findBy(array('refStockArticle' => $sarticle));
-
 
         foreach ($stocks as $stock) {
             $sn = $this->getDoctrine()->getManager()->getRepository('SSFMBBundle:StocksArticlesSn')->findByRefStockArticle($stock);
             foreach ($sn as $lot) {
-                $result[$lot->getNumeroSerie()] = $lot->getNumeroSerie();
-                $result[$lot->getNumeroSerie() . $lot->getSnQte()] = $lot->getSnQte();
+                $result[ $lot->getNumeroSerie()] = $lot->getSnQte();
             }
         }
         return new JsonResponse($result);

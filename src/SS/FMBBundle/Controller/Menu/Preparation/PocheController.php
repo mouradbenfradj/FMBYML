@@ -15,7 +15,8 @@ class PocheController extends Controller
     public function pocheHAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $form = $this->createForm(new PreparationPocheType($em), null, array('action' => $this->generateUrl('ssfmb_preparationpoche'), 'method' => 'POST', 'attr' => array('class' => "form-horizontal")));
+        $processus = $em->getRepository('SSFMBBundle:Processus')->findAll();
+        $form = $this->createForm(new PreparationPocheType($em, $processus), null, array('action' => $this->generateUrl('ssfmb_preparationpoche'), 'method' => 'POST', 'attr' => array('class' => "form-horizontal")));
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             $stockarticles = $em->getRepository('SSFMBBundle:StocksArticles')->findOneBy(array('idStock' => $form['libStock']->getData()->getIdStock(), 'refArticle' => $form['refArticle']->getData()->getRefArticle()));
@@ -29,8 +30,7 @@ class PocheController extends Controller
                 $doclin->setLibArticle($form['refArticle']->getData()->getLibArticle());
                 $doclin->setRefArticle($form['refArticle']->getData()->getRefArticle());
                 $pochesbs = $request->request->get("ss_fmbbundle_preparationpoche")["nomPoche"];
-                $poche = $em->getRepository("SSFMBBundle:PochesBS")->findOneBy(array('nomPoche' => $pochesbs, 'parc' => $form['Parc']->getData()));
-
+                $poche = $em->getRepository("SSFMBBundle:PochesBS")->find($pochesbs);
                 $doclin2 = new DocsLines();
                 $doclin2->setRefDoc($document);
                 $doclin2->setLibArticle($poche->getNomPoche());

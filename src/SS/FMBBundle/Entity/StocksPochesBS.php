@@ -49,7 +49,7 @@ class StocksPochesBS
      *
      * @ORM\Column(name="chaussement", type="boolean")
      */
-    private $chaussement =false;
+    private $chaussement = false;
     /**
      * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\StocksArticlesSn")
      * @Orm\JoinColumns({  @ORM\JoinColumn(name="ref_stock_article", referencedColumnName="ref_stock_article"),@Orm\JoinColumn(name="numero_serie", referencedColumnName="numero_serie")} )
@@ -83,6 +83,11 @@ class StocksPochesBS
      * @ORM\Column(name="dateDeMAETransfert", type="date",nullable=true)
      */
     private $dateDeMAETransfert;
+    /**
+     *
+     * @ORM\Column(name="dateAssemblage", type="date", nullable=true)
+     */
+    private $dateAssemblage;
 
     /**
      * @var \DateTime
@@ -97,11 +102,19 @@ class StocksPochesBS
      */
     private $emplacement;
 
+
+    /**
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\StocksCordes", inversedBy="pocheAssemblage")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $cordeAssemblage;
+
     /**
      * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\DocsLines")
      * @ORM\JoinColumn(name="doc_line", referencedColumnName="ref_doc_line")
      */
     private $docLine;
+
     /**
      * Get id
      *
@@ -114,7 +127,7 @@ class StocksPochesBS
 
     public function __toString()
     {
-     return ''.$this->getId();
+        return '' . $this->getId();
     }
 
     /**
@@ -317,7 +330,7 @@ class StocksPochesBS
     /**
      * Get pochesbs
      *
-     * @return \SS\FMBBundle\Entity\PochesBS 
+     * @return \SS\FMBBundle\Entity\PochesBS
      */
     public function getPochesbs()
     {
@@ -340,7 +353,7 @@ class StocksPochesBS
     /**
      * Get article
      *
-     * @return \SS\FMBBundle\Entity\StocksArticlesSn 
+     * @return \SS\FMBBundle\Entity\StocksArticlesSn
      */
     public function getArticle()
     {
@@ -363,7 +376,7 @@ class StocksPochesBS
     /**
      * Get emplacement
      *
-     * @return \SS\FMBBundle\Entity\Emplacement 
+     * @return \SS\FMBBundle\Entity\Emplacement
      */
     public function getEmplacement()
     {
@@ -386,7 +399,7 @@ class StocksPochesBS
     /**
      * Get docLine
      *
-     * @return \SS\FMBBundle\Entity\DocsLines 
+     * @return \SS\FMBBundle\Entity\DocsLines
      */
     public function getDocLine()
     {
@@ -409,7 +422,7 @@ class StocksPochesBS
     /**
      * Get chaussement
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getChaussement()
     {
@@ -432,10 +445,56 @@ class StocksPochesBS
     /**
      * Get processus
      *
-     * @return \SS\FMBBundle\Entity\Processus 
+     * @return \SS\FMBBundle\Entity\Processus
      */
     public function getProcessus()
     {
         return $this->processus;
+    }
+
+    /**
+     * Set dateAssemblage
+     *
+     * @param \DateTime $dateAssemblage
+     * @return StocksPochesBS
+     */
+    public function setDateAssemblage($dateAssemblage)
+    {
+        $this->dateAssemblage = $dateAssemblage;
+
+        return $this;
+    }
+
+    /**
+     * Get dateAssemblage
+     *
+     * @return \DateTime 
+     */
+    public function getDateAssemblage()
+    {
+        return $this->dateAssemblage;
+    }
+
+    /**
+     * Set cordeAssemblage
+     *
+     * @param \SS\FMBBundle\Entity\StocksCordes $cordeAssemblage
+     * @return StocksPochesBS
+     */
+    public function setCordeAssemblage(\SS\FMBBundle\Entity\StocksCordes $cordeAssemblage = null)
+    {
+        $this->cordeAssemblage = $cordeAssemblage;
+
+        return $this;
+    }
+
+    /**
+     * Get cordeAssemblage
+     *
+     * @return \SS\FMBBundle\Entity\StocksCordes 
+     */
+    public function getCordeAssemblage()
+    {
+        return $this->cordeAssemblage;
     }
 }

@@ -89,6 +89,17 @@ class StocksCordes
     private $dateDeMAETransfert;
     /**
      *
+     * @ORM\Column(name="dateAssemblage", type="date", nullable=true)
+     */
+    private $dateAssemblage;
+
+    /**
+     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\StocksPochesBS", mappedBy="cordeAssemblage" ,cascade={"persist","merge","remove"},fetch="LAZY")
+     */
+    private $pocheAssemblage;
+
+    /**
+     *
      * @ORM\Column(name="dateDeRetirement", type="date", nullable=true)
      */
     private $dateDeRetirement;
@@ -433,5 +444,68 @@ class StocksCordes
     public function getProcessus()
     {
         return $this->processus;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->pocheAssemblage = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set dateAssemblage
+     *
+     * @param \DateTime $dateAssemblage
+     * @return StocksCordes
+     */
+    public function setDateAssemblage($dateAssemblage)
+    {
+        $this->dateAssemblage = $dateAssemblage;
+
+        return $this;
+    }
+
+    /**
+     * Get dateAssemblage
+     *
+     * @return \DateTime 
+     */
+    public function getDateAssemblage()
+    {
+        return $this->dateAssemblage;
+    }
+
+    /**
+     * Add pocheAssemblage
+     *
+     * @param \SS\FMBBundle\Entity\StocksPochesBS $pocheAssemblage
+     * @return StocksCordes
+     */
+    public function addPocheAssemblage(\SS\FMBBundle\Entity\StocksPochesBS $pocheAssemblage)
+    {
+        $this->pocheAssemblage[] = $pocheAssemblage;
+
+        return $this;
+    }
+
+    /**
+     * Remove pocheAssemblage
+     *
+     * @param \SS\FMBBundle\Entity\StocksPochesBS $pocheAssemblage
+     */
+    public function removePocheAssemblage(\SS\FMBBundle\Entity\StocksPochesBS $pocheAssemblage)
+    {
+        $this->pocheAssemblage->removeElement($pocheAssemblage);
+    }
+
+    /**
+     * Get pocheAssemblage
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPocheAssemblage()
+    {
+        return $this->pocheAssemblage;
     }
 }

@@ -63,12 +63,21 @@ traitementcomerciale:
 ssfmb_PochPreparer:
     path:     /pochePreparer
     defaults: { _controller: SSFMBBundle:Default:pochePreparer}
+    options:
+            expose: true
+
 
 ssfmb_datePochPreparer:
     path:     /datepochePreparer
     defaults: { _controller: SSFMBBundle:Default:datePochePreparer}
+    options:
+            expose: true
 
 
 ssfmb_nombrePochPreparer:
     path:     /nombrePochPreparer
     defaults: { _controller: SSFMBBundle:Default:nombrePochePreparer}
+    options:
+            expose: true
+
+

@@ -14,10 +14,12 @@ use Doctrine\ORM\EntityManager;
 class PreparationPocheType extends AbstractType
 {
     protected $em;
+    protected $processus;
 
-    function __construct(EntityManager $em)
+    function __construct(EntityManager $em, array $processus)
     {
         $this->em = $em;
+        $this->processus = $processus;
     }
 
     /**
@@ -29,7 +31,11 @@ class PreparationPocheType extends AbstractType
         $builder->add('date', 'text', array('label' => 'Date de la Préparation des Poches', 'attr' => array('class' => 'form-control', 'placeholder' => "dd/mm/yyyy", 'id' => "datepicker")));
         $builder->add('refArticle', 'entity', array('class' => 'SSFMBBundle:Articles',
             'query_builder' => function (EntityRepository $er) {
-                return $er->createQueryBuilder('a')->where('a.libArticle LIKE :articles')->orWhere('a.libArticle LIKE :articles2')->setParameter('articles', 'Huitre%H%COM')->setParameter('articles2', 'Huitre%G%COM');
+                $req = $er->createQueryBuilder('a');
+                foreach ($this->processus as $pro) {
+                    $req->orWhere("a.libArticle LIKE '%" . $pro->getArticleSortie() . "%'");
+                }
+                return $req;
             }, 'label' => 'article', 'attr' => array('class' => "form-control")))
             ->add('numeroSerie', 'entity', array('class' => 'SSFMBBundle:StocksArticlesSn', 'label' => 'lot', 'mapped' => false, 'attr' => array('class' => "form-control")))
             ->add('qte', 'number', array('label' => 'Densiter', 'attr' => array('class' => "form-control")))

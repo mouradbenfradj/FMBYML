@@ -5,6 +5,8 @@ ssfmb_articlecyclechoix:
 ssfmb_articlestock:
     path:     /articlestock
     defaults: { _controller: SSFMBBundle:Articles:articleStocks }
+    options:
+            expose: true
 
 ssfmb_pochearticle:
     path:     /pochearticle
