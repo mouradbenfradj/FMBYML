@@ -5,6 +5,7 @@ namespace SS\FMBBundle\Controller\Menu\Preparation;
 
 use SS\FMBBundle\Entity\DocsLines;
 use SS\FMBBundle\Entity\Documents;
+use SS\FMBBundle\Entity\Historique;
 use SS\FMBBundle\Entity\StocksPochesBS;
 use SS\FMBBundle\Form\PreparationPocheType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -14,6 +15,10 @@ class PocheController extends Controller
 {
     public function pocheHAction(Request $request)
     {
+        $historique = new Historique();
+        $historique->setOperation("preparation Poche");
+        $historique->setUtilisateur($this->container->get('security.context')->getToken()->getUser());
+        $tacheEffectuer = array();
         $em = $this->getDoctrine()->getManager();
         $processus = $em->getRepository('SSFMBBundle:Processus')->findAll();
         $form = $this->createForm(new PreparationPocheType($em, $processus), null, array('action' => $this->generateUrl('ssfmb_preparationpoche'), 'method' => 'POST', 'attr' => array('class' => "form-horizontal")));
@@ -57,7 +62,22 @@ class PocheController extends Controller
             } else {
                 return $this->render('@SSFMB/Default/preparationPoche.html.twig', array('form' => $form->createView(),));
             }
+            $tacheEffectuer =
+                array(
+                    'parc' => $form['Parc']->getData()->getLibMagasin(),
+                    'stock' => $form['libStock']->getData()->getLibStock(),
+                    'conteneur' => 'poche',
+                    'lanterne' => $request->request->get("ss_fmbbundle_preparationpoche")["nomPoche"],
+                    'datePreparation' => $form['date']->getData(),
+                    'article' => $form['refArticle']->getData()->getLibArticle(),
+                    'lot' => $request->request->get("ss_fmbbundle_preparationlanterne")['numeroSerie'],
+                    'dentiter' => $form['qte']->getData(),
+                    'nombre' => $form['nombre']->getData(),
+                    'ligneDocument' => $doclin2->getRefDocLine()
+                );
             $poche->setNbrTotaleEnStock($poche->getNbrTotaleEnStock() - $form['nombre']->getData());
+            $historique->setTacheEffectuer($tacheEffectuer);
+            $em->persist($historique);
             $em->flush();
             return $this->redirectToRoute('ssfmb_homepage');
         }

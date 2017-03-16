@@ -4,6 +4,7 @@ namespace SS\FMBBundle\Controller\Menu\Preparation;
 
 use SS\FMBBundle\Entity\DocsLines;
 use SS\FMBBundle\Entity\Documents;
+use SS\FMBBundle\Entity\Historique;
 use SS\FMBBundle\Entity\StocksCordes;
 use SS\FMBBundle\Form\PreparationCordeType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -13,6 +14,10 @@ class CordeController extends Controller
 {
     public function cordeHAction(Request $request)
     {
+        $historique = new Historique();
+        $historique->setOperation("preparation Corde");
+        $historique->setUtilisateur($this->container->get('security.context')->getToken()->getUser());
+        $tacheEffectuer = array();
         $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(new PreparationCordeType($em), null, array('action' => $this->generateUrl('ssfmb_preparationcorde'), 'method' => 'POST', 'attr' => array('class' => "form-horizontal")));
         if ($request->isMethod('POST')) {
@@ -54,7 +59,23 @@ class CordeController extends Controller
             } else {
                 return $this->render('@SSFMB/Default/preparationCorde.html.twig', array('form' => $form->createView(),));
             }
+            $tacheEffectuer =
+                array(
+                    'parc' => $form['Parc']->getData()->getLibMagasin(),
+                    'stock' => $form['libStock']->getData()->getLibStock(),
+                    'conteneur' =>'corde',
+                    'corde' => $request->request->get("ss_fmbbundle_preparationcorde")["nomCorde"],
+                    'datePreparation' => $form['date']->getData(),
+                    'article' => $form['refArticle']->getData()->getLibArticle(),
+                    'lot' => $request->request->get("ss_fmbbundle_preparationcorde")['numeroSerie'],
+                    'dentiter' => $form['qte']->getData(),
+                    'nombre' => $form['nombre']->getData(),
+                    'ligneDocument' => $doclin2->getRefDocLine()
+
+                );
             $corde->setNbrTotaleEnStock($corde->getNbrTotaleEnStock() - $form['nombre']->getData());
+            $historique->setTacheEffectuer($tacheEffectuer);
+            $em->persist($historique);
             $em->flush();
             return $this->redirectToRoute('ssfmb_homepage');
         }

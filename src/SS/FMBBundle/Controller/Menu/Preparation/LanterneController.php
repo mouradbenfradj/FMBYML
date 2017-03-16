@@ -16,11 +16,11 @@ class LanterneController extends Controller
     public function lanterneNHAction(Request $request)
     {
         $historique = new Historique();
-        $historique->setOperation("preparationLanterne");
+        $historique->setOperation("preparation Lanterne");
         $historique->setUtilisateur($this->container->get('security.context')->getToken()->getUser());
         $tacheEffectuer = array();
         $em = $this->getDoctrine()->getManager();
-        $form = $this->createForm(new PreparationLanterneType($em), null, array('action' => $this->generateUrl('ssfmb_preparationlanterne'), 'method' => 'POST', 'attr' => array('class' => "form-horizontal",'id'=>"preparationlanterneform")));
+        $form = $this->createForm(new PreparationLanterneType($em), null, array('action' => $this->generateUrl('ssfmb_preparationlanterne'), 'method' => 'POST', 'attr' => array('class' => "form-horizontal", 'id' => "preparationlanterneform")));
         if ($request->isMethod('POST')) {
             $defaultmetier = new DefaultImpl($em);
             $form->handleRequest($request);
@@ -67,6 +67,7 @@ class LanterneController extends Controller
                 array(
                     'parc' => $form['Parc']->getData()->getLibMagasin(),
                     'stock' => $form['libStock']->getData()->getLibStock(),
+                    'conteneur' => 'lanterne',
                     'lanterne' => $form['nomLanterne']->getData()->getNomLanterne(),
                     'datePreparation' => $form['date']->getData(),
                     'article' => $form['refArticle']->getData()->getLibArticle(),

@@ -70,7 +70,7 @@ function datepochePreparer(idPoche) {
 function nombrePochePreparer(idPoche, qte) {
     jQuery.ajax({
         type: "POST",
-        url: Routing.generate('ssfmb_nombrePochPreparer', {poche_id: idPoche,qte:qte})
+        url: Routing.generate('ssfmb_nombrePochPreparer', {poche_id: idPoche, qte: qte})
         , beforeSend: function () {
             $('#nbrPoche').empty();
         }, success: function (data) {
@@ -82,7 +82,7 @@ function nombrePochePreparer(idPoche, qte) {
 function pochePreparer(idPoche, date) {
     jQuery.ajax({
         type: "POST",
-        url: Routing.generate('ssfmb_PochPreparer', {poche_id: idPoche,date:date})
+        url: Routing.generate('ssfmb_PochPreparer', {poche_id: idPoche, date: date})
         , beforeSend: function () {
             $('#valeurPoche2').empty();
             $('#nbrPoche').empty();
@@ -104,13 +104,15 @@ function choixCorde(obj) {
     $('#valeurCorde').empty();
     jQuery.ajax({
         type: "POST",
-        url: Routing.generate('ssfmb_parcCorde', {parc_id:choix.attr('value')})
+        url: Routing.generate('ssfmb_parcCorde', {parc_id: choix.attr('value')})
         , beforeSend: function () {
             $('#nbrCorde').empty();
             $('#valeurCorde').empty();
         }, success: function (data) {
             jQuery.each(data, function (k, v) {
-                $('#valeurCorde').append('<option value="' + k + '">' + v + '</option>');
+                console.log(k);
+                console.log(v);
+                $('#valeurCorde').append('<option value="' + k + '">' + v.nomCorde + '</option>');
             });
         },
         complete: function () {

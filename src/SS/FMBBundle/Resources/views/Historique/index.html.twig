@@ -7,6 +7,7 @@
         <thead>
         <tr>
             <th>Dateop</th>
+            <th>utilisateur</th>
             <th>Operation</th>
             <th>Tacheeffectuer</th>
             <th>Actions</th>
@@ -15,32 +16,29 @@
         <tbody>
         {% for entity in entities %}
             <tr>
-                {% if entity.operation == "preparationLanterne" %}
-                    <td>{% if entity.dateOp %}{{ entity.dateOp|date('Y-m-d H:i:s') }}{% endif %}</td>
-                    <td>
-                        {% if entity.operation == "preparationLanterne" %}
-                            Préparation lanterne
-                        {% endif %}
-                    </td>
-                    <td>préparation de {{ entity.tacheEffectuer.nombre }}
-                        lanterne de densité égale a {{ entity.tacheEffectuer.dentiter }}
-                        avec l'article {{ entity.tacheEffectuer.article }}
-                        du du lot {{ entity.tacheEffectuer.lot }}
-                        sur la date {{ entity.tacheEffectuer.datePreparation }}
-                        dans le stock {{ entity.tacheEffectuer.stock }}
-                        du parc {{ entity.tacheEffectuer.parc }}
-                        </td>
-                    <td>
-                        <ul>
-                            <li>
-                                <a href="{{ path('historique_show', { 'id': entity.id }) }}">show</a>
-                            </li>
-                            <li>
-                                <a href="{{ path('historique_edit', { 'id': entity.id }) }}">edit</a>
-                            </li>
-                        </ul>
-                    </td>
-                {% endif %}
+                <td>{% if entity.dateOp %}{{ entity.dateOp|date('Y-m-d H:i:s') }}{% endif %}</td>
+               <td>{{ entity.utilisateur.username }}</td>
+                <td>
+                    {{ entity.operation }}
+                </td>
+                <td>préparation de {{ entity.tacheEffectuer.nombre }}
+                    {{ entity.tacheEffectuer.conteneur }} de densité égale a {{ entity.tacheEffectuer.dentiter }}
+                    avec l'article {{ entity.tacheEffectuer.article }}
+                    du du lot {{ entity.tacheEffectuer.lot }}
+                    sur la date {{ entity.tacheEffectuer.datePreparation }}
+                    dans le stock {{ entity.tacheEffectuer.stock }}
+                    du parc {{ entity.tacheEffectuer.parc }}
+                </td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('historique_show', { 'id': entity.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('historique_edit', { 'id': entity.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
             </tr>
         {% endfor %}
         </tbody>
