@@ -19,13 +19,11 @@ class ArticlesController extends Controller
     public function articleCycleAction(Request $request)
     {// Get the province ID
         $sarticle = $request->query->get('sarticle');
-        $repo = $this->getDoctrine()->getManager()->getRepository('SSFMBBundle:StocksArticles');
-
-        $stocks = $repo->findOneBy(array('refStockArticle' => $sarticle));
+        $article = $this->getDoctrine()->getManager()->getRepository('SSFMBBundle:Articles');
         $result = array();
-        $repo = $this->getDoctrine()->getManager()->getRepository('SSFMBBundle:Processus')->findByArticleDebut($stocks->getRefArticle());
+        $repo = $this->getDoctrine()->getManager()->getRepository('SSFMBBundle:Processus')->findByArticleDebut($article->findOneByLibArticle($sarticle));
         foreach ($repo as $stock) {
-            $result[$stock->getNomProcessus()] = $stock->getId();
+            $result[$stock->getId()] = $stock->getNomProcessus();
         }
         return new JsonResponse($result);
     }
@@ -42,7 +40,7 @@ class ArticlesController extends Controller
         foreach ($stocks as $stock) {
             $sn = $this->getDoctrine()->getManager()->getRepository('SSFMBBundle:StocksArticlesSn')->findByRefStockArticle($stock);
             foreach ($sn as $lot) {
-                $result[ $lot->getNumeroSerie()] = $lot->getSnQte();
+                $result[$lot->getNumeroSerie()] = $lot->getSnQte();
             }
         }
         return new JsonResponse($result);

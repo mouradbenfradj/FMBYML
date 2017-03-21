@@ -25,16 +25,23 @@ class CordeController extends Controller
         }
         if ($request->isMethod('POST')) {
             $dateMiseAEau = new \DateTime($request->request->get('dateMAECorde'));
+            $dateCordePreparer = new \DateTime($request->request->get('dateCordeChoix'));
+
             $corde = $em->getRepository('SSFMBBundle:Corde')->find($request->request->get('cordechoix'));
+            $article = $em->getRepository('SSFMBBundle:Articles')->findOneByLibArticle($request->request->get('articlechoix'));
+            $stockArticle = $em->getRepository('SSFMBBundle:StocksArticles')->findOneBy(array('idStock' => $request->request->get('idstockparc'), 'refArticle' => $article));
+            $cordearticle = $em->getRepository('SSFMBBundle:StocksCordes')->getCordePreparer($em->getRepository('SSFMBBundle:StocksArticlesSn')->getSAS($stockArticle, $request->request->get('articlelotchoix')), $corde, $dateCordePreparer);
+            $position = 0;
+            $processusC = $em->getRepository('SSFMBBundle:Processus')->find($request->request->get('articlecyclechoix'));
             foreach ($request->request->get('placecorde') as $emplacementcorde) {
                 $place = $em->getRepository('SSFMBBundle:Emplacement')->find($emplacementcorde);
-                $cordearticle = $em->getRepository('SSFMBBundle:StocksCordes')->getCordePreparer($em->getRepository('SSFMBBundle:StocksArticlesSn')->getSAS($request->request->get('articlechoix'), $request->request->get('articlelotchoix')), $corde);
-                $cordearticle[0]->setEmplacement($place);
-                $cordearticle[0]->setDateDeMiseAEau($dateMiseAEau);
-                $cordearticle[0]->setProcessus($em->getRepository('SSFMBBundle:Processus')->find($request->request->get('articlecyclechoix')));
-                $place->setStocksCorde($cordearticle[0]);
+                $cordearticle[$position]->setEmplacement($place);
+                $cordearticle[$position]->setDateDeMiseAEau($dateMiseAEau);
+                $cordearticle[$position]->setProcessus($processusC);
+                $place->setStocksCorde($cordearticle[$position]);
                 $place->setDateDeRemplissage($dateMiseAEau);
                 $em->flush();
+                $position++;
             }
             return $this->redirectToRoute('ssfmb_misaaeaucorde');
         }

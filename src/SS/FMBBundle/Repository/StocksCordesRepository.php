@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class StocksCordesRepository extends EntityRepository
 {
-    public function getCordePreparer($stocksArticlesSn, $corde)
+    public function getCordePreparer($stocksArticlesSn, $corde, $datePreparation)
     {
         $qb = $this->createQueryBuilder('c');
         $qb->where('c.pret = false')
@@ -23,6 +23,8 @@ class StocksCordesRepository extends EntityRepository
             ->setParameter(1, $stocksArticlesSn->getRefStockArticle())
             ->andWhere('s.numeroSerie = ?2')
             ->setParameter(2, $stocksArticlesSn->getNumeroSerie())
+            ->andWhere('c.dateDeCreation=?4')
+            ->setParameter(4, $datePreparation)
             ->andWhere('c.corde = ?3')
             ->setParameter(3, $corde);
         return $qb->getQuery()->getResult();

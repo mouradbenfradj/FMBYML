@@ -6,6 +6,8 @@
         {{ parent() }}
         <link rel="stylesheet" href="{{ asset('bundles/ssfmb/css/sidenavi-right.css') }}">
     {% endif %}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 {% endblock %}
 {% block header %} {{ parent() }}{% endblock %}
 {% block body %}
@@ -32,21 +34,14 @@
                     <div class="card-box">
                         <div class="row">
                             <div class="col-md-12">
-                                <div id="idstockparc" hidden="true">{{ entity.idStock.idStock }}</div>
-                                <div id="idparc" hidden="true">{{ entity.idMagasin }}</div>
+                                <input type="hidden" id="idstockparc" name="idstockparc"
+                                       value="{{ entity.idStock.idStock }}"/>
                                 <h4 class="m-t-0 header-title"><b>Mise a eau lanterne {{ entity.abrevMagasin }}</b></h4>
                                 <p class="text-muted m-b-30 font-13">
                                 </p>
                                 <div class="custom-dd dd" id="nestable_list_2">
                                     <ol class="dd-list">
                                         {{ render(controller('SSFMBBundle:Filiere:findByParc',{ 'parc': entity,'page':page })) }}
-                                        {#                                      {{ render(controller(
-                                             'SSFMBBundle:Filiere:findByParc',
-                                             { 'parc': entity }
-                                             )) }}
-
-                                        {% include '@SSFMB/Filiere/Include/listIndexInclude.html.twig' %}
-                                    #}
                                     </ol>
                                 </div>
                             </div>
@@ -96,7 +91,7 @@
                                     {% include "@SSFMB/Filiere/Include/listMenuIndexInclude.html.twig" %}
                                 </div>
                                 <div class="tab-pane" id="messages-2">
-                                    <div class="row">
+                                    <div class="row" style="overflow: scroll">
                                         <div class="col-lg-12">quantiter disponible</div>
                                         <div class="col-lg-12">
                                             <img src="{{ asset('bundles/ssfmb/images/stock.gif') }}" height="50"
@@ -104,10 +99,10 @@
                                                  id="loadquantit">
                                             <input type="number" id="quantit" readonly="true" value="0">
                                         </div>
-                                        <div class="col-lg-12">date de preparation des lanternes</div>
+                                        <div class="col-lg-12">date de MAE des lanternes</div>
                                         {% set now =  "now"|date("Y-m-d") %}
                                         <div class="col-lg-12">
-                                            <input type="date" name="dateMAELanterne" value="{{ now }}">
+                                            <input type="date" required="required" name="dateMAELanterne" value="">
                                         </div>
                                         <div class="col-lg-12">choisir type lanternes</div>
                                         <div class="col-lg-12">
@@ -119,26 +114,25 @@
                                                 {% endfor %}
                                             </select>
                                         </div>
+                                        <div class="col-lg-12">date des lanternes préparé a mettre en eau</div>
+                                        <div class="col-lg-12">
+                                            <select name="dateLanterneChoix" id="dateLanterneChoix"></select>
+                                        </div>
                                         <div class="col-lg-12"> choisir l'article a mettre</div>
                                         <div class="col-lg-12">
                                             <select name="articlechoix" id="articlechoix">
-                                                {% for article in articles %}
-                                                    {% if article.refArticle.libArticle starts with 'NAISSAIN' %}
-                                                        <option value="{{ article.refStockArticle }}">
-                                                            {{ article.refArticle.libArticle }}
-                                                        </option>
-                                                    {% endif %}
-                                                {% endfor %}
+
                                             </select>
-                                        </div>
-                                        <div class="col-lg-12"> choisir le Cycle A suivre</div>
-                                        <div class="col-lg-12">
-                                            <select name="articlecyclechoix" id="articlecyclechoix"></select>
                                         </div>
                                         <div class="col-lg-12"> choisir le lot de l'article</div>
                                         <div class="col-lg-12">
                                             <select name="articlelotchoix" id="articlelotchoix"></select>
                                         </div>
+                                        <div class="col-lg-12"> choisir le Cycle A suivre</div>
+                                        <div class="col-lg-12">
+                                            <select name="articlecyclechoix" id="articlecyclechoix"></select>
+                                        </div>
+
                                         <div id="choixqtearticle">
                                             <div class="col-lg-12"> choix de la quantiter des lanternes</div>
                                             <div class="col-lg-12">
@@ -168,531 +162,7 @@
         <script src="{{ asset('bundles/ssfmb/plugins/nestable/jquery.nestable.js') }}"></script>
         <script src="{{ asset('bundles/ssfmb/pages/nestable.js') }}"></script>
         <script src="{{ asset('bundles/ssfmb/js/SideNavi.js') }}"></script>
-        <script src="{{ asset('bundles/ssfmb/js/SideNav.js') }}"></script> <script type="text/javascript">
-            function validation() {
-                if (parseInt($('#quantit').val()) < 0) {
-                    alert("vous avez demander de mettre un nombre superieur de lanterne que celle preparé");
-                    return false;
-                } else {
-                    check = confirm('vous confirmer les données (date de retrait, article , lot que vous avez choisie');
-                    if (check == true) {
-                        return true;
-                    }
-                    else {
-                        return false;
-                    }
-                }
-            }
-            $(document).ready(function () {
-                $('#loadquantit').hide();
-                $('#choixqtearticle').ready(function () {
-                    $('input:checkbox').hide();
-                    $('#choixqtearticle').hide();
-                    $('.cochage').hide();
-                });
-                $('input:checkbox').change(function () {
-                    if ($(this).is(':checked')) {
-                        $('#quantit').val(parseInt($('#quantit').val()) - 1);
-                    } else {
-                        $('#quantit').val(parseInt($('#quantit').val()) + 1);
-                    }
-                });
-            });
-            $('.cochage').hide();
-            $('#articlecyclechoix').hide();
-            $('#articlelotchoix').hide();
-            $('#articlechoix').ready(function () {
-                $.ajax({
-                    type: "POST",
-                    url: "{{ url('ssfmb_articlestock') }}?stock_id=" + $('#idstockparc').text() + "&sarticle=" + $('#articlechoix').val(),
-                    beforeSend: function () {
-                        $('#loadquantit').show();
-                        $('#quantit').val(0);
-                    },
-                    complete: function () {
-                        $('#loadquantit').hide();
-                    },
-                    success: function (data) {
-                        if ($.trim(data)) {
-                            var pos = true;
-                            var lan = '';
-                            $('#articlelotchoix').show();
-
-                            // Remove current options
-                            $('#articlelotchoix').html('');
-                            $.each(data, function (k, v) {
-                                if (pos) {
-                                    lan = k;
-                                    $('#articlelotchoix').append('<option value="' + v + '">' + k + '</option>');
-                                    pos = false;
-                                } else {
-                                    pos = true;
-                                }
-                            });
-                            $('#ss_fmbbundle_preparationlanterne_submit').show();
-                            $.ajax({
-                                type: 'get',
-                                url: "{{ path('ssfmb_lanternearticle') }}",
-                                data: {
-                                    'idp': $('#idparc').text(),
-                                    'lot': $('#articlelotchoix').val(),
-                                    'ida': $('#articlechoix').val(),
-                                    'idl': $('#lanternechoix').val()
-                                },
-                                dataType: 'json',
-                                beforeSend: function () {
-                                    $('#loadquantit').show();
-                                    $('#quantit').val(0);
-                                    $('#quantierchoix').empty();
-                                },
-                                complete: function () {
-                                    $('#loadquantit').hide();
-                                },
-                                success: function (json) {
-                                    $('#quantierchoix').html('');
-                                    if (!$.trim(json)) {
-                                        $('#choixqtearticle').ready(function () {
-                                            $('#choixqtearticle').hide();
-                                            $('input:checkbox').hide();
-                                            $('.cochage').hide();
-
-                                        });
-                                    }
-                                    ;
-                                    if ($.trim(json)) {
-                                        $('#choixqtearticle').ready(function () {
-                                            $('input:checkbox').show();
-                                            $('#choixqtearticle').show();
-                                            $('.cochage').show();
-
-                                            $.ajax({
-                                                type: 'get',
-                                                url: "{{ path('ssfmb_nombrelanternearticle') }}",
-                                                data: {
-                                                    'ida': $('#articlechoix').val(),
-                                                    'lot': $('#articlelotchoix').val(),
-                                                    'idl': $('#lanternechoix').val(),
-                                                    'qtech': $('#quantierchoix').val()
-                                                },
-                                                dataType: 'json',
-                                                beforeSend: function () {
-                                                    $('#loadquantit').show();
-                                                    $('#quantit').val(0);
-                                                },
-                                                complete: function () {
-                                                    $('#loadquantit').hide();
-                                                },
-                                                success: function (json) {
-                                                    if ($.trim(json)) {
-                                                        $('#choixqtearticle').ready(function () {
-                                                            $("input:checkbox").each(function () {
-                                                                $(this).prop('checked', false);
-                                                            });
-                                                            $('input:checkbox').show();
-                                                            $('#choixqtearticle').show();
-                                                            $('.cochage').show();
-
-                                                        });
-                                                    }
-                                                    $.each(json, function (index, value) {
-                                                        $('#quantit').val(value.nombre);
-                                                        $("input:checkbox").each(function () {
-                                                            $(this).attr('checked', false);
-                                                        });
-                                                    });
-                                                }
-                                            });
-                                            $("input:checkbox").each(function () {
-                                                $(this).prop('checked', false);
-                                            });
-                                        });
-                                    }
-                                    ;
-                                    $.each(json, function (index, value) {
-                                        $('#quantit').val(value.nombre);
-                                        $('#quantierchoix').append('<option value="' + value.qte + '">' + value.qte + '</option>');
-                                    });
-                                }
-                            });
-                        }
-                    }
-                });
-                ////////////////////////////////////////////////////////////////////////////////////////////
-                $.ajax({
-                    type: "POST",
-                    url: "{{ url('ssfmb_articlecyclechoix') }}?sarticle=" + $('#articlechoix').val(),
-                    beforeSend: function () {
-                        $('#loadquantit').show();
-                    },
-                    complete: function () {
-                        $('#loadquantit').hide();
-                    },
-                    success: function (data) {
-                        if ($.trim(data)) {
-                            $('#articlecyclechoix').show();
-
-                            // Remove current options
-                            $('#articlecyclechoix').html('');
-                            $.each(data, function (k, v) {
-                                    $('#articlecyclechoix').append('<option value="' + v + '">' + k + '</option>');
-                            });
-                        }
-                    }
-                });
-            });
-
-            $('#articlechoix').change(function () {
-                $.ajax({
-                    type: 'get',
-                    url: "{{ path('ssfmb_lanternearticle') }}",
-                    data: {
-                        'idp': $('#idparc').text(),
-                        'lot': $('#articlelotchoix').val(),
-                        'ida': $('#articlechoix').val(),
-                        'idl': $('#lanternechoix').val()
-                    },
-                    dataType: 'json',
-                    beforeSend: function () {
-                        $('#loadquantit').show();
-                        $('#quantit').val(0);
-                        $('#quantierchoix').empty();
-                    },
-                    complete: function () {
-                        $('#loadquantit').hide();
-                        $.ajax({
-                            type: "POST",
-                            url: "{{ url('ssfmb_articlecyclechoix') }}?sarticle=" + $('#articlechoix').val(),
-                            beforeSend: function () {
-                                $('#loadquantit').show();
-                            },
-                            complete: function () {
-                                $('#loadquantit').hide();
-                            },
-                            success: function (data) {
-                                if ($.trim(data)) {
-                                    $('#articlecyclechoix').show();
-
-                                    // Remove current options
-                                    $('#articlecyclechoix').html('');
-                                    $.each(data, function (k, v) {
-                                        $('#articlecyclechoix').append('<option value="' + v + '">' + k + '</option>');
-                                    });
-                                }
-                            }
-                        });
-                    },
-                    success: function (json) {
-                        $('#quantierchoix').html('');
-                        if (!$.trim(json)) {
-                            $('#choixqtearticle').ready(function () {
-                                $('input:checkbox').hide();
-                                $('#choixqtearticle').hide();
-                                $('.cochage').hide();
-                            });
-                        }
-                        if ($.trim(json)) {
-                            $('#choixqtearticle').ready(function () {
-                                $("input:checkbox").each(function () {
-                                    $(this).prop('checked', false);
-                                });
-                                $('input:checkbox').show();
-
-                                $('#choixqtearticle').show();
-                                $.ajax({
-                                    type: 'get',
-                                    url: "{{ path('ssfmb_nombrelanternearticle') }}",
-                                    data: {
-                                        'ida': $('#articlechoix').val(),
-                                        'lot': $('#articlelotchoix').val(),
-                                        'idl': $('#lanternechoix').val(),
-                                        'qtech': $('#quantierchoix').val()
-                                    },
-                                    dataType: 'json',
-                                    beforeSend: function () {
-                                        $('#loadquantit').show();
-                                        $('#quantit').val(0);
-                                    },
-                                    complete: function () {
-                                        $('#loadquantit').hide();
-                                    },
-                                    success: function (json) {
-                                        if ($.trim(json)) {
-                                            $('#choixqtearticle').ready(function () {
-                                                $("input:checkbox").each(function () {
-                                                    $(this).prop('checked', false);
-                                                });
-                                                $('input:checkbox').show();
-                                                $('#choixqtearticle').show();
-                                                $('.cochage').show();
-
-                                            });
-                                        }
-                                        $.each(json, function (index, value) {
-                                            $('#quantit').val(value.nombre);
-                                            $("input:checkbox").each(function () {
-                                                $(this).attr('checked', false);
-                                            });
-                                        });
-                                    }
-                                });
-                            });
-                        }
-                        $.each(json, function (index, value) {
-                            $('#quantit').val(value.nombre);
-                            $("input:checkbox").each(function () {
-                                $(this).attr('checked', false);
-                            });
-                            // et  boucle sur la réponse contenu dans la variable passé à la function du success "json"
-                            $('#quantierchoix').append('<option value="' + value.qte + '">' + value.qte + '</option>');
-                        });
-                    }
-                });
-            });
-
-            $('#lanternechoix').change(function () {
-                $.ajax({
-                    type: 'get',
-                    url: "{{ path('ssfmb_lanternearticle') }}",
-                    data: {
-                        'idp': $('#idparc').text(),
-                        'lot': $('#articlelotchoix').val(),
-                        'ida': $('#articlechoix').val(),
-                        'idl': $('#lanternechoix').val()
-                    },
-                    dataType: 'json',
-                    beforeSend: function () {
-                        $('#loadquantit').show();
-                        $('#quantit').val(0);
-                        $('#quantierchoix').empty();
-                    },
-                    complete: function () {
-                        $('#loadquantit').hide();
-                    },
-                    success: function (json) {
-                        $('#quantierchoix').html('');
-                        if (!$.trim(json)) {
-                            $('#choixqtearticle').ready(function () {
-                                $('input:checkbox').hide();
-                                $('.cochage').hide();
-                                $('#choixqtearticle').hide();
-                            });
-                        }
-                        if ($.trim(json)) {
-                            $('#choixqtearticle').ready(function () {
-                                $("input:checkbox").each(function () {
-                                    $(this).prop('checked', false);
-                                });
-                                $('input:checkbox').show();
-
-                                $('#choixqtearticle').show();
-                                $('.cochage').show();
-
-                                $.ajax({
-                                    type: 'get',
-                                    url: "{{ path('ssfmb_nombrelanternearticle') }}",
-                                    data: {
-                                        'ida': $('#articlechoix').val(),
-                                        'lot': $('#articlelotchoix').val(),
-                                        'idl': $('#lanternechoix').val(),
-                                        'qtech': $('#quantierchoix').val()
-                                    },
-                                    dataType: 'json',
-                                    beforeSend: function () {
-                                        $('#loadquantit').show();
-                                        $('#quantit').val(0);
-                                    },
-                                    complete: function () {
-                                        $('#loadquantit').hide();
-                                    },
-                                    success: function (json) {
-
-                                        if ($.trim(json)) {
-                                            $('#choixqtearticle').ready(function () {
-                                                $("input:checkbox").each(function () {
-                                                    $(this).prop('checked', false);
-                                                });
-                                                $('input:checkbox').show();
-
-                                                $('#choixqtearticle').show();
-                                                $('.cochage').show();
-
-                                            });
-                                        }
-                                        $.each(json, function (index, value) {
-                                            $('#quantit').val(value.nombre);
-                                            $("input:checkbox").each(function () {
-                                                $(this).attr('checked', false);
-                                            });
-                                        });
-                                    }
-                                });
-                            });
-                        }
-                        $.each(json, function (index, value) {
-                            $('#quantit').val(value.nombre);
-                            $("input:checkbox").each(function () {
-                                $(this).attr('checked', false);
-                            });
-                            // et  boucle sur la réponse contenu dans la variable passé à la function du success "json"
-                            $('#quantierchoix').append('<option value="' + value.qte + '">' + value.qte + '</option>');
-                        });
-                    }
-                });
-            });
-            $('#articlelotchoix').change(function () {
-                $.ajax({
-                    type: 'get',
-                    url: "{{ path('ssfmb_lanternearticle') }}",
-                    data: {
-                        'idp': $('#idparc').text(),
-                        'lot': $('#articlelotchoix').val(),
-                        'ida': $('#articlechoix').val(),
-                        'idl': $('#lanternechoix').val()
-                    },
-                    dataType: 'json',
-                    beforeSend: function () {
-                        $('#loadquantit').show();
-                        $('#quantit').val(0);
-                        $('#quantierchoix').empty();
-                    },
-                    complete: function () {
-                        $('#loadquantit').hide();
-                    },
-                    success: function (json) {
-                        $('#quantierchoix').html('');
-                        if (!$.trim(json)) {
-                            $('#choixqtearticle').ready(function () {
-                                $('input:checkbox').hide();
-                                $('#choixqtearticle').hide();
-                                $('.cochage').hide();
-
-                            });
-                        }
-                        if ($.trim(json)) {
-                            $('#choixqtearticle').ready(function () {
-                                $("input:checkbox").each(function () {
-                                    $(this).prop('checked', false);
-                                });
-                                $('input:checkbox').show();
-
-                                $('#choixqtearticle').show();
-                                $('.cochage').show();
-
-                                $.ajax({
-                                    type: 'get',
-                                    url: "{{ path('ssfmb_nombrelanternearticle') }}",
-                                    data: {
-                                        'ida': $('#articlechoix').val(),
-                                        'lot': $('#articlelotchoix').val(),
-                                        'idl': $('#lanternechoix').val(),
-                                        'qtech': $('#quantierchoix').val()
-                                    },
-                                    dataType: 'json',
-                                    beforeSend: function () {
-                                        $('#quantit').val(0);
-                                        $('#loadquantit').show();
-                                    },
-                                    complete: function () {
-                                        $('#loadquantit').hide();
-                                    },
-                                    success: function (json) {
-                                        if ($.trim(json)) {
-                                            $('#choixqtearticle').ready(function () {
-                                                $("input:checkbox").each(function () {
-                                                    $(this).prop('checked', false);
-                                                });
-                                                $('input:checkbox').show();
-
-                                                $('#choixqtearticle').show();
-                                                $('.cochage').show();
-
-                                            });
-                                        }
-                                        $.each(json, function (index, value) {
-                                            $('#quantit').val(value.nombre);
-                                            $("input:checkbox").each(function () {
-                                                $(this).attr('checked', false);
-                                            });
-                                        });
-                                    }
-                                });
-                            });
-                        }
-                        $.each(json, function (index, value) {
-                            $('#quantit').val(value.nombre);
-                            $("input:checkbox").each(function () {
-                                $(this).attr('checked', false);
-                            });
-                            // et  boucle sur la réponse contenu dans la variable passé à la function du success "json"
-                            $('#quantierchoix').append('<option value="' + value.qte + '">' + value.qte + '</option>');
-                        });
-                    }
-                });
-            });
-            $('#quantierchoix').change(function () {
-                $.ajax({
-                    type: 'get',
-                    url: "{{ path('ssfmb_nombrelanternearticle') }}",
-                    data: {
-                        'ida': $('#articlechoix').val(),
-                        'lot': $('#articlelotchoix').val(),
-                        'idl': $('#lanternechoix').val(),
-                        'qtech': $('#quantierchoix').val()
-                    },
-                    dataType: 'json',
-                    beforeSend: function () {
-                        $('#loadquantit').show();
-                        $('#quantit').val(0);
-                    },
-                    complete: function () {
-                        $('#loadquantit').hide();
-                    },
-                    success: function (json) {
-                        if ($.trim(json)) {
-                            $('#choixqtearticle').ready(function () {
-                                $("input:checkbox").each(function () {
-                                    $(this).prop('checked', false);
-                                });
-                                $('input:checkbox').show();
-
-                                $('#choixqtearticle').show();
-                                $('.cochage').show();
-
-                            });
-                        }
-                        $.each(json, function (index, value) {
-                            $('#quantit').val(value.nombre);
-                            $("input:checkbox").each(function () {
-                                $(this).attr('checked', false);
-                            });
-                        });
-                    }
-                });
-            });
-
-
-            function fillCheckbox(containerID, fill) {
-
-                var checkbox = $('#' + containerID);
-                var checkbox = checkbox.find('input[type="checkbox"]');
-
-                checkbox.each(function () {
-                    switch (fill) {
-                        case '0':
-                            if (this.checked == true)
-                                $('#quantit').val(parseInt($('#quantit').val()) + 1);
-                            this.checked = false;
-                            break;
-                        case '1':
-                            if (this.checked == false)
-                                $('#quantit').val(parseInt($('#quantit').val()) - 1);
-                            this.checked = true;
-                            break;
-                        case 2:
-                            this.checked = !this.checked;
-                            break;
-                    }
-                });
-            }    </script>
+        <script src="{{ asset('bundles/ssfmb/js/SideNav.js') }}"></script>
+        <script src="{{ asset('bundles/ssfmb/js/miseAEauLanterne.js') }}"></script>
     {% endif %}
 {% endblock %}

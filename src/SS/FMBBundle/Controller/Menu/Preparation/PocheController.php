@@ -4,6 +4,7 @@ namespace SS\FMBBundle\Controller\Menu\Preparation;
 
 
 use SS\FMBBundle\Entity\DocsLines;
+use SS\FMBBundle\Entity\DocsLinesSn;
 use SS\FMBBundle\Entity\Documents;
 use SS\FMBBundle\Entity\Historique;
 use SS\FMBBundle\Entity\StocksPochesBS;
@@ -34,6 +35,10 @@ class PocheController extends Controller
                 $doclin->setQte($form['qte']->getData());
                 $doclin->setLibArticle($form['refArticle']->getData()->getLibArticle());
                 $doclin->setRefArticle($form['refArticle']->getData()->getRefArticle());
+                $docLineSn = new DocsLinesSn();
+                $docLineSn->setRefDocLine($doclin);
+                $docLineSn->setSnQte($form['qte']->getData());
+                $docLineSn->setNumeroSerie($request->request->get("ss_fmbbundle_preparationpoche")['numeroSerie']);
                 $pochesbs = $request->request->get("ss_fmbbundle_preparationpoche")["nomPoche"];
                 $poche = $em->getRepository("SSFMBBundle:PochesBS")->find($pochesbs);
                 $doclin2 = new DocsLines();
@@ -45,6 +50,7 @@ class PocheController extends Controller
 
                 $em->persist($document);
                 $em->persist($doclin);
+                $em->persist($docLineSn);
                 $em->persist($doclin2);
                 for ($j = 0; $j < $form['nombre']->getData(); $j++) {
                     $stocksarticlessn = $em->getRepository('SSFMBBundle:StocksArticlesSn')->findOneBy(array('refStockArticle' => $stockarticles, 'numeroSerie' => $request->request->get("ss_fmbbundle_preparationpoche")['numeroSerie']));

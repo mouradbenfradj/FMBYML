@@ -3,6 +3,7 @@
 namespace SS\FMBBundle\Controller\Menu\Preparation;
 
 use SS\FMBBundle\Entity\DocsLines;
+use SS\FMBBundle\Entity\DocsLinesSn;
 use SS\FMBBundle\Entity\Documents;
 use SS\FMBBundle\Entity\Historique;
 use SS\FMBBundle\Entity\StocksLanternes;
@@ -32,6 +33,10 @@ class LanterneController extends Controller
                 $document->setDateCreationDoc(new \DateTime($time[2] . '-' . $time[1] . '-' . $time[0]));
                 $doclin = new DocsLines();
                 $doclin->setRefDoc($document);
+                $docLineSn = new DocsLinesSn();
+                $docLineSn->setRefDocLine($doclin);
+                $docLineSn->setSnQte($form['qte']->getData());
+                $docLineSn->setNumeroSerie($request->request->get("ss_fmbbundle_preparationlanterne")['numeroSerie']);
                 $doclin->setQte($form['qte']->getData());
                 $doclin->setLibArticle($form['refArticle']->getData()->getLibArticle());
                 $doclin->setRefArticle($form['refArticle']->getData()->getRefArticle());
@@ -44,6 +49,7 @@ class LanterneController extends Controller
                 $doclin2->setRefArticle($lant);
                 $em->persist($document);
                 $em->persist($doclin);
+                $em->persist($docLineSn);
                 $em->persist($doclin2);
                 for ($j = 0; $j < $form['nombre']->getData(); $j++) {
                     $stocksarticlessn = $em->getRepository('SSFMBBundle:StocksArticlesSn')->findOneBy(array('refStockArticle' => $stockarticles, 'numeroSerie' => $request->request->get("ss_fmbbundle_preparationlanterne")['numeroSerie']));

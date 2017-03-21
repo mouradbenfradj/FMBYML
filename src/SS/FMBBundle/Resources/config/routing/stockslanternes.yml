@@ -1,3 +1,11 @@
+ssfmb_parcDateLPreparer:
+    path:     /dateLanternePreparer
+    defaults: { _controller: "SSFMBBundle:StocksLanternes:dateLanternePreparer" }
+    options:
+            expose: true
+
+
+
 stockslanternes:
     path:     /
     defaults: { _controller: "SSFMBBundle:StocksLanternes:index" }

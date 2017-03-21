@@ -2,6 +2,8 @@
 
 namespace SS\FMBBundle\Controller;
 
+use SS\FMBBundle\Implementation\DefaultImpl;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -14,6 +16,22 @@ use SS\FMBBundle\Form\StocksLanternesType;
  */
 class StocksLanternesController extends Controller
 {
+    public function dateLanternePreparerAction(Request $request)
+    {// Get the province ID
+        $id = $request->query->get('lanterne');
+        $em = $this->getDoctrine()->getManager();
+        $implementation = new DefaultImpl($em);
+        $lanternes = $em->getRepository('SSFMBBundle:StocksLanternes')->findBy(array('lanterne' => $id, 'pret' => false, 'dateDeMiseAEau' => null, 'emplacement' => null));
+        $date = array();
+
+        foreach ($lanternes as $lanterne) {
+            if (!isset($date[$lanterne->getDateDeCreation()->format('Y-m-d')][$lanterne->getArticle()->getRefStockArticle()->getRefArticle()->getLibArticle()][$lanterne->getArticle()->getNumeroSerie()][$implementation->calculerQuantiterLanterne($lanterne)])) {
+                $date[$lanterne->getDateDeCreation()->format('Y-m-d')][$lanterne->getArticle()->getRefStockArticle()->getRefArticle()->getLibArticle()][$lanterne->getArticle()->getNumeroSerie()][$implementation->calculerQuantiterLanterne($lanterne)] = 0;
+            }
+            $date[$lanterne->getDateDeCreation()->format('Y-m-d')][$lanterne->getArticle()->getRefStockArticle()->getRefArticle()->getLibArticle()][$lanterne->getArticle()->getNumeroSerie()][$implementation->calculerQuantiterLanterne($lanterne)] = $date[$lanterne->getDateDeCreation()->format('Y-m-d')][$lanterne->getArticle()->getRefStockArticle()->getRefArticle()->getLibArticle()][$lanterne->getArticle()->getNumeroSerie()][$implementation->calculerQuantiterLanterne($lanterne)] + 1;
+        }
+        return new JsonResponse($date);
+    }
 
     /**
      * Lists all StocksLanternes entities.

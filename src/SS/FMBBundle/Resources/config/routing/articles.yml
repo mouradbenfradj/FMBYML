@@ -1,6 +1,8 @@
 ssfmb_articlecyclechoix:
     path:     /choiccycle
     defaults: { _controller: SSFMBBundle:Articles:articleCycle }
+    options:
+            expose: true
 
 ssfmb_articlestock:
     path:     /articlestock

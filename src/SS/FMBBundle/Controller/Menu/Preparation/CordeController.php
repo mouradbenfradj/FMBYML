@@ -3,6 +3,7 @@
 namespace SS\FMBBundle\Controller\Menu\Preparation;
 
 use SS\FMBBundle\Entity\DocsLines;
+use SS\FMBBundle\Entity\DocsLinesSn;
 use SS\FMBBundle\Entity\Documents;
 use SS\FMBBundle\Entity\Historique;
 use SS\FMBBundle\Entity\StocksCordes;
@@ -32,6 +33,10 @@ class CordeController extends Controller
                 $doclin->setQte($form['qte']->getData());
                 $doclin->setLibArticle($form['refArticle']->getData()->getLibArticle());
                 $doclin->setRefArticle($form['refArticle']->getData()->getRefArticle());
+                $docLineSn = new DocsLinesSn();
+                $docLineSn->setRefDocLine($doclin);
+                $docLineSn->setSnQte($form['qte']->getData());
+                $docLineSn->setNumeroSerie($request->request->get("ss_fmbbundle_preparationcorde")['numeroSerie']);
                 $cordes = $request->request->get("ss_fmbbundle_preparationcorde")["nomCorde"];
                 $corde = $em->getRepository("SSFMBBundle:Corde")->findOneBy(array('nomCorde' => $cordes, 'parc' => $form['Parc']->getData()));
                 $doclin2 = new DocsLines();
@@ -42,6 +47,7 @@ class CordeController extends Controller
                 $doclin2->setRefArticle($corde->getId());
                 $em->persist($document);
                 $em->persist($doclin);
+                $em->persist($docLineSn);
                 $em->persist($doclin2);
                 for ($j = 0; $j < $form['nombre']->getData(); $j++) {
                     $stocksarticlessn = $em->getRepository('SSFMBBundle:StocksArticlesSn')->findOneBy(array('refStockArticle' => $stockarticles, 'numeroSerie' => $request->request->get("ss_fmbbundle_preparationcorde")['numeroSerie']));
