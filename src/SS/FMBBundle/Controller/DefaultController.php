@@ -89,7 +89,7 @@ class DefaultController extends Controller
         $result = array();
         // Return a list of cities, based on the selected province
         $repo = $this->getDoctrine()->getManager()->getRepository('SSFMBBundle:StocksPochesBS');
-        $poches = $repo->findByPochesbs($id);
+        $poches = $repo->findBy(array('pochesbs' => $id, 'cordeAssemblage' => null));
         foreach ($poches as $poche) {
             $result[$poche->getDateDeCreation()->format('Y-m-d')] = $poche->getDateDeCreation()->format('Y-m-d');
         }
@@ -104,7 +104,7 @@ class DefaultController extends Controller
         $result = array();
         // Return a list of cities, based on the selected province
         $repo = $this->getDoctrine()->getManager()->getRepository('SSFMBBundle:StocksPochesBS');
-        $poches = $repo->findBy(array('pochesbs' => $id, 'quantiter' => $qte));
+        $poches = $repo->findBy(array('pochesbs' => $id, 'quantiter' => $qte, 'cordeAssemblage' => null));
         $result = count($poches);
         return new JsonResponse($result);
     }

@@ -36,13 +36,16 @@ function choixPoche(obj) {
             $('#nbrPoche').empty();
         }, success: function (data) {
             jQuery.each(data, function (k, v) {
-                $('#valeurPoche0').append('<option value="' + k + '">' + v + '</option>');
+                $('#valeurPoche0').append('<option value="' + k + '">' + v.poche + '</option>');
             });
         },
         complete: function () {
             if ($('#valeurPoche0').val() != null) {
                 datepochePreparer($('#valeurPoche0').val());
             }
+            $('#valeurPoche0').change(function () {
+                datepochePreparer($('#valeurPoche0').val());
+            });
         }
     });
 }
@@ -110,8 +113,6 @@ function choixCorde(obj) {
             $('#valeurCorde').empty();
         }, success: function (data) {
             jQuery.each(data, function (k, v) {
-                console.log(k);
-                console.log(v);
                 $('#valeurCorde').append('<option value="' + k + '">' + v.nomCorde + '</option>');
             });
         },

@@ -218,7 +218,7 @@
                 } else {
                     cmp++;
                     if (cmp == 5) {
-                        $('#affichageParcCorde').after('<div class="time-item"> <div class="item-info"><p> <input type="hidden" class="contenu" name="contenu[]" value="' + $('#nbrPoche').text() + ' "><input type="hidden" class="contenu" name="contenu[]" value="' + $('#valeurPoche4').val() + ' ">' + $('#valeurPoche4').val() + ' <input name="contenu[]" class="contenu" type="hidden" value="' + $('#valeurPoche0').val() + ' ">' + $('#valeurPoche0').text() + ' cree le <input name="contenu[]" class="contenu" type="hidden" value="' + $('#valeurPoche1').val() + ' ">' + $('#valeurPoche1').val() + ' de <input name="contenu[]" class="contenu" type="hidden" value="' + $('#valeurPoche2').val() + ' ">' + $('#valeurPoche2').val() + ' u/p</p> </div> </div>');
+                        $('#affichageParcCorde').after('<div class="time-item"> <div class="item-info"><p> <input type="hidden" class="contenu" name="contenu[]" value="' + $('#nbrPoche').text() + ' "><input type="hidden" class="contenu" name="contenu[]" value="' + $('#valeurPoche4').val() + ' ">' + $('#valeurPoche4').val() + ' <input name="contenu[]" class="contenu" type="hidden" value="' + $('#valeurPoche0 option:selected').val() + ' ">' + $('#valeurPoche0 option:selected').text() + ' cree le <input name="contenu[]" class="contenu" type="hidden" value="' + $('#valeurPoche1').val() + ' ">' + $('#valeurPoche1').val() + ' de <input name="contenu[]" class="contenu" type="hidden" value="' + $('#valeurPoche2').val() + ' ">' + $('#valeurPoche2').val() + ' u/p</p> </div> </div>');
                         return $.trim($this.find('input').val());
                     } else {
                         return $.trim($this.find('select option:selected').text());
@@ -240,7 +240,6 @@
             if ($row.hasClass('adding')) {
                 this.$addButton.removeAttr('disabled');
             }
-
             this.datatable.row($row.get(0)).remove().draw();
         },
 

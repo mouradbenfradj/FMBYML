@@ -65,20 +65,26 @@
                             op++;
                             switch (op) {
                                 case 1:
-                                    quantiter = $(value).val();
+                                    //nbrCorde
+                                    quantiter = parseInt($(value).val());
                                     break;
                                 case 2:
-                                    quantiterDemander = $(value).val();
+                                    //nombreSaisie
+                                    quantiterDemander = parseInt($(value).val());
                                     break;
                                 case 3:
+                                    //pocheChoisie
                                     break;
+                                //datePocheChoisie
                                 case 4:
+                                    //densite choisie
                                     break;
                                 case 5:
-                                    quantiterU = $(value).val();
+                                    quantiterU = parseInt($(value).val());
                                     console.log(quantiterDemander);
                                     console.log(nombreCordeChoisie);
                                     console.log(quantiter);
+                                    console.log(quantiterU);
                                     if ((quantiterDemander * nombreCordeChoisie) > quantiter) {
                                         alert("il vous manque " + ((quantiterDemander * nombreCordeChoisie) - quantiter) + " poche H de quantiter " + quantiterU + "pour effectué cette operation");
                                         ok = false;
@@ -90,8 +96,7 @@
                             }
                         });
                         if (ok) {
-                            alert('la tache demander ne sera pas effectué ,cette operation est en cours de construction ');
-                            // $("#wizard-validation-form").submit();
+                            $("#wizard-validation-form").submit();
                         } else {
                             alert('operation non effectué veillez verifié vos valeurs');
                         }

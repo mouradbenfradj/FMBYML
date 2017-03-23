@@ -94,13 +94,13 @@ class Processus
     /**
      * @var \SS\FMBBundle\Entity\Processus
      *
-     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Processus", inversedBy="idProcessusSuivant")
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Processus", inversedBy="idProcessusSuivant",fetch="LAZY")
      */
     private $idProcessusParent;
     /**
      * @var \SS\FMBBundle\Entity\Processus
      *
-     * @ORM\OneToOne(targetEntity="SS\FMBBundle\Entity\Processus", mappedBy="idProcessusParent")
+     * @ORM\OneToOne(targetEntity="SS\FMBBundle\Entity\Processus", mappedBy="idProcessusParent",fetch="LAZY")
      */
     private $idProcessusSuivant;
 
