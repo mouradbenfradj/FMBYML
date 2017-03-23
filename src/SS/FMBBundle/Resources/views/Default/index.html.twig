@@ -64,6 +64,33 @@
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-lg-3 col-sm-6">
+            <div class="widget-panel widget-style-2 bg-white">
+                <i class="md ti-align-justify text-pink"></i>
+                <h2 class="m-0 text-dark counter font-600"><span data-plugin="counterup">
+                        {{ nbrCordeAs }}
+                    </span></h2>
+                <div class="text-muted m-t-5">Corde Assemblé <br> Preparé</div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+            <div class="widget-panel widget-style-2 bg-white">
+                <i class="md ti-align-justify text-pink"></i>
+                <h2 class="m-0 text-dark counter font-600"><span data-plugin="counterup">
+                        {{ nbrCordeAsAe }}
+                    </span></h2>
+                <div class="text-muted m-t-5">Corde Assemblé <br> en eau</div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
     <div class="row">
         <div class="col-lg-3 col-sm-6">
             <div class="widget-panel widget-style-2 bg-white">
@@ -141,17 +168,39 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-lg-3 col-sm-6">
+            <div class="widget-panel widget-style-2 bg-white">
+                <i class="md typcn typcn-shopping-bag text-custom"></i>
+                <h2 class="m-0 text-dark counter font-600"><span data-plugin="counterup">
+                        {{ nbrpocheAsp }}
+                    </span></h2>
+                <div class="text-muted m-t-5">Poche Assemble</div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+            <div class="widget-panel widget-style-2 bg-white">
+                <i class="md typcn typcn-shopping-bag text-custom"></i>
+                <h2 class="m-0 text-dark counter font-600"><span data-plugin="counterup">
+                        {{ nbrpocheAsae }}
+                    </span></h2>
+                <div class="text-muted m-t-5">Poche assemblé <br> en eau</div>
+            </div>
+        </div>
+
+    </div>
+
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
-        <!-- Counter Up  -->
-        <script src="{{ asset('bundles/ssfmb/plugins/waypoints/lib/jquery.waypoints.js') }}"></script>
-        <script src="{{ asset('bundles/ssfmb/plugins/counterup/jquery.counterup.min.js') }}"></script>
+    <!-- Counter Up  -->
+    <script src="{{ asset('bundles/ssfmb/plugins/waypoints/lib/jquery.waypoints.js') }}"></script>
+    <script src="{{ asset('bundles/ssfmb/plugins/counterup/jquery.counterup.min.js') }}"></script>
 
-        <!-- Widget js -->
-        <script src="{{ asset('bundles/ssfmb/pages/jquery.widgets.js') }}"></script>
+    <!-- Widget js -->
+    <script src="{{ asset('bundles/ssfmb/pages/jquery.widgets.js') }}"></script>
 
-        <!-- Sparkline chart -->
-        <script src="{{ asset('bundles/ssfmb/plugins/jquery-sparkline/jquery.sparkline.min.js') }}"></script>
+    <!-- Sparkline chart -->
+    <script src="{{ asset('bundles/ssfmb/plugins/jquery-sparkline/jquery.sparkline.min.js') }}"></script>
 
 {% endblock %}

@@ -34,6 +34,20 @@ class ParcRepository extends EntityRepository
             ->join('m.cordes', 'c')
             ->leftJoin('c.stockscordes', 'sc')
             ->where('sc.emplacement IS NOT NULL')
+            ->andWhere('sc.dateAssemblage IS NULL')
+            ->andWhere('sc.pret = :pres')
+            ->setParameter('pres', false);
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function countTotaleNbrCordeAssembleAEau()
+    {
+        $qb = $this->createQueryBuilder('m')
+            ->select('COUNT(sc)')
+            ->join('m.cordes', 'c')
+            ->leftJoin('c.stockscordes', 'sc')
+            ->where('sc.emplacement IS NOT NULL')
+            ->andWhere('sc.dateAssemblage IS NOT NULL')
             ->andWhere('sc.pret = :pres')
             ->setParameter('pres', false);
         return $qb->getQuery()->getSingleScalarResult();
@@ -47,6 +61,21 @@ class ParcRepository extends EntityRepository
             ->join('m.cordes', 'c')
             ->leftJoin('c.stockscordes', 'sc')
             ->where('sc.emplacement IS NULL')
+            ->andWhere('sc.dateAssemblage IS NULL')
+            ->andWhere('sc.pret = :pres')
+            ->setParameter('pres', false);
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function countTotaleNbrCordeAssemble()
+    {
+
+        $qb = $this->createQueryBuilder('m')
+            ->select('COUNT(sc)')
+            ->join('m.cordes', 'c')
+            ->leftJoin('c.stockscordes', 'sc')
+            ->where('sc.emplacement IS NULL')
+            ->andWhere('sc.dateAssemblage IS NOT NULL')
             ->andWhere('sc.pret = :pres')
             ->setParameter('pres', false);
         return $qb->getQuery()->getSingleScalarResult();
@@ -102,6 +131,20 @@ class ParcRepository extends EntityRepository
             ->join('m.poches', 'p')
             ->leftJoin('p.stockspoches', 'sp')
             ->where('sp.emplacement IS NOT NULL')
+            ->andWhere('sp.dateAssemblage IS NULL')
+            ->andWhere('sp.pret = :pres')
+            ->setParameter('pres', false);
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function countTotaleNbrPocheAssembleAEau()
+    {
+        $qb = $this->createQueryBuilder('m')
+            ->select('COUNT(sp)')
+            ->join('m.poches', 'p')
+            ->leftJoin('p.stockspoches', 'sp')
+            ->where('sp.emplacement IS NOT NULL')
+            ->andWhere('sp.dateAssemblage IS NOT NULL')
             ->andWhere('sp.pret = :pres')
             ->setParameter('pres', false);
         return $qb->getQuery()->getSingleScalarResult();
@@ -115,6 +158,21 @@ class ParcRepository extends EntityRepository
             ->join('m.poches', 'p')
             ->leftJoin('p.stockspoches', 'sp')
             ->where('sp.emplacement IS NULL')
+            ->andWhere('sp.dateAssemblage IS NULL')
+            ->andWhere('sp.pret = :pres')
+            ->setParameter('pres', false);
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function countTotaleNbrPocheAssemblePreparer()
+    {
+
+        $qb = $this->createQueryBuilder('m')
+            ->select('COUNT(sp)')
+            ->join('m.poches', 'p')
+            ->leftJoin('p.stockspoches', 'sp')
+            ->where('sp.emplacement IS NULL')
+            ->andWhere('sp.dateAssemblage IS NOT NULL')
             ->andWhere('sp.pret = :pres')
             ->setParameter('pres', false);
         return $qb->getQuery()->getSingleScalarResult();
@@ -148,6 +206,23 @@ class ParcRepository extends EntityRepository
             ->join('m.cordes', 'c')
             ->leftJoin('c.stockscordes', 'sc')
             ->where('sc.emplacement IS NOT NULL')
+            ->andWhere('sc.dateAssemblage IS NULL')
+            ->andWhere('sc.pret = :pres')
+            ->setParameter('pres', false)
+            ->andWhere('c.parc = :parc')
+            ->setParameter('parc', $parc);
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function countTotaleNbrCordeAssembleAEauByParc($parc)
+    {
+        $qb = $this->createQueryBuilder('m')
+            ->select('COUNT(sc)')
+            ->join('m.cordes', 'c')
+            ->leftJoin('c.stockscordes', 'sc')
+            ->where('sc.emplacement IS NOT NULL')
+            ->andWhere('sc.dateAssemblage IS NOT NULL')
             ->andWhere('sc.pret = :pres')
             ->setParameter('pres', false)
             ->andWhere('c.parc = :parc')
@@ -164,6 +239,22 @@ class ParcRepository extends EntityRepository
             ->leftJoin('c.stockscordes', 'sc')
             ->where('sc.emplacement IS NULL')
             ->andWhere('sc.pret = :pres')
+            ->andWhere('sc.dateAssemblage IS NULL')
+            ->setParameter('pres', false)
+            ->andWhere('c.parc = :parc')
+            ->setParameter('parc', $parc);
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function countTotaleNbrCordeAssembleByParc($parc)
+    {
+        $qb = $this->createQueryBuilder('m')
+            ->select('COUNT(sc)')
+            ->join('m.cordes', 'c')
+            ->leftJoin('c.stockscordes', 'sc')
+            ->where('sc.emplacement IS NULL')
+            ->andWhere('sc.pret = :pres')
+            ->andWhere('sc.dateAssemblage IS NOT NULL')
             ->setParameter('pres', false)
             ->andWhere('c.parc = :parc')
             ->setParameter('parc', $parc);
@@ -227,6 +318,22 @@ class ParcRepository extends EntityRepository
             ->join('m.poches', 'p')
             ->leftJoin('p.stockspoches', 'sp')
             ->where('sp.emplacement IS NOT NULL')
+            ->andWhere('sp.dateAssemblage IS NULL')
+            ->andWhere('sp.pret = :pres')
+            ->setParameter('pres', false)
+            ->andWhere('p.parc = :parc')
+            ->setParameter('parc', $parc);
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function countTotaleNbrPocheAssembleAEauByParc($parc)
+    {
+        $qb = $this->createQueryBuilder('m')
+            ->select('COUNT(sp)')
+            ->join('m.poches', 'p')
+            ->leftJoin('p.stockspoches', 'sp')
+            ->where('sp.emplacement IS NOT NULL')
+            ->andWhere('sp.dateAssemblage IS NOT NULL')
             ->andWhere('sp.pret = :pres')
             ->setParameter('pres', false)
             ->andWhere('p.parc = :parc')
@@ -242,6 +349,23 @@ class ParcRepository extends EntityRepository
             ->join('m.poches', 'p')
             ->leftJoin('p.stockspoches', 'sp')
             ->where('sp.emplacement IS NULL')
+            ->andWhere('sp.dateAssemblage IS NULL')
+            ->andWhere('sp.pret = :pres')
+            ->setParameter('pres', false)
+            ->andWhere('p.parc = :parc')
+            ->setParameter('parc', $parc);
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function countTotaleNbrPocheAssemblePreparerByParc($parc)
+    {
+
+        $qb = $this->createQueryBuilder('m')
+            ->select('COUNT(sp)')
+            ->join('m.poches', 'p')
+            ->leftJoin('p.stockspoches', 'sp')
+            ->where('sp.emplacement IS NULL')
+            ->andWhere('sp.dateAssemblage IS NOT NULL')
             ->andWhere('sp.pret = :pres')
             ->setParameter('pres', false)
             ->andWhere('p.parc = :parc')
