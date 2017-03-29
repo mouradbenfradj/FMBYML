@@ -32,6 +32,7 @@ class ChaussementController extends Controller
                 } elseif ($place->getStockspoches()) {
                     $contenu = $place->getStockspoches();
                 }
+                $contenu->setDateChaussement(new \DateTime($request->request->get('dateChaussement')));
                 $contenu->setChaussement(true);
                 $em->merge($contenu);
             }

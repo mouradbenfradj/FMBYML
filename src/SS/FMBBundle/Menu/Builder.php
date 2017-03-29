@@ -26,6 +26,8 @@ class Builder implements ContainerAwareInterface
         $menu->addChild('Operation');
         $menu->addChild('planing de travaille');
         $menu->addChild('Processus');
+        $menu->addChild('Outil');
+        $menu['Outil']->addChild('Historique des operations');
 
         $menu['Operation']->addChild('Préparation');
         $menu['Operation']->addChild('Assemblage');
@@ -109,6 +111,9 @@ class Builder implements ContainerAwareInterface
         $menu['Operation']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
         $menu['planing de travaille']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
         $menu['Processus']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
+        $menu['Outil']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
+        $menu['Outil']['Historique des operations']->setAttribute('class', 'has-submenu')->setUri("/app_dev.php/historiqueOperation")->setChildrenAttribute('class', 'submenu');
+
 
         $menu['Operation']['Préparation']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
         $menu['Operation']['Assemblage']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');

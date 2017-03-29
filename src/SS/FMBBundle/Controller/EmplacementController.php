@@ -17,6 +17,19 @@ use SS\FMBBundle\Form\EmplacementType;
 class EmplacementController extends Controller
 {
 
+    public function afficherSourceEmplacementAction($id)
+    {
+        $place = $this->getDoctrine()->getManager()->getRepository('SSFMBBundle:Emplacement')->find($id);
+        $message = $place->getFlotteur()->getSegment()->getFiliere()->getNomFiliere();
+        $message = $message . '->' . $place->getFlotteur()->getSegment()->getNomSegment();
+        $message = $message . '->' . $place->getFlotteur()->getNomFlotteur();
+        $message = $message . '->' . $place->getPlace();
+
+        return $this->render('SSFMBBundle:Emplacement:afficherSourceEmplacement.html.twig', array(
+            'message' => $message,
+        ));
+    }
+
     /**
      * Lists all Emplacement entities.
      *
@@ -31,6 +44,7 @@ class EmplacementController extends Controller
             'entities' => $entities,
         ));
     }
+
     /**
      * Creates a new Emplacement entity.
      *
@@ -233,6 +247,7 @@ class EmplacementController extends Controller
             'emplacements' => $emplacements));
 
     }
+
     public function getTotaleEmplacementDuParcAction(Magasins $parc)
     {
         $em = $this->getDoctrine()->getManager();

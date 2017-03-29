@@ -2,6 +2,7 @@
 
 namespace SS\FMBBundle\Controller\Menu\MAE;
 
+use SS\FMBBundle\Entity\Historique;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -24,6 +25,11 @@ class CordeController extends Controller
             $articles = $em->getRepository('SSFMBBundle:StocksArticles')->findByIdStock($parcs->getIdStock());
         }
         if ($request->isMethod('POST')) {
+            $historique = new Historique();
+            $historique->setOperation("MAE Corde");
+            $historique->setUtilisateur($this->container->get('security.context')->getToken()->getUser());
+            $tacheEffectuer = array();
+
             $dateMiseAEau = new \DateTime($request->request->get('dateMAECorde'));
             $dateCordePreparer = new \DateTime($request->request->get('dateCordeChoix'));
 
@@ -32,9 +38,13 @@ class CordeController extends Controller
             $stockArticle = $em->getRepository('SSFMBBundle:StocksArticles')->findOneBy(array('idStock' => $request->request->get('idstockparc'), 'refArticle' => $article));
             $cordearticle = $em->getRepository('SSFMBBundle:StocksCordes')->getCordePreparer($em->getRepository('SSFMBBundle:StocksArticlesSn')->getSAS($stockArticle, $request->request->get('articlelotchoix')), $corde, $dateCordePreparer);
             $position = 0;
+            $idStockPlaceMAEO = array();
+            $idStockCordeMAE = array();
             $processusC = $em->getRepository('SSFMBBundle:Processus')->find($request->request->get('articlecyclechoix'));
             foreach ($request->request->get('placecorde') as $emplacementcorde) {
                 $place = $em->getRepository('SSFMBBundle:Emplacement')->find($emplacementcorde);
+                array_push($idStockPlaceMAEO, $place);
+                array_push($idStockCordeMAE, $cordearticle[$position]);
                 $cordearticle[$position]->setEmplacement($place);
                 $cordearticle[$position]->setDateDeMiseAEau($dateMiseAEau);
                 $cordearticle[$position]->setProcessus($processusC);
@@ -43,6 +53,21 @@ class CordeController extends Controller
                 $em->flush();
                 $position++;
             }
+            $tacheEffectuer =
+                array(
+                    'parc' => $parcs->getLibMagasin(),
+                    'nbrCordeMAE' => $position,
+                    'typeCorde' => $corde->getNomCorde(),
+                    'positionDeMAE' => $idStockPlaceMAEO,
+                    'CordeLier' => $idStockCordeMAE,
+                    'dateMAE' => $dateMiseAEau,
+                    'article' => $request->request->get('articlechoix'),
+                    'lot' => $request->request->get('articlelotchoix'),
+                    'cycle' => $processusC
+                );
+            $historique->setTacheEffectuer($tacheEffectuer);
+            $em->persist($historique);
+            $em->flush();
             return $this->redirectToRoute('ssfmb_misaaeaucorde');
         }
         return $this->render(

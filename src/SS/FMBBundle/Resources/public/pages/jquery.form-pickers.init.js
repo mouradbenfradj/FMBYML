@@ -26,7 +26,7 @@ jQuery(document).ready(function () {
     });
     jQuery('#datepicker-inline').datepicker();
     jQuery('#datepicker-multiple-date').datepicker({
-        format: "mm/dd/yyyy",
+        format: "dd/mm/yyyy",
         clearBtn: true,
         multidate: true,
         multidateSeparator: ","
@@ -64,16 +64,16 @@ jQuery(document).ready(function () {
         timePicker: true,
         timePickerIncrement: 30,
         locale: {
-            format: 'MM/DD/YYYY h:mm A'
+            format: 'DD/MM/YYYY h:mm A'
         },
         buttonClasses: ['btn', 'btn-sm'],
         applyClass: 'btn-default',
         cancelClass: 'btn-white'
     });
     $('.input-limit-datepicker').daterangepicker({
-        format: 'MM/DD/YYYY',
-        minDate: '06/01/2015',
-        maxDate: '06/30/2015',
+        format: 'DD/MM/YYYY',
+        minDate: '01/06/2015',
+        maxDate: '30/06/2015',
         buttonClasses: ['btn', 'btn-sm'],
         applyClass: 'btn-default',
         cancelClass: 'btn-white',
@@ -82,14 +82,16 @@ jQuery(document).ready(function () {
         }
     });
 
-    $('#reportrange span').html(moment().subtract(29, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
+    $('#reportrange span').html(moment().subtract(29, 'days').format('D MMMM, YYYY') + ' - ' + moment().format('D MMMM, YYYY'));
+    $('#reportrange span').after("<input type='hidden' name='dateDebutRecherche' value='" + moment().subtract(29, 'days').format('D MMMM, YYYY') + "'>");
+    $('#reportrange span').after("<input type='hidden' name='dateFinRecherche' value='" + moment().format('D MMMM, YYYY') + "'>");
 
     $('#reportrange').daterangepicker({
-        format: 'MM/DD/YYYY',
+        format: 'DD/MM/YYYY',
         startDate: moment().subtract(29, 'days'),
         endDate: moment(),
         minDate: '01/01/2012',
-        maxDate: '12/31/2015',
+        maxDate: '31/12/2020',
         dateLimit: {
             days: 60
         },
@@ -99,12 +101,12 @@ jQuery(document).ready(function () {
         timePickerIncrement: 1,
         timePicker12Hour: true,
         ranges: {
-            'Today': [moment(), moment()],
-            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-            'This Month': [moment().startOf('month'), moment().endOf('month')],
-            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            "aujoud'huit": [moment(), moment()],
+            'Huier': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            'Avant 7 Jours': [moment().subtract(6, 'days'), moment()],
+            'Avant 30 Jours': [moment().subtract(29, 'days'), moment()],
+            'Ce Mois': [moment().startOf('month'), moment().endOf('month')],
+            'Mois Dernier': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
         },
         opens: 'left',
         drops: 'down',
@@ -113,18 +115,20 @@ jQuery(document).ready(function () {
         cancelClass: 'btn-white',
         separator: ' to ',
         locale: {
-            applyLabel: 'Submit',
-            cancelLabel: 'Cancel',
+            applyLabel: 'valider',
+            cancelLabel: 'annuler',
             fromLabel: 'From',
             toLabel: 'To',
             customRangeLabel: 'Custom',
-            daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-            monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            daysOfWeek: ['Di', 'Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa'],
+            monthNames: ['Janvier', 'Fevrier', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Aout', 'Septembre', 'Octobre', 'Novembre', 'Decembre'],
             firstDay: 1
         }
     }, function (start, end, label) {
         console.log(start.toISOString(), end.toISOString(), label);
-        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+        $('#reportrange span').html(start.format('D MMMM, YYYY') + ' - ' + end.format('D MMMM, YYYY'));
+        $('#reportrange span').after("<input type='hidden' name='dateDebutRecherche' value='" + start.format('D MMMM, YYYY') + "'>");
+        $('#reportrange span').after("<input type='hidden' name='dateFinRecherche' value='" + end.format('D MMMM, YYYY') + "'>");
     });
 
 });

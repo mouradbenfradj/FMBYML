@@ -99,6 +99,13 @@ class StocksCordes
     private $pocheAssemblage;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateChaussement", type="date",nullable=true)
+     */
+    private $dateChaussement;
+
+    /**
      *
      * @ORM\Column(name="dateDeRetirement", type="date", nullable=true)
      */
@@ -507,5 +514,28 @@ class StocksCordes
     public function getPocheAssemblage()
     {
         return $this->pocheAssemblage;
+    }
+
+    /**
+     * Set dateChaussement
+     *
+     * @param \DateTime $dateChaussement
+     * @return StocksCordes
+     */
+    public function setDateChaussement($dateChaussement)
+    {
+        $this->dateChaussement = $dateChaussement;
+
+        return $this;
+    }
+
+    /**
+     * Get dateChaussement
+     *
+     * @return \DateTime 
+     */
+    public function getDateChaussement()
+    {
+        return $this->dateChaussement;
     }
 }

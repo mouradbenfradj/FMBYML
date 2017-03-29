@@ -2,6 +2,7 @@
 
 namespace SS\FMBBundle\Controller\Menu\Transfert;
 
+use SS\FMBBundle\Entity\Historique;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -29,8 +30,16 @@ class TransfertMAEController extends Controller
         }
         if ($request->isMethod('POST')) {
             $cmpt = 0;
+            $historique = new Historique();
+            $historique->setOperation("transfert MAE");
+            $historique->setUtilisateur($this->container->get('security.context')->getToken()->getUser());
+            $tacheEffectuer = array();
+            $placeMouvement['origine'] = array();
+            $placeMouvement['article'] = array();
+            $placeMouvement['destination'] = array();
             foreach ($request->request->get('place') as $emplacement) {
                 $place = $em->getRepository('SSFMBBundle:Emplacement')->find($emplacement);
+
                 if ($cmpt < count($session->get('emplacement'))) {
                     if ($session->get('emplacement')[$cmpt]->getStockscorde() != null) {
                         $anarticle = $em->getRepository('SSFMBBundle:StocksCordes')->find($session->get('emplacement')[$cmpt]->getStockscorde());
@@ -44,6 +53,9 @@ class TransfertMAEController extends Controller
                         $anarticle->setEmplacement($place);
                         $anarticle->setDateDeRetraitTransfert($session->get('dateTransfertRetrait'));
                         $anarticle->setDateDeMAETransfert(new \DateTime($request->request->get('dateRemise')));
+                        array_push($placeMouvement['article'], $anarticle);
+                        array_push($placeMouvement['origine'], $anplace->getId());
+                        array_push($placeMouvement['destination'], $place->getId());
                         $cmpt++;
 
                     } else if (($session->get('emplacement')[$cmpt]->getStockslanterne() != null) && ($cmpt < count($session->get('emplacement')))) {
@@ -58,11 +70,24 @@ class TransfertMAEController extends Controller
                         $anarticle->setEmplacement($place);
                         $anarticle->setDateDeRetraitTransfert($session->get('dateTransfertRetrait'));
                         $anarticle->setDateDeMAETransfert(new \DateTime($request->request->get('dateRemise')));
+                        array_push($placeMouvement['article'], $anarticle);
+                        array_push($placeMouvement['origine'], $anplace->getId());
+                        array_push($placeMouvement['destination'], $place->getId());
                         $cmpt++;
 
                     }
                 }
             }
+            $tacheEffectuer =
+                array(
+                    'parc' => $parcs->getLibMagasin(),
+                    'transfert' => $placeMouvement,
+                    'dateTransfert' => $session->get('dateTransfertRetrait'),
+                    'dateRMAE' => $request->request->get('dateRemise'),
+                    'nombre' => $cmpt
+                );
+            $historique->setTacheEffectuer($tacheEffectuer);
+            $em->persist($historique);
             $em->flush();
             return $this->redirectToRoute('ssfmb_transfert');
         }

@@ -95,6 +95,12 @@ class StocksLanternes
     private $dateDeRetirement;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateChaussement", type="date",nullable=true)
+     */
+    private $dateChaussement;
+    /**
      * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\DocsLines")
      * @ORM\JoinColumn(name="doc_line", referencedColumnName="ref_doc_line")
      */
@@ -482,5 +488,28 @@ class StocksLanternes
     public function getDateDeRetirement()
     {
         return $this->dateDeRetirement;
+    }
+
+    /**
+     * Set dateChaussement
+     *
+     * @param \DateTime $dateChaussement
+     * @return StocksLanternes
+     */
+    public function setDateChaussement($dateChaussement)
+    {
+        $this->dateChaussement = $dateChaussement;
+
+        return $this;
+    }
+
+    /**
+     * Get dateChaussement
+     *
+     * @return \DateTime 
+     */
+    public function getDateChaussement()
+    {
+        return $this->dateChaussement;
     }
 }

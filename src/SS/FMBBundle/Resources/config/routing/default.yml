@@ -81,3 +81,8 @@ ssfmb_nombrePochPreparer:
             expose: true
 
 
+historiqueOperation:
+    path:     /historiqueOperation
+    defaults: { _controller: SSFMBBundle:Menu/Outil/HistoriqueOperation:historiqueOperation}
+
+

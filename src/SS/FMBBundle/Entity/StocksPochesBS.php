@@ -97,6 +97,13 @@ class StocksPochesBS
     private $dateDeRetirement;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateChaussement", type="date",nullable=true)
+     */
+    private $dateChaussement;
+
+    /**
      * @ORM\OneToOne(targetEntity="SS\FMBBundle\Entity\Emplacement", mappedBy="stockspoches")
      * @ORM\JoinColumn(nullable=true)
      */
@@ -496,5 +503,28 @@ class StocksPochesBS
     public function getCordeAssemblage()
     {
         return $this->cordeAssemblage;
+    }
+
+    /**
+     * Set dateChaussement
+     *
+     * @param \DateTime $dateChaussement
+     * @return StocksPochesBS
+     */
+    public function setDateChaussement($dateChaussement)
+    {
+        $this->dateChaussement = $dateChaussement;
+
+        return $this;
+    }
+
+    /**
+     * Get dateChaussement
+     *
+     * @return \DateTime 
+     */
+    public function getDateChaussement()
+    {
+        return $this->dateChaussement;
     }
 }

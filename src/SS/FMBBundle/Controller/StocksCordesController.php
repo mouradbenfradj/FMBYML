@@ -18,7 +18,7 @@ class StocksCordesController extends Controller
     public function dateCordePreparerAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $cordes = $em->getRepository('SSFMBBundle:StocksCordes')->findBy(array('corde' => $request->query->get('corde'), 'pret' => false, 'dateDeMiseAEau' => null, 'emplacement' => null));
+        $cordes = $em->getRepository('SSFMBBundle:StocksCordes')->findBy(array('corde' => $request->query->get('corde'), 'pret' => false, 'dateDeMiseAEau' => null, 'emplacement' => null, 'dateAssemblage' => null));
         $date = array();
 
         foreach ($cordes as $corde) {

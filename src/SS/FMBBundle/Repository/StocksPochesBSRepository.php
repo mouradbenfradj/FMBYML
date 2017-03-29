@@ -27,4 +27,18 @@ class StocksPochesBSRepository extends EntityRepository
             ->setParameter(3, $poche);
         return $qb->getQuery()->getResult();
     }
+
+    public function getPocheByDate(\DateTime $de, \DateTime $a)
+    {
+        $qb = $this->createQueryBuilder('p');
+        $qb->where('p.dateAssemblage >= :assemblageDeb')
+            ->andWhere('p.dateAssemblage <=  :assemblageFin')
+            ->setParameter('assemblageDeb', $de)
+            ->setParameter('assemblageFin', $a)
+            ->orWhere('p.dateChaussement >= :chaussmentDeb')
+            ->andWhere('p.dateChaussement <= :chaussmentFin')
+            ->setParameter('chaussmentDeb', $de)
+            ->setParameter('chaussmentFin', $a);
+        return $qb->getQuery()->getResult();
+    }
 }
