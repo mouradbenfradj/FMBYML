@@ -34,6 +34,7 @@ class Builder implements ContainerAwareInterface
         $menu['Operation']->addChild('MAE lanterne');
         $menu['Operation']->addChild('MAE corde');
         $menu['Operation']->addChild('MAE Poche');
+        $menu['Operation']->addChild('MAE Assemblage');
         $menu['Operation']->addChild('chaussage');
         $menu['Operation']->addChild('Retrait Transfert');
         $menu['Operation']->addChild('Retrait AW lanterne');
@@ -74,6 +75,10 @@ class Builder implements ContainerAwareInterface
                 $menu['Operation']['Retrait AW lanterne']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
                 $menu['Operation']["MAE corde"]->addChild($parc->getAbrevMagasin(), array(
                     'route' => 'ssfmb_misaaeaucorde',
+                    'routeParameters' => array('idparc' => $parc->getIdMagasin())
+                ));
+                $menu['Operation']["MAE Assemblage"]->addChild($parc->getAbrevMagasin(), array(
+                    'route' => 'ssfmb_assemblagemiseaeauformulaire',
                     'routeParameters' => array('idparc' => $parc->getIdMagasin())
                 ));
                 $menu['Operation']["MAE Poche"]->addChild($parc->getAbrevMagasin(), array(
@@ -119,6 +124,7 @@ class Builder implements ContainerAwareInterface
         $menu['Operation']['Assemblage']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
         $menu['Operation']['MAE lanterne']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
         $menu['Operation']['MAE corde']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
+        $menu['Operation']['MAE Assemblage']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
         $menu['Operation']['MAE Poche']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
         $menu['Operation']['chaussage']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
         $menu['Operation']['Retrait Transfert']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');

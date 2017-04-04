@@ -20,15 +20,15 @@ class PocheACordeController extends Controller
             $corde = $em->getRepository('SSFMBBundle:Corde')->find($request->get('corde'));
             $corde->setNbrTotaleEnStock($corde->getNbrTotaleEnStock() - $request->get('nbrCordeAssemblage'));
             $em->merge($corde);
-            $stockCorde = new StocksCordes();
-            $stockCorde->setCorde($corde);
-            $stockCorde->setPret(false);
-            $stockCorde->setDateDeCreation(new \DateTime($request->get('dateAssemblage')));
-            $stockCorde->setDateAssemblage(new \DateTime($request->get('dateAssemblage')));
-            $stockCorde->setQuantiter(0);
-            $em->persist($stockCorde);
-            for ($i = 0; $i < $request->get('nbrCordeAssemblage'); $i++) {
-                $contenuCompteur = 0;
+             for ($i = 0; $i < $request->get('nbrCordeAssemblage'); $i++) {
+                 $stockCorde = new StocksCordes();
+                 $stockCorde->setCorde($corde);
+                 $stockCorde->setPret(false);
+                 $stockCorde->setDateDeCreation(new \DateTime($request->get('dateAssemblage')));
+                 $stockCorde->setDateAssemblage(new \DateTime($request->get('dateAssemblage')));
+                 $stockCorde->setQuantiter(0);
+                 $em->persist($stockCorde);
+                 $contenuCompteur = 0;
                 foreach ($request->get('contenu') as $contenu) {
                     $contenuCompteur++;
                     switch ($contenuCompteur) {
@@ -52,7 +52,6 @@ class PocheACordeController extends Controller
                             }
                             for ($cmp = 0; $cmp < $nbrAFabriquer; $cmp++) {
                                 $poche = $tabPocheEntity[$pocheId];
-                                $poche->setNbrTotaleEnStock($poche->getNbrTotaleEnStock() - $nbrAFabriquer);
                                 $stocksPocheBs = $em->getRepository('SSFMBBundle:StocksPochesBs')->findOneBy(array('pochesbs' => $pocheId, 'quantiter' => $qteU, 'pret' => false, 'dateDeCreation' => new \DateTime($date), 'cordeAssemblage' => null));
                                 $stocksPocheBs->setCordeAssemblage($stockCorde);
                                 $stocksPocheBs->setDateAssemblage(new \DateTime($request->get('dateAssemblage')));

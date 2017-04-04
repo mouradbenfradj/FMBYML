@@ -12,6 +12,18 @@ use Doctrine\ORM\EntityRepository;
  */
 class StocksCordesRepository extends EntityRepository
 {
+    public function getCordeAssembler($parc)
+    {
+        $qb = $this->createQueryBuilder('stocksCorde');
+        $qb->select('stocksCorde')
+            ->addSelect('poche')
+            ->where('stocksCorde.pret = false')
+            ->andWhere('stocksCorde.emplacement IS NULL')
+            ->andWhere('stocksCorde.dateAssemblage IS NOT NULL')
+            ->join('stocksCorde.pocheAssemblage', 'poche');
+        return $qb->getQuery()->getResult();
+    }
+
     public function getCordePreparer($stocksArticlesSn, $corde, $datePreparation)
     {
         $qb = $this->createQueryBuilder('c');
@@ -48,7 +60,7 @@ class StocksCordesRepository extends EntityRepository
             ->andWhere('c.emplacement IS NULL')
             ->setParameter('date', new \DateTime(Date('Y-m-d')))
             ->setParameter('pret', false)
-        ->setParameter('parc', $parc);
+            ->setParameter('parc', $parc);
         return $qb->getQuery()->getResult();
     }
 

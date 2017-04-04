@@ -54,7 +54,7 @@ class StocksCordes
      *
      * @ORM\Column(name="chaussement", type="boolean")
      */
-    private $chaussement =false;
+    private $chaussement = false;
     /**
      * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\StocksArticlesSn")
      * @Orm\JoinColumns({  @ORM\JoinColumn(name="ref_stock_article", referencedColumnName="ref_stock_article"),@Orm\JoinColumn(name="numero_serie", referencedColumnName="numero_serie")} )
@@ -94,7 +94,7 @@ class StocksCordes
     private $dateAssemblage;
 
     /**
-     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\StocksPochesBS", mappedBy="cordeAssemblage" ,cascade={"persist","merge","remove"},fetch="LAZY")
+     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\StocksPochesBS", mappedBy="cordeAssemblage" ,cascade={"persist","merge","remove"})
      */
     private $pocheAssemblage;
 
@@ -400,7 +400,7 @@ class StocksCordes
     /**
      * Get dateDeMiseAEau
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDateDeMiseAEau()
     {
@@ -423,7 +423,7 @@ class StocksCordes
     /**
      * Get chaussement
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getChaussement()
     {
@@ -446,12 +446,13 @@ class StocksCordes
     /**
      * Get processus
      *
-     * @return \SS\FMBBundle\Entity\Processus 
+     * @return \SS\FMBBundle\Entity\Processus
      */
     public function getProcessus()
     {
         return $this->processus;
     }
+
     /**
      * Constructor
      */
@@ -476,7 +477,7 @@ class StocksCordes
     /**
      * Get dateAssemblage
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDateAssemblage()
     {
@@ -492,7 +493,6 @@ class StocksCordes
     public function addPocheAssemblage(\SS\FMBBundle\Entity\StocksPochesBS $pocheAssemblage)
     {
         $this->pocheAssemblage[] = $pocheAssemblage;
-
         return $this;
     }
 
@@ -509,7 +509,7 @@ class StocksCordes
     /**
      * Get pocheAssemblage
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getPocheAssemblage()
     {
@@ -532,7 +532,7 @@ class StocksCordes
     /**
      * Get dateChaussement
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDateChaussement()
     {

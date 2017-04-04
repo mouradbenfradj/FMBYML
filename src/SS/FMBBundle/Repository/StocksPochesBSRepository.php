@@ -41,4 +41,18 @@ class StocksPochesBSRepository extends EntityRepository
             ->setParameter('chaussmentFin', $a);
         return $qb->getQuery()->getResult();
     }
+
+    public function pocheAssemble($parc)
+    {
+        $qb = $this->createQueryBuilder('pas')
+            ->select('pas')
+            ->addSelect('corde')
+            ->addSelect('cordeAssemblage')
+            ->join('pas.cordeAssemblage', 'cordeAssemblage')
+            ->join('cordeAssemblage.corde', 'corde')
+            ->where('corde.parc = :parc')
+            ->andWhere('pas.cordeAssemblage IS NOT NULL')
+            ->setParameter('parc', $parc);
+        return $qb->getQuery()->getResult();
+    }
 }

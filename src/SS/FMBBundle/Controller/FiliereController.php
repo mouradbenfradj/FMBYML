@@ -325,16 +325,6 @@ class FiliereController extends Controller
             $filiere->setObservation($observations);
             $em->flush();
             $observations = $filiere->getObservation();
-            /*
-            $qb = $em->createQueryBuilder();
-            $qb->select('a')
-            ->from('MyAppFilmothequeBundle:Acteur', 'a')
-            ->where("a.nom LIKE :motcle OR a.prenom LIKE :motcle")
-            ->orderBy('a.nom', 'ASC')
-            ->setParameter('motcle', '%' . $observation . '%');
-            $query = $qb->getQuery();
-            $acteurs = $query->getResult();
-            */
         } else {
             $filiere = $em->getRepository('SSFMBBundle:Filiere')->findOneById($id);
             $observations = array_merge($filiere->getObservation());

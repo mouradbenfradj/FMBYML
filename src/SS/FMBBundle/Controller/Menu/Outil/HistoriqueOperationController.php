@@ -35,10 +35,9 @@ class HistoriqueOperationController extends Controller
                             $nomClasse = $classe->getCorde()->getNomCorde();
                             $magasine = $classe->getCorde()->getParc()->getAbrevMagasin();
                         } else {
-                            $nomClasse = $classe->getPocheBs()->getNomPocheBs();
-                            $magasine = $classe->getPocheBs()->getParc()->getAbrevMagasin();
-                            var_dump($nomClasse);
-                            die();
+                            $nomClasse = $classe->getPochesbs()->getNomPoche();
+                            $magasine = $classe->getPochesbs()->getParc()->getAbrevMagasin();
+
                         }
                         if ($dateDebut <= $max) {
                             if ($max <= $dateFin) {
@@ -60,10 +59,8 @@ class HistoriqueOperationController extends Controller
                             $nomClasse = $classe->getCorde()->getNomCorde();
                             $magasine = $classe->getCorde()->getParc()->getAbrevMagasin();
                         } else {
-                            $nomClasse = $classe->getPocheBs()->getNomPocheBs();
-                            $magasine = $classe->getPocheBs()->getParc()->getAbrevMagasin();
-                            var_dump($nomClasse);
-                            die();
+                            $nomClasse = $classe->getPochesbs()->getNomPoche();
+                            $magasine = $classe->getPochesbs()->getParc()->getAbrevMagasin();
                         }
                         if ($dateDebut <= $max) {
                             if ($max <= $dateFin) {
@@ -85,10 +82,8 @@ class HistoriqueOperationController extends Controller
                             $nomClasse = $classe->getCorde()->getNomCorde();
                             $magasine = $classe->getCorde()->getParc()->getAbrevMagasin();
                         } else {
-                            $nomClasse = $classe->getPocheBs()->getNomPocheBs();
-                            $magasine = $classe->getPocheBs()->getParc()->getAbrevMagasin();
-                            var_dump($nomClasse);
-                            die();
+                            $nomClasse = $classe->getPochesbs()->getNomPoche();
+                            $magasine = $classe->getPochesbs()->getParc()->getAbrevMagasin();
                         }
                         if ($dateDebut <= $max) {
                             if ($max <= $dateFin) {
@@ -110,10 +105,8 @@ class HistoriqueOperationController extends Controller
                             $nomClasse = $classe->getCorde()->getNomCorde();
                             $magasine = $classe->getCorde()->getParc()->getAbrevMagasin();
                         } else {
-                            $nomClasse = $classe->getPocheBs()->getNomPocheBs();
-                            $magasine = $classe->getPocheBs()->getParc()->getAbrevMagasin();
-                            var_dump($nomClasse);
-                            die();
+                            $nomClasse = $classe->getPochesbs()->getNomPoche();
+                            $magasine = $classe->getPochesbs()->getParc()->getAbrevMagasin();
                         }
                         if ($dateDebut <= $max) {
                             if ($max <= $dateFin) {
@@ -136,10 +129,8 @@ class HistoriqueOperationController extends Controller
                                 $nomClasse = $classe->getCorde()->getNomCorde();
                                 $magasine = $classe->getCorde()->getParc()->getAbrevMagasin();
                             } else {
-                                $nomClasse = $classe->getPocheBs()->getNomPocheBs();
-                                $magasine = $classe->getPocheBs()->getParc()->getAbrevMagasin();
-                                var_dump($nomClasse);
-                                die();
+                                $nomClasse = $classe->getPochesbs()->getNomPoche();
+                                $magasine = $classe->getPochesbs()->getParc()->getAbrevMagasin();
                             }
                             if ($dateDebut <= $max) {
                                 if ($max <= $dateFin) {
@@ -162,10 +153,8 @@ class HistoriqueOperationController extends Controller
                             $nomClasse = $classe->getCorde()->getNomCorde();
                             $magasine = $classe->getCorde()->getParc()->getAbrevMagasin();
                         } else {
-                            $nomClasse = $classe->getPocheBs()->getNomPocheBs();
-                            $magasine = $classe->getPocheBs()->getParc()->getAbrevMagasin();
-                            var_dump($nomClasse);
-                            die();
+                            $nomClasse = $classe->getPochesbs()->getNomPoche();
+                            $magasine = $classe->getPochesbs()->getParc()->getAbrevMagasin();
                         }
                         if ($dateDebut <= $max) {
                             if ($max <= $dateFin) {
@@ -187,10 +176,8 @@ class HistoriqueOperationController extends Controller
                             $nomClasse = $classe->getCorde()->getNomCorde();
                             $magasine = $classe->getCorde()->getParc()->getAbrevMagasin();
                         } else {
-                            $nomClasse = $classe->getPocheBs()->getNomPocheBs();
-                            $magasine = $classe->getPocheBs()->getParc()->getAbrevMagasin();
-                            var_dump($nomClasse);
-                            die();
+                            $nomClasse = $classe->getPochesbs()->getNomPoche();
+                            $magasine = $classe->getPochesbs()->getParc()->getAbrevMagasin();
                         }
                         if ($dateDebut <= $max) {
                             if ($max <= $dateFin) {
@@ -212,10 +199,8 @@ class HistoriqueOperationController extends Controller
                             $nomClasse = $classe->getCorde()->getNomCorde();
                             $magasine = $classe->getCorde()->getParc()->getAbrevMagasin();
                         } else {
-                            $nomClasse = $classe->getPocheBs()->getNomPocheBs();
-                            $magasine = $classe->getPocheBs()->getParc()->getAbrevMagasin();
-                            var_dump($nomClasse);
-                            die();
+                            $nomClasse = $classe->getPochesbs()->getNomPoche();
+                            $magasine = $classe->getPochesbs()->getParc()->getAbrevMagasin();
                         }
                         if ($dateDebut <= $max) {
                             if ($max <= $dateFin) {
@@ -244,10 +229,8 @@ class HistoriqueOperationController extends Controller
                     $nomClasse = $classe->getCorde()->getNomCorde();
                     $magasine = $classe->getCorde()->getParc()->getAbrevMagasin();
                 } else {
-                    $nomClasse = $classe->getPocheBs()->getNomPocheBs();
-                    $magasine = $classe->getPocheBs()->getParc()->getAbrevMagasin();
-                    var_dump($nomClasse);
-                    die();
+                    $nomClasse = $classe->getPochesbs()->getNomPoche();
+                    $magasine = $classe->getPochesbs()->getParc()->getAbrevMagasin();
                 }
                 if (!isset($tableauOperation[date_format($max, 'Y-m-d')][$max_key][$value->getArticle()->getRefStockArticle()->getRefArticle()->getLibArticle()][$value->getArticle()->getNumeroSerie()][$magasine][$nomClasse]))
                     $tableauOperation[date_format($max, 'Y-m-d')][$max_key][$value->getArticle()->getRefStockArticle()->getRefArticle()->getLibArticle()][$value->getArticle()->getNumeroSerie()][$magasine][$nomClasse] = array();

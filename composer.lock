@@ -2014,12 +2014,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/oyejorge/less.php.git",
-                "reference": "03ade807714f3764893c151d95a65e5523fe9015"
+                "reference": "42925c5a01a07d67ca7e82dfc8fb31814d557bc9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/oyejorge/less.php/zipball/03ade807714f3764893c151d95a65e5523fe9015",
-                "reference": "03ade807714f3764893c151d95a65e5523fe9015",
+                "url": "https://api.github.com/repos/oyejorge/less.php/zipball/42925c5a01a07d67ca7e82dfc8fb31814d557bc9",
+                "reference": "42925c5a01a07d67ca7e82dfc8fb31814d557bc9",
                 "shasum": ""
             },
             "require": {
@@ -2056,10 +2056,6 @@
                 {
                     "name": "Josh Schmidt",
                     "homepage": "https://github.com/oyejorge"
-                },
-                {
-                    "name": "Michaël Marinetti",
-                    "homepage": "https://github.com/Asenar"
                 }
             ],
             "description": "PHP port of the Javascript version of LESS http://lesscss.org (Originally maintained by Josh Schmidt)",
@@ -2072,7 +2068,7 @@
                 "php",
                 "stylesheet"
             ],
-            "time": "2017-02-23 18:01:04"
+            "time": "2017-03-28 22:19:25"
         },
         {
             "name": "paragonie/random_compat",
@@ -2447,16 +2443,16 @@
         },
         {
             "name": "sensiolabs/security-checker",
-            "version": "v3.0.5",
+            "version": "v3.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/security-checker.git",
-                "reference": "462f4d089e641deef4759ac1117387c9bfd62764"
+                "reference": "59a6a299e2f5612dc8692d40e84373703a5df1b5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/security-checker/zipball/462f4d089e641deef4759ac1117387c9bfd62764",
-                "reference": "462f4d089e641deef4759ac1117387c9bfd62764",
+                "url": "https://api.github.com/repos/sensiolabs/security-checker/zipball/59a6a299e2f5612dc8692d40e84373703a5df1b5",
+                "reference": "59a6a299e2f5612dc8692d40e84373703a5df1b5",
                 "shasum": ""
             },
             "require": {
@@ -2487,7 +2483,7 @@
                 }
             ],
             "description": "A security checker for your composer.lock",
-            "time": "2017-03-09T17:41:10+00:00"
+            "time": "2017-03-29T09:29:53+00:00"
         },
         {
             "name": "sonata-project/admin-bundle",

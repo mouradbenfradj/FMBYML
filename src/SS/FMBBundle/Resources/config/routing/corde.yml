@@ -5,3 +5,13 @@ ssfmb_cordearticle:
 ssfmb_nombrecordearticle:
     path:     /nombrecordearticle
     defaults: { _controller: SSFMBBundle:Corde:nombreCordeArticle}
+
+
+ssfmb_assemblagemiseaeau:
+    path:     /miseaeauassemblage
+    defaults: { _controller: SSFMBBundle:Menu/MAE/Assemblage:miseAEauAssemblage}
+
+
+ssfmb_assemblagemiseaeauformulaire:
+    path:     /miseaeauassemblageformulaire
+    defaults: { _controller: SSFMBBundle:Menu/MAE/Assemblage:miseAEauAssemblageFormulaire}

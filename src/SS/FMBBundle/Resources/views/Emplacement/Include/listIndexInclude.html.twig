@@ -74,6 +74,37 @@
             </div>
         </div>
     {% endif %}
+{% elseif page == "MAEAS" %}
+    {% for idemp, emplacement in flotteur %}
+        {% if not loop.first %}
+            <div class="col-xs-1 col-sm-1 col-md-1">
+                {% if emplacement.stockscorde == null and emplacement.stockslanterne == null and emplacement.stockspoche == null %}
+                    {% set verifexsistance =  verifexsistance + 1 %}
+                    <div style="color: red">{{ emplacement.place }}</div>
+                    <input type="checkbox" name="placeassemblage[]" value="{{ idemp }}"/>
+                {% elseif emplacement.stockscorde != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatCordeInclude.html.twig" %}
+                {% elseif emplacement.stockslanterne != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatLanterneInclude.html.twig" %}
+                {% elseif emplacement.stockspoche != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatPocheInclude.html.twig" %}
+                {% endif %}
+            </div>
+        {% endif %}
+    {% endfor %}
+    <br>
+    {% if verifexsistance != 0 %}
+        <div class="cochage">
+            <div class="col-xs-11 col-sm-11 col-md-11">
+                <input type="button"
+                       value="Tout cocher"
+                       onClick="fillCheckbox('{{ filiere.nomFiliere }}{{ segment.nomSegment }}{{ flotteur.nomFlotteur }}','1');">&nbsp;&nbsp;
+                <input type="button"
+                       value="Tout décocher"
+                       onClick="fillCheckbox('{{ filiere.nomFiliere }}{{ segment.nomSegment }}{{ flotteur.nomFlotteur }}','0');">
+            </div>
+        </div>
+    {% endif %}
 {% elseif page == "MAEP" %}
     {% for idemp, emplacement in flotteur %}
         {% if not loop.first %}

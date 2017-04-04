@@ -21,56 +21,23 @@
                 <td>
                     {{ entity.operation }}
                 </td>
-                {% if entity.operation =='transfert MAE' %}
-                    <td>
-                        effectuation de {{ entity.tacheEffectuer.nombre }} transfert
-                        retirer a la date {{ entity.tacheEffectuer.dateTransfert|date('Y-m-d') }}
-                        et remise a l'eau a la date {{ entity.tacheEffectuer.dateRMAE }}
-                        de
-                        <table border="1" width="100%">
-                            <thead>
-                            <tr>
-                                <th>article</th>
-                                <th>origine</th>
-                                <th>destination</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for origine in entity.tacheEffectuer.transfert.article %}
-                                <tr>
-                                    <td>
-                                        {% if origine.corde is defined %}
-                                            {{ origine.corde.nomCorde }}
-                                        {% elseif origine.lanterne is defined %}
-                                            {{ origine.lanterne.nomLanterne }}
-                                        {% endif %}
-                                    </td>
-                                    <td>
-                                        {{ entity.tacheEffectuer.transfert.origine[loop.index0] }}
-                                    </td>
-                                    <td>
-                                        {{ entity.tacheEffectuer.transfert.destination[loop.index0] }}
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    </td>
-                {% elseif entity.operation =='MAE Corde' %}
+                {% if entity.operation =='MAE Corde' %}
                     <td>
                         Mise A eau de {{ entity.tacheEffectuer.nbrCordeMAE }}
                         {{ entity.tacheEffectuer.typeCorde }}
-                        avec l'article {{ entity.tacheEffectuer.article }}
+                       avec l'article {{ entity.tacheEffectuer.article }}
                         du lot {{ entity.tacheEffectuer.lot }}
                         a la date {{ entity.tacheEffectuer.dateMAE|date('Y-m-d') }}
                         suivant le processus {{ entity.tacheEffectuer.cycle.nomProcessus }}
                         au emplacement suivant
-                        {% for place in entity.tacheEffectuer.positionDeMAE %}
-                            {{ render(controller(
-                            'SSFMBBundle:Emplacement:afficherSourceEmplacement',
-                            { 'id': place.id }
-                            )) }}
-                        {% endfor %}
+                        <table border="1" width="100%">
+                            {% for place in entity.tacheEffectuer.positionDeMAE %}
+                                {{ render(controller(
+                                'SSFMBBundle:Emplacement:afficherSourceEmplacement',
+                                { 'id': place.id }
+                                )) }}
+                            {% endfor %}
+                        </table>
                     </td>
                 {% elseif entity.operation =='MAE Lanterne' %}
                     <td>
@@ -81,12 +48,14 @@
                         a la date {{ entity.tacheEffectuer.dateMAE|date('Y-m-d') }}
                         suivant le processus {{ entity.tacheEffectuer.cycle.nomProcessus }}
                         au emplacement suivant
-                        {% for place in entity.tacheEffectuer.positionDeMAE %}
-                            {{ render(controller(
-                            'SSFMBBundle:Emplacement:afficherSourceEmplacement',
-                            { 'id': place.id }
-                            )) }}
-                        {% endfor %}
+                        <table border="1" width="100%">
+                            {% for place in entity.tacheEffectuer.positionDeMAE %}
+                                {{ render(controller(
+                                'SSFMBBundle:Emplacement:afficherSourceEmplacement',
+                                { 'id': place.id }
+                                )) }}
+                            {% endfor %}
+                        </table>
                     </td>
                 {% else %}
                     <td>préparation de {{ entity.tacheEffectuer.nombre }}

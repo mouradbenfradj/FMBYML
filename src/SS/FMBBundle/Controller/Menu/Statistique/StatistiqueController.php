@@ -56,6 +56,7 @@ class StatistiqueController extends Controller
         return $this->render('SSFMBBundle:Default:index.html.twig',
             array(
                 'entity' => $parc,
+                'nbrParc' => count($parc),
                 'nbrcorde' => ($nbCorde),
                 'nbrcordev' => ($nbCordeES),
                 'nbrCordeAs' => ($nbCordeAs),

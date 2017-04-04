@@ -475,7 +475,7 @@ class StocksPochesBS
     /**
      * Get dateAssemblage
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDateAssemblage()
     {
@@ -498,7 +498,7 @@ class StocksPochesBS
     /**
      * Get cordeAssemblage
      *
-     * @return \SS\FMBBundle\Entity\StocksCordes 
+     * @return \SS\FMBBundle\Entity\StocksCordes
      */
     public function getCordeAssemblage()
     {
@@ -521,10 +521,26 @@ class StocksPochesBS
     /**
      * Get dateChaussement
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDateChaussement()
     {
         return $this->dateChaussement;
+    }
+
+    public function compareAPoche($poche)
+    {
+        if (($this->getArticle() == $poche->getArticle()) &&
+            ($this->getChaussement() == $poche->getChaussement())
+            && ($this->getCordeAssemblage() == $poche->getCordeAssemblage())
+            && ($this->getDateAssemblage() == $poche->getDateAssemblage())
+            && ($this->getPochesbs() == $poche->getPochesbs())
+            && ($this->getQuantiter() == $poche->getQuantiter())
+        ) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 }

@@ -24,11 +24,12 @@ class HistoriqueController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('SSFMBBundle:Historique')->findAll();
-
+        krsort($entities);
         return $this->render('SSFMBBundle:Historique:index.html.twig', array(
             'entities' => $entities,
         ));
     }
+
     /**
      * Creates a new Historique entity.
      *
@@ -49,7 +50,7 @@ class HistoriqueController extends Controller
 
         return $this->render('SSFMBBundle:Historique:new.html.twig', array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         ));
     }
 
@@ -79,11 +80,11 @@ class HistoriqueController extends Controller
     public function newAction()
     {
         $entity = new Historique();
-        $form   = $this->createCreateForm($entity);
+        $form = $this->createCreateForm($entity);
 
         return $this->render('SSFMBBundle:Historique:new.html.twig', array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         ));
     }
 
@@ -104,7 +105,7 @@ class HistoriqueController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('SSFMBBundle:Historique:show.html.twig', array(
-            'entity'      => $entity,
+            'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -127,19 +128,19 @@ class HistoriqueController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('SSFMBBundle:Historique:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }
 
     /**
-    * Creates a form to edit a Historique entity.
-    *
-    * @param Historique $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
+     * Creates a form to edit a Historique entity.
+     *
+     * @param Historique $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
     private function createEditForm(Historique $entity)
     {
         $form = $this->createForm(new HistoriqueType(), $entity, array(
@@ -151,6 +152,7 @@ class HistoriqueController extends Controller
 
         return $form;
     }
+
     /**
      * Edits an existing Historique entity.
      *
@@ -176,11 +178,12 @@ class HistoriqueController extends Controller
         }
 
         return $this->render('SSFMBBundle:Historique:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }
+
     /**
      * Deletes a Historique entity.
      *
@@ -218,7 +221,6 @@ class HistoriqueController extends Controller
             ->setAction($this->generateUrl('historique_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
-        ;
+            ->getForm();
     }
 }
