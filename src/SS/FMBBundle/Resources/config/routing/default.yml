@@ -85,4 +85,12 @@ historiqueOperation:
     path:     /historiqueOperation
     defaults: { _controller: SSFMBBundle:Menu/Outil/HistoriqueOperation:historiqueOperation}
 
+previsionFuture:
+    path:     /previsionSortie
+    defaults: { _controller: SSFMBBundle:Menu/Outil/PrevisionSortie:previsionSortie}
 
+
+
+mapagedecorrection:
+    path:     /correction
+    defaults: { _controller: SSFMBBundle:Default:correction}

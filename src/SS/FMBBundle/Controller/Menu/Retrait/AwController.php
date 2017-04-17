@@ -137,74 +137,152 @@ class AwController extends Controller
                 $place = $em->getRepository('SSFMBBundle:Emplacement')->find($emplacementcorde);
                 $interval = date_diff($place->getDateDeRemplissage(), $date1);
                 $scorde = $place->getStockscorde();
-                $actualProcess = $implementationProcessus->processusArticle($scorde->getProcessus(), $date1, $place->getDateDeRemplissage());
-                $cycleProcess = $implementationProcessus->cycleArticle($scorde->getProcessus(), $date1, $place->getDateDeRemplissage());
+                if ($scorde->getDateAssemblage()) {
+                    foreach ($scorde->getPocheAssemblage() as $poche) {
+                        var_dump($poche);
+                        die();
+                        $actualProcess = $implementationProcessus->processusArticle($scorde->getProcessus(), $date1, $place->getDateDeRemplissage());
+                        $cycleProcess = $implementationProcessus->cycleArticle($scorde->getProcessus(), $date1, $place->getDateDeRemplissage());
+                        $article = $em->getRepository('SSFMBBundle:Articles')->findOneByLibArticle($actualProcess->getArticleSortie() . $cycleProcess . " COM");
+                        if (!$article) {
+                            $article = new Articles();
+                            $article->setLibArticle($actualProcess->getArticleSortie() . $cycleProcess . " COM");
+                            $article->setLibTicket('l');
+                            $article->setDescCourte('e');
+                            $article->setDescLongue('e');
+                            $article->setRefArtCateg('r');
+                            $article->setModele('m');
+                            $article->setPaaLastMaj(new \DateTime());
+                            $article->setPromo(1);
+                            $article->setValoIndice(10);
+                            $article->setLot(true);
+                            $article->setComposant(true);
+                            $article->setVariante(true);
+                            $article->setGestionSn(true);
+                            $article->setDateDebutDispo(new \DateTime());
+                            $article->setDateFinDispo(new \DateTime());
+                            $article->setDispo(true);
+                            $article->setDateCreation(new \DateTime());
+                            $article->setDateModification(new \DateTime());
+                            $article->setIsAchetable(true);
+                            $article->setIsVendable(true);
+                            $em->persist($article);
+                            $em->flush();
+                        }
+                        $sarticle = $em->getRepository('SSFMBBundle:StocksArticles')->findOneBy(array('refArticle' => $article, 'idStock' => $stock));
+                        if (!$sarticle) {
+                            $sarticle = new StocksArticles();
+                            $sarticle->setRefArticle($article);
+                            $sarticle->setQte($poche->getQuantiter());
+                            $sarticle->setIdStock($stock);
+                            $em->persist($sarticle);
+                            $sarticlesn1 = $em->getRepository('SSFMBBundle:StocksArticlesSn')->getSAS($sarticle->getRefStockArticle(), $scorde->getArticle()->getNumeroSerie());
+                            $sarticlesn = $em->getRepository('SSFMBBundle:StocksArticlesSnVirtuel')->getSAS($sarticle->getRefStockArticle(), $scorde->getArticle()->getNumeroSerie());
+                            if (!$sarticlesn && !$sarticlesn1) {
+                                $sarticlesn1 = new StocksArticlesSn();
+                                $sarticlesn1->setNumeroSerie($poche->getArticle()->getNumeroSerie());
+                                $sarticlesn1->setSnQte(0);
+                                $sarticlesn1->setRefStockArticle($sarticle);
+                                $sarticlesn = new StocksArticlesSnVirtuel($poche->getArticle()->getNumeroSerie(), $poche->getQuantiter(), $sarticle);
+                                $em->persist($sarticlesn1);
+                                $em->persist($sarticlesn);
+                                $poche->setArticle($sarticlesn1);
+                                $em->flush();
+                            }
+                        } else {
+                            $sarticle->setQte($sarticle->getQte() + $poche->getQuantiter());
+                            $sarticlesn1 = $em->getRepository('SSFMBBundle:StocksArticlesSn')->getSAS($sarticle->getRefStockArticle(), $poche->getArticle()->getNumeroSerie());
+                            $sarticlesn = $em->getRepository('SSFMBBundle:StocksArticlesSnVirtuel')->getSAS($sarticle->getRefStockArticle(), $poche->getArticle()->getNumeroSerie());
+                            if (!$sarticlesn && !$sarticlesn1) {
+                                $sarticlesn1 = new StocksArticlesSn();
+                                $sarticlesn1->setNumeroSerie($poche->getArticle()->getNumeroSerie());
+                                $sarticlesn1->setSnQte(0);
+                                $sarticlesn1->setRefStockArticle($sarticle);
+                                $sarticlesn = new StocksArticlesSnVirtuel($poche->getArticle()->getNumeroSerie(), $poche->getQuantiter(), $sarticle);
+                                $poche->setArticle($sarticlesn1);
+                                $em->persist($sarticlesn1);
+                                $em->persist($sarticlesn);
+                                $em->flush();
+                            } else {
+                                $sarticlesn1->setSnQte($sarticlesn1->getSnQte() + 0);
+                                $sarticlesn->setSnQte($sarticlesn->getSnQte() + $poche->getQuantiter());
+                                $poche->setArticle($sarticlesn1);
+                            }
+                        }
+                    }
+                    var_dump($scorde->getPocheAssemblage());
+                    var_dump('assemblage ');
+                    die();
+                } else {
+                    $actualProcess = $implementationProcessus->processusArticle($scorde->getProcessus(), $date1, $place->getDateDeRemplissage());
+                    $cycleProcess = $implementationProcessus->cycleArticle($scorde->getProcessus(), $date1, $place->getDateDeRemplissage());
 
 
-                $article = $em->getRepository('SSFMBBundle:Articles')->findOneByLibArticle($actualProcess->getArticleSortie() . $cycleProcess . " COM");
-                if (!$article) {
-                    $article = new Articles();
-                    $article->setLibArticle($actualProcess->getArticleSortie() . $cycleProcess . " COM");
-                    $article->setLibTicket('l');
-                    $article->setDescCourte('e');
-                    $article->setDescLongue('e');
-                    $article->setRefArtCateg('r');
-                    $article->setModele('m');
-                    $article->setPaaLastMaj(new \DateTime());
-                    $article->setPromo(1);
-                    $article->setValoIndice(10);
-                    $article->setLot(true);
-                    $article->setComposant(true);
-                    $article->setVariante(true);
-                    $article->setGestionSn(true);
-                    $article->setDateDebutDispo(new \DateTime());
-                    $article->setDateFinDispo(new \DateTime());
-                    $article->setDispo(true);
-                    $article->setDateCreation(new \DateTime());
-                    $article->setDateModification(new \DateTime());
-                    $article->setIsAchetable(true);
-                    $article->setIsVendable(true);
-                    $em->persist($article);
-                    $em->flush();
-                }
-                $sarticle = $em->getRepository('SSFMBBundle:StocksArticles')->findOneBy(array('refArticle' => $article, 'idStock' => $stock));
-                if (!$sarticle) {
-                    $sarticle = new StocksArticles();
-                    $sarticle->setRefArticle($article);
-                    $sarticle->setQte($scorde->getQuantiter());
-                    $sarticle->setIdStock($stock);
-                    $em->persist($sarticle);
-                    $sarticlesn1 = $em->getRepository('SSFMBBundle:StocksArticlesSn')->getSAS($sarticle->getRefStockArticle(), $scorde->getArticle()->getNumeroSerie());
-                    $sarticlesn = $em->getRepository('SSFMBBundle:StocksArticlesSnVirtuel')->getSAS($sarticle->getRefStockArticle(), $scorde->getArticle()->getNumeroSerie());
-                    if (!$sarticlesn && !$sarticlesn1) {
-                        $sarticlesn1 = new StocksArticlesSn();
-                        $sarticlesn1->setNumeroSerie($scorde->getArticle()->getNumeroSerie());
-                        $sarticlesn1->setSnQte(0);
-                        $sarticlesn1->setRefStockArticle($sarticle);
-                        $sarticlesn = new StocksArticlesSnVirtuel($scorde->getArticle()->getNumeroSerie(), $scorde->getQuantiter(), $sarticle);
-                        $em->persist($sarticlesn1);
-                        $em->persist($sarticlesn);
-                        $scorde->setArticle($sarticlesn1);
+                    $article = $em->getRepository('SSFMBBundle:Articles')->findOneByLibArticle($actualProcess->getArticleSortie() . $cycleProcess . " COM");
+                    if (!$article) {
+                        $article = new Articles();
+                        $article->setLibArticle($actualProcess->getArticleSortie() . $cycleProcess . " COM");
+                        $article->setLibTicket('l');
+                        $article->setDescCourte('e');
+                        $article->setDescLongue('e');
+                        $article->setRefArtCateg('r');
+                        $article->setModele('m');
+                        $article->setPaaLastMaj(new \DateTime());
+                        $article->setPromo(1);
+                        $article->setValoIndice(10);
+                        $article->setLot(true);
+                        $article->setComposant(true);
+                        $article->setVariante(true);
+                        $article->setGestionSn(true);
+                        $article->setDateDebutDispo(new \DateTime());
+                        $article->setDateFinDispo(new \DateTime());
+                        $article->setDispo(true);
+                        $article->setDateCreation(new \DateTime());
+                        $article->setDateModification(new \DateTime());
+                        $article->setIsAchetable(true);
+                        $article->setIsVendable(true);
+                        $em->persist($article);
                         $em->flush();
                     }
-                } else {
-                    $sarticle->setQte($sarticle->getQte() + $scorde->getQuantiter());
-                    $sarticlesn1 = $em->getRepository('SSFMBBundle:StocksArticlesSn')->getSAS($sarticle->getRefStockArticle(), $scorde->getArticle()->getNumeroSerie());
-                    $sarticlesn = $em->getRepository('SSFMBBundle:StocksArticlesSnVirtuel')->getSAS($sarticle->getRefStockArticle(), $scorde->getArticle()->getNumeroSerie());
-                    if (!$sarticlesn && !$sarticlesn1) {
-                        $sarticlesn1 = new StocksArticlesSn();
-                        $sarticlesn1->setNumeroSerie($scorde->getArticle()->getNumeroSerie());
-                        $sarticlesn1->setSnQte(0);
-                        $sarticlesn1->setRefStockArticle($sarticle);
-                        $sarticlesn = new StocksArticlesSnVirtuel($scorde->getArticle()->getNumeroSerie(), $scorde->getQuantiter(), $sarticle);
-                        $scorde->setArticle($sarticlesn1);
-                        $em->persist($sarticlesn1);
-                        $em->persist($sarticlesn);
-                        $em->flush();
+                    $sarticle = $em->getRepository('SSFMBBundle:StocksArticles')->findOneBy(array('refArticle' => $article, 'idStock' => $stock));
+                    if (!$sarticle) {
+                        $sarticle = new StocksArticles();
+                        $sarticle->setRefArticle($article);
+                        $sarticle->setQte($scorde->getQuantiter());
+                        $sarticle->setIdStock($stock);
+                        $em->persist($sarticle);
+                        $sarticlesn1 = $em->getRepository('SSFMBBundle:StocksArticlesSn')->getSAS($sarticle->getRefStockArticle(), $scorde->getArticle()->getNumeroSerie());
+                        $sarticlesn = $em->getRepository('SSFMBBundle:StocksArticlesSnVirtuel')->getSAS($sarticle->getRefStockArticle(), $scorde->getArticle()->getNumeroSerie());
+                        if (!$sarticlesn && !$sarticlesn1) {
+                            $sarticlesn1 = new StocksArticlesSn();
+                            $sarticlesn1->setNumeroSerie($scorde->getArticle()->getNumeroSerie());
+                            $sarticlesn1->setSnQte(0);
+                            $sarticlesn1->setRefStockArticle($sarticle);
+                            $sarticlesn = new StocksArticlesSnVirtuel($scorde->getArticle()->getNumeroSerie(), $scorde->getQuantiter(), $sarticle);
+                            $em->persist($sarticlesn1);
+                            $em->persist($sarticlesn);
+                            $scorde->setArticle($sarticlesn1);
+                            $em->flush();
+                        }
                     } else {
-                        $sarticlesn1->setSnQte($sarticlesn1->getSnQte() + 0);
-                        $sarticlesn->setSnQte($sarticlesn->getSnQte() + $scorde->getQuantiter());
-                        $scorde->setArticle($sarticlesn1);
+                        $sarticle->setQte($sarticle->getQte() + $scorde->getQuantiter());
+                        $sarticlesn1 = $em->getRepository('SSFMBBundle:StocksArticlesSn')->getSAS($sarticle->getRefStockArticle(), $scorde->getArticle()->getNumeroSerie());
+                        $sarticlesn = $em->getRepository('SSFMBBundle:StocksArticlesSnVirtuel')->getSAS($sarticle->getRefStockArticle(), $scorde->getArticle()->getNumeroSerie());
+                        if (!$sarticlesn && !$sarticlesn1) {
+                            $sarticlesn1 = new StocksArticlesSn();
+                            $sarticlesn1->setNumeroSerie($scorde->getArticle()->getNumeroSerie());
+                            $sarticlesn1->setSnQte(0);
+                            $sarticlesn1->setRefStockArticle($sarticle);
+                            $sarticlesn = new StocksArticlesSnVirtuel($scorde->getArticle()->getNumeroSerie(), $scorde->getQuantiter(), $sarticle);
+                            $scorde->setArticle($sarticlesn1);
+                            $em->persist($sarticlesn1);
+                            $em->persist($sarticlesn);
+                            $em->flush();
+                        } else {
+                            $sarticlesn1->setSnQte($sarticlesn1->getSnQte() + 0);
+                            $sarticlesn->setSnQte($sarticlesn->getSnQte() + $scorde->getQuantiter());
+                            $scorde->setArticle($sarticlesn1);
+                        }
                     }
                 }
                 $scorde->setPret(true);
@@ -215,7 +293,9 @@ class AwController extends Controller
                 $place->setDateDeRemplissage(null);
             }
             $em->flush();
+
             return $this->redirectToRoute('ssfmb_retraitcorde');
+
         }
         return $this->render('@SSFMB/Retrait/retraitCorde.html.twig',
             array(

@@ -33,6 +33,28 @@ class DefaultController extends Controller
             return $this->render('@SSFMB/Default/maintenance.html.twig');
     }
 
+    public function correctionAction(Request $request)
+    {
+        var_dump('correction');
+        $em = $this->getDoctrine()->getManager();
+        $tableauACorriger = $em->getRepository('SSFMBBundle:StocksCordes')->findBy(array('dateDeRetirement' => NULL, 'dateDeMiseAEau' => null));
+        $cmp = 0;
+        foreach ($tableauACorriger as $objet) {
+            if ($objet->getEmplacement() != null) {
+
+                $cmp++;
+                $objet->setDateDeMiseAEau($objet->getEmplacement()->getDateDeRemplissage());
+                $em->merge($objet);
+                $em->flush();
+
+            }
+
+        }
+            $em->flush();
+
+        return $this->render('SSFMBBundle:Default:correction.html.twig', array('cmp' => $cmp));
+    }
+
     public function quantiterEnStocksSnActuelAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();

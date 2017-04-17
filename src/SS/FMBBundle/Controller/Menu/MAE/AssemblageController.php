@@ -117,6 +117,11 @@ class AssemblageController extends Controller
                 $scordes->setEmplacement($place);
                 $scordes->setDateDeMiseAEau($dateMiseAEau);
                 $scordes->setProcessus($processusC);
+                foreach ($scordes->getPocheAssemblage() as $poche) {
+                    $poche->setDateDeMiseAEau($dateMiseAEau);
+                    $poche->setProcessus($processusC);
+                    $em->merge($poche);
+                }
                 $place->setStocksCorde($scordes);
                 $place->setDateDeRemplissage($dateMiseAEau);
                 $em->merge($place);

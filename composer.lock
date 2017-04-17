@@ -8,25 +8,29 @@
     "packages": [
         {
             "name": "behat/transliterator",
-            "version": "v1.1.0",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Behat/Transliterator.git",
-                "reference": "868e05be3a9f25ba6424c2dd4849567f50715003"
+                "reference": "826ce7e9c2a6664c0d1f381cbb38b1fb80a7ee2c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Behat/Transliterator/zipball/868e05be3a9f25ba6424c2dd4849567f50715003",
-                "reference": "868e05be3a9f25ba6424c2dd4849567f50715003",
+                "url": "https://api.github.com/repos/Behat/Transliterator/zipball/826ce7e9c2a6664c0d1f381cbb38b1fb80a7ee2c",
+                "reference": "826ce7e9c2a6664c0d1f381cbb38b1fb80a7ee2c",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
+            "require-dev": {
+                "chuyskywalker/rolling-curl": "^3.1",
+                "php-yaoi/php-yaoi": "^1.0"
+            },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.1-dev"
+                    "dev-master": "1.2-dev"
                 }
             },
             "autoload": {
@@ -44,7 +48,7 @@
                 "slug",
                 "transliterator"
             ],
-            "time": "2015-09-28T16:26:35+00:00"
+            "time": "2017-04-04T11:38:05+00:00"
         },
         {
             "name": "cocur/slugify",
@@ -3557,16 +3561,16 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "v2.7.25",
+            "version": "v2.7.26",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "e22beacc9345866de4f859e805e3bd785d5e3291"
+                "reference": "103414623cff7fe35a44989d5f20594318937378"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/e22beacc9345866de4f859e805e3bd785d5e3291",
-                "reference": "e22beacc9345866de4f859e805e3bd785d5e3291",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/103414623cff7fe35a44989d5f20594318937378",
+                "reference": "103414623cff7fe35a44989d5f20594318937378",
                 "shasum": ""
             },
             "require": {
@@ -3685,7 +3689,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2017-03-06T01:33:53+00:00"
+            "time": "2017-04-04T04:32:30+00:00"
         },
         {
             "name": "twbs/bootstrap",
