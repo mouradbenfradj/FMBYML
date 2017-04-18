@@ -4,6 +4,12 @@ ssfmb_parcDateLPreparer:
     options:
             expose: true
 
+ssfmb_articleLPreparer:
+    path:     /articleLanternePreparer
+    defaults: { _controller: "SSFMBBundle:StocksLanternes:articleLanternePreparer" }
+    options:
+            expose: true
+
 
 
 stockslanternes:

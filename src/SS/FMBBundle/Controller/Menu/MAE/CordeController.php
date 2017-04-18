@@ -31,12 +31,10 @@ class CordeController extends Controller
             $tacheEffectuer = array();
 
             $dateMiseAEau = new \DateTime($request->request->get('dateMAECorde'));
-            $dateCordePreparer = new \DateTime($request->request->get('dateCordeChoix'));
-
             $corde = $em->getRepository('SSFMBBundle:Corde')->find($request->request->get('cordechoix'));
             $article = $em->getRepository('SSFMBBundle:Articles')->findOneByLibArticle($request->request->get('articlechoix'));
             $stockArticle = $em->getRepository('SSFMBBundle:StocksArticles')->findOneBy(array('idStock' => $request->request->get('idstockparc'), 'refArticle' => $article));
-            $cordearticle = $em->getRepository('SSFMBBundle:StocksCordes')->getCordePreparer($em->getRepository('SSFMBBundle:StocksArticlesSn')->getSAS($stockArticle, $request->request->get('articlelotchoix')), $corde, $dateCordePreparer);
+            $cordearticle = $em->getRepository('SSFMBBundle:StocksCordes')->getCordePreparer($em->getRepository('SSFMBBundle:StocksArticlesSn')->getSAS($stockArticle, $request->request->get('articlelotchoix')), $corde);
             $position = 0;
             $idStockPlaceMAEO = array();
             $idStockCordeMAE = array();

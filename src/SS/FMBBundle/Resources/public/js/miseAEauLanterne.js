@@ -23,37 +23,87 @@ $(document).ready(function () {
     });
     $('input:checkbox').hide();
     $('.cochage').hide();
-    $('#dateLanterneChoix').hide();
     $('#articlechoix').hide();
     $('#articlelotchoix').hide();
     $('#articlecyclechoix').hide();
     $('#quantierchoix').hide();
     $('input[type="submit"]').hide();
     $('#lanternechoix').ready(function () {
-            chercherDatePreparer($('#lanternechoix  option:selected').val());
+            trouveArticle($('#lanternechoix  option:selected').val());
+            //chercherDatePreparer($('#lanternechoix  option:selected').val());
         }
     ).change(function () {
-            chercherDatePreparer($('#lanternechoix  option:selected').val());
+            trouveArticle($('#lanternechoix  option:selected').val());
+            //chercherDatePreparer($('#lanternechoix  option:selected').val());
             $("input:checkbox").each(function () {
                 $(this).prop('checked', false);
             });
         }
     );
 });
-function chercherDatePreparer(lanterne) {
+/*
+ function chercherDatePreparer(lanterne) {
+ $.ajax({
+ type: 'get',
+ url: Routing.generate('ssfmb_parcDateLPreparer', {lanterne: lanterne}),
+ beforeSend: function () {
+ tabFormulaire = [];
+ $('#dateLanterneChoix').hide();
+ $('#articlechoix').hide();
+ $('#articlelotchoix').hide();
+ $('#articlecyclechoix').hide();
+ $('#quantierchoix').hide();
+ $('input[type="submit"]').hide();
+ $('loadquantit').show();
+ $('#dateLanterneChoix').empty();
+ $('#articlechoix').empty();
+ $('input[type="submit"]').hide();
+
+ $('#quantit').val(0);
+ $('#loadquantit').show();
+ $('input:checkbox').hide();
+ $('.cochage').hide();
+ },
+ success: function (data) {
+ tabFormulaire = data;
+ if (tabFormulaire.length != 0) {
+ $.each(tabFormulaire, function (k, v) {
+ $('#dateLanterneChoix').append('<option value="' + k + '">' + k + '</option>');
+ });
+ }
+ },
+ complete: function () {
+ $('#dateLanterneChoix').show();
+ if (tabFormulaire.length != 0) {
+ $('#dateLanterneChoix').change(function () {
+ trouveArticle($('#dateLanterneChoix option:selected').val());
+ $("input:checkbox").each(function () {
+ $(this).prop('checked', false);
+ });
+ });
+
+ } else {
+ $('#quantit').val(0);
+ $('#loadquantit').hide();
+ $('input:checkbox').hide();
+ $('.cochage').hide();
+ }
+ }
+ });
+ }
+ */
+function trouveArticle(lanterne) {
     $.ajax({
         type: 'get',
-        url: Routing.generate('ssfmb_parcDateLPreparer', {lanterne: lanterne}),
+        url: Routing.generate('ssfmb_articleLPreparer', {lanterne: lanterne}),
         beforeSend: function () {
             tabFormulaire = [];
-            $('#dateLanterneChoix').hide();
             $('#articlechoix').hide();
             $('#articlelotchoix').hide();
             $('#articlecyclechoix').hide();
             $('#quantierchoix').hide();
             $('input[type="submit"]').hide();
             $('loadquantit').show();
-            $('#dateLanterneChoix').empty();
             $('#articlechoix').empty();
             $('input[type="submit"]').hide();
 
@@ -66,21 +116,27 @@ function chercherDatePreparer(lanterne) {
             tabFormulaire = data;
             if (tabFormulaire.length != 0) {
                 $.each(tabFormulaire, function (k, v) {
+                    $('#articlechoix').append('<option value="' + k + '">' + k + '</option>');
+                });
+
+                $.each(tabFormulaire, function (k, v) {
                     $('#dateLanterneChoix').append('<option value="' + k + '">' + k + '</option>');
                 });
             }
         },
         complete: function () {
-            $('#dateLanterneChoix').show();
+            $('#articlechoix').show();
             if (tabFormulaire.length != 0) {
-                $('#dateLanterneChoix').change(function () {
-                    trouveArticle($('#dateLanterneChoix option:selected').val());
+
+                $('#articlechoix').change(function () {
+                    afficheLot($('#articlechoix').val());
+                    cycleArticle($('#articlechoix').val());
                     $("input:checkbox").each(function () {
                         $(this).prop('checked', false);
                     });
                 });
-
-                trouveArticle($('#dateLanterneChoix option:selected').val());
+                cycleArticle($('#articlechoix').val());
+                afficheLot( $('#articlechoix').val());
             } else {
                 $('#quantit').val(0);
                 $('#loadquantit').hide();
@@ -89,54 +145,43 @@ function chercherDatePreparer(lanterne) {
             }
         }
     });
+
+
+
+
+
 }
-function trouveArticle(date) {
-    $('#articlechoix').empty();
-    $.each(tabFormulaire[date], function (k, v) {
-        $('#articlechoix').append('<option value="' + k + '">' + k + '</option>');
-    });
-    $('#articlechoix').show();
-    $('#articlechoix').change(function () {
-        afficheLot($('#dateLanterneChoix option:selected').val(), $('#articlechoix').val());
-        cycleArticle($('#articlechoix').val());
-        $("input:checkbox").each(function () {
-            $(this).prop('checked', false);
-        });
-    });
-    cycleArticle($('#articlechoix').val());
-    afficheLot($('#dateLanterneChoix option:selected').val(), $('#articlechoix').val());
-}
-function afficheLot(datec, article) {
+function afficheLot(article) {
     $('#articlelotchoix').empty();
-    $.each(tabFormulaire[datec][article], function (k, v) {
+    $.each(tabFormulaire[article], function (k, v) {
         $('#articlelotchoix').append('<option value="' + k + '">' + k + '</option>');
     });
 
     $('#articlelotchoix').show();
     $('#articlelotchoix').change(function () {
-        affichageQte($('#dateLanterneChoix option:selected').val(), $('#articlechoix').val(), $('#articlelotchoix').val());
+        affichageQte($('#articlechoix').val(), $('#articlelotchoix').val());
         $("input:checkbox").each(function () {
             $(this).prop('checked', false);
         });
     });
-    affichageQte($('#dateLanterneChoix option:selected').val(), $('#articlechoix').val(), $('#articlelotchoix').val());
+    affichageQte( $('#articlechoix').val(), $('#articlelotchoix').val());
 }
-function affichageQte(datec, article, lot) {
+function affichageQte( article, lot) {
     $('#quantierchoix').empty();
-    $.each(tabFormulaire[datec][article][lot], function (k, v) {
+    $.each(tabFormulaire[article][lot], function (k, v) {
         $('#quantierchoix').append('<option value="' + k + '">' + k + '</option>');
     });
     $('#quantierchoix').change(function () {
-        affichageNombreDispo($('#dateLanterneChoix option:selected').val(), $('#articlechoix').val(), $('#articlelotchoix').val(), $('#quantierchoix').val());
+        affichageNombreDispo( $('#articlechoix').val(), $('#articlelotchoix').val(), $('#quantierchoix').val());
         $("input:checkbox").each(function () {
             $(this).prop('checked', false);
         });
     });
     $('#quantierchoix').show();
-    affichageNombreDispo($('#dateLanterneChoix option:selected').val(), $('#articlechoix').val(), $('#articlelotchoix').val(), $('#quantierchoix').val());
+    affichageNombreDispo( $('#articlechoix').val(), $('#articlelotchoix').val(), $('#quantierchoix').val());
 }
-function affichageNombreDispo(datec, article, lot, qte) {
-    $('#quantit').val(tabFormulaire[datec][article][lot][qte]);
+function affichageNombreDispo( article, lot, qte) {
+    $('#quantit').val(tabFormulaire[article][lot][qte]);
     $('#loadquantit').hide();
     $('input[type="submit"]').show();
     $('input:checkbox').show();

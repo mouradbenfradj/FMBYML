@@ -30,6 +30,21 @@ class StocksCordesController extends Controller
         return new JsonResponse($date);
     }
 
+
+    public function articleCordePreparerAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $cordes = $em->getRepository('SSFMBBundle:StocksCordes')->findBy(array('corde' => $request->query->get('corde'), 'pret' => false, 'dateDeMiseAEau' => null, 'emplacement' => null, 'dateAssemblage' => null));
+        $date = array();
+
+        foreach ($cordes as $corde) {
+            if (!isset($date[$corde->getArticle()->getRefStockArticle()->getRefArticle()->getLibArticle()][$corde->getArticle()->getNumeroSerie()][$corde->getQuantiter()])) {
+                $date[$corde->getArticle()->getRefStockArticle()->getRefArticle()->getLibArticle()][$corde->getArticle()->getNumeroSerie()][$corde->getQuantiter()] = 0;
+            }
+            $date[$corde->getArticle()->getRefStockArticle()->getRefArticle()->getLibArticle()][$corde->getArticle()->getNumeroSerie()][$corde->getQuantiter()] = $date[$corde->getArticle()->getRefStockArticle()->getRefArticle()->getLibArticle()][$corde->getArticle()->getNumeroSerie()][$corde->getQuantiter()] + 1;
+        }
+        return new JsonResponse($date);
+    }
     /**
      * Lists all StocksCordes entities.
      *

@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class StocksLanternesRepository extends EntityRepository
 {
-    public function getLanternePreparer($stocksArticlesSn, $lanterne, $datePreparation)
+    public function getLanternePreparer($stocksArticlesSn, $lanterne)
     {
         $qb = $this->createQueryBuilder('l');
         $qb->where('l.pret = false')
@@ -23,10 +23,9 @@ class StocksLanternesRepository extends EntityRepository
             ->setParameter(1, $stocksArticlesSn->getRefStockArticle())
             ->andWhere('s.numeroSerie = ?2')
             ->setParameter(2, $stocksArticlesSn->getNumeroSerie())
-            ->andWhere('l.dateDeCreation=?4')
-            ->setParameter(4, $datePreparation)
             ->andWhere('l.lanterne = ?3')
-            ->setParameter(3, $lanterne);
+            ->setParameter(3, $lanterne)
+            ->orderBy('l.dateDeCreation', 'ASC');
         return $qb->getQuery()->getResult();
     }
 

@@ -33,6 +33,24 @@ class StocksLanternesController extends Controller
         return new JsonResponse($date);
     }
 
+
+    public function articleLanternePreparerAction(Request $request)
+    {// Get the province ID
+        $id = $request->query->get('lanterne');
+        $em = $this->getDoctrine()->getManager();
+        $implementation = new DefaultImpl($em);
+        $lanternes = $em->getRepository('SSFMBBundle:StocksLanternes')->findBy(array('lanterne' => $id, 'pret' => false, 'dateDeMiseAEau' => null, 'emplacement' => null));
+        $date = array();
+
+        foreach ($lanternes as $lanterne) {
+            if (!isset($date[$lanterne->getArticle()->getRefStockArticle()->getRefArticle()->getLibArticle()][$lanterne->getArticle()->getNumeroSerie()][$implementation->calculerQuantiterLanterne($lanterne)])) {
+                $date[$lanterne->getArticle()->getRefStockArticle()->getRefArticle()->getLibArticle()][$lanterne->getArticle()->getNumeroSerie()][$implementation->calculerQuantiterLanterne($lanterne)] = 0;
+            }
+            $date[$lanterne->getArticle()->getRefStockArticle()->getRefArticle()->getLibArticle()][$lanterne->getArticle()->getNumeroSerie()][$implementation->calculerQuantiterLanterne($lanterne)] = $date[$lanterne->getArticle()->getRefStockArticle()->getRefArticle()->getLibArticle()][$lanterne->getArticle()->getNumeroSerie()][$implementation->calculerQuantiterLanterne($lanterne)] + 1;
+        }
+        return new JsonResponse($date);
+    }
+
     /**
      * Lists all StocksLanternes entities.
      *

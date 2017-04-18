@@ -24,7 +24,7 @@ class StocksCordesRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function getCordePreparer($stocksArticlesSn, $corde, $datePreparation)
+    public function getCordePreparer($stocksArticlesSn, $corde)
     {
         $qb = $this->createQueryBuilder('c');
         $qb->where('c.pret = false')
@@ -35,10 +35,10 @@ class StocksCordesRepository extends EntityRepository
             ->setParameter(1, $stocksArticlesSn->getRefStockArticle())
             ->andWhere('s.numeroSerie = ?2')
             ->setParameter(2, $stocksArticlesSn->getNumeroSerie())
-            ->andWhere('c.dateDeCreation=?4')
-            ->setParameter(4, $datePreparation)
             ->andWhere('c.corde = ?3')
-            ->setParameter(3, $corde);
+            ->setParameter(3, $corde)
+            ->orderBy('c.dateDeCreation', 'ASC');
+
         return $qb->getQuery()->getResult();
     }
 

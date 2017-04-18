@@ -4,6 +4,12 @@ ssfmb_parcDateCPreparer:
     options:
             expose: true
 
+ssfmb_articleCPreparer:
+    path:     /articleCPreparer
+    defaults: { _controller: "SSFMBBundle:StocksCordes:articleCordePreparer" }
+    options:
+            expose: true
+
 stockscordes:
     path:     /
     defaults: { _controller: "SSFMBBundle:StocksCordes:index" }

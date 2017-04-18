@@ -32,11 +32,9 @@ class LanterneController extends Controller
 
             $lanterne = $em->getRepository('SSFMBBundle:Lanterne')->find($request->request->get('lanternechoix'));
             $dateMiseAEau = new \DateTime($request->request->get('dateMAELanterne'));
-            $dateLanternePreparer = new \DateTime($request->request->get('dateLanterneChoix'));
             $article = $em->getRepository('SSFMBBundle:Articles')->findOneByLibArticle($request->request->get('articlechoix'));
-
             $stockArticle = $em->getRepository('SSFMBBundle:StocksArticles')->findOneBy(array('idStock' => $request->request->get('idstockparc'), 'refArticle' => $article));
-            $lanternearticle = $em->getRepository('SSFMBBundle:StocksLanternes')->getLanternePreparer($em->getRepository('SSFMBBundle:StocksArticlesSn')->getSAS($stockArticle, $request->request->get('articlelotchoix')), $lanterne, $dateLanternePreparer);
+            $lanternearticle = $em->getRepository('SSFMBBundle:StocksLanternes')->getLanternePreparer($em->getRepository('SSFMBBundle:StocksArticlesSn')->getSAS($stockArticle, $request->request->get('articlelotchoix')), $lanterne);
             $position = 0;
             $idStockPlaceMAEO = array();
             $idStockLanterneMAE = array();
