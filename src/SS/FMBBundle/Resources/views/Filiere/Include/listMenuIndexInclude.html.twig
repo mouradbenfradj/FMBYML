@@ -1,14 +1,11 @@
-<div class="row" style="overflow: scroll">
+<div class="row">
     {% for filiere in entity.filieres %}
         {% if page not in ["RL","RC"] %}
-            <div class="col-lg-12">
-                <div class="col-lg-2"><a href="#{{ filiere.nomFiliere }}">{{ filiere.nomFiliere }}</a></div>
-            </div>
+            <div class="col-md-4"><a href="#{{ filiere.nomFiliere }}">{{ filiere.nomFiliere }}</a></div>
+
         {% elseif page in ["RL","RC"] %}
             {% if filiere.aireDeTravaille %}
-                <div class="col-lg-12">
-                    <div class="col-lg-2"><a href="#{{ filiere.nomFiliere }}">{{ filiere.nomFiliere }}</a></div>
-                </div>
+                <div class="col-md-4"><a href="#{{ filiere.nomFiliere }}">{{ filiere.nomFiliere }}</a></div>
             {% endif %}
         {% endif %}
     {% endfor %}
