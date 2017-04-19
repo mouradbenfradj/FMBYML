@@ -37,22 +37,19 @@ class DefaultController extends Controller
     {
         var_dump('correction');
         $em = $this->getDoctrine()->getManager();
-        $tableauACorriger = $em->getRepository('SSFMBBundle:StocksCordes')->findBy(array('dateDeRetirement' => NULL, 'dateDeMiseAEau' => null));
+        $tableauACorriger = $em->getRepository('SSFMBBundle:StocksCordes')->findBy(array('dateDeRetirement' => NULL, 'dateChaussement' => null, 'chaussement' => true));
+
+        $tabRenvoyer = array();
         $cmp = 0;
         foreach ($tableauACorriger as $objet) {
             if ($objet->getEmplacement() != null) {
 
                 $cmp++;
-                $objet->setDateDeMiseAEau($objet->getEmplacement()->getDateDeRemplissage());
-                $em->merge($objet);
-                $em->flush();
-
+                $tabRenvoyer[$objet->getEmplacement()->getFlotteur()->getSegment()->getFiliere()->getNomFiliere()][$objet->getEmplacement()->getFlotteur()->getSegment()->getNomSegment()][$objet->getEmplacement()->getFlotteur()->getNomFlotteur()][$objet->getEmplacement()->getPlace()] = $objet;
             }
 
         }
-            $em->flush();
-
-        return $this->render('SSFMBBundle:Default:correction.html.twig', array('cmp' => $cmp));
+        return $this->render('SSFMBBundle:Default:correction.html.twig', array('tab' => $tabRenvoyer));
     }
 
     public function quantiterEnStocksSnActuelAction(Request $request)

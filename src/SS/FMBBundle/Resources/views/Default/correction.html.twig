@@ -7,10 +7,36 @@
 {% block body %}
     {{ parent() }}
     {% set page = 'Statistique' %}
-    <br><br><br><br><br><div class="row">
-    correction de
-        {{ cmp }} ligne
-    effectuer
+
+    <div class="row">
+        <table border="1" width="100%">
+            {% for filiere,contenuF in tab %}
+                <tr>
+                    <td>{{ filiere }}</td>
+                    <td>
+                        <table border="1" width="100%">
+                            {% for segment , contenuS in contenuF %}
+                                <tr>
+                                    <td>{{ segment }}</td>
+                                    <td>
+                                        <table border="1" width="100%">
+                                            {% for flotteur  ,contenuF in contenuS %}
+                                                <tr>
+                                                    <td>{{ flotteur }}</td>
+                                                    {% for emplacement  ,contenuE in contenuF %}
+                                                        <td>{{ emplacement }}</td>
+                                                    {% endfor %}
+                                                </tr>
+                                            {% endfor %}
+                                        </table>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
     </div>
 
 {% endblock %}
