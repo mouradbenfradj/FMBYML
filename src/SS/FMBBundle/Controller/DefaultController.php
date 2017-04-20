@@ -24,7 +24,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 class DefaultController extends Controller
 {
-    public function indexAction(Request $request)
+    public function indexAction()
     {
         $fonctionnel = true;
         if ($fonctionnel) {

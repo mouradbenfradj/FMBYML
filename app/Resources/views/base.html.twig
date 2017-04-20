@@ -8,6 +8,8 @@
     <link rel="shortcut icon" href="{{ asset('favicon.ico' ) }}">
     <title>{% block title %}OYSTERPRO{% endblock %}</title>
     {#starter page  default#}
+    <link href="{{ asset('bundles/ssfmb/plugins/bootstrap-sweetalert/sweet-alert.css') }}" rel="stylesheet"
+          type="text/css">
     <link href="{{ asset('bundles/ssfmb/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('bundles/ssfmb/assets/css/core.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('bundles/ssfmb/assets/css/components.css') }}" rel="stylesheet" type="text/css"/>
@@ -63,16 +65,18 @@
                                     {% endif %}
                                 </a>
                             </li>
-                            <li>
-                                <a href="{{ path('sonata_admin_dashboard') }}">
-                                    <i class="ti-settings text-custom m-r-10"></i> Administration
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path('sonata_admin_dashboard') }}">
-                                    <i class="ti-lock text-custom m-r-10"></i> Administration
-                                </a>
-                            </li>
+                            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                <li>
+                                    <a href="{{ path('sonata_admin_dashboard') }}">
+                                        <i class="ti-settings text-custom m-r-10"></i> Administration
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('sonata_admin_dashboard') }}">
+                                        <i class="ti-lock text-custom m-r-10"></i> Administration
+                                    </a>
+                                </li>
+                            {% endif %}
                             <li class="divider"></li>
                             <li>
                                 <a href="{{ path('fos_user_security_logout') }}">
@@ -98,35 +102,35 @@
     {% include "@SSFMB/Default/menu.html.twig" %}
 </header>
 {#<div class='contents fade out'>#}
-    <div class="wrapper">
-        <div class="container">
-            {% block body %}
-                {% block footer %}
-                    <footer class="footer text-right">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-xs-6">
-                                    © 2016. All rights reserved. / POWERED BY FMB & SIDRATSOFT
-                                </div>
-                                <div class="col-xs-6">
-                                </div>
+<div class="wrapper">
+    <div class="container">
+        {% block body %}
+            {% block footer %}
+                <footer class="footer text-right">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                © 2016. All rights reserved. / POWERED BY FMB & SIDRATSOFT
+                            </div>
+                            <div class="col-xs-6">
                             </div>
                         </div>
-                    </footer>
-                {% endblock %}
+                    </div>
+                </footer>
             {% endblock %}
-            <div class="row">
-                <div class="col-xs-11">
-                </div>
-                <div class="col-xs-1">
-                    <a id="back-to-top" href="#" class="btn btn-primary btn-lg back-to-top" role="button"
-                       title="Click to return on the top page" data-toggle="tooltip" data-placement="left">
-                        <span class="glyphicon glyphicon-chevron-up"></span>
-                    </a>
-                </div>
+        {% endblock %}
+        <div class="row">
+            <div class="col-xs-11">
+            </div>
+            <div class="col-xs-1">
+                <a id="back-to-top" href="#" class="btn btn-primary btn-lg back-to-top" role="button"
+                   title="Click to return on the top page" data-toggle="tooltip" data-placement="left">
+                    <span class="glyphicon glyphicon-chevron-up"></span>
+                </a>
             </div>
         </div>
     </div>
+</div>
 {#</div>#}
 {# general css#}
 <script src="{{ asset('bundles/ssfmb/assets/js/bootstrap.min.js') }}"></script>
@@ -148,6 +152,8 @@
 
 <script src="{{ asset('bundles/ssfmb/js/baseTwig/base.js') }}"></script>
 <script src="{{ asset('bundles/ssfmb/js/clignotement.js') }}"></script>
+<script src="{{ asset('bundles/ssfmb/plugins/bootstrap-sweetalert/sweet-alert.min.js') }}"></script>
+<script src="{{ asset('bundles/ssfmb/pages/jquery.sweet-alert.init.js') }}"></script>
 
 
 <script>

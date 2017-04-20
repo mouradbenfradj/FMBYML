@@ -7,13 +7,15 @@
                 {{ include('@SSFMB/Filiere/Include/listObservationFiliere.html.twig',{observations: filiere.observation}) }}
             </div>
         </td>
-        <td>
-            <form action="{{ path('filiere_observation') }}" method="post" class="formObservation{{ id }}">
-                <input type="hidden" name="idf" value="{{ id }}">
-                <textarea name="observation" id="textObservation{{ id }}"></textarea><input type="submit"
-                                                                                                 value="validé">
-            </form>
-        </td>
+        {% if is_granted('ROLE_SUPER_ADMIN') %}
+            <td>
+                <form action="{{ path('filiere_observation') }}" method="post" class="formObservation{{ id }}">
+                    <input type="hidden" name="idf" value="{{ id }}">
+                    <textarea name="observation" id="textObservation{{ id }}"></textarea>
+                    <input type="submit" value="validé">
+                </form>
+            </td>
+        {% endif %}
     </tr>
     </tbody>
 </table>
