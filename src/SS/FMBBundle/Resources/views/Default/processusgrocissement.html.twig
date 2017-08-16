@@ -101,11 +101,12 @@
                                                                                                        class="processusqte"
                                                                                                        name="processusqte[]">
                                                                                             </span>
-                                                                                                    u/
+                                                                                                    u<br>
                                                                                                     {{ (cycle.quantiterLanterne /12)|number_format(2, ',', '.') }}
-                                                                                                    dz/
-                                                                                                    {{ cycle.nombreLanterne }}
-                                                                                                    lanterne
+                                                                                                    dz<br>
+                                                                                                    {{ ((cycle.quantiterLanterne /12)* 0.533)|number_format(2, ',', '.') }}(dz * 0.533)
+                                                                                                    <br>
+                                                                                                    {{ cycle.nombreLanterne }}lanterne
                                                                                                 </p>
                                                                                             {% endif %}
                                                                                             {% if(cycle.quantiterCorde  + cycle.nombreCorde ) != 0 %}
@@ -123,9 +124,10 @@
                                                                                                            class="processusqte"
                                                                                                            name="processusqte[]">
                                                                                                     {{ cycle.quantiterCorde|number_format(0, ',', '.') }}
-                                                                                                    u/
+                                                                                                    u<br>
                                                                                                     {{ (cycle.quantiterCorde/12)|number_format(2, ',', '.') }}
-                                                                                                    dz/
+                                                                                                    dz<br>
+                                                                                                    {{ ((cycle.quantiterCorde /12)* 0.533)|number_format(2, ',', '.') }}(dz * 0.533)<br>
                                                                                                     {{ cycle.nombreCorde }}
                                                                                                     corde
                                                                                                 </p>
@@ -145,9 +147,10 @@
                                                                                                            class="processusqte"
                                                                                                            name="processusqte[]">
                                                                                                     {{ cycle.quantiterPoche|number_format(0, ',', '.') }}
-                                                                                                    u/
+                                                                                                    u<br>
                                                                                                     {{ (cycle.quantiterPoche/12)|number_format(2, ',', '.') }}
-                                                                                                    dz/
+                                                                                                    dz<br>
+                                                                                                    {{ ((cycle.quantiterPoche /12)* 0.533)|number_format(2, ',', '.') }}(dz * 0.533)<br>
                                                                                                     {{ cycle.nombrePoche }}
                                                                                                     poche
                                                                                                 </p>
@@ -170,6 +173,7 @@
                                                                                                                         lanterne</p>
                                                                                                                     <p>{{ (filiere.quantiterLanterne /12)|number_format(2, ',', '.') }}
                                                                                                                         dz</p>
+                                                                                                                    <p>{{ ((cycle.quantiterLanterne /12)* 0.533)|number_format(2, ',', '.') }}(dz * 0.533)</p>
                                                                                                                 {% endif %}
                                                                                                                 {% if(filiere.quantiterCorde  + filiere.nombreCorde ) != 0 %}
                                                                                                                     <p>{{ filiere.quantiterCorde|number_format(0, ',', '.') }}
@@ -178,6 +182,7 @@
                                                                                                                         corde</p>
                                                                                                                     <p>{{ (filiere.quantiterCorde/12)|number_format(2, ',', '.') }}
                                                                                                                         dz</p>
+                                                                                                                    <p>{{ ((cycle.quantiterCorde /12)* 0.533)|number_format(2, ',', '.') }}(dz * 0.533)</p>
                                                                                                                 {% endif %}
                                                                                                                 {% if(filiere.quantiterPoche  + filiere.nombrePoche ) != 0 %}
                                                                                                                     <p>{{ filiere.quantiterPoche|number_format(0, ',', '.') }}
@@ -186,6 +191,7 @@
                                                                                                                         poche</p>
                                                                                                                     <p>{{ (filiere.quantiterPoche/12)|number_format(2, ',', '.') }}
                                                                                                                         dz</p>
+                                                                                                                    <p>{{ ((cycle.quantiterPoche /12)* 0.533)|number_format(2, ',', '.') }}(dz * 0.533)</p>
                                                                                                                 {% endif %}
                                                                                                             </div>
 
@@ -203,6 +209,7 @@
                                                                                                                                     lanterne</p>
                                                                                                                                 <p>{{ (segment.quantiterLanterne/12)|number_format(2, ',', '.') }}
                                                                                                                                     dz</p>
+                                                                                                                                <p>{{ ((cycle.quantiterLanterne /12)* 0.533)|number_format(2, ',', '.') }}(dz * 0.533)</p>
                                                                                                                             {% endif %}
                                                                                                                             {% if(segment.quantiterCorde  + segment.nombreCorde ) != 0 %}
                                                                                                                                 <p>{{ segment.quantiterCorde|number_format(0, ',', '.') }}
@@ -211,6 +218,7 @@
                                                                                                                                     corde</p>
                                                                                                                                 <p>{{ (segment.quantiterCorde/12)|number_format(2, ',', '.') }}
                                                                                                                                     dz</p>
+                                                                                                                                <p>{{ ((cycle.quantiterCorde /12)* 0.533)|number_format(2, ',', '.') }}(dz * 0.533)</p>
                                                                                                                             {% endif %}
                                                                                                                             {% if(segment.quantiterPoche  + segment.nombrePoche ) != 0 %}
                                                                                                                                 <p>{{ segment.quantiterPoche|number_format(0, ',', '.') }}
@@ -219,6 +227,7 @@
                                                                                                                                     poche</p>
                                                                                                                                 <p>{{ (segment.quantiterPoche/12)|number_format(2, ',', '.') }}
                                                                                                                                     dz</p>
+                                                                                                                                <p>{{ ((cycle.quantiterPoche /12)* 0.533)|number_format(2, ',', '.') }}(dz * 0.533)</p>
                                                                                                                             {% endif %}
                                                                                                                         </div>
                                                                                                                         <ol class="dd-list"
@@ -238,6 +247,7 @@
                                                                                                                                                     lanterne</p>
                                                                                                                                                 <p>{{ (flotteur.quantiterLanterne /12)|number_format(2, ',', '.') }}
                                                                                                                                                     dz</p>
+                                                                                                                                                <p>{{ ((cycle.quantiterLanterne /12)* 0.533)|number_format(2, ',', '.') }}(dz * 0.533)</p>
                                                                                                                                             {% endif %}
                                                                                                                                             {% if(flotteur.quantiterCorde  + flotteur.nombreCorde ) != 0 %}
                                                                                                                                                 <p>{{ flotteur.quantiterCorde|number_format(0, ',', '.') }}
@@ -246,6 +256,7 @@
                                                                                                                                                     corde</p>
                                                                                                                                                 <p>{{ (flotteur.quantiterCorde/12)|number_format(2, ',', '.') }}
                                                                                                                                                     dz</p>
+                                                                                                                                                <p>{{ ((cycle.quantiterCorde /12)* 0.533)|number_format(2, ',', '.') }}(dz * 0.533)</p>
                                                                                                                                             {% endif %}
                                                                                                                                             {% if(flotteur.quantiterPoche  + flotteur.nombrePoche ) != 0 %}
                                                                                                                                                 <p>{{ flotteur.quantiterPoche|number_format(0, ',', '.') }}
@@ -254,6 +265,7 @@
                                                                                                                                                     poche</p>
                                                                                                                                                 <p>{{ (flotteur.quantiterPoche/12)|number_format(2, ',', '.') }}
                                                                                                                                                     dz</p>
+                                                                                                                                                <p>{{ ((cycle.quantiterPoche /12)* 0.533)|number_format(2, ',', '.') }}(dz * 0.533)</p>
                                                                                                                                             {% endif %}
                                                                                                                                         </div>
                                                                                                                                         <div class="col-xs-12 col-sm-12 col-md-12">

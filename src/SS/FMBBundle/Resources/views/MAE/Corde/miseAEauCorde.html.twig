@@ -37,8 +37,10 @@
                     <div class="card-box">
                         <div class="row">
                             <div class="col-md-12">
-                                <input type="hidden" name="idstockparc" id="idstockparc"
-                                       value="{{ entity.idStock.idStock }}">
+                                {% if  entity.idStock %}
+                                    <input type="hidden" name="idstockparc" id="idstockparc"
+                                           value="{{ entity.idStock.idStock }}">
+                                {% endif %}
                                 <div id="idparc" hidden="true">{{ entity.idMagasin }}</div>
                                 <h4 class="m-t-0 header-title"><b>Mise à l'eau -> parc {{ entity.abrevMagasin }}</b>
                                 </h4>

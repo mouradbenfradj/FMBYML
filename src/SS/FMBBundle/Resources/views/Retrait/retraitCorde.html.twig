@@ -31,7 +31,9 @@
                 <div class="col-sm-12">
                     <div class="card-box">
                         <div class="row">
-                            <div id="idstockparc" hidden="true">{{ entity.idStock.idStock }}</div>
+                            {% if  entity.idStock %}
+                                <div id="idstockparc" hidden="true">{{ entity.idStock.idStock }}</div>
+                            {% endif %}
                             <div id="idparc" hidden="true">{{ entity.idMagasin }}</div>
 
                             <div class="col-md-12">
@@ -111,9 +113,12 @@
                                                                       value="0"></div>
                                         <div class="col-lg-12">stocks de reception</div>
                                         <div class="col-lg-12">
-                                            <input type="text" name="stockchoix" hidden="true" id="stockchoix"
-                                                   value="{{ entity.idStock.idStock }}">
-                                            <input type="text" readonly="true" value="{{ entity.idStock.libStock }}">
+                                            {% if  entity.idStock %}
+                                                <input type="text" name="stockchoix" hidden="true" id="stockchoix"
+                                                       value="{{ entity.idStock.idStock }}">
+                                                <input type="text" readonly="true"
+                                                       value="{{ entity.idStock.libStock }}">
+                                            {% endif %}
                                         </div>
                                         <div class="col-lg-12"><input type="submit" value="confirmer le retrait"/></div>
                                     </div>

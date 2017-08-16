@@ -107,6 +107,7 @@
                                         <div class="col-lg-12">
                                             <select name="articlecyclechoix" id="articlecyclechoix">
                                                 {% for process in processus %}
+                                                    {{ dump(process) }}
                                                     <option value="{{ process.id }}">{{ process.nomProcessus }}</option>
                                                 {% endfor %}
                                             </select>

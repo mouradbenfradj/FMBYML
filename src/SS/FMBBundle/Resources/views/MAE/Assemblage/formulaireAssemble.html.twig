@@ -17,10 +17,12 @@
         <form action="{{ path('ssfmb_assemblagemiseaeau') }}" method="get" id="formulaie"
               onsubmit="return validation()">
             <table border="1" width="100%">
-                <tr>
-                    <td colspan="4"><input type="submit" class="btn btn-default waves-effect waves-light btn-sm" name="envoyer">
-                    <input type="hidden" name="idparc" value="{{ entity.idMagasin }}"></td>
-                </tr>
+                {% if  assemblages|length !=0 %}
+                    <tr>
+                        <td colspan="4"><input type="submit" name="envoyer">
+                            <input type="hidden" name="idparc" value="{{ entity.idMagasin }}"></td>
+                    </tr>
+                {% endif %}
                 {% for idPoche , poche in assemblages %}
                     <tr>
                         <td><input type="radio" value="{{ idPoche }}" name="choixAssemblage"></td>

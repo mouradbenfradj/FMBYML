@@ -16,18 +16,21 @@ class StatistiqueController extends Controller
             $nbCordeP = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrCordePreparer();
             $nbCordeAs = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrCordeAssemble();
             $nbCordeAe = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrCordeAEau();
+            $nbCordeChausser = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrCordeChausseeAE();
             $nbCordeAsAe = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrCordeAssembleAEau();
             $nbCordeES = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrCordeEnStock();
             $nbCorde = $nbCordeP + $nbCordeAe + $nbCordeES + $nbCordeAs + $nbCordeAsAe;
 
             $nbLanterneP = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrLanternePreparer();
             $nbLanterneAe = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrLanterneAEau();
+            $nbrlanterneChausser = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrLanterneChausserAEau();
             $nbLanterneES = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrLanterneEnStock();
             $nbLanterne = $nbLanterneP + $nbLanterneAe + $nbLanterneES;
 
             $nbPocheP = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrPochePreparer();
             $nbPocheAsP = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrPocheAssemblePreparer();
             $nbPocheAe = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrPocheAEau();
+            $nbPocheChausserAe = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrPocheChausserAEau();
             $nbPocheAsAe = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrPocheAssembleAEau();
             $nbPocheES = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrPocheEnStock();
             $nbPoche = $nbPocheP + $nbPocheAe + $nbPocheES;
@@ -37,18 +40,22 @@ class StatistiqueController extends Controller
             $nbCordeP = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrCordePreparerByParc($parc);
             $nbCordeAs = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrCordeAssembleByParc($parc);
             $nbCordeAe = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrCordeAEauByParc($parc);
+            $nbCordeChausser = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrCordeChausserAEByParc($parc);
+
             $nbCordeAsAe = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrCordeAssembleAEauByParc($parc);
             $nbCordeES = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrCordeEnStockByParc($parc);
             $nbCorde = $nbCordeP + $nbCordeAe + $nbCordeES;
 
             $nbLanterneP = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrLanternePreparerByParc($parc);
             $nbLanterneAe = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrLanterneAEauByParc($parc);
+            $nbrlanterneChausser = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrLanterneChausserAEauByParc($parc);
             $nbLanterneES = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrLanterneEnStockByParc($parc);
             $nbLanterne = $nbLanterneP + $nbLanterneAe + $nbLanterneES;
 
             $nbPocheP = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrPochePreparerByParc($parc);
             $nbPocheAsP = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrPocheAssemblePreparerByParc($parc);
             $nbPocheAe = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrPocheAEauByParc($parc);
+            $nbPocheChausserAe = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrPocheChausserAEauByParc($parc);
             $nbPocheAsAe = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrPocheAssembleAEauByParc($parc);
             $nbPocheES = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrPocheEnStockByParc($parc);
             $nbPoche = $nbPocheP + $nbPocheAe + $nbPocheES + $nbPocheAsP + $nbPocheAsAe;
@@ -61,18 +68,21 @@ class StatistiqueController extends Controller
                 'nbrcordev' => ($nbCordeES),
                 'nbrCordeAs' => ($nbCordeAs),
                 'nbrCordeAsAe' => ($nbCordeAsAe),
+                'nbrCordeChausser' => $nbCordeChausser,
                 'nbrcordep' => ($nbCordeP),
                 'nbrcordeae' => ($nbCordeAe),
                 'nbrlanterne' => ($nbLanterne),
                 'nbrlanternev' => ($nbLanterneES),
                 'nbrlanternep' => ($nbLanterneP),
                 'nbrlanterneae' => ($nbLanterneAe),
+                'nbrlanterneChausser' => $nbrlanterneChausser,
                 'nbrpoche' => ($nbPoche),
                 'nbrpochev' => ($nbPocheES),
                 'nbrpochep' => ($nbPocheP),
                 'nbrpocheAsp' => ($nbPocheAsP),
                 'nbrpocheae' => ($nbPocheAe),
                 'nbrpocheAsae' => ($nbPocheAsAe),
+                'nbPocheChausserAe' => $nbPocheChausserAe,
                 'nbrfiliere' => $nbfiliere
             )
         );

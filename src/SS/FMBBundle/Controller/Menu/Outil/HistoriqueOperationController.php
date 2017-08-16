@@ -64,7 +64,7 @@ class HistoriqueOperationController extends Controller
                         }
                         if ($dateDebut <= $max) {
                             if ($max <= $dateFin) {
-                                if (!isset($tableauOperation[date_format($max, 'Y-m-d')][0][$value->getArticle()->getRefStockArticle()->getRefArticle()->getLibArticle()][$value->getArticle()->getNumeroSerie()][$magasine][$magasine][$nomClasse]))
+                                if (!isset($tableauOperation[date_format($max, 'Y-m-d')][0][$value->getArticle()->getRefStockArticle()->getRefArticle()->getLibArticle()][$value->getArticle()->getNumeroSerie()][$magasine][$nomClasse]))
                                     $tableauOperation[date_format($max, 'Y-m-d')][0][$value->getArticle()->getRefStockArticle()->getRefArticle()->getLibArticle()][$value->getArticle()->getNumeroSerie()][$magasine][$nomClasse] = array();
                                 array_push($tableauOperation[date_format($max, 'Y-m-d')][0][$value->getArticle()->getRefStockArticle()->getRefArticle()->getLibArticle()][$value->getArticle()->getNumeroSerie()][$magasine][$nomClasse], $value);
                             }

@@ -40,7 +40,9 @@
         <div class="panel-body">
             <form action="{{ path("sonata_user_admin_security_check") }}" class="form-horizontal m-t-20" method="post">
                 {% if error %}
-                    <div class="alert alert-error">{{ error|trans({}, 'SonataUserBundle') }}</div>
+                    <div class="alert alert-error">{{ error|trans({}, 'SonataUserBundle') }}
+                        {{ error | replace({"Bad credentials." : "Invalid username or password."}) }}
+                    </div>
                 {% endif %}
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
                 <div class="form-group ">

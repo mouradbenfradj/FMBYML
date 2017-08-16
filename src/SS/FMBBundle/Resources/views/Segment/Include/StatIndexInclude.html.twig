@@ -1,5 +1,7 @@
 {% set tailleSegment = segment.longeur %}
 {% set totaleplace =0 %}
+{% set chaussementLanterne =0 %}
+{% set chaussementCorde =0 %}
 {% set totalelanterne =0 %}
 {% set totalecorde =0 %}
     {% for key, flotteur in segment %}
@@ -11,9 +13,15 @@
                     {% elseif emplacement.stockscorde != null %}
                         {% set totaleplace = totaleplace + 1 %}
                         {% set totalecorde = totalecorde + 1 %}
+                        {% if emplacement.chausc %}
+                            {% set chaussementCorde = chaussementCorde + 1 %}
+                        {% endif %}
                     {% elseif emplacement.stockslanterne != null %}
                         {% set totaleplace = totaleplace + 1 %}
                         {% set totalelanterne =totalelanterne + 1 %}
+                        {% if emplacement.chausl %}
+                            {% set chaussementLanterne = chaussementLanterne + 1 %}
+                        {% endif %}
                     {% endif %}
                 {% endif %}
             {% endfor %}
@@ -61,9 +69,8 @@
         <td>{{ totaleplace - (totaleplace -(totalecorde + totalelanterne)) }} place
             || {{ ((((totaleplace -(totaleplace -(totalecorde + totalelanterne))))/totaleplace )*100 )|number_format }}%
         </td>
-        <td>{{ totalecorde }}</td>
-
-        <td>{{ totalelanterne }}</td>
+        <td>{{ totalecorde }} dont {{ chaussementCorde }} chausser</td>
+        <td>{{ totalelanterne }} dont {{ chaussementLanterne }} chausser</td>
     </tr>
     </tbody>
 </table>

@@ -20,66 +20,66 @@ class Processus
     /**
      * @var integer
      *
-     * @ORM\Column(name="numeroDebCycle", type="integer")
+     * @ORM\Column(name="numeroDebCycle", type="integer", nullable=false)
      */
     private $numeroDebCycle;
     /**
      * @var integer
      *
-     * @ORM\Column(name="limiteDuCycle", type="integer")
+     * @ORM\Column(name="limiteDuCycle", type="integer", nullable=false)
      */
     private $limiteDuCycle;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="nomProcessus", type="string", length=255)
+     * @ORM\Column(name="nomProcessus", type="string", length=255, nullable=false)
      */
     private $nomProcessus;
     /**
      * @var string
      *
-     * @ORM\Column(name="abrevProcessus", type="string", length=255)
+     * @ORM\Column(name="abrevProcessus", type="string", length=255, nullable=false)
      *
      */
     private $abrevProcessus;
     /**
      * @var array
      *
-     * @ORM\Column(name="duree", type="array")
+     * @ORM\Column(name="duree", type="array", nullable=false)
      */
     private $duree = array();
     /**
      * @var array
      *
-     * @ORM\Column(name="alerteRougeJours", type="array")
+     * @ORM\Column(name="alerteRougeJours", type="array", nullable=false)
      */
     private $alerteRouge = array();
 
     /**
      * @var array
      *
-     * @ORM\Column(name="alerteJauneJours", type="array")
+     * @ORM\Column(name="alerteJauneJours", type="array", nullable=false)
      */
     private $alerteJaune = array();
 
     /**
      * @var string
      *
-     * @ORM\Column(name="couleur", type="string")
+     * @ORM\Column(name="couleur", type="string", nullable=false)
      */
     private $couleur;
     /**
      * @var string
      *
-     * @ORM\Column(name="couleurDuFond", type="string")
+     * @ORM\Column(name="couleurDuFond", type="string", nullable=false)
      */
     private $couleurDuFond;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="articleSortie", type="string")
+     * @ORM\Column(name="articleSortie", type="string", nullable=false)
      */
     private $articleSortie;
 
@@ -108,13 +108,14 @@ class Processus
      * @var \SS\FMBBundle\Entity\Articles
      *
      * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Articles")
-     * @ORM\JoinColumn(name="ref_article", referencedColumnName="ref_article")
+     * @ORM\JoinColumn(name="ref_article", referencedColumnName="ref_article", nullable=false)
      */
     private $articleDebut;
     /**
      * @var \SS\FMBBundle\Entity\Phases
      *
      * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Phases")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $phasesProcessus;
 

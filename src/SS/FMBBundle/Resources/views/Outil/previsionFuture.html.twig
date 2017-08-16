@@ -120,7 +120,7 @@
                                                     {{ lot }}
                                                 </td>
                                                 {% for  qte in quantiter %}
-                                                    <td>{{ qte }} u<br> {{ (qte/12)|number_format(2) }} dz</td>
+                                                    <td>{{ qte }} u<br> {{ (qte/12)|number_format(2) }} dz<br> {{ ((qte/12)* 0.533)|number_format(2) }} (dz * 0.533)</td>
                                                 {% endfor %}
                                                 </tr>
                                             {% endfor %}
@@ -176,7 +176,7 @@
                                             </td>
                                             <td>
                                                 {{ article.qteEau }} u<br> {{ (article.qteEau /12)|number_format(2) }}
-                                                dz
+                                                dz<br> {{ ((article.qteEau/12)* 0.533)|number_format(2) }} (dz * 0.533)
                                             </td>
 
                                             </tr>

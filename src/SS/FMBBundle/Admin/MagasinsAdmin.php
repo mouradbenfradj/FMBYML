@@ -15,11 +15,11 @@ class MagasinsAdmin extends Admin
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('idMagasin')->add('libMagasin')->add('abrevMagasin')->add('idTarif')->add('modeVente')->add('actif')->add('idStock');
+        $datagridMapper->add('idMagasin')->add('libMagasin')->add('abrevMagasin')->add('idStock');
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('idMagasin')->add('libMagasin')->add('abrevMagasin')->add('idTarif')->add('modeVente')->add('actif')->add('idStock');
+        $listMapper->addIdentifier('idMagasin')->add('libMagasin')->add('abrevMagasin')->add('idStock');
     }
 }

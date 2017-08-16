@@ -18,28 +18,18 @@ class ArticlesAdmin extends Admin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('libArticle')->add('libTicket')->add('descCourte')->add('descLongue')->add('refArtCateg')->add('modele')->add('paaLastMaj')->add('promo')->add('idValo')->add('valoIndice')->add('lot')->add('composant')->add('variante')->add('gestionSn')->add('dateDebutDispo')->add('dateFinDispo')->add('dispo')->add('dateCreation')->add('dateModification')->add('isAchetable')->add('isVendable');
+        $formMapper->add('libArticle')->add('libTicket')->add('descCourte')->add('descLongue')->add('refArtCateg')->add('modele')->add('paaLastMaj')->add('promo')->add('valoIndice')->add('lot')->add('composant')->add('variante')->add('gestionSn')->add('dateDebutDispo')->add('dateFinDispo')->add('dispo')->add('dateCreation')->add('dateModification')->add('isAchetable')->add('isVendable');
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('refArticle')->add('libArticle')->add('libTicket')->add('idValo')
-            ->add('isVendable')->add('isAchetable')
-            ->add('dateModification')->add('dateCreation')->add('dispo')->add('dateFinDispo')->add('dateDebutDispo')
-            ->add('gestionSn')->add('variante')->add('composant')->add('lot')->add('valoIndice')->add('promo')
-            ->add('modele')->add('paaLastMaj')->add('refArtCateg')->add('descLongue')
-            ->add('descCourte')->add('refInterne')->add('refOem');
+        $datagridMapper->add('refArticle')->add('libArticle');
 
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('refArticle')->add('libArticle')->add('libTicket')->add('idValo')
-            ->add('isVendable')->add('isAchetable')
-            ->add('dateModification')->add('dateCreation')->add('dispo')->add('dateFinDispo')->add('dateDebutDispo')
-            ->add('gestionSn')->add('variante')->add('composant')->add('lot')->add('valoIndice')->add('promo')
-            ->add('modele')->add('paaLastMaj')->add('refArtCateg')->add('descLongue')
-            ->add('descCourte')->add('refInterne')->add('refOem');
+        $listMapper->addIdentifier('refArticle')->add('libArticle');
 
     }
 }

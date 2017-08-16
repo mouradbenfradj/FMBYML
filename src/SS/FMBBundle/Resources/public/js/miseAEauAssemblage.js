@@ -23,19 +23,10 @@ $(document).ready(function () {
         }
     });
 
-    $('input:checkbox').hide();
-    $('.cochage').hide();
-    $('#dateAssemblageChoix').hide();
-    $('#articlechoix').hide();
-    $('#articlelotchoix').hide();
-    $('#articlecyclechoix').hide();
-    $('#quantierchoix').hide();
-    $('input[type="submit"]').hide();
+
     $('#assemblagechoix').ready(function () {
-            chercherDatePreparer($('#assemblagechoix  option:selected').val());
         }
     ).change(function () {
-            chercherDatePreparer($('#assemblagechoix  option:selected').val());
             $("input:checkbox").each(function () {
                 $(this).prop('checked', false);
             });

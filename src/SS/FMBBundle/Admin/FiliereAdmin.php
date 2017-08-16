@@ -46,7 +46,7 @@ class FiliereAdmin extends Admin
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('id')->add('parc')->add('nomFiliere')->add('aireDeTravaille')->add('observation','choice')
+        $listMapper->addIdentifier('id')->add('parc')->add('nomFiliere')->add('aireDeTravaille')
             ->add('segments');
 
     }

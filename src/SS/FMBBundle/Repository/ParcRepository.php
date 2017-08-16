@@ -40,6 +40,21 @@ class ParcRepository extends EntityRepository
         return $qb->getQuery()->getSingleScalarResult();
     }
 
+    public function countTotaleNbrCordeChausseeAE()
+    {
+        $qb = $this->createQueryBuilder('m')
+            ->select('COUNT(sc)')
+            ->join('m.cordes', 'c')
+            ->leftJoin('c.stockscordes', 'sc')
+            ->where('sc.emplacement IS NOT NULL')
+            ->andWhere('sc.dateAssemblage IS NULL')
+            ->andWhere('sc.chaussement = :chaussement')
+            ->andWhere('sc.pret = :pres')
+            ->setParameter('chaussement', true)
+            ->setParameter('pres', false);
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
     public function countTotaleNbrCordeAssembleAEau()
     {
         $qb = $this->createQueryBuilder('m')
@@ -102,6 +117,20 @@ class ParcRepository extends EntityRepository
         return $qb->getQuery()->getSingleScalarResult();
     }
 
+    public function countTotaleNbrLanterneChausserAEau()
+    {
+        $qb = $this->createQueryBuilder('m')
+            ->select('COUNT(sl)')
+            ->join('m.lanternes', 'l')
+            ->leftJoin('l.stockslanternes', 'sl')
+            ->where('sl.emplacement IS NOT NULL')
+            ->andWhere('sl.chaussement = :chaussement')
+            ->andWhere('sl.pret = :pres')
+            ->setParameter('chaussement', true)
+            ->setParameter('pres', false);
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
     public function countTotaleNbrLanternePreparer()
     {
 
@@ -133,6 +162,21 @@ class ParcRepository extends EntityRepository
             ->where('sp.emplacement IS NOT NULL')
             ->andWhere('sp.dateAssemblage IS NULL')
             ->andWhere('sp.pret = :pres')
+            ->setParameter('pres', false);
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function countTotaleNbrPocheChausserAEau()
+    {
+        $qb = $this->createQueryBuilder('m')
+            ->select('COUNT(sp)')
+            ->join('m.poches', 'p')
+            ->leftJoin('p.stockspoches', 'sp')
+            ->where('sp.emplacement IS NOT NULL')
+            ->andWhere('sp.dateAssemblage IS NULL')
+            ->andWhere('sp.chaussement = :chaussement')
+            ->andWhere('sp.pret = :pres')
+            ->setParameter('chaussement', true)
             ->setParameter('pres', false);
         return $qb->getQuery()->getSingleScalarResult();
     }
@@ -215,6 +259,24 @@ class ParcRepository extends EntityRepository
         return $qb->getQuery()->getSingleScalarResult();
     }
 
+    public function countTotaleNbrCordeChausserAEByParc($parc)
+    {
+        $qb = $this->createQueryBuilder('m')
+            ->select('COUNT(sc)')
+            ->join('m.cordes', 'c')
+            ->leftJoin('c.stockscordes', 'sc')
+            ->where('sc.emplacement IS NOT NULL')
+            ->andWhere('sc.dateAssemblage IS NULL')
+            ->andWhere('sc.chaussement = :chaussement')
+            ->andWhere('sc.pret = :pres')
+            ->setParameter('chaussement', true)
+            ->setParameter('pres', false)
+            ->andWhere('c.parc = :parc')
+            ->setParameter('parc', $parc);
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
     public function countTotaleNbrCordeAssembleAEauByParc($parc)
     {
         $qb = $this->createQueryBuilder('m')
@@ -285,6 +347,22 @@ class ParcRepository extends EntityRepository
         return $qb->getQuery()->getSingleScalarResult();
     }
 
+    public function countTotaleNbrLanterneChausserAEauByParc($parc)
+    {
+        $qb = $this->createQueryBuilder('m')
+            ->select('COUNT(sl)')
+            ->join('m.lanternes', 'l')
+            ->leftJoin('l.stockslanternes', 'sl')
+            ->where('sl.emplacement IS NOT NULL')
+            ->andWhere('sl.pret = :pres')
+            ->andWhere('sl.chaussement = :chaussement')
+            ->setParameter('pres', false)
+            ->andWhere('l.parc = :parc')
+            ->setParameter('chaussement', true)
+            ->setParameter('parc', $parc);
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
     public function countTotaleNbrLanternePreparerByParc($parc)
     {
 
@@ -322,6 +400,23 @@ class ParcRepository extends EntityRepository
             ->andWhere('sp.pret = :pres')
             ->setParameter('pres', false)
             ->andWhere('p.parc = :parc')
+            ->setParameter('parc', $parc);
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function countTotaleNbrPocheChausserAEauByParc($parc)
+    {
+        $qb = $this->createQueryBuilder('m')
+            ->select('COUNT(sp)')
+            ->join('m.poches', 'p')
+            ->leftJoin('p.stockspoches', 'sp')
+            ->where('sp.emplacement IS NOT NULL')
+            ->andWhere('sp.dateAssemblage IS NULL')
+            ->andWhere('sp.pret = :pres')
+            ->andWhere('sp.chaussement = :chaussement')
+            ->setParameter('pres', false)
+            ->andWhere('p.parc = :parc')
+            ->setParameter('chaussement', true)
             ->setParameter('parc', $parc);
         return $qb->getQuery()->getSingleScalarResult();
     }

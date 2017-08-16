@@ -28,6 +28,6 @@ class EmplacementAdmin extends Admin
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('id')->add('place')->add('stockscorde')->add('stockslanterne')->add('flotteur')->add('dateDeRemplissage');
+        $listMapper->addIdentifier('id')->add('place')->add('stockscorde')->add('stockspoches')->add('stockslanterne')->add('flotteur')->add('dateDeRemplissage');
     }
 }

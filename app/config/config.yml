@@ -3,6 +3,8 @@ imports:
     - { resource: security.yml }
     - { resource: services.yml }
     - { resource: "@SSFMBBundle/Resources/config/admin.yml" }
+    - { resource: ../../vendor/knplabs/doctrine-behaviors/config/orm-services.yml }
+    - { resource: sonata_timeline.yml }
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
@@ -10,7 +12,7 @@ parameters:
 
 framework:
     #esi:             ~
-    translator:      ~
+    translator:      { fallback: "%locale%" }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -200,20 +202,25 @@ sonata_admin:
     title:                'OYSTERPRO'
     title_logo:           bundles/ssfmb/assets/images/avatar-1.jpg
     templates:
-        dashboard: SSAdminBundle:Core:dashboard.html.twig
-        layout:    SSAdminBundle::standard_layout.html.twig
+        layout: admin/layout.html.twig
+
     options:
         html5_validate:       true
-
+    dashboard:
+        blocks:
+            - { position: center, type: sonata.timeline.block.timeline, settings: { context: SONATA_ADMIN, max_per_page: 25 }}
 sonata_block:
     default_contexts: [cms]
     blocks:
         # enable the SonataAdminBundle block
         sonata.admin.block.admin_list:
             contexts: [admin]
+        sonata.admin.block.search_result:
+            contexts:   [admin]
         sonata.user.block.menu:    # used to display the menu in profile pages
         sonata.user.block.account: # used to display menu option (login option)
         sonata.block.service.text: # used to if you plan to use Sonata user routes
+        sonata.timeline.block.timeline:
 
 
 sonata_user:
@@ -228,3 +235,25 @@ knp_menu:
     templating: false
     # the renderer to use, list is also available by default
     default_renderer: twig
+
+sonata_translation:
+    locales: [en, fr]
+    default_locale: fr
+    # here enable the types you need
+    gedmo:
+        enabled: true
+    knplabs:
+        enabled: false
+    #phpcr:
+    #    enabled: true
+
+
+sonata_intl:
+    timezone:
+        default: Europe/Paris
+        locales:
+            fr:    Europe/Paris
+            en_UK: Europe/London
+        detectors:
+                    - sonata.intl.timezone_detector.user
+                    - sonata.intl.timezone_detector.locale

@@ -35,7 +35,9 @@
                     <div class="card-box">
                         <div class="row">
                             <div class="col-md-12">
-                                <div id="idstockparc" hidden="true">{{ entity.idStock.idStock }}</div>
+                                {% if  entity.idStock %}
+                                    <div id="idstockparc" hidden="true">{{ entity.idStock.idStock }}</div>
+                                {% endif %}
                                 <div id="idparc" hidden="true">{{ entity.idMagasin }}</div>
                                 <h4 class="m-t-0 header-title"><b>Mise à l'eau -> parc {{ entity.abrevMagasin }}</b>
                                 </h4>

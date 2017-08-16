@@ -23,11 +23,11 @@ class StocksAdmin extends Admin
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('libStock')->add('abrevStock')->add('actif');
+        $datagridMapper->add('libStock')->add('abrevStock');
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('libStock')->add('abrevStock')->add('actif');
+        $listMapper->addIdentifier('libStock')->add('abrevStock');
     }
 }

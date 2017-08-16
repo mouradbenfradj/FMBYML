@@ -39,7 +39,9 @@
                                 </h4>
                                 <p class="text-muted m-b-30 font-13">
                                 </p>
-                                <div id="idstockparc" hidden="true">{{ entity.idStock.idStock }}</div>
+                                {% if  entity.idStock %}
+                                    <div id="idstockparc" hidden="true">{{ entity.idStock.idStock }}</div>
+                                {% endif %}
                                 <div id="idparc" hidden="true">{{ entity.idMagasin }}</div>
 
                                 <div class="custom-dd dd" id="nestable_list_2">

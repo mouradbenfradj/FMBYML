@@ -17,12 +17,13 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new SS\FMBBundle\SSFMBBundle(),
-            new SS\UserBundle\SSUserBundle(),
             new SS\AdminBundle\SSAdminBundle(),
 
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new FOS\UserBundle\FOSUserBundle(),
+            new Spy\TimelineBundle\SpyTimelineBundle(),
             new Sonata\CoreBundle\SonataCoreBundle(),
+            new Sonata\TimelineBundle\SonataTimelineBundle(),
             new Sonata\BlockBundle\SonataBlockBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
@@ -31,9 +32,12 @@ class AppKernel extends Kernel
             new Sonata\AdminBundle\SonataAdminBundle(),
             new Sonata\UserBundle\SonataUserBundle('FOSUserBundle'),
             new Application\Sonata\UserBundle\ApplicationSonataUserBundle(),
+            new Application\Sonata\TimelineBundle\ApplicationSonataTimelineBundle(),
 
-            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle()
-,
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+            new Sonata\TranslationBundle\SonataTranslationBundle(),
+            new Sonata\IntlBundle\SonataIntlBundle(),
+
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

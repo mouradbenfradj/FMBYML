@@ -28,22 +28,27 @@
                                 </h4>
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <div id="idstockparc" hidden="true">{{ entity.idStock.idStock }}</div>
+                                        {% if  entity.idStock %}
+                                            <div id="idstockparc" hidden="true">{{ entity.idStock.idStock }}</div>
+                                        {% endif %}
                                         <div id="idparc" hidden="true">{{ entity.idMagasin }}</div>
                                         {{ entity.abrevMagasin }}
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-1"><label class="control-label">Article</label></div>
-                                    <div class="col-md-1"><label class="control-label"  style="color: red">0- TL HC RET</label></div>
+                                    <div class="col-md-1"><label class="control-label" style="color: red">0- TL HC
+                                            RET</label></div>
                                     <div class="col-md-1"><label class="control-label">1- TL HC VS</label></div>
                                     <div class="col-md-1"><label class="control-label">2- TL HC - MTH</label></div>
                                     <div class="col-md-1"><label class="control-label">3- TL HC - POCHES</label></div>
                                     <div class="col-md-1"><label class="control-label">4- TL HC - MTE</label></div>
-                                    <div class="col-md-2"><label class="control-label" style="color: blue">5- TL HC - TRAIT</label></div>
-                                    <div class="col-md-2"><label class="control-label" >6- AUTER HC - PERTE & VOL</label>
+                                    <div class="col-md-2"><label class="control-label" style="color: blue">5- TL HC -
+                                            TRAIT</label></div>
+                                    <div class="col-md-2"><label class="control-label">6- AUTER HC - PERTE & VOL</label>
                                     </div>
-                                    <div class="col-md-2"><label class="control-label" style="color: blue">7- SOLDE HC NON TRAIT</label>
+                                    <div class="col-md-2"><label class="control-label" style="color: blue">7- SOLDE HC
+                                            NON TRAIT</label>
                                     </div>
                                 </div>
                                 {% for stock in stocksnvirtuel %}

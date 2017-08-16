@@ -64,7 +64,6 @@ class AssemblageController extends Controller
             $formulaire = $cordeCompare;
             $session = new Session();
             $session->set('assemblage', $cordeCompare);
-
             return $this->render(
                 '@SSFMB/MAE/Assemblage/formulaireAssemble.html.twig',
                 array(
@@ -81,6 +80,7 @@ class AssemblageController extends Controller
 
     public function miseAEauAssemblageAction(Request $request)
     {
+
         if ($this->container->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN')) {
             $em = $this->getDoctrine()->getManager();
             $session = new Session();
@@ -151,6 +151,7 @@ class AssemblageController extends Controller
                 $em->flush();
                 return $this->redirectToRoute('ssfmb_misaaeaucorde');
             }
+
             foreach ($assemblages as $valeur) {
                 $formulaire[$valeur->getCordeAssemblage()->getCorde()->getId()] = $valeur->getCordeAssemblage();
             }
