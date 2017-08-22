@@ -2,7 +2,8 @@
     {% for idemp,emplacement in flotteur %}
         {% if not loop.first %}
             <div class="col-xs-1 col-sm-1 col-md-1">
-                {% if emplacement.stockscorde == null and emplacement.stockslanterne == null and emplacement.stockspoche == null %}
+                {% if emplacement.stockscorde == null and
+                emplacement.stockslanterne == null and emplacement.stockspoche == null %}
                     <div style="color: red"> {{ emplacement.place }}</div>
                 {% elseif emplacement.stockscorde != null %}
                     {% include "SSFMBBundle:Include:suivitEtatCordeInclude.html.twig" %}

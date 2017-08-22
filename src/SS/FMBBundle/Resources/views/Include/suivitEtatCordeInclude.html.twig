@@ -6,10 +6,11 @@
        href="">
         {% if emplacement.chausc %}
             <div style="color: {{ emplacement.couleur }};background-color: {{ emplacement.couleurDuFond }}"
-                 class="emplacement LblClignotant">{{ emplacement.place }}</div>
+                 class="emplacement LblClignotant">
+                {% if emplacement.dateAsmblg  %}p{% else %}{{ emplacement.place }} {% endif %}</div>
         {% else %}
             <div style="color: {{ emplacement.couleur }};background-color: {{ emplacement.couleurDuFond }}"
-                 class="emplacement">{{ emplacement.place }}</div>
+                 class="emplacement">{% if emplacement.dateAsmblg  %}p{% else %}{{ emplacement.place }} {% endif %}</div>
         {% endif %}
     </a>
 </b>

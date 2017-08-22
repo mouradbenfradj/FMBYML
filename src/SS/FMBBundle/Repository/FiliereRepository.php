@@ -68,6 +68,7 @@ class FiliereRepository extends EntityRepository
             ->addSelect('spchbs.dateDeMAETransfert as maept')
             ->addSelect('lan.dateDeMAETransfert as maelt')
             ->addSelect('c.quantiter as qtec')
+            ->addSelect('c.dateAssemblage as dateAssemblage')
             ->addSelect('poch.quantite as qte')
 
             ->join('fi.segments', 's')

@@ -279,6 +279,12 @@ class FiliereController extends Controller
             } else {
                 $abp = "error test ";
             }
+            if($item['dateAssemblage'])
+            {
+                $assemblage = $item['dateAssemblage'];
+            }else{
+                $assemblage = null;
+            }
             $filieres[$item['fiId']][$item['sId']][$item['flId']][$item['empId']] =
                 array(
                     'place' => $item['place'],
@@ -292,6 +298,7 @@ class FiliereController extends Controller
                     'dateDTL' => $item['maelt'],
                     'dateDTC' => $item['maect'],
                     'dateDTP' => $item['maept'],
+                    'dateAsmblg' => $assemblage,
                     'dateDeRemplissage' => $item['dateDeRemplissage'],
                     'stockscorde' => $item['sc'],
                     'stockslanterne' => $item['sl'],
