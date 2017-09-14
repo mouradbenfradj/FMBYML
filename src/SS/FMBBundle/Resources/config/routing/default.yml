@@ -90,6 +90,11 @@ previsionFuture:
     defaults: { _controller: SSFMBBundle:Menu/Outil/PrevisionSortie:previsionSortie}
 
 
+previsionFutureCourbe:
+    path:     /previsionSortieCourbe
+    defaults: { _controller: SSFMBBundle:Menu/Outil/PrevisionSortieCourbe:previsionSortieCourbe}
+
+
 
 mapagedecorrection:
     path:     /correction

@@ -49,6 +49,8 @@ class Builder implements ContainerAwareInterface
             $menu['Operation']['Préparation']->addChild('preparer corde', array('route' => 'ssfmb_preparationcorde'));
             $menu['Operation']['Préparation']->addChild('preparer poche', array('route' => 'ssfmb_preparationpoche'));
             $menu['Operation']['Assemblage']->addChild('Poche a corde', array('route' => 'ssfmb_assemblage'));
+            $menu['Outil']['Prévision des sorties']->addChild('tableau', array('route' => 'previsionFuture'));
+            $menu['Outil']['Prévision des sorties']->addChild('courbe', array('route' => 'previsionFutureCourbe'));
         }
         //   $menu->setChildrenAttribute('class', 'nav navbar-nav');
         $em = $this->container->get('doctrine')->getManager();
@@ -129,7 +131,7 @@ class Builder implements ContainerAwareInterface
         $menu['Processus']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
         $menu['Outil']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
         $menu['Outil']['Historique des operations']->setAttribute('class', 'has-submenu')->setUri("/app_dev.php/historiqueOperation")->setChildrenAttribute('class', 'submenu');
-        $menu['Outil']['Prévision des sorties']->setAttribute('class', 'has-submenu')->setUri("/app_dev.php/previsionSortie")->setChildrenAttribute('class', 'submenu');
+        $menu['Outil']['Prévision des sorties']->setAttribute('class', 'has-submenu')->setUri("#")->setChildrenAttribute('class', 'submenu');
 
 
         if ($sc->isGranted('ROLE_SUPER_ADMIN')) {
