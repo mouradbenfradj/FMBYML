@@ -74,7 +74,17 @@ class PrevisionSortieCourbeController extends Controller
                                     $magasine = $classe->getPochesbs()->getParc();
                                     $cycle = $processusImplementation->processusArticle($objet->getProcessus(), $datePrevision, $objet->getDateDeMiseAEau())->getAbrevProcessus() . '' . $processusImplementation->cycleArticle($objet->getProcessus(), $datePrevision, $objet->getDateDeMiseAEau());
                                 }
-
+                                if ($request->get('mesure') == 'piece') {
+                                   if ($request->get('rendu') == '53') {
+                                        $quantiter = $quantiter  * 0.533;
+                                    }
+                                } else if ($request->get('mesure') == 'duozaine') {
+                                    if ($request->get('rendu') == '100') {
+                                        $quantiter = $quantiter / 12;
+                                    } elseif ($request->get('rendu') == '53') {
+                                        $quantiter = ($quantiter / 12) * 0.533;
+                                    }
+                                }
                                 if (!isset($tableauPrevision[$magasine->getIdMagasin()][$it])) {
                                     $tableauPrevision[$magasine->getIdMagasin()][$it] = array('nomParc' => $magasine->getAbrevMagasin(), 'cycle' => array());
                                 }
@@ -104,22 +114,23 @@ class PrevisionSortieCourbeController extends Controller
                     } while ($datePrevision <= $datePrevisionVoulut);
                     $ittest = 0;
                     for ($ittest; $ittest < $it; $ittest++) {
-                       // foreach ($tableauPrevision[intval($parcCherche)][$ittest]['cycle'] as $key => $value) {
-                            //var_dump($tableauPrevision[intval($parcCherche)][$ittest]['cycle']);
-                           // var_dump($key);
-                            foreach ($cycleKey as $keycycle) {
-                                if (!isset($tableauPrevision[$magasine->getIdMagasin()][$ittest]['cycle'][$keycycle])) {
-                                    $tableauPrevision[$magasine->getIdMagasin()][$ittest]['cycle'][$keycycle] = array('article' => array());
-                                }
+                        // foreach ($tableauPrevision[intval($parcCherche)][$ittest]['cycle'] as $key => $value) {
+                        //var_dump($tableauPrevision[intval($parcCherche)][$ittest]['cycle']);
+                        // var_dump($key);
+                        foreach ($cycleKey as $keycycle) {
+                            if (!isset($tableauPrevision[$magasine->getIdMagasin()][$ittest]['cycle'][$keycycle])) {
+                                $tableauPrevision[$magasine->getIdMagasin()][$ittest]['cycle'][$keycycle] = array('article' => array());
                             }
-                   //     }
+                        }
+                        //     }
                     }
                     $ittest = 0;
                     for ($ittest; $ittest < $it; $ittest++) {
-                         foreach ($tableauPrevision[intval($parcCherche)][$ittest]['cycle'] as $key => $value) {
-                        //var_dump($tableauPrevision[intval($parcCherche)][$ittest]['cycle']);
+                        foreach ($tableauPrevision[intval($parcCherche)][$ittest]['cycle'] as $key => $value) {
+                            //var_dump($tableauPrevision[intval($parcCherche)][$ittest]['cycle']);
 
-                    }}
+                        }
+                    }
                     break;
                 case 1 :
                     foreach ($tableauPrevisionSelect as $objet) {

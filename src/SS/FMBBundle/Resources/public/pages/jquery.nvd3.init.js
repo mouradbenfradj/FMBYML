@@ -40,8 +40,6 @@ function createCourbe(result) {
                 );
             }
 
-
-            console.log(ret);
             return ret;
         }
 
@@ -51,7 +49,7 @@ function createCourbe(result) {
             lineChart.useInteractiveGuideline(true);
             for (var value in result) {
                 var taille = result[value].length;
-                lineChart.forceX(([0, 0, taille])-1);
+                lineChart.forceX([0, 0, (taille-1)]);
                 d3.select('.line-chart svg').attr('perserveAspectRatio', 'xMinYMid').datum(courbe(value)).transition().duration(500).call(lineChart);
             }
             nv.utils.windowResize(lineChart.update);

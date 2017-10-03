@@ -21,7 +21,7 @@
                             <div class="col-sm-12 col-lg-16 ">
                                 <form role="form" method="post">
                                     <div class="row">
-                                        <div class="col-md-7">
+                                        <div class="col-md-auto">
                                             <div class="input-group">
                                                 <input type="text" required name="datePrevision" class="form-control"
                                                        placeholder="mm/dd/yyyy" id="datepicker">
@@ -29,10 +29,10 @@
                                                             class="icon-calender"></i></span>
                                             </div>
                                         </div>
-                                        <div class="col-md-1">
+                                        <div class="col-md-auto">
                                             <label for="operationCherche">Parc</label>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-auto">
 
                                             <select name="parcCherche" id="parcCherche" class="form-control">
                                                 {% for  parc in parcs %}
@@ -40,7 +40,25 @@
                                                 {% endfor %}
                                             </select>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-auto">
+                                            <label for="mesure">Mesure</label>
+                                        </div>
+                                        <div class="col-md-auto">
+                                            <select name="mesure" id="mesure" class="form-control">
+                                                <option value="piece">pièces</option>
+                                                <option value="duozaine">douzaines</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-auto">
+                                            <label for="rendu">rendu</label>
+                                        </div>
+                                        <div class="col-md-auto">
+                                            <select name="rendu" id="rendu" class="form-control">
+                                                <option value="100">100%</option>
+                                                <option value="53">53%</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-auto">
                                             <button type="submit" class="btn btn-white"><i class="fa fa-search"></i>
                                             </button>
                                         </div>
@@ -64,10 +82,7 @@
                     <div class="card-box">
                         <h4 class="m-t-0 m-b-20 header-title"><b>{{ parc[0]['nomParc'] }}</b></h4>
                         <div>
-                            <p>pour information</p>
                             <p> 0 définie la date de ce jours c'est a dire {{ "now"|date("Y-m-d") }}</p>
-                            <p>la periode de calcule sur l'axe x est de 1 mois</p>
-                            <p>l'axe y définie la quantitée en unitié cumulée pour chaque cycle </p></div>
                         <div class="line-chart">
                             <svg style="height:400px;width:100%"></svg>
                         </div>
