@@ -14,8 +14,13 @@ class StatistiqueController extends Controller
             $parc = $em->getRepository('SSFMBBundle:Magasins')->findAll();
             $nbfiliere = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrFiliere();
             $nbCordeP = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrCordePreparer();
+            $nbCordeHuitreP = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrCordeHuitrePreparer();
+            $nbCordeMouleP = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrCordeMoulePreparer();
             $nbCordeAs = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrCordeAssemble();
             $nbCordeAe = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrCordeAEau();
+            $nbCordeHuitreAe = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrCordeHuitreAEau();
+            $nbCordeMouleAe = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrCordeHMoulesAEau();
+
             $nbCordeChausser = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrCordeChausseeAE();
             $nbCordeAsAe = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrCordeAssembleAEau();
             $nbCordeES = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrCordeEnStock();
@@ -38,8 +43,12 @@ class StatistiqueController extends Controller
             $parc = $em->getRepository('SSFMBBundle:Magasins')->findOneByIdMagasin($request->get('idparc'));
             $nbfiliere = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrFiliereByParc($parc);
             $nbCordeP = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrCordePreparerByParc($parc);
+            $nbCordeHuitreP = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrCordeHuitrePreparerByParc($parc);
+            $nbCordeMouleP = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrCordeMoulePreparerByParc($parc);
             $nbCordeAs = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrCordeAssembleByParc($parc);
             $nbCordeAe = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrCordeAEauByParc($parc);
+            $nbCordeHuitreAe = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrCordeHuitreAEauByParc($parc);
+            $nbCordeMouleAe = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrCordeMouleAEauByParc($parc);
             $nbCordeChausser = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrCordeChausserAEByParc($parc);
 
             $nbCordeAsAe = $em->getRepository('SSFMBBundle:Magasins')->countTotaleNbrCordeAssembleAEauByParc($parc);
@@ -70,7 +79,11 @@ class StatistiqueController extends Controller
                 'nbrCordeAsAe' => ($nbCordeAsAe),
                 'nbrCordeChausser' => $nbCordeChausser,
                 'nbrcordep' => ($nbCordeP),
+                'nbCordeHuitreP' => ($nbCordeHuitreP),
+                'nbCordeMouleP' => ($nbCordeMouleP),
                 'nbrcordeae' => ($nbCordeAe),
+                'nbrordehuitreae' => ($nbCordeHuitreAe),
+                'nbcordemouleae' => ($nbCordeMouleAe),
                 'nbrlanterne' => ($nbLanterne),
                 'nbrlanternev' => ($nbLanterneES),
                 'nbrlanternep' => ($nbLanterneP),

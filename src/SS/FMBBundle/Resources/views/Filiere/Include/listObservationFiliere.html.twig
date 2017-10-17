@@ -1,6 +1,9 @@
 <table valign="top" class="table table-striped m-0" border="1">
-<thead>
-    <tr><th>date de saisie</th><th>observation</th></tr>
+    <thead>
+    <tr>
+        <th>date de saisie</th>
+        <th>observation</th>
+    </tr>
     </thead>
     {% for id, observation in observations %}
         {% if id is divisible by(2) %}
@@ -18,7 +21,7 @@
         {% endif %}
     {% else %}
         <tr>
-            <td> pas d'observation</td>
+            <td colspan="2"> pas d'observation</td>
         </tr>
     {% endfor %}
 </table>

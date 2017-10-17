@@ -40,6 +40,34 @@ class ParcRepository extends EntityRepository
         return $qb->getQuery()->getSingleScalarResult();
     }
 
+    public function countTotaleNbrCordeHuitreAEau()
+    {
+        $qb = $this->createQueryBuilder('m')
+            ->select('COUNT(sc)')
+            ->join('m.cordes', 'c')
+            ->leftJoin('c.stockscordes', 'sc')
+            ->where('sc.emplacement IS NOT NULL')
+            ->andWhere('sc.dateAssemblage IS NULL')
+            ->andWhere('sc.pret = :pres')
+            ->andWhere("c.nomCorde LIKE '%CORDE H%'")
+            ->setParameter('pres', false);
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function countTotaleNbrCordeHMoulesAEau()
+    {
+        $qb = $this->createQueryBuilder('m')
+            ->select('COUNT(sc)')
+            ->join('m.cordes', 'c')
+            ->leftJoin('c.stockscordes', 'sc')
+            ->where('sc.emplacement IS NOT NULL')
+            ->andWhere('sc.dateAssemblage IS NULL')
+            ->andWhere('sc.pret = :pres')
+            ->andWhere("c.nomCorde LIKE '%CORDE M%'")
+            ->setParameter('pres', false);
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
     public function countTotaleNbrCordeChausseeAE()
     {
         $qb = $this->createQueryBuilder('m')
@@ -78,6 +106,36 @@ class ParcRepository extends EntityRepository
             ->where('sc.emplacement IS NULL')
             ->andWhere('sc.dateAssemblage IS NULL')
             ->andWhere('sc.pret = :pres')
+            ->setParameter('pres', false);
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function countTotaleNbrCordeHuitrePreparer()
+    {
+
+        $qb = $this->createQueryBuilder('m')
+            ->select('COUNT(sc)')
+            ->join('m.cordes', 'c')
+            ->leftJoin('c.stockscordes', 'sc')
+            ->where('sc.emplacement IS NULL')
+            ->andWhere('sc.dateAssemblage IS NULL')
+            ->andWhere('sc.pret = :pres')
+            ->andWhere("c.nomCorde LIKE '%CORDE H%'")
+            ->setParameter('pres', false);
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function countTotaleNbrCordeMoulePreparer()
+    {
+
+        $qb = $this->createQueryBuilder('m')
+            ->select('COUNT(sc)')
+            ->join('m.cordes', 'c')
+            ->leftJoin('c.stockscordes', 'sc')
+            ->where('sc.emplacement IS NULL')
+            ->andWhere('sc.dateAssemblage IS NULL')
+            ->andWhere('sc.pret = :pres')
+            ->andWhere("c.nomCorde LIKE '%CORDE M%'")
             ->setParameter('pres', false);
         return $qb->getQuery()->getSingleScalarResult();
     }
@@ -187,8 +245,9 @@ class ParcRepository extends EntityRepository
             ->select('COUNT(sp)')
             ->join('m.poches', 'p')
             ->leftJoin('p.stockspoches', 'sp')
-            ->where('sp.emplacement IS NOT NULL')
+            ->where('sp.cordeAssemblage IS NOT NULL')
             ->andWhere('sp.dateAssemblage IS NOT NULL')
+            ->andWhere('sp.dateDeMiseAEau IS NOT NULL')
             ->andWhere('sp.pret = :pres')
             ->setParameter('pres', false);
         return $qb->getQuery()->getSingleScalarResult();
@@ -259,6 +318,40 @@ class ParcRepository extends EntityRepository
         return $qb->getQuery()->getSingleScalarResult();
     }
 
+    public function countTotaleNbrCordeHuitreAEauByParc($parc)
+    {
+        $qb = $this->createQueryBuilder('m')
+            ->select('COUNT(sc)')
+            ->join('m.cordes', 'c')
+            ->leftJoin('c.stockscordes', 'sc')
+            ->where('sc.emplacement IS NOT NULL')
+            ->andWhere('sc.dateAssemblage IS NULL')
+            ->andWhere('sc.pret = :pres')
+            ->setParameter('pres', false)
+            ->andWhere('c.parc = :parc')
+            ->andWhere("c.nomCorde LIKE '%CORDE H%'")
+            ->setParameter('parc', $parc);
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function countTotaleNbrCordeMouleAEauByParc($parc)
+    {
+        $qb = $this->createQueryBuilder('m')
+            ->select('COUNT(sc)')
+            ->join('m.cordes', 'c')
+            ->leftJoin('c.stockscordes', 'sc')
+            ->where('sc.emplacement IS NOT NULL')
+            ->andWhere('sc.dateAssemblage IS NULL')
+            ->andWhere('sc.pret = :pres')
+            ->setParameter('pres', false)
+            ->andWhere('c.parc = :parc')
+            ->andWhere("c.nomCorde LIKE '%CORDE M%'")
+            ->setParameter('parc', $parc);
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
     public function countTotaleNbrCordeChausserAEByParc($parc)
     {
         $qb = $this->createQueryBuilder('m')
@@ -304,6 +397,38 @@ class ParcRepository extends EntityRepository
             ->andWhere('sc.dateAssemblage IS NULL')
             ->setParameter('pres', false)
             ->andWhere('c.parc = :parc')
+            ->setParameter('parc', $parc);
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function countTotaleNbrCordeHuitrePreparerByParc($parc)
+    {
+        $qb = $this->createQueryBuilder('m')
+            ->select('COUNT(sc)')
+            ->join('m.cordes', 'c')
+            ->leftJoin('c.stockscordes', 'sc')
+            ->where('sc.emplacement IS NULL')
+            ->andWhere('sc.pret = :pres')
+            ->andWhere('sc.dateAssemblage IS NULL')
+            ->setParameter('pres', false)
+            ->andWhere('c.parc = :parc')
+            ->andWhere("c.nomCorde LIKE '%CORDE H%'")
+            ->setParameter('parc', $parc);
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function countTotaleNbrCordeMoulePreparerByParc($parc)
+    {
+        $qb = $this->createQueryBuilder('m')
+            ->select('COUNT(sc)')
+            ->join('m.cordes', 'c')
+            ->leftJoin('c.stockscordes', 'sc')
+            ->where('sc.emplacement IS NULL')
+            ->andWhere('sc.pret = :pres')
+            ->andWhere('sc.dateAssemblage IS NULL')
+            ->setParameter('pres', false)
+            ->andWhere('c.parc = :parc')
+            ->andWhere("c.nomCorde LIKE '%CORDE M%'")
             ->setParameter('parc', $parc);
         return $qb->getQuery()->getSingleScalarResult();
     }
@@ -427,8 +552,9 @@ class ParcRepository extends EntityRepository
             ->select('COUNT(sp)')
             ->join('m.poches', 'p')
             ->leftJoin('p.stockspoches', 'sp')
-            ->where('sp.emplacement IS NOT NULL')
+            ->where('sp.cordeAssemblage IS NOT NULL')
             ->andWhere('sp.dateAssemblage IS NOT NULL')
+            ->andWhere('sp.dateDeMiseAEau IS NOT NULL')
             ->andWhere('sp.pret = :pres')
             ->setParameter('pres', false)
             ->andWhere('p.parc = :parc')

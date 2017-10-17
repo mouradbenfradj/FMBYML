@@ -33,7 +33,7 @@ class StocksArticlesSn
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="SS\FMBBundle\Entity\StocksArticles")
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\StocksArticles", inversedBy="stocksArticlesSn")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="ref_stock_article", referencedColumnName="ref_stock_article")
      * })

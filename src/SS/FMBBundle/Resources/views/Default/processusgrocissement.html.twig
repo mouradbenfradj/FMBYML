@@ -104,9 +104,11 @@
                                                                                                     u<br>
                                                                                                     {{ (cycle.quantiterLanterne /12)|number_format(2, ',', '.') }}
                                                                                                     dz<br>
-                                                                                                    {{ ((cycle.quantiterLanterne /12)* 0.533)|number_format(2, ',', '.') }}(dz * 0.533)
+                                                                                                    {{ ((cycle.quantiterLanterne /12)* 0.533)|number_format(2, ',', '.') }}
+                                                                                                    (dz * 0.533)
                                                                                                     <br>
-                                                                                                    {{ cycle.nombreLanterne }}lanterne
+                                                                                                    {{ cycle.nombreLanterne }}
+                                                                                                    lanterne
                                                                                                 </p>
                                                                                             {% endif %}
                                                                                             {% if(cycle.quantiterCorde  + cycle.nombreCorde ) != 0 %}
@@ -127,7 +129,8 @@
                                                                                                     u<br>
                                                                                                     {{ (cycle.quantiterCorde/12)|number_format(2, ',', '.') }}
                                                                                                     dz<br>
-                                                                                                    {{ ((cycle.quantiterCorde /12)* 0.533)|number_format(2, ',', '.') }}(dz * 0.533)<br>
+                                                                                                    {{ ((cycle.quantiterCorde /12)* 0.533)|number_format(2, ',', '.') }}
+                                                                                                    (dz * 0.533)<br>
                                                                                                     {{ cycle.nombreCorde }}
                                                                                                     corde
                                                                                                 </p>
@@ -150,11 +153,95 @@
                                                                                                     u<br>
                                                                                                     {{ (cycle.quantiterPoche/12)|number_format(2, ',', '.') }}
                                                                                                     dz<br>
-                                                                                                    {{ ((cycle.quantiterPoche /12)* 0.533)|number_format(2, ',', '.') }}(dz * 0.533)<br>
+                                                                                                    {{ ((cycle.quantiterPoche /12)* 0.533)|number_format(2, ',', '.') }}
+                                                                                                    (dz * 0.533)<br>
                                                                                                     {{ cycle.nombrePoche }}
                                                                                                     poche
                                                                                                 </p>
                                                                                             {% endif %}
+                                                                                            {% set datemincordemae = null %}
+                                                                                            {% set datemaxcordemae = null %}
+                                                                                            {% set dateminlanternemae = null %}
+                                                                                            {% set datemaxlanternemae = null %}
+                                                                                            {% set dateminpochemae = null %}
+                                                                                            {% set datemaxpochemae = null %}
+                                                                                            {% for idFiliere, filiere in cycle.filiere %}
+                                                                                                {% for idSegment,segment in filiere.segment %}
+                                                                                                    {% for idFlotteur, flotteur in segment.flotteur %}
+                                                                                                        {% for idEmplacement,emplacement in flotteur.emplacement %}
+                                                                                                            {% if emplacement.stockslanterne %}
+                                                                                                                {% if dateminlanternemae %}
+                                                                                                                    {% if datemaxlanternemae < emplacement.dateDeRemplissage %}
+                                                                                                                        {% set datemaxlanternemae = emplacement.dateDeRemplissage %}
+                                                                                                                    {% elseif dateminlanternemae > emplacement.dateDeRemplissage %}
+                                                                                                                        {% set dateminlanternemae = emplacement.dateDeRemplissage %}
+                                                                                                                    {% endif %}
+                                                                                                                {% else %}
+                                                                                                                    {% set dateminlanternemae = emplacement.dateDeRemplissage %}
+                                                                                                                    {% set datemaxlanternemae = emplacement.dateDeRemplissage %}
+                                                                                                                {% endif %}
+                                                                                                            {% elseif emplacement.stockscorde %}
+                                                                                                                {% if emplacement.stockscorde.dateAssemblage %}
+                                                                                                                    {% if dateminpochemae %}
+                                                                                                                        {% if datemaxpochemae < emplacement.dateDeRemplissage %}
+                                                                                                                            {% set datemaxpochemae = emplacement.dateDeRemplissage %}
+                                                                                                                        {% elseif dateminpochemae > emplacement.dateDeRemplissage %}
+                                                                                                                            {% set dateminpochemae = emplacement.dateDeRemplissage %}
+                                                                                                                        {% endif %}
+                                                                                                                    {% else %}
+                                                                                                                        {% set dateminpochemae = emplacement.dateDeRemplissage %}
+                                                                                                                        {% set datemaxpochemae = emplacement.dateDeRemplissage %}
+                                                                                                                    {% endif %}
+                                                                                                                {% else %}
+                                                                                                                    {% if datemincordemae %}
+                                                                                                                        {% if datemaxcordemae < emplacement.dateDeRemplissage %}
+                                                                                                                            {% set datemaxcordemae = emplacement.dateDeRemplissage %}
+                                                                                                                        {% elseif datemincordemae > emplacement.dateDeRemplissage %}
+                                                                                                                            {% set datemincordemae = emplacement.dateDeRemplissage %}
+                                                                                                                        {% endif %}
+                                                                                                                    {% else %}
+                                                                                                                        {% set datemincordemae = emplacement.dateDeRemplissage %}
+                                                                                                                        {% set datemaxcordemae = emplacement.dateDeRemplissage %}
+                                                                                                                    {% endif %}
+                                                                                                                {% endif %}
+                                                                                                            {% endif %}
+                                                                                                        {% endfor %}
+                                                                                                    {% endfor %}
+                                                                                                {% endfor %}
+                                                                                            {% endfor %}
+                                                                                            {% if dateminlanternemae %}
+                                                                                                <p>
+                                                                                                MIN
+                                                                                                date
+                                                                                                MAE
+                                                                                                Lanterne: {{ dateminlanternemae|date('Y-m-d') }}
+                                                                                                <->
+                                                                                                MAX
+                                                                                                date
+                                                                                                MAE
+                                                                                                Lanterne: {{ datemaxlanternemae|date('Y-m-d') }}</p>{% endif %}
+                                                                                            {% if datemincordemae %}
+                                                                                                <p>
+                                                                                                MIN
+                                                                                                date
+                                                                                                MAE
+                                                                                                Corde: {{ datemincordemae|date('Y-m-d') }}
+                                                                                                <->
+                                                                                                MAX
+                                                                                                date
+                                                                                                MAE
+                                                                                                Corde: {{ datemaxcordemae|date('Y-m-d') }}</p>{% endif %}
+                                                                                            {% if dateminpochemae %}
+                                                                                                <p>
+                                                                                                MIN
+                                                                                                date
+                                                                                                MAE
+                                                                                                Poche: {{ dateminpochemae|date('Y-m-d') }}
+                                                                                                <->
+                                                                                                MAX
+                                                                                                date
+                                                                                                MAE
+                                                                                                Poche: {{ datemaxpochemae|date('Y-m-d') }}</p>{% endif %}
                                                                                         </td>
                                                                                         <td>
                                                                                             <div class="custom-dd dd"
@@ -173,7 +260,10 @@
                                                                                                                         lanterne</p>
                                                                                                                     <p>{{ (filiere.quantiterLanterne /12)|number_format(2, ',', '.') }}
                                                                                                                         dz</p>
-                                                                                                                    <p>{{ ((cycle.quantiterLanterne /12)* 0.533)|number_format(2, ',', '.') }}(dz * 0.533)</p>
+                                                                                                                    <p>{{ ((cycle.quantiterLanterne /12)* 0.533)|number_format(2, ',', '.') }}
+                                                                                                                        (dz
+                                                                                                                        *
+                                                                                                                        0.533)</p>
                                                                                                                 {% endif %}
                                                                                                                 {% if(filiere.quantiterCorde  + filiere.nombreCorde ) != 0 %}
                                                                                                                     <p>{{ filiere.quantiterCorde|number_format(0, ',', '.') }}
@@ -182,7 +272,10 @@
                                                                                                                         corde</p>
                                                                                                                     <p>{{ (filiere.quantiterCorde/12)|number_format(2, ',', '.') }}
                                                                                                                         dz</p>
-                                                                                                                    <p>{{ ((cycle.quantiterCorde /12)* 0.533)|number_format(2, ',', '.') }}(dz * 0.533)</p>
+                                                                                                                    <p>{{ ((cycle.quantiterCorde /12)* 0.533)|number_format(2, ',', '.') }}
+                                                                                                                        (dz
+                                                                                                                        *
+                                                                                                                        0.533)</p>
                                                                                                                 {% endif %}
                                                                                                                 {% if(filiere.quantiterPoche  + filiere.nombrePoche ) != 0 %}
                                                                                                                     <p>{{ filiere.quantiterPoche|number_format(0, ',', '.') }}
@@ -191,10 +284,93 @@
                                                                                                                         poche</p>
                                                                                                                     <p>{{ (filiere.quantiterPoche/12)|number_format(2, ',', '.') }}
                                                                                                                         dz</p>
-                                                                                                                    <p>{{ ((cycle.quantiterPoche /12)* 0.533)|number_format(2, ',', '.') }}(dz * 0.533)</p>
+                                                                                                                    <p>{{ ((cycle.quantiterPoche /12)* 0.533)|number_format(2, ',', '.') }}
+                                                                                                                        (dz
+                                                                                                                        *
+                                                                                                                        0.533)</p>
                                                                                                                 {% endif %}
+                                                                                                                {% set datemincordemae = null %}
+                                                                                                                {% set datemaxcordemae = null %}
+                                                                                                                {% set dateminlanternemae = null %}
+                                                                                                                {% set datemaxlanternemae = null %}
+                                                                                                                {% set dateminpochemae = null %}
+                                                                                                                {% set datemaxpochemae = null %}
+                                                                                                                {% for idSegment,segment in filiere.segment %}
+                                                                                                                    {% for idFlotteur, flotteur in segment.flotteur %}
+                                                                                                                        {% for idEmplacement,emplacement in flotteur.emplacement %}
+                                                                                                                            {% if emplacement.stockslanterne %}
+                                                                                                                                {% if dateminlanternemae %}
+                                                                                                                                    {% if datemaxlanternemae < emplacement.dateDeRemplissage %}
+                                                                                                                                        {% set datemaxlanternemae = emplacement.dateDeRemplissage %}
+                                                                                                                                    {% elseif dateminlanternemae > emplacement.dateDeRemplissage %}
+                                                                                                                                        {% set dateminlanternemae = emplacement.dateDeRemplissage %}
+                                                                                                                                    {% endif %}
+                                                                                                                                {% else %}
+                                                                                                                                    {% set dateminlanternemae = emplacement.dateDeRemplissage %}
+                                                                                                                                    {% set datemaxlanternemae = emplacement.dateDeRemplissage %}
+                                                                                                                                {% endif %}
+                                                                                                                            {% elseif emplacement.stockscorde %}
+                                                                                                                                {% if emplacement.stockscorde.dateAssemblage %}
+                                                                                                                                    {% if dateminpochemae %}
+                                                                                                                                        {% if datemaxpochemae < emplacement.dateDeRemplissage %}
+                                                                                                                                            {% set datemaxpochemae = emplacement.dateDeRemplissage %}
+                                                                                                                                        {% elseif dateminpochemae > emplacement.dateDeRemplissage %}
+                                                                                                                                            {% set dateminpochemae = emplacement.dateDeRemplissage %}
+                                                                                                                                        {% endif %}
+                                                                                                                                    {% else %}
+                                                                                                                                        {% set dateminpochemae = emplacement.dateDeRemplissage %}
+                                                                                                                                        {% set datemaxpochemae = emplacement.dateDeRemplissage %}
+                                                                                                                                    {% endif %}
+                                                                                                                                {% else %}
+                                                                                                                                    {% if datemincordemae %}
+                                                                                                                                        {% if datemaxcordemae < emplacement.dateDeRemplissage %}
+                                                                                                                                            {% set datemaxcordemae = emplacement.dateDeRemplissage %}
+                                                                                                                                        {% elseif datemincordemae > emplacement.dateDeRemplissage %}
+                                                                                                                                            {% set datemincordemae = emplacement.dateDeRemplissage %}
+                                                                                                                                        {% endif %}
+                                                                                                                                    {% else %}
+                                                                                                                                        {% set datemincordemae = emplacement.dateDeRemplissage %}
+                                                                                                                                        {% set datemaxcordemae = emplacement.dateDeRemplissage %}
+                                                                                                                                    {% endif %}
+                                                                                                                                {% endif %}
+                                                                                                                            {% endif %}
+                                                                                                                        {% endfor %}
+                                                                                                                    {% endfor %}
+                                                                                                                {% endfor %}
+                                                                                                                {% if dateminlanternemae %}
+                                                                                                                    <p>
+                                                                                                                    MIN
+                                                                                                                    date
+                                                                                                                    MAE
+                                                                                                                    Lanterne: {{ dateminlanternemae|date('Y-m-d') }}
+                                                                                                                    <->
+                                                                                                                    MAX
+                                                                                                                    date
+                                                                                                                    MAE
+                                                                                                                    Lanterne: {{ datemaxlanternemae|date('Y-m-d') }}</p>{% endif %}
+                                                                                                                {% if datemincordemae %}
+                                                                                                                    <p>
+                                                                                                                    MIN
+                                                                                                                    date
+                                                                                                                    MAE
+                                                                                                                    Corde: {{ datemincordemae|date('Y-m-d') }}
+                                                                                                                    <->
+                                                                                                                    MAX
+                                                                                                                    date
+                                                                                                                    MAE
+                                                                                                                    Corde: {{ datemaxcordemae|date('Y-m-d') }}</p>{% endif %}
+                                                                                                                {% if dateminpochemae %}
+                                                                                                                    <p>
+                                                                                                                    MIN
+                                                                                                                    date
+                                                                                                                    MAE
+                                                                                                                    Poche: {{ dateminpochemae|date('Y-m-d') }}
+                                                                                                                    <->
+                                                                                                                    MAX
+                                                                                                                    date
+                                                                                                                    MAE
+                                                                                                                    Poche: {{ datemaxpochemae|date('Y-m-d') }}</p>{% endif %}
                                                                                                             </div>
-
                                                                                                             {% for idSegment,segment in filiere.segment %}
                                                                                                                 <ol class="dd-list"
                                                                                                                     style="display: inline-block">
@@ -209,7 +385,10 @@
                                                                                                                                     lanterne</p>
                                                                                                                                 <p>{{ (segment.quantiterLanterne/12)|number_format(2, ',', '.') }}
                                                                                                                                     dz</p>
-                                                                                                                                <p>{{ ((cycle.quantiterLanterne /12)* 0.533)|number_format(2, ',', '.') }}(dz * 0.533)</p>
+                                                                                                                                <p>{{ ((cycle.quantiterLanterne /12)* 0.533)|number_format(2, ',', '.') }}
+                                                                                                                                    (dz
+                                                                                                                                    *
+                                                                                                                                    0.533)</p>
                                                                                                                             {% endif %}
                                                                                                                             {% if(segment.quantiterCorde  + segment.nombreCorde ) != 0 %}
                                                                                                                                 <p>{{ segment.quantiterCorde|number_format(0, ',', '.') }}
@@ -218,7 +397,10 @@
                                                                                                                                     corde</p>
                                                                                                                                 <p>{{ (segment.quantiterCorde/12)|number_format(2, ',', '.') }}
                                                                                                                                     dz</p>
-                                                                                                                                <p>{{ ((cycle.quantiterCorde /12)* 0.533)|number_format(2, ',', '.') }}(dz * 0.533)</p>
+                                                                                                                                <p>{{ ((cycle.quantiterCorde /12)* 0.533)|number_format(2, ',', '.') }}
+                                                                                                                                    (dz
+                                                                                                                                    *
+                                                                                                                                    0.533)</p>
                                                                                                                             {% endif %}
                                                                                                                             {% if(segment.quantiterPoche  + segment.nombrePoche ) != 0 %}
                                                                                                                                 <p>{{ segment.quantiterPoche|number_format(0, ',', '.') }}
@@ -227,8 +409,90 @@
                                                                                                                                     poche</p>
                                                                                                                                 <p>{{ (segment.quantiterPoche/12)|number_format(2, ',', '.') }}
                                                                                                                                     dz</p>
-                                                                                                                                <p>{{ ((cycle.quantiterPoche /12)* 0.533)|number_format(2, ',', '.') }}(dz * 0.533)</p>
+                                                                                                                                <p>{{ ((cycle.quantiterPoche /12)* 0.533)|number_format(2, ',', '.') }}
+                                                                                                                                    (dz
+                                                                                                                                    *
+                                                                                                                                    0.533)</p>
                                                                                                                             {% endif %}
+                                                                                                                            {% set datemincordemae = null %}
+                                                                                                                            {% set datemaxcordemae = null %}
+                                                                                                                            {% set dateminlanternemae = null %}
+                                                                                                                            {% set datemaxlanternemae = null %}
+                                                                                                                            {% set dateminpochemae = null %}
+                                                                                                                            {% set datemaxpochemae = null %}
+                                                                                                                            {% for idFlotteur, flotteur in segment.flotteur %}
+                                                                                                                                {% for idEmplacement,emplacement in flotteur.emplacement %}
+                                                                                                                                    {% if emplacement.stockslanterne %}
+                                                                                                                                        {% if dateminlanternemae %}
+                                                                                                                                            {% if datemaxlanternemae < emplacement.dateDeRemplissage %}
+                                                                                                                                                {% set datemaxlanternemae = emplacement.dateDeRemplissage %}
+                                                                                                                                            {% elseif dateminlanternemae > emplacement.dateDeRemplissage %}
+                                                                                                                                                {% set dateminlanternemae = emplacement.dateDeRemplissage %}
+                                                                                                                                            {% endif %}
+                                                                                                                                        {% else %}
+                                                                                                                                            {% set dateminlanternemae = emplacement.dateDeRemplissage %}
+                                                                                                                                            {% set datemaxlanternemae = emplacement.dateDeRemplissage %}
+                                                                                                                                        {% endif %}
+                                                                                                                                    {% elseif emplacement.stockscorde %}
+                                                                                                                                        {% if emplacement.stockscorde.dateAssemblage %}
+                                                                                                                                            {% if dateminpochemae %}
+                                                                                                                                                {% if datemaxpochemae < emplacement.dateDeRemplissage %}
+                                                                                                                                                    {% set datemaxpochemae = emplacement.dateDeRemplissage %}
+                                                                                                                                                {% elseif dateminpochemae > emplacement.dateDeRemplissage %}
+                                                                                                                                                    {% set dateminpochemae = emplacement.dateDeRemplissage %}
+                                                                                                                                                {% endif %}
+                                                                                                                                            {% else %}
+                                                                                                                                                {% set dateminpochemae = emplacement.dateDeRemplissage %}
+                                                                                                                                                {% set datemaxpochemae = emplacement.dateDeRemplissage %}
+                                                                                                                                            {% endif %}
+                                                                                                                                        {% else %}
+                                                                                                                                            {% if datemincordemae %}
+                                                                                                                                                {% if datemaxcordemae < emplacement.dateDeRemplissage %}
+                                                                                                                                                    {% set datemaxcordemae = emplacement.dateDeRemplissage %}
+                                                                                                                                                {% elseif datemincordemae > emplacement.dateDeRemplissage %}
+                                                                                                                                                    {% set datemincordemae = emplacement.dateDeRemplissage %}
+                                                                                                                                                {% endif %}
+                                                                                                                                            {% else %}
+                                                                                                                                                {% set datemincordemae = emplacement.dateDeRemplissage %}
+                                                                                                                                                {% set datemaxcordemae = emplacement.dateDeRemplissage %}
+                                                                                                                                            {% endif %}
+                                                                                                                                        {% endif %}
+                                                                                                                                    {% endif %}
+                                                                                                                                {% endfor %}
+                                                                                                                            {% endfor %}
+                                                                                                                            {% if dateminlanternemae %}
+                                                                                                                                <p>
+                                                                                                                                MIN
+                                                                                                                                date
+                                                                                                                                MAE
+                                                                                                                                Lanterne: {{ dateminlanternemae|date('Y-m-d') }}
+                                                                                                                                <->
+                                                                                                                                MAX
+                                                                                                                                date
+                                                                                                                                MAE
+                                                                                                                                Lanterne: {{ datemaxlanternemae|date('Y-m-d') }}</p>{% endif %}
+                                                                                                                            {% if datemincordemae %}
+                                                                                                                                <p>
+                                                                                                                                MIN
+                                                                                                                                date
+                                                                                                                                MAE
+                                                                                                                                Corde: {{ datemincordemae|date('Y-m-d') }}
+                                                                                                                                <->
+                                                                                                                                MAX
+                                                                                                                                date
+                                                                                                                                MAE
+                                                                                                                                Corde: {{ datemaxcordemae|date('Y-m-d') }}</p>{% endif %}
+                                                                                                                            {% if dateminpochemae %}
+                                                                                                                                <p>
+                                                                                                                                MIN
+                                                                                                                                date
+                                                                                                                                MAE
+                                                                                                                                Poche: {{ dateminpochemae|date('Y-m-d') }}
+                                                                                                                                <->
+                                                                                                                                MAX
+                                                                                                                                date
+                                                                                                                                MAE
+                                                                                                                                Poche: {{ datemaxpochemae|date('Y-m-d') }}</p>{% endif %}
                                                                                                                         </div>
                                                                                                                         <ol class="dd-list"
                                                                                                                             style="display: inline-block"
@@ -247,7 +511,10 @@
                                                                                                                                                     lanterne</p>
                                                                                                                                                 <p>{{ (flotteur.quantiterLanterne /12)|number_format(2, ',', '.') }}
                                                                                                                                                     dz</p>
-                                                                                                                                                <p>{{ ((cycle.quantiterLanterne /12)* 0.533)|number_format(2, ',', '.') }}(dz * 0.533)</p>
+                                                                                                                                                <p>{{ ((cycle.quantiterLanterne /12)* 0.533)|number_format(2, ',', '.') }}
+                                                                                                                                                    (dz
+                                                                                                                                                    *
+                                                                                                                                                    0.533)</p>
                                                                                                                                             {% endif %}
                                                                                                                                             {% if(flotteur.quantiterCorde  + flotteur.nombreCorde ) != 0 %}
                                                                                                                                                 <p>{{ flotteur.quantiterCorde|number_format(0, ',', '.') }}
@@ -256,7 +523,10 @@
                                                                                                                                                     corde</p>
                                                                                                                                                 <p>{{ (flotteur.quantiterCorde/12)|number_format(2, ',', '.') }}
                                                                                                                                                     dz</p>
-                                                                                                                                                <p>{{ ((cycle.quantiterCorde /12)* 0.533)|number_format(2, ',', '.') }}(dz * 0.533)</p>
+                                                                                                                                                <p>{{ ((cycle.quantiterCorde /12)* 0.533)|number_format(2, ',', '.') }}
+                                                                                                                                                    (dz
+                                                                                                                                                    *
+                                                                                                                                                    0.533)</p>
                                                                                                                                             {% endif %}
                                                                                                                                             {% if(flotteur.quantiterPoche  + flotteur.nombrePoche ) != 0 %}
                                                                                                                                                 <p>{{ flotteur.quantiterPoche|number_format(0, ',', '.') }}
@@ -265,8 +535,88 @@
                                                                                                                                                     poche</p>
                                                                                                                                                 <p>{{ (flotteur.quantiterPoche/12)|number_format(2, ',', '.') }}
                                                                                                                                                     dz</p>
-                                                                                                                                                <p>{{ ((cycle.quantiterPoche /12)* 0.533)|number_format(2, ',', '.') }}(dz * 0.533)</p>
+                                                                                                                                                <p>{{ ((cycle.quantiterPoche /12)* 0.533)|number_format(2, ',', '.') }}
+                                                                                                                                                    (dz
+                                                                                                                                                    *
+                                                                                                                                                    0.533)</p>
                                                                                                                                             {% endif %}
+                                                                                                                                            {% set datemincordemae = null %}
+                                                                                                                                            {% set datemaxcordemae = null %}
+                                                                                                                                            {% set dateminlanternemae = null %}
+                                                                                                                                            {% set datemaxlanternemae = null %}
+                                                                                                                                            {% set dateminpochemae = null %}
+                                                                                                                                            {% set datemaxpochemae = null %}
+                                                                                                                                            {% for idEmplacement,emplacement in flotteur.emplacement %}
+                                                                                                                                                {% if emplacement.stockslanterne %}
+                                                                                                                                                    {% if dateminlanternemae %}
+                                                                                                                                                        {% if datemaxlanternemae < emplacement.dateDeRemplissage %}
+                                                                                                                                                            {% set datemaxlanternemae = emplacement.dateDeRemplissage %}
+                                                                                                                                                        {% elseif dateminlanternemae > emplacement.dateDeRemplissage %}
+                                                                                                                                                            {% set dateminlanternemae = emplacement.dateDeRemplissage %}
+                                                                                                                                                        {% endif %}
+                                                                                                                                                    {% else %}
+                                                                                                                                                        {% set dateminlanternemae = emplacement.dateDeRemplissage %}
+                                                                                                                                                        {% set datemaxlanternemae = emplacement.dateDeRemplissage %}
+                                                                                                                                                    {% endif %}
+                                                                                                                                                {% elseif emplacement.stockscorde %}
+                                                                                                                                                    {% if emplacement.stockscorde.dateAssemblage %}
+                                                                                                                                                        {% if dateminpochemae %}
+                                                                                                                                                            {% if datemaxpochemae < emplacement.dateDeRemplissage %}
+                                                                                                                                                                {% set datemaxpochemae = emplacement.dateDeRemplissage %}
+                                                                                                                                                            {% elseif dateminpochemae > emplacement.dateDeRemplissage %}
+                                                                                                                                                                {% set dateminpochemae = emplacement.dateDeRemplissage %}
+                                                                                                                                                            {% endif %}
+                                                                                                                                                        {% else %}
+                                                                                                                                                            {% set dateminpochemae = emplacement.dateDeRemplissage %}
+                                                                                                                                                            {% set datemaxpochemae = emplacement.dateDeRemplissage %}
+                                                                                                                                                        {% endif %}
+                                                                                                                                                    {% else %}
+                                                                                                                                                        {% if datemincordemae %}
+                                                                                                                                                            {% if datemaxcordemae < emplacement.dateDeRemplissage %}
+                                                                                                                                                                {% set datemaxcordemae = emplacement.dateDeRemplissage %}
+                                                                                                                                                            {% elseif datemincordemae > emplacement.dateDeRemplissage %}
+                                                                                                                                                                {% set datemincordemae = emplacement.dateDeRemplissage %}
+                                                                                                                                                            {% endif %}
+                                                                                                                                                        {% else %}
+                                                                                                                                                            {% set datemincordemae = emplacement.dateDeRemplissage %}
+                                                                                                                                                            {% set datemaxcordemae = emplacement.dateDeRemplissage %}
+                                                                                                                                                        {% endif %}
+                                                                                                                                                    {% endif %}
+                                                                                                                                                {% endif %}
+                                                                                                                                            {% endfor %}
+                                                                                                                                            {% if dateminlanternemae %}
+                                                                                                                                                <p>
+                                                                                                                                                MIN
+                                                                                                                                                date
+                                                                                                                                                MAE
+                                                                                                                                                Lanterne: {{ dateminlanternemae|date('Y-m-d') }}
+                                                                                                                                                <->
+                                                                                                                                                MAX
+                                                                                                                                                date
+                                                                                                                                                MAE
+                                                                                                                                                Lanterne: {{ datemaxlanternemae|date('Y-m-d') }}</p>{% endif %}
+                                                                                                                                            {% if datemincordemae %}
+                                                                                                                                                <p>
+                                                                                                                                                MIN
+                                                                                                                                                date
+                                                                                                                                                MAE
+                                                                                                                                                Corde: {{ datemincordemae|date('Y-m-d') }}
+                                                                                                                                                <->
+                                                                                                                                                MAX
+                                                                                                                                                date
+                                                                                                                                                MAE
+                                                                                                                                                Corde: {{ datemaxcordemae|date('Y-m-d') }}</p>{% endif %}
+                                                                                                                                            {% if dateminpochemae %}
+                                                                                                                                                <p>
+                                                                                                                                                MIN
+                                                                                                                                                date
+                                                                                                                                                MAE
+                                                                                                                                                Poche: {{ dateminpochemae|date('Y-m-d') }}
+                                                                                                                                                <->
+                                                                                                                                                MAX
+                                                                                                                                                date
+                                                                                                                                                MAE
+                                                                                                                                                Poche: {{ datemaxpochemae|date('Y-m-d') }}</p>{% endif %}
                                                                                                                                         </div>
                                                                                                                                         <div class="col-xs-12 col-sm-12 col-md-12">
                                                                                                                                             <table class="table table-bordered table-striped table-condensed">

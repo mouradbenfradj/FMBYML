@@ -84,7 +84,11 @@ class ProcessusAdmin extends Admin
             ->add('articleSortie')
             ->add('numeroDebCycle')
             ->add('limiteDuCycle')
-            ->add('couleur', 'color')
-            ->add('couleurDuFond', 'color');
+            ->add('couleur', null, array(
+                'template' => 'SSFMBBundle:template:base_show_field.html.twig'
+            ))
+            ->add('couleurDuFond', null, array(
+                'template' => 'SSFMBBundle:template:base_show_field.html.twig'
+            ));
     }
 }

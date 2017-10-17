@@ -294,6 +294,7 @@ class FiliereController extends Controller
                     'llibArticle' => $item['llibArticle'],
                     'libArticle' => $item['libArticle'],
                     'nomLanterne' => $item['nomLanterne'],
+                    'nomCorde' => $item['nomCorde'],
                     'numeroSerie' => $item['numeroSerie'],
                     'dateDTL' => $item['maelt'],
                     'dateDTC' => $item['maect'],
