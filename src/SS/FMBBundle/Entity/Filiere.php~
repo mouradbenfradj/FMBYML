@@ -29,12 +29,18 @@ class Filiere
     private $nomFiliere;
 
     /**
-     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Magasins", inversedBy="filieres",)
+     * @var array
+     *
+     * @ORM\Column(name="observation", type="array",nullable=true)
+     */
+    private $observation = array();
+    /**
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Magasins", inversedBy="filieres")
      * @ORM\JoinColumn(name="magasin", referencedColumnName="id_magasin",nullable=false)
      */
     private $parc;
     /**
-     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Segment", mappedBy="filiere" ,cascade={"persist","remove"})
+     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Segment", mappedBy="filiere" ,cascade={"persist","merge","remove"},fetch="LAZY")
      */
     private $segments;
     /**
@@ -43,6 +49,7 @@ class Filiere
      * @ORM\Column(name="aireDeTravaille", type="boolean")
      */
     private $aireDeTravaille;
+
     /**
      * Constructor
      */
@@ -146,4 +153,49 @@ class Filiere
         return $this;
     }
 
+    /**
+     * Get aireDeTravaille
+     *
+     * @return boolean
+     */
+    public function getAireDeTravaille()
+    {
+        return $this->aireDeTravaille;
+    }
+
+    /**
+     * Set aireDeTravaille
+     *
+     * @param boolean $aireDeTravaille
+     * @return Filiere
+     */
+    public function setAireDeTravaille($aireDeTravaille)
+    {
+        $this->aireDeTravaille = $aireDeTravaille;
+
+        return $this;
+    }
+
+    /**
+     * Set observation
+     *
+     * @param array $observation
+     * @return Filiere
+     */
+    public function setObservation($observation)
+    {
+        $this->observation = $observation;
+
+        return $this;
+    }
+
+    /**
+     * Get observation
+     *
+     * @return array
+     */
+    public function getObservation()
+    {
+        return $this->observation;
+    }
 }

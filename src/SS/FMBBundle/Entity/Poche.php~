@@ -20,35 +20,34 @@ class Poche
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
     /**
      * @var integer
      *
      * @ORM\Column(name="quantite", type="integer")
      */
     private $quantite;
-
     /**
      * @var integer
      *
      * @ORM\Column(name="emplacement", type="integer")
      */
     private $emplacement;
-
-
     /**
      * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\StocksLanternes", inversedBy="poches")
      * @ORM\JoinColumn(nullable=false)
      */
     private $stocklanterne;
 
-
+    public function __toString()
+    {
+        return "" . $this->id;
+    }
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->quantite = 0;
+        $this->setQuantite(0);
     }
 
     /**
@@ -59,16 +58,6 @@ class Poche
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Get quantite
-     *
-     * @return integer
-     */
-    public function getQuantite()
-    {
-        return $this->quantite;
     }
 
     /**
@@ -85,13 +74,13 @@ class Poche
     }
 
     /**
-     * Get emplacement
+     * Get quantite
      *
-     * @return integer
+     * @return integer 
      */
-    public function getEmplacement()
+    public function getQuantite()
     {
-        return $this->emplacement;
+        return $this->quantite;
     }
 
     /**
@@ -107,4 +96,36 @@ class Poche
         return $this;
     }
 
+    /**
+     * Get emplacement
+     *
+     * @return integer 
+     */
+    public function getEmplacement()
+    {
+        return $this->emplacement;
+    }
+
+    /**
+     * Set stocklanterne
+     *
+     * @param \SS\FMBBundle\Entity\StocksLanternes $stocklanterne
+     * @return Poche
+     */
+    public function setStocklanterne(\SS\FMBBundle\Entity\StocksLanternes $stocklanterne)
+    {
+        $this->stocklanterne = $stocklanterne;
+
+        return $this;
+    }
+
+    /**
+     * Get stocklanterne
+     *
+     * @return \SS\FMBBundle\Entity\StocksLanternes 
+     */
+    public function getStocklanterne()
+    {
+        return $this->stocklanterne;
+    }
 }

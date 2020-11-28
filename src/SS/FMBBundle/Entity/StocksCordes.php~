@@ -25,6 +25,11 @@ class StocksCordes
      * @ORM\JoinColumn(nullable=false,  referencedColumnName="id")
      */
     private $corde;
+    /**
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Processus")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $processus;
 
     /**
      * @var integer
@@ -44,6 +49,12 @@ class StocksCordes
      */
     private $pret;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="chaussement", type="boolean")
+     */
+    private $chaussement =false;
     /**
      * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\StocksArticlesSn")
      * @Orm\JoinColumns({  @ORM\JoinColumn(name="ref_stock_article", referencedColumnName="ref_stock_article"),@Orm\JoinColumn(name="numero_serie", referencedColumnName="numero_serie")} )
@@ -76,6 +87,24 @@ class StocksCordes
      * @ORM\Column(name="dateDeMAETransfert", type="date", nullable=true)
      */
     private $dateDeMAETransfert;
+    /**
+     *
+     * @ORM\Column(name="dateAssemblage", type="date", nullable=true)
+     */
+    private $dateAssemblage;
+
+    /**
+     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\StocksPochesBS", mappedBy="cordeAssemblage" ,cascade={"persist","merge","remove"},fetch="LAZY")
+     */
+    private $pocheAssemblage;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateChaussement", type="date",nullable=true)
+     */
+    private $dateChaussement;
+
     /**
      *
      * @ORM\Column(name="dateDeRetirement", type="date", nullable=true)
@@ -353,5 +382,137 @@ class StocksCordes
         $this->dateDeMAETransfert = $dateDeMAETransfert;
 
         return $this;
+    }
+
+    /**
+     * Set dateDeMiseAEau
+     *
+     * @param \DateTime $dateDeMiseAEau
+     * @return StocksCordes
+     */
+    public function setDateDeMiseAEau($dateDeMiseAEau)
+    {
+        $this->dateDeMiseAEau = $dateDeMiseAEau;
+
+        return $this;
+    }
+
+    /**
+     * Get dateDeMiseAEau
+     *
+     * @return \DateTime 
+     */
+    public function getDateDeMiseAEau()
+    {
+        return $this->dateDeMiseAEau;
+    }
+
+    /**
+     * Set chaussement
+     *
+     * @param boolean $chaussement
+     * @return StocksCordes
+     */
+    public function setChaussement($chaussement)
+    {
+        $this->chaussement = $chaussement;
+
+        return $this;
+    }
+
+    /**
+     * Get chaussement
+     *
+     * @return boolean 
+     */
+    public function getChaussement()
+    {
+        return $this->chaussement;
+    }
+
+    /**
+     * Set processus
+     *
+     * @param \SS\FMBBundle\Entity\Processus $processus
+     * @return StocksCordes
+     */
+    public function setProcessus(\SS\FMBBundle\Entity\Processus $processus = null)
+    {
+        $this->processus = $processus;
+
+        return $this;
+    }
+
+    /**
+     * Get processus
+     *
+     * @return \SS\FMBBundle\Entity\Processus 
+     */
+    public function getProcessus()
+    {
+        return $this->processus;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->pocheAssemblage = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set dateAssemblage
+     *
+     * @param \DateTime $dateAssemblage
+     * @return StocksCordes
+     */
+    public function setDateAssemblage($dateAssemblage)
+    {
+        $this->dateAssemblage = $dateAssemblage;
+
+        return $this;
+    }
+
+    /**
+     * Get dateAssemblage
+     *
+     * @return \DateTime 
+     */
+    public function getDateAssemblage()
+    {
+        return $this->dateAssemblage;
+    }
+
+    /**
+     * Add pocheAssemblage
+     *
+     * @param \SS\FMBBundle\Entity\StocksPochesBS $pocheAssemblage
+     * @return StocksCordes
+     */
+    public function addPocheAssemblage(\SS\FMBBundle\Entity\StocksPochesBS $pocheAssemblage)
+    {
+        $this->pocheAssemblage[] = $pocheAssemblage;
+
+        return $this;
+    }
+
+    /**
+     * Remove pocheAssemblage
+     *
+     * @param \SS\FMBBundle\Entity\StocksPochesBS $pocheAssemblage
+     */
+    public function removePocheAssemblage(\SS\FMBBundle\Entity\StocksPochesBS $pocheAssemblage)
+    {
+        $this->pocheAssemblage->removeElement($pocheAssemblage);
+    }
+
+    /**
+     * Get pocheAssemblage
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPocheAssemblage()
+    {
+        return $this->pocheAssemblage;
     }
 }

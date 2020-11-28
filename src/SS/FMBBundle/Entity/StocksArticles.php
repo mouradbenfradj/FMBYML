@@ -53,10 +53,10 @@ class StocksArticles
      */
     private $stocksArticlesSn;
 
-public function __toString()
-{
- return $this->refStockArticle;
-}
+    public function __toString()
+    {
+        return $this->refStockArticle;
+    }
 
     /**
      * Set qte
@@ -74,7 +74,7 @@ public function __toString()
     /**
      * Get qte
      *
-     * @return float 
+     * @return float
      */
     public function getQte()
     {
@@ -84,7 +84,7 @@ public function __toString()
     /**
      * Get refStockArticle
      *
-     * @return string 
+     * @return string
      */
     public function getRefStockArticle()
     {
@@ -176,23 +176,10 @@ public function __toString()
     /**
      * Get stocksArticlesSn
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getStocksArticlesSn()
     {
         return $this->stocksArticlesSn;
-    }
-
-    /**
-     * Set refStockArticle
-     *
-     * @param string $refStockArticle
-     * @return StocksArticles
-     */
-    public function setRefStockArticle($refStockArticle)
-    {
-        $this->refStockArticle = $refStockArticle;
-
-        return $this;
     }
 }

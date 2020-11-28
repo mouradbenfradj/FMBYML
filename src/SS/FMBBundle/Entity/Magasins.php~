@@ -84,13 +84,17 @@ class Magasins
      */
     private $filieres;
     /**
-     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Corde", mappedBy="parc" ,cascade={"persist","remove"},fetch="LAZY")
+     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Corde", mappedBy="parc" ,cascade={"persist","remove"},fetch="EXTRA_LAZY")
      */
     private $cordes;
     /**
-     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Lanterne", mappedBy="parc" ,cascade={"persist","remove"},fetch="LAZY")
+     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Lanterne", mappedBy="parc" ,cascade={"persist","remove"},fetch="EXTRA_LAZY")
      */
     private $lanternes;
+    /**
+     * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\PochesBS", mappedBy="parc" ,cascade={"persist","remove"},fetch="EXTRA_LAZY")
+     */
+    private $poches;
 
     /**
      * Constructor
@@ -335,10 +339,76 @@ class Magasins
     /**
      * Get cordes
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getCordes()
     {
         return $this->cordes;
+    }
+
+    /**
+     * Add lanternes
+     *
+     * @param \SS\FMBBundle\Entity\Lanterne $lanternes
+     * @return Magasins
+     */
+    public function addLanterne(\SS\FMBBundle\Entity\Lanterne $lanternes)
+    {
+        $this->lanternes[] = $lanternes;
+
+        return $this;
+    }
+
+    /**
+     * Remove lanternes
+     *
+     * @param \SS\FMBBundle\Entity\Lanterne $lanternes
+     */
+    public function removeLanterne(\SS\FMBBundle\Entity\Lanterne $lanternes)
+    {
+        $this->lanternes->removeElement($lanternes);
+    }
+
+    /**
+     * Get lanternes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getLanternes()
+    {
+        return $this->lanternes;
+    }
+
+    /**
+     * Add poches
+     *
+     * @param \SS\FMBBundle\Entity\PochesBS $poches
+     * @return Magasins
+     */
+    public function addPoch(\SS\FMBBundle\Entity\PochesBS $poches)
+    {
+        $this->poches[] = $poches;
+
+        return $this;
+    }
+
+    /**
+     * Remove poches
+     *
+     * @param \SS\FMBBundle\Entity\PochesBS $poches
+     */
+    public function removePoch(\SS\FMBBundle\Entity\PochesBS $poches)
+    {
+        $this->poches->removeElement($poches);
+    }
+
+    /**
+     * Get poches
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPoches()
+    {
+        return $this->poches;
     }
 }

@@ -36,10 +36,11 @@ class Corde
      */
     private $stockscordes;
     /**
-     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Magasins", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Magasins",inversedBy="cordes")
      * @ORM\JoinColumn(name="magasin", referencedColumnName="id_magasin",nullable=false)
      */
     private $parc;
+
     /**
      * Constructor
      */
@@ -51,11 +52,21 @@ class Corde
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get nbrTotaleEnStock
+     *
+     * @return integer
+     */
+    public function getNbrTotaleEnStock()
+    {
+        return $this->nbrTotaleEnStock;
     }
 
     /**
@@ -69,16 +80,6 @@ class Corde
         $this->nbrTotaleEnStock = $nbrTotaleEnStock;
 
         return $this;
-    }
-
-    /**
-     * Get nbrTotaleEnStock
-     *
-     * @return integer 
-     */
-    public function getNbrTotaleEnStock()
-    {
-        return $this->nbrTotaleEnStock;
     }
 
     /**
@@ -107,11 +108,21 @@ class Corde
     /**
      * Get stockscordes
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getStockscordes()
     {
         return $this->stockscordes;
+    }
+
+    /**
+     * Get parc
+     *
+     * @return \SS\FMBBundle\Entity\Magasins
+     */
+    public function getParc()
+    {
+        return $this->parc;
     }
 
     /**
@@ -128,12 +139,30 @@ class Corde
     }
 
     /**
-     * Get parc
+     * Get nomCorde
      *
-     * @return \SS\FMBBundle\Entity\Magasins 
+     * @return string
      */
-    public function getParc()
+    public function getNomCorde()
     {
-        return $this->parc;
+        return $this->nomCorde;
+    }
+
+    /**
+     * Set nomCorde
+     *
+     * @param string $nomCorde
+     * @return Corde
+     */
+    public function setNomCorde($nomCorde)
+    {
+        $this->nomCorde = $nomCorde;
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->nomCorde;
     }
 }

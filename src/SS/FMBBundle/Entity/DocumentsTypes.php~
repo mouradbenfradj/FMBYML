@@ -7,58 +7,216 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * DocumentsTypes
  *
- * @ORM\Table()
- * @ORM\Entity(repositoryClass="SS\FMBBundle\Repository\DocumentsTypesRepository")
+ * @ORM\Table(name="documents_types", indexes={@ORM\Index(name="actif", columns={"actif"}), @ORM\Index(name="id_pdf_modele", columns={"id_pdf_modele"}), @ORM\Index(name="id_type_groupe", columns={"id_type_groupe"})})
+ * @ORM\Entity
  */
 class DocumentsTypes
 {
     /**
-     * @var integer
-     * @ORM\Id
-     * @ORM\Column(name="idTypeDoc", type="smallint", length=5)
-     */
-    private $idTypeDoc;
-
-    /**
      * @var string
      *
-     * @ORM\Column(name="libTypeDoc", type="string", length=64)
+     * @ORM\Column(name="lib_type_doc", type="string", length=64, nullable=false)
      */
     private $libTypeDoc;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="libTypePrinted", type="string", length=64)
+     * @ORM\Column(name="lib_type_printed", type="string", length=64, nullable=false)
      */
     private $libTypePrinted;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="codeDoc", type="string", length=32)
+     * @ORM\Column(name="code_doc", type="string", length=32, nullable=false)
      */
-    private $codeDoc;
+    private $codeDoc ='';
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="idTypeGroupe", type="boolean" , length=3)
+     * @ORM\Column(name="id_type_groupe", type="boolean", nullable=false)
      */
-    private $idTypeGroupe;
+    private $idTypeGroupe=' ';
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="actif", type="boolean", length=3)
+     * @ORM\Column(name="actif", type="boolean", nullable=false)
      */
-    private $actif;
+    private $actif = false;
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @ORM\Column(name="idPdfModele", type="boolean", length=5)
+     * @ORM\Column(name="id_type_doc", type="smallint")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $idTypeDoc;
+
+    /**
+     * @var \SS\FMBBundle\Entity\PdfModeles
+     *
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\PdfModeles")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_pdf_modele", referencedColumnName="id_pdf_modele")
+     * })
      */
     private $idPdfModele;
 
+    public function __toString()
+    {
+        return $this->getLibTypeDoc();
+    }
+
+    /**
+     * Set libTypeDoc
+     *
+     * @param string $libTypeDoc
+     * @return DocumentsTypes
+     */
+    public function setLibTypeDoc($libTypeDoc)
+    {
+        $this->libTypeDoc = $libTypeDoc;
+
+        return $this;
+    }
+
+    /**
+     * Get libTypeDoc
+     *
+     * @return string
+     */
+    public function getLibTypeDoc()
+    {
+        return $this->libTypeDoc;
+    }
+
+    /**
+     * Set libTypePrinted
+     *
+     * @param string $libTypePrinted
+     * @return DocumentsTypes
+     */
+    public function setLibTypePrinted($libTypePrinted)
+    {
+        $this->libTypePrinted = $libTypePrinted;
+
+        return $this;
+    }
+
+    /**
+     * Get libTypePrinted
+     *
+     * @return string
+     */
+    public function getLibTypePrinted()
+    {
+        return $this->libTypePrinted;
+    }
+
+    /**
+     * Set codeDoc
+     *
+     * @param string $codeDoc
+     * @return DocumentsTypes
+     */
+    public function setCodeDoc($codeDoc)
+    {
+        $this->codeDoc = $codeDoc;
+
+        return $this;
+    }
+
+    /**
+     * Get codeDoc
+     *
+     * @return string
+     */
+    public function getCodeDoc()
+    {
+        return $this->codeDoc;
+    }
+
+    /**
+     * Set idTypeGroupe
+     *
+     * @param boolean $idTypeGroupe
+     * @return DocumentsTypes
+     */
+    public function setIdTypeGroupe($idTypeGroupe)
+    {
+        $this->idTypeGroupe = $idTypeGroupe;
+
+        return $this;
+    }
+
+    /**
+     * Get idTypeGroupe
+     *
+     * @return boolean
+     */
+    public function getIdTypeGroupe()
+    {
+        return $this->idTypeGroupe;
+    }
+
+    /**
+     * Set actif
+     *
+     * @param boolean $actif
+     * @return DocumentsTypes
+     */
+    public function setActif($actif)
+    {
+        $this->actif = $actif;
+
+        return $this;
+    }
+
+    /**
+     * Get actif
+     *
+     * @return boolean
+     */
+    public function getActif()
+    {
+        return $this->actif;
+    }
+
+    /**
+     * Get idTypeDoc
+     *
+     * @return integer
+     */
+    public function getIdTypeDoc()
+    {
+        return $this->idTypeDoc;
+    }
+
+    /**
+     * Set idPdfModele
+     *
+     * @param \SS\FMBBundle\Entity\PdfModeles $idPdfModele
+     * @return DocumentsTypes
+     */
+    public function setIdPdfModele(\SS\FMBBundle\Entity\PdfModeles $idPdfModele = null)
+    {
+        $this->idPdfModele = $idPdfModele;
+
+        return $this;
+    }
+
+
+    /**
+     * Get idPdfModele
+     *
+     * @return \SS\FMBBundle\Entity\PdfModeles
+     */
+    public function getIdPdfModele()
+    {
+        return $this->idPdfModele;
+    }
 }

@@ -18,8 +18,8 @@ class MagasinsController extends Controller
     public function parcStocksAction(Request $request)
     {
         $result = array();
-        $repo = $this->getDoctrine()->getManager()->getRepository('SSFMBBundle:Magasins');
-        $parc = $repo->find($request->query->get('parc_id'));
+            $repo = $this->getDoctrine()->getManager()->getRepository('SSFMBBundle:Magasins');
+            $parc = $repo->find($request->query->get('parc_id'));
         $stocks = $parc->getIdStock();
         $result[$stocks->getLibStock()] = $stocks->getIdStock();
         return new JsonResponse($result);

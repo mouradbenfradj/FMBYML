@@ -20,43 +20,37 @@ class Emplacement
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
     /**
      * @var integer
      *
      * @ORM\Column(name="place", type="integer")
      */
     private $place;
-
     /**
-     * @ORM\OneToOne(targetEntity="SS\FMBBundle\Entity\Corde", inversedBy="emplacement")
+     * @ORM\OneToOne(targetEntity="SS\FMBBundle\Entity\StocksCordes", inversedBy="emplacement",fetch="EAGER")
+     * @ORM\JoinColumn(nullable=true)
      */
-    private $corde;
+    private $stockscorde;
     /**
-     * @ORM\OneToOne(targetEntity="SS\FMBBundle\Entity\Lanterne", inversedBy="emplacement")
+     * @ORM\OneToOne(targetEntity="SS\FMBBundle\Entity\StocksPochesBS", inversedBy="emplacement",fetch="EAGER")
+     * @ORM\JoinColumn(nullable=true)
      */
-    private $lanterne;
+    private $stockspoches;
+    /**
+     * @ORM\OneToOne(targetEntity="SS\FMBBundle\Entity\StocksLanternes", inversedBy="emplacement")
+     * @ORM\JoinColumn(nullable=true,  referencedColumnName="id")
+     */
+    private $stockslanterne;
     /**
      * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Flotteur", inversedBy="emplacements",cascade={"persist","remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $flotteur;
-
     /**
      *
      * @ORM\Column(name="date_remplissage", type="date",nullable=true)
      */
     private $dateDeRemplissage;
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
     /**
      * Get place
@@ -79,6 +73,21 @@ class Emplacement
         $this->place = $place;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return "".$this->getId();
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return "".$this->id;
     }
 
     /**
@@ -104,49 +113,96 @@ class Emplacement
         return $this;
     }
 
+
     /**
-     * Get corde
+     * Get dateDeRemplissage
      *
-     * @return \SS\FMBBundle\Entity\Corde
+     * @return \DateTime
      */
-    public function getCorde()
+    public function getDateDeRemplissage()
     {
-        return $this->corde;
+        return $this->dateDeRemplissage;
     }
 
     /**
-     * Set corde
+     * Set dateDeRemplissage
      *
-     * @param \SS\FMBBundle\Entity\Corde $corde
+     * @param \DateTime $dateDeRemplissage
      * @return Emplacement
      */
-    public function setCorde(\SS\FMBBundle\Entity\Corde $corde = null)
+    public function setDateDeRemplissage($dateDeRemplissage)
     {
-        $this->corde = $corde;
+        $this->dateDeRemplissage = $dateDeRemplissage;
 
         return $this;
     }
 
     /**
-     * Get lanterne
+     * Get stockslanterne
      *
-     * @return \SS\FMBBundle\Entity\Lanterne
+     * @return \SS\FMBBundle\Entity\StocksLanternes
      */
-    public function getLanterne()
+    public function getStockslanterne()
     {
-        return $this->lanterne;
+        return $this->stockslanterne;
     }
 
     /**
-     * Set lanterne
+     * Set stockslanterne
      *
-     * @param \SS\FMBBundle\Entity\Lanterne $lanterne
+     * @param \SS\FMBBundle\Entity\StocksLanternes $stockslanterne
      * @return Emplacement
      */
-    public function setLanterne(\SS\FMBBundle\Entity\Lanterne $lanterne = null)
+    public function setStockslanterne(\SS\FMBBundle\Entity\StocksLanternes $stockslanterne = null)
     {
-        $this->lanterne = $lanterne;
+        $this->stockslanterne = $stockslanterne;
+        return $this;
+    }
+
+    /**
+     * Get stockscorde
+     *
+     * @return \SS\FMBBundle\Entity\StocksCordes
+     */
+    public function getStockscorde()
+    {
+        return $this->stockscorde;
+    }
+
+    /**
+     * Set stockscorde
+     *
+     * @param \SS\FMBBundle\Entity\StocksCordes $stockscorde
+     * @return Emplacement
+     */
+    public function setStockscorde(\SS\FMBBundle\Entity\StocksCordes $stockscorde = null)
+    {
+        $this->stockscorde = $stockscorde;
 
         return $this;
+    }
+
+
+    /**
+     * Set stockspoches
+     *
+     * @param \SS\FMBBundle\Entity\StocksPochesBS $stockspoches
+     * @return Emplacement
+     */
+    public function setStockspoches(\SS\FMBBundle\Entity\StocksPochesBS $stockspoches = null)
+    {
+        $this->stockspoches = $stockspoches;
+
+        return $this;
+    }
+
+    /**
+     * Get stockspoches
+     *
+     * @return \SS\FMBBundle\Entity\StocksPochesBS 
+     */
+    public function getStockspoches()
+    {
+        return $this->stockspoches;
     }
 }

@@ -119,6 +119,6 @@ class ProcessusController extends Controller
                 }
             }
         }
-        return $this->render('@SSFMB/Default/processusgrocissement.html.twig', array('tableauDesProcessus' => $tableauDesProcessus, 'phases' => $phases, 'processusBase' => $processus, 'entity' => $parc));
+            return $this->render('@SSFMB/Default/processusgrocissement.html.twig', array('tableauDesProcessus' => $tableauDesProcessus, 'phases' => $phases, 'processusBase' => $processus, 'entity' => $parc));
     }
 }

@@ -26,6 +26,11 @@ class StocksLanternes
      * @ORM\JoinColumn(nullable=false,  referencedColumnName="nomLanterne")
      */
     private $lanterne;
+    /**
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Processus")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $processus;
 
     /**
      * @ORM\OneToMany(targetEntity="SS\FMBBundle\Entity\Poche", mappedBy="stocklanterne",cascade={"persist","remove"},fetch="LAZY")
@@ -33,7 +38,7 @@ class StocksLanternes
     private $poches;
 
     /**
-     * @ORM\OneToOne(targetEntity="SS\FMBBundle\Entity\Emplacement", mappedBy="stockslanterne")
+     * @ORM\OneToOne(targetEntity="SS\FMBBundle\Entity\Emplacement", mappedBy="stockslanterne",fetch="LAZY")
      * @ORM\JoinColumn(nullable=true)
      */
     private $emplacement;
@@ -44,6 +49,13 @@ class StocksLanternes
      * @ORM\Column(name="pret", type="boolean")
      */
     private $pret =false;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="chaussement", type="boolean")
+     */
+    private $chaussement =false;
 
     /**
      * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\StocksArticlesSn")
@@ -83,10 +95,22 @@ class StocksLanternes
     private $dateDeRetirement;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateChaussement", type="date",nullable=true)
+     */
+    private $dateChaussement;
+    /**
      * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\DocsLines")
      * @ORM\JoinColumn(name="doc_line", referencedColumnName="ref_doc_line")
      */
     private $docLine;
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="cycle_r", type="integer")
+     */
+    private $cycleR = 0;
 
     /**
      * Constructor
@@ -134,28 +158,6 @@ class StocksLanternes
         return $this;
     }
 
-    /**
-     * Get dateDeCreation
-     *
-     * @return \DateTime
-     */
-    public function getDateDeCreation()
-    {
-        return $this->dateDeCreation;
-    }
-
-    /**
-     * Set dateDeCreation
-     *
-     * @param \DateTime $dateDeCreation
-     * @return StocksLanternes
-     */
-    public function setDateDeCreation($dateDeCreation)
-    {
-        $this->dateDeCreation = $dateDeCreation;
-
-        return $this;
-    }
 
     /**
      * Get lanterne
@@ -305,36 +307,118 @@ class StocksLanternes
     }
 
     /**
-     * Get dateDeRetirement
+     * Set chaussement
      *
-     * @return \DateTime
-     */
-    public function getDateDeRetirement()
-    {
-        return $this->dateDeRetirement;
-    }
-
-    /**
-     * Set dateDeRetirement
-     *
-     * @param \DateTime $dateDeRetirement
+     * @param boolean $chaussement
      * @return StocksLanternes
      */
-    public function setDateDeRetirement($dateDeRetirement)
+    public function setChaussement($chaussement)
     {
-        $this->dateDeRetirement = $dateDeRetirement;
+        $this->chaussement = $chaussement;
 
         return $this;
     }
 
     /**
-     * Get dateDeRetraitTransfert
+     * Get chaussement
      *
-     * @return \DateTime
+     * @return boolean 
      */
-    public function getDateDeRetraitTransfert()
+    public function getChaussement()
     {
-        return $this->dateDeRetraitTransfert;
+        return $this->chaussement;
+    }
+
+    /**
+     * Set cycleR
+     *
+     * @param integer $cycleR
+     * @return StocksLanternes
+     */
+    public function setCycleR($cycleR)
+    {
+        $this->cycleR = $cycleR;
+
+        return $this;
+    }
+
+    /**
+     * Get cycleR
+     *
+     * @return integer 
+     */
+    public function getCycleR()
+    {
+        return $this->cycleR;
+    }
+
+    /**
+     * Set processus
+     *
+     * @param \SS\FMBBundle\Entity\Processus $processus
+     * @return StocksLanternes
+     */
+    public function setProcessus(\SS\FMBBundle\Entity\Processus $processus = null)
+    {
+        $this->processus = $processus;
+
+        return $this;
+    }
+
+    /**
+     * Get processus
+     *
+     * @return \SS\FMBBundle\Entity\Processus 
+     */
+    public function getProcessus()
+    {
+        return $this->processus;
+    }
+
+    /**
+     * Set dateDeCreation
+     *
+     * @param \DateTime $dateDeCreation
+     * @return StocksLanternes
+     */
+    public function setDateDeCreation($dateDeCreation)
+    {
+        $this->dateDeCreation = $dateDeCreation;
+
+        return $this;
+    }
+
+    /**
+     * Get dateDeCreation
+     *
+     * @return \DateTime 
+     */
+    public function getDateDeCreation()
+    {
+        return $this->dateDeCreation;
+    }
+
+    /**
+     * Set dateDeMiseAEau
+     *
+     * @param \DateTime $dateDeMiseAEau
+     * @return StocksLanternes
+     */
+    public function setDateDeMiseAEau($dateDeMiseAEau)
+    {
+        $this->dateDeMiseAEau = $dateDeMiseAEau;
+
+        return $this;
+    }
+
+    /**
+     * Get dateDeMiseAEau
+     *
+     * @return \DateTime 
+     */
+    public function getDateDeMiseAEau()
+    {
+        return $this->dateDeMiseAEau;
     }
 
     /**
@@ -351,13 +435,13 @@ class StocksLanternes
     }
 
     /**
-     * Get dateDeMAETransfert
+     * Get dateDeRetraitTransfert
      *
-     * @return \DateTime
+     * @return \DateTime 
      */
-    public function getDateDeMAETransfert()
+    public function getDateDeRetraitTransfert()
     {
-        return $this->dateDeMAETransfert;
+        return $this->dateDeRetraitTransfert;
     }
 
     /**
@@ -371,5 +455,38 @@ class StocksLanternes
         $this->dateDeMAETransfert = $dateDeMAETransfert;
 
         return $this;
+    }
+
+    /**
+     * Get dateDeMAETransfert
+     *
+     * @return \DateTime 
+     */
+    public function getDateDeMAETransfert()
+    {
+        return $this->dateDeMAETransfert;
+    }
+
+    /**
+     * Set dateDeRetirement
+     *
+     * @param \DateTime $dateDeRetirement
+     * @return StocksLanternes
+     */
+    public function setDateDeRetirement($dateDeRetirement)
+    {
+        $this->dateDeRetirement = $dateDeRetirement;
+
+        return $this;
+    }
+
+    /**
+     * Get dateDeRetirement
+     *
+     * @return \DateTime 
+     */
+    public function getDateDeRetirement()
+    {
+        return $this->dateDeRetirement;
     }
 }

@@ -60,6 +60,7 @@ class ProcessusImplementation implements ProcessusInterface
             }
         }
         $differance = $dateRecherche->diff($dateDebut);
+
         $nbday = $differance->d;
         $nbmonth = $differance->m;
         $nbmonth = $nbmonth + $processus->getNumeroDebCycle();

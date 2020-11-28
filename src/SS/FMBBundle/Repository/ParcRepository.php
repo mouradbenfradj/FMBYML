@@ -31,7 +31,7 @@ class ParcRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('m')
             ->select('COUNT(sc)')
-            ->join('m.cordes', 'c')
+            ->leftJoin('m.cordes', 'c')
             ->leftJoin('c.stockscordes', 'sc')
             ->where('sc.emplacement IS NOT NULL')
             ->andWhere('sc.dateAssemblage IS NULL')

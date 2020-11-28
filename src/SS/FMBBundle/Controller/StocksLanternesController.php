@@ -39,14 +39,27 @@ class StocksLanternesController extends Controller
         $id = $request->query->get('lanterne');
         $em = $this->getDoctrine()->getManager();
         $implementation = new DefaultImpl($em);
-        $lanternes = $em->getRepository('SSFMBBundle:StocksLanternes')->findBy(array('lanterne' => $id, 'pret' => false, 'dateDeMiseAEau' => null, 'emplacement' => null));
-        $date = array();
+        //$lanternes = $em->getRepository('SSFMBBundle:StocksLanternes')->findBy(array('lanterne' => $id, 'pret' => false, 'dateDeMiseAEau' => null, 'emplacement' => null));
+        $lanternes = $em->getRepository('SSFMBBundle:StocksLanternes')->createQueryBuilder('SLanterne')
+            ->select('Article.libArticle')
+            ->addSelect('SLanterne.numeroSerie')
+            ->addSelect('SLanterne')
+            ->leftJoin('SLanterne.lanterne', 'Lant')
+            ->leftJoin('SLanterne.article', 'stoSN')
+            ->leftJoin('stoSN.refStockArticle', 'SA')
+            ->leftJoin('SA.refArticle', 'Article')
+            ->where("Lant.nomLanterne = '$id'")
+            ->andWhere('SLanterne.pret = false')
+            ->andWhere('SLanterne.dateDeMiseAEau IS NULL')
+            ->andWhere('SLanterne.emplacement IS NULL')
+            ->getQuery()->getResult();
 
+        $date = array();
         foreach ($lanternes as $lanterne) {
-            if (!isset($date[$lanterne->getArticle()->getRefStockArticle()->getRefArticle()->getLibArticle()][$lanterne->getArticle()->getNumeroSerie()][$implementation->calculerQuantiterLanterne($lanterne)])) {
-                $date[$lanterne->getArticle()->getRefStockArticle()->getRefArticle()->getLibArticle()][$lanterne->getArticle()->getNumeroSerie()][$implementation->calculerQuantiterLanterne($lanterne)] = 0;
+            if (!isset($date[$lanterne['libArticle']][$lanterne['numeroSerie']][$implementation->calculerQuantiterLanterne($lanterne[0])])) {
+                $date[$lanterne['libArticle']][$lanterne['numeroSerie']][$implementation->calculerQuantiterLanterne($lanterne[0])] = 0;
             }
-            $date[$lanterne->getArticle()->getRefStockArticle()->getRefArticle()->getLibArticle()][$lanterne->getArticle()->getNumeroSerie()][$implementation->calculerQuantiterLanterne($lanterne)] = $date[$lanterne->getArticle()->getRefStockArticle()->getRefArticle()->getLibArticle()][$lanterne->getArticle()->getNumeroSerie()][$implementation->calculerQuantiterLanterne($lanterne)] + 1;
+            $date[$lanterne['libArticle']][$lanterne['numeroSerie']][$implementation->calculerQuantiterLanterne($lanterne[0])] = $date[$lanterne['libArticle']][$lanterne['numeroSerie']][$implementation->calculerQuantiterLanterne($lanterne[0])] + 1;
         }
         return new JsonResponse($date);
     }

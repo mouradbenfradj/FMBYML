@@ -112,9 +112,6 @@ class StocksArticlesSn
      */
     public function getRefStockArticle()
     {
-        if (is_null($this->refStockArticle))
-            return $this->refStockArticle;
-        else
-            return $this->refStockArticle;
+        return $this->refStockArticle;
     }
 }
